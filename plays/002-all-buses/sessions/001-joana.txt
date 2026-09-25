@@ -1,0 +1,59 @@
+> does the app only show one bus or all?
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls -R doc..., description: List docs and read product vision)
+  ⎿ documentation:
+  ⎿ context
+  ⎿ design
+  ⎿ modules
+  ⎿ 
+  ⎿ documentation/context:
+  ⎿ tech.md
+  ⎿ vision.md
+  ⎿ 
+  ⎿ documentation/design:
+  ⎿ 001-project-structure-prototype.html
+  ⎿ 
+  ⎿ documentation/modules:
+  ⎿ app-platform.md
+  ⎿ map-screen.md
+  ⎿ timetable-and-estimates.md
+  ⎿ 
+  ⎿ plays:
+  ⎿ 001-project-structure
+  ⎿ 002-test
+  ⎿ … +118 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat docum..., description: Read map and timetable module docs and bus code)
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop, and the nearest bus heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content. Its grab handle is
+  ⎿   decorative, and the sheet cannot be dragged.
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet. The locate button sits at the bottom right, with the
+  ⎿   attribution below it.
+  ⎿ - The page never scrolls (`100dvh`). All styling is plain CSS with custom properties
+  ⎿   (`src/ui/styles/tokens.css` and `app.css`). There is no CSS framework, and the Aptos fonts in the
+  ⎿   font stacks are not bundled, so they fall back to Segoe UI or the system font.
+  ⎿ 
+  ⎿ … +261 more lines
+
+● Right now the app shows **only one bus**: the one due at your nearest stop soonest.
+
+- `nearestApproachingBus` in `src/domain/nearestBus.ts` goes through all of today's trips, keeps the ones that have started but haven't reached your stop yet, and returns just the one arriving first. It returns `null` if none qualify.
+- The map screen draws one bus marker for that result. The sheet shows a single "Nearest bus · U1" row with a **Scheduled** badge (see `documentation/modules/map-screen.md`).
+- Buses that haven't left their first stop are skipped, even if one would reach you sooner than a bus already on the road.
+
+That falls short of the product vision. `documentation/context/vision.md` says the map should show "the live position of **every** Metrobus bus, and how many minutes each approaching bus is from that stop." Two things are missing:
+
+1. **All buses on the map.** Only one is drawn today.
+2. **"Minutes away".** `arrivalAtStopSeconds` is already calculated, but the UI doesn't display it yet.
+
+If you want to close that gap, it would make a good next play. The estimation logic already works out a position for any trip in progress, so showing every bus mostly means running it for all active trips instead of just the soonest one.

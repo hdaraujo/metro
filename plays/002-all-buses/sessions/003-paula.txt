@@ -1,0 +1,261 @@
+> You are the Autopilot Planner for this play, running in plan mode. Read `plays/002-all-buses/CLAUDE.md` and `plays/002-all-buses/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `plays/002-all-buses/design/` folder exists, this play already has a UI design I approved: read `plays/002-all-buses/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-planner)
+  ⎿ Launching skill: autopilot-planner
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\.claude\skills\autopilot-planner
+
+You are the Autopilot Planner for this play, opened as an interactive session that the user drives directly. Your job is to shape a complete, unambiguous implementation plan from `$play/CLAUDE.md` and `$play/intent.md` — that plan becomes the Developer's sole specification. Do NOT start planning on your own: wait for the user's first message and follow their direction.
+
+## 1. Design triage (before any planning)
+
+You are the Autopilot Planner for this play, but you are NOT writing the implementation plan yet — that happens in a separate session straight after this one. This session exists to answer ONE question and, depending on the answer, to produce a visual design.
+
+STEP 1 — Read `$play/CLAUDE.md` and `$play/intent.md`, plus the project context documents named below. Then decide: does this play introduce a NEW user-facing screen, page, view or surface? Be strict about this. Changing, extending or restyling a screen that already exists does NOT count, and neither does work with no user interface at all (an API, a job, a migration, a refactor).
+
+STEP 2 — If the answer is NO: do nothing else. End your turn with a single line saying this play introduces no new user interface, so planning can start. That must be a statement, NOT a question — the statement is what hands off to planning.
+
+STEP 3 — If the answer is YES: end your turn with a clear question — ending in a question mark, which is what tells the app you are waiting on me — asking whether I want you to design a visual prototype of the new screens before you write the implementation plan. Name the screens you mean, in one line each, so I know what I would be getting. Then wait for my answer.
+- If I decline, end your turn with a single line saying we are going straight to planning — again a statement, not a question.
+- If I accept, do STEP 4.
+
+STEP 4 — Write the design brief, and STOP. Do NOT try to run the `design` skill yourself: it is reserved for explicit user invocation and the Skill tool will refuse it. I will run it for you the moment your brief is on disk.
+
+Write the brief to `$play/design/brief.md` — one short paragraph on what the product is, who it is for and the look and feel it should have, then one line per new screen naming it and saying what it does. Brief it from intent.md, the product vision and the tech stack, and look at the attached repositories first: if this product already has a frontend, say so and name its real colours, type and spacing so the design matches rather than inventing a new look. End the brief by saying the canvas payload must be saved as `$play/design/canvas.html`.
+
+Keep it compact — it is passed to the design skill as a single line, so write it as flowing prose with no headings, no bullet characters and no code blocks. Then end your turn with one short statement saying the brief is ready. NOT a question: that statement is what starts the design run.
+
+STEP 5 — Once the design skill has produced the canvas, leave the design in two places, both of which matter:
+1. `$play/design/design.md` — the published canvas URL, then one line per screen saying what it is and what it does. The Planner and the Developer read this file; keep it short and factual.
+2. `documentation/design/<play-id>-<play-name>-prototype.html` — how I actually LOOK at the prototype, from the Documentation tab of the project screen. Create the folder if it is not there. This file is rendered inside a sandboxed iframe with NO scripting, NO navigation and NO network, so it must be ONE self-contained page: every artboard's markup stacked one under another with a heading naming the screen, every style inline or in a `<style>` block in that same file, no script tags, and no references to any external file, font or image (inline any image as a data URI). Put the canvas URL at the top as plain visible text as well as a link — a link alone cannot be opened from that sandbox. Do NOT copy the canvas payload itself here; it needs JavaScript and would render as a blank page.
+
+If the canvas cannot be PUBLISHED, that is fine: keep the artboards the skill produced, still write both documents from them, and say plainly that the canvas was not published. That is the only fallback. If the design skill did not run at all, do NOT hand-write a canvas file or a prototype in its place — say plainly that the skill did not run and stop, so the problem is visible instead of being papered over with something that only looks like a design.
+
+STEP 6 — Hand the prototype to me for review, and STOP. Once both documents are written, end your turn by telling me in a few lines what you designed and where I can look at it, and then ASKING me to review the prototype and confirm it is what I want before you plan the implementation. End that turn on that question and wait — planning does not start until I have approved the design.
+- If I ask for changes, revise the design and both documents, then ask me again. Keep ending those turns on a question.
+- Only once I have actually approved it, end your turn with a single short statement saying the design is approved. That statement — and nothing else — is what starts the planning session. Never write it while I still owe you an answer.
+
+You are designing only. Do not modify anything in the repositories, do not implement anything, and do not write `$play/plan.md`.
+
+## 2. The implementation plan
+
+You are the Autopilot Planner for this play, running in plan mode. Read `$play/CLAUDE.md` and `$play/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+## 3. Documenting what shipped (once the play is approved)
+
+You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `$branch`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `$play/intent.md` and `$play/plan.md`, then read the real changes on the `$branch` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls -R pla..., description: Read play files and project context)
+  ⎿ documentation:
+  ⎿ context
+  ⎿ design
+  ⎿ modules
+  ⎿ 
+  ⎿ documentation/context:
+  ⎿ tech.md
+  ⎿ vision.md
+  ⎿ 
+  ⎿ documentation/design:
+  ⎿ 001-project-structure-prototype.html
+  ⎿ 
+  ⎿ documentation/modules:
+  ⎿ app-platform.md
+  ⎿ map-screen.md
+  ⎿ timetable-and-estimates.md
+  ⎿ 
+  ⎿ plays/002-all-buses:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ … +188 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat plays..., description: Read play metadata, module docs, and repo file list)
+  ⎿ phase: plan
+  ⎿ session_id: ff675cd5b6a84714953fa5f29e1bf6d4
+  ⎿ rooms:
+  ⎿   Alice: whiteboards
+  ⎿   Paula: spec
+  ⎿   Gui: whiteboards
+  ⎿   Dave: whiteboards
+  ⎿   Joana: whiteboards
+  ⎿ events:
+  ⎿   - kind: transition
+  ⎿     at: '2026-09-25T19:35:06.433Z'
+  ⎿     from: ideation
+  ⎿     to: working
+  ⎿   - kind: decision
+  ⎿     at: '2026-09-25T19:36:04.755Z'
+  ⎿     question: I checked play 002's intent ("Display all buses and the minutes and seconds away below them") against `documentation/context/vision.md` and `tech.md`. It fits the vision, which already promises "the …
+  ⎿     agent: Alice
+  ⎿     resolution: answered
+  ⎿     session_id: cd56fc105d214572864630364c82ab82
+  ⎿ sessions:
+  ⎿ … +408 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro/plays/002-all..., description: Read tails of earlier session transcripts)
+  ⎿ uestion. That completion statement is what hands off to the Planner.
+  ⎿ 
+  ⎿ ## Reviewing a play against the vision
+  ⎿ 
+  ⎿ REVIEW: `documentation/context/vision.md` and `documentation/context/tech.md` already exist. Read `$play/intent.md`, then read both documents. Validate that this play's intent is consistent with the product vision. If the intent implies changes to the vision or the tech stack — a new goal, a new technology, an additional repository — update `documentation/context/vision.md` and/or `documentation/context/tech.md` to keep them accurate and concise. Ask me before making any substantive change.
+  ⎿ 
+  ⎿ Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+  ⎿ 
+  ⎿ PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+  ⎿ 
+  ⎿ ---
+  ⎿ 
+  ⎿ Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+  ⎿ 
+  ⎿   → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls docume..., description: Read intent, vision and tech docs)
+  ⎿   ⎿ tech.md
+  ⎿   ⎿ vision.md
+  ⎿   ⎿ ---INTENT
+  ⎿   ⎿ Display all buses and the minutes and seconds away below them---VISION
+  ⎿   ⎿ <!--
+  ⎿ … +130 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat src/d..., description: Read domain types, bus logic, App and map code)
+  ⎿ /** Geographic coordinates. Inside the domain always `{ lat, lng }`; MapLibre's `[lng, lat]` lives in `src/ui/map/`. */
+  ⎿ export interface LatLng {
+  ⎿   lat: number;
+  ⎿   lng: number;
+  ⎿ }
+  ⎿ 
+  ⎿ /** A Metrobus line, e.g. 'S1' | 'S2' | 'U1' | 'U2' | 'U3' in the current data. */
+  ⎿ export type LineId = string;
+  ⎿ 
+  ⎿ export type Direction = 'outbound' | 'inbound';
+  ⎿ 
+  ⎿ /** Timetable day type: weekday (`DU`), Saturday (`Sab`), Sunday and public holidays (`Dom`). */
+  ⎿ export type DayType = 'DU' | 'Sab' | 'Dom';
+  ⎿ 
+  ⎿ export interface Stop {
+  ⎿   id: string;
+  ⎿   code: string;
+  ⎿   name: string;
+  ⎿   lines: LineId[];
+  ⎿   coords: LatLng;
+  ⎿ … +611 more lines
+  → AskUserQuestion(questions: [{"question":"Which buses should appear on the map?","header":"Which buses","...)
+  ⎿ Your questions have been answered: "Which buses should appear on the map?"="Every bus in service (Recommended)", "What should appear under a bus that is NOT heading to your nearest stop (or has already passed it)?"="Just "Scheduled" (Recommended)", "Should the bottom sheet / desktop panel change too?"="List approaching buses (Recommended)". You can now continue with these answers in mind.
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat src/u..., description: Read sheet components, hooks, shape logic and bus tests)
+  ⎿ import { readableTextColor } from '../../domain/color';
+  ⎿ import { BusIcon } from '../icons';
+  ⎿ import { ScheduledBadge } from './ScheduledBadge';
+  ⎿ 
+  ⎿ export function NearestBusRow({ line, color }: { line: string; color: string }) {
+  ⎿   return (
+  ⎿     <div className="bus-row">
+  ⎿       <div className="bus-row__icon" style={{ background: color, color: readableTextColor(color) }}>
+  ⎿         <BusIcon size={20} />
+  ⎿       </div>
+  ⎿       <div className="bus-row__text">
+  ⎿         <div className="bus-row__title">Nearest bus · {line}</div>
+  ⎿         <div className="bus-row__subtitle">Heading towards this stop</div>
+  ⎿       </div>
+  ⎿       <ScheduledBadge />
+  ⎿     </div>
+  ⎿   );
+  ⎿ }
+  ⎿ import { formatDistance } from '../../domain/geo';
+  ⎿ import { formatLisbonDate, formatLisbonHM } from '../../domain/lisbonTime';
+  ⎿ … +448 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && grep -n "..., description: Read bus-related CSS, e2e test, and domain exports)
+  ⎿ 140:.marker-bus {
+  ⎿ 141-  display: flex;
+  ⎿ 142-  flex-direction: column;
+  ⎿ 143-  align-items: center;
+  ⎿ 144-  gap: 3px;
+  ⎿ 145-  font-family: var(--font-sans);
+  ⎿ 146-  pointer-events: none;
+  ⎿ 147-}
+  ⎿ 148-
+  ⎿ 149:.marker-bus__pill {
+  ⎿ 150-  display: flex;
+  ⎿ 151-  align-items: center;
+  ⎿ 152-  gap: 4px;
+  ⎿ 153-  padding: 3px 8px 3px 6px;
+  ⎿ 154-  border: 2px dashed #ffffff;
+  ⎿ 155-  border-radius: 6px;
+  ⎿ 156-  box-shadow: var(--shadow-bus);
+  ⎿ 157-  font-size: 13px;
+  ⎿ 158-  font-weight: 700;
+  ⎿ 159-  line-height: 1.3;
+  ⎿ … +333 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && head -c 8..., description: Inspect trips fixture format and README)
+  ⎿ [
+  ⎿   {
+  ⎿     "id": "s1-DU-0-633",
+  ⎿     "line": "S1",
+  ⎿     "lineType": "suburbana",
+  ⎿     "dayType": "DU",
+  ⎿     "direction": "P-S",
+  ⎿     "finalDestination": "Corvo",
+  ⎿     "stops": [
+  ⎿       {
+  ⎿         "name": "Coimbra B",
+  ⎿         "time": "07:40:00"
+  ⎿       },
+  ⎿       {
+  ⎿         "name": "Casa do Sal",
+  ⎿         "time": "07:41:18"
+  ⎿       },
+  ⎿       {
+  ⎿         "name": "Açude",
+  ⎿         "time": "07:42:25"
+  ⎿ … +52 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && node -e "..., description: List fixture trips running at 10:44 weekday)
+  ⎿ s2-DU-0-701 P-S Serpins 10:20:00 11:25:08 Portagem 10:25:35
+  ⎿ u1-DU-0-852 P-S Vale das Flores 10:41:00 10:58:53 Portagem 10:47:04
+  ⎿ u1-DU-1-823 S-P Coimbra B 10:41:00 10:59:26 Portagem 10:53:18
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && grep -rn ..., description: Find usages of fields and helpers to change)
+  ⎿ src/domain/types.ts:57:  nextStopId: string;
+  ⎿ src/domain/types.ts:58:  arrivalAtStopSeconds: number;
+  ⎿ src/ui/App.tsx:4:import { nearestApproachingBus } from '../domain/nearestBus';
+  ⎿ src/ui/App.tsx:14:import { useNow } from './hooks/useNow';
+  ⎿ src/ui/App.tsx:32:  const now = useNow(5000);
+  ⎿ src/ui/App.tsx:50:        ? nearestApproachingBus({
+  ⎿ src/ui/hooks/useNow.ts:4:export function useNow(intervalMs = 5000): Date {
+  ⎿ src/ui/sheet/NearestBusRow.tsx:5:export function NearestBusRow({ line, color }: { line: string; color: string }) {
+  ⎿ src/ui/sheet/NearestStopContent.tsx:5:import { NearestBusRow } from './NearestBusRow';
+  ⎿ src/ui/sheet/NearestStopContent.tsx:50:          <NearestBusRow line={bus.line} color={colorOf(bus.line)} />
+  ⎿ 302:.rule {
+  ⎿ 303-  height: 1px;
+  ⎿ 304-  flex-shrink: 0;
+  ⎿ 305-  background: var(--color-hairline);
+  ⎿ 306-}
+  ⎿ 307-
+  ⎿ 308-.desktop-locate {
+  ⎿ 309-  position: absolute;
+  ⎿ 310-  right: var(--gutter-desktop);
+  ⎿ --
+  ⎿ … +60 more lines
+
+● I've read the code and have your answers, so I'm writing the plan now.
+
+  → Write(file_path: C:\Users\Hugo\.claude\plans\you-are-the-autopilot-cosmic-pearl.md, content: # Play 002 — All buses, with minutes and seconds away
+
+## Context
+
+Intent: *"...)
+  ⎿ File created successfully at: C:\Users\Hugo\.claude\plans\you-are-the-autopilot-cosmic-pearl.md (file state is current in your context — no need to Read it back)
+  → ToolSearch(query: select:ExitPlanMode, max_results: 1)

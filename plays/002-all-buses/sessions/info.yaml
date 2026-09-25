@@ -1,0 +1,67 @@
+sessions:
+  - id: cd56fc105d214572864630364c82ab82
+    state: finished
+    seq: 1
+    datetime: '2026-09-25T19:35:06.478Z'
+    team: Autopilot
+    agent: Alice
+    logs:
+      pty: 001-alice.pty
+      txt: 001-alice.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T19:35:32.288Z'
+    usage:
+      claude-opus-5-5:
+        input: 12
+        output: 3543
+        cache_read: 227923
+        cache_write_5m: 0
+        cache_write_1h: 46710
+  - id: 939d81a49d614872939492563639e6ef
+    state: finished
+    generic:
+      waiting: false
+      question: null
+    cols: 180
+    rows: 50
+  - id: ff675cd5b6a84714953fa5f29e1bf6d4
+    state: finished
+    seq: 2
+    datetime: '2026-09-25T19:36:11.894Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 002-paula.pty
+      txt: 002-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 10
+        output: 876
+        cache_read: 215046
+        cache_write_5m: 0
+        cache_write_1h: 29287
+  - id: b753ceb4eebd4f96a413a11d93f89e1e
+    state: finished
+    seq: 3
+    datetime: '2026-09-25T19:36:32.226Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 003-paula.pty
+      txt: 003-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T19:37:14.057Z'
+next_seq: 4

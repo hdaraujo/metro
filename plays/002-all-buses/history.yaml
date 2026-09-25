@@ -1,0 +1,17 @@
+events:
+  - kind: transition
+    at: '2026-09-25T19:35:06.433Z'
+    from: ideation
+    to: working
+  - kind: decision
+    at: '2026-09-25T19:36:04.755Z'
+    question: I checked play 002's intent ("Display all buses and the minutes and seconds away below them") against `documentation/context/vision.md` and `tech.md`. It fits the vision, which already promises "the …
+    agent: Alice
+    resolution: answered
+    session_id: cd56fc105d214572864630364c82ab82
+  - kind: decision
+    at: '2026-09-25T19:37:48.935Z'
+    question: Is asking for a clarification
+    agent: Paula
+    resolution: answered
+    session_id: b753ceb4eebd4f96a413a11d93f89e1e
