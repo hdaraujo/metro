@@ -1,0 +1,12 @@
+# Design — 001 project structure
+
+Canvas: https://claude.ai/artifact/6vttGVud6vExLWRoN6ZCUB (private to the owner until shared)
+Canvas source: `design/canvas/project/` (one `.dc.html` per artboard plus `canvas.json`).
+Static review copy: `documentation/design/001-project-structure-prototype.html`.
+
+Look: the organisation's default design system (Beta_Critical). Aptos, with Aptos Narrow for headings and Aptos Mono for the `// NEAREST STOP` eyebrow. Ink neutrals (#14161a text, #656c78 muted, #e5e7ec hairlines), Critical Red #dc1a32 for the nearest-stop marker and primary button, blue #1f5fa8 for the user's location dot, 4px radius on controls, 16px radius on the bottom sheet, 16px/24px gutters, 48px touch targets. The map base is muted (#f1f0eb land, white roads, #cad9e5 river). The line colours (U1 #47548a, U3 #dca64b, U2 #5993bd, S1 #346b45) and the stop name "Portagem" are placeholders: take the real ones from `route-shapes.json` and `stops.json`.
+
+- **Map — nearest stop (phone, 390×844):** the home screen. A full-screen map centred on the user's blue dot, with smart zoom framing the nearest stop (a red marker with a name label) and the nearest bus. The top-left shows the "Metro" wordmark, the right side has a locate/recentre button, and the OSM attribution sits above the sheet. The bottom sheet shows the nearest stop's name, its straight-line distance and the lines that serve it as coloured chips. Below that, optionally, it shows the nearest bus with a "Scheduled" badge and when the estimate was made. On the map, the bus marker has a dashed outline and a "Scheduled" tag, so an estimate never looks live.
+- **Finding your location (phone):** a default map view over Coimbra with every stop shown. The sheet shows a spinner, "Finding your location…" and a line asking the user to allow location access when the browser asks. Skeleton placeholders stand in for the nearest-stop content, and the locate button is disabled.
+- **Location unavailable (phone):** shown when permission is denied or location fails. The same default map stays fully usable. A non-blocking sheet says "Location is off", explains that Metro needs location to find the nearest stop and how to enable it, and has a full-width "Try again" primary button. The locate button shows a crossed-out state.
+- **Map — desktop (1440×900):** the home screen at desktop width. The map fills the window, the nearest-stop content sits in a 380px floating panel at the top left, the locate button is bottom right and the attribution is in the bottom-right corner.

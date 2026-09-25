@@ -1,0 +1,26 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-09-25T18:05:00Z" },
+  "title": "Metro Map Prototype",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 390, "h": 844, "title": "Map — nearest stop" },
+    "Locating.dc.html": { "x": 470, "y": 0, "w": 390, "h": 844, "title": "Finding your location" },
+    "LocationOff.dc.html": { "x": 940, "y": 0, "w": 390, "h": 844, "title": "Location unavailable" },
+    "Desktop.dc.html": { "x": 0, "y": 964, "w": 1440, "h": 900, "title": "Map — desktop" }
+  },
+  "order": ["Main.dc.html", "Locating.dc.html", "LocationOff.dc.html", "Desktop.dc.html"],
+  "notes": {
+    "phoneTitle": { "x": 0, "y": -300, "text": "Metro — map screens", "kind": "title1", "maxW": 1330 }
+  },
+  "designSystems": [
+    {
+      "title": "Beta_Critical Design System",
+      "namespace": "criticalsoftwaredesignsystem_adefdb",
+      "artifact": "https://claude.ai/artifact/VK1fwxXH3enK8Fqr39coWW",
+      "version": "1790248554-2052",
+      "copiedAt": "2026-09-25T18:05:00Z"
+    }
+  ]
+}

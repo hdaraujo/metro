@@ -1,0 +1,1 @@
+Create the base app, only feature is the map centered on the user location, smart zoom to show the nearest stop (maybe nearest bus also). Create readme, .gitignore, import libs, project scafolding

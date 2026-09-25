@@ -1,0 +1,116 @@
+sessions:
+  - id: 12f39e166b1845d6b0afea2b7fac6097
+    state: finished
+    seq: 1
+    datetime: '2026-09-25T17:46:05.719Z'
+    team: Autopilot
+    agent: Alice
+    logs:
+      pty: 001-alice.pty
+      txt: 001-alice.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 10
+        output: 1878
+        cache_read: 194622
+        cache_write_5m: 0
+        cache_write_1h: 34545
+  - id: d119f82edbf94427b12bcc3f86ff4aa2
+    state: finished
+    seq: 2
+    datetime: '2026-09-25T17:46:31.228Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 002-paula.pty
+      txt: 002-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T17:46:47.187Z'
+    usage:
+      claude-opus-5-5:
+        input: 78
+        output: 175772
+        cache_read: 3167211
+        cache_write_5m: 0
+        cache_write_1h: 206947
+  - id: 531af824461d41a89df64ac45fa93ebc
+    state: finished
+    seq: 3
+    datetime: '2026-09-25T18:02:04.513Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 003-paula.pty
+      txt: 003-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T18:03:53.192Z'
+  - id: 61823686093644f381cfa3fb4d699f85
+    state: finished
+    seq: 4
+    datetime: '2026-09-25T18:15:27.722Z'
+    team: Autopilot
+    agent: Alice
+    logs:
+      pty: 004-alice.pty
+      txt: 004-alice.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 18
+        output: 4101
+        cache_read: 423212
+        cache_write_5m: 0
+        cache_write_1h: 52920
+  - id: ad9b8a1f3b7f40d0a37b540922d789d6
+    state: finished
+    seq: 5
+    datetime: '2026-09-25T18:16:08.584Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 005-paula.pty
+      txt: 005-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 16
+        output: 2369
+        cache_read: 383338
+        cache_write_5m: 0
+        cache_write_1h: 40721
+  - id: c64c28ec29e24ead81c12d66512c6460
+    state: finished
+    seq: 6
+    datetime: '2026-09-25T18:17:15.959Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 006-paula.pty
+      txt: 006-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+next_seq: 7

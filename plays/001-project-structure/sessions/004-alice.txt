@@ -1,0 +1,176 @@
+> You are the Autopilot Architect for this play — you run FIRST, before the Planner. You own two PRODUCT-LEVEL documents shared by every play in this project: the product vision at `documentation/context/vision.md` and the tech stack at `documentation/context/tech.md` (both under `documentation/context/`, relative to the repository root you are in). Keep BOTH concise — they are loaded into every other agent's context, like CLAUDE.md. That folder may hold further context documents the user added; read and respect those too, but they are the user's — only these two are yours to write.
+
+REVIEW: `documentation/context/vision.md` and `documentation/context/tech.md` already exist. Read `plays/001-project-structure/intent.md`, then read both documents. Validate that this play's intent is consistent with the product vision. If the intent implies changes to the vision or the tech stack — a new goal, a new technology, an additional repository — update `documentation/context/vision.md` and/or `documentation/context/tech.md` to keep them accurate and concise. Ask me before making any substantive change.
+
+Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-architect)
+  ⎿ Launching skill: autopilot-architect
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\.claude\skills\autopilot-architect
+
+You are the Autopilot Architect for this play — you run FIRST, before the Planner. You own two PRODUCT-LEVEL documents shared by every play in this project: the product vision at `documentation/context/vision.md` and the tech stack at `documentation/context/tech.md` (both under `documentation/context/`, relative to the repository root you are in). Keep BOTH concise — they are loaded into every other agent's context, like CLAUDE.md. That folder may hold further context documents the user added; read and respect those too, but they are the user's — only these two are yours to write.
+
+## Setting up a new project (no vision or tech stack yet)
+
+SETUP: this project has no product vision or tech stack yet. Create them WITH me, from scratch. Do NOT assume anything about the product, and do NOT offer me multiple-choice questions or a menu of options — in each phase below, let ME type first, in free text.
+
+PHASE 1 — Product vision. Begin by asking me — as an actual question, ending in a question mark — to describe in my own words and as free text my vision for this product. Ask only that, then wait for my answer. Once I reply, take on the role of an experienced product owner and architect and iterate with me over a few rounds: reflect back what you understood, probe the gaps with open (not multiple-choice) questions — one focused point per turn — and refine, until we genuinely share a clear understanding of the vision. Only then write `documentation/context/vision.md`, following this structure and keeping it concise:
+
+===== documentation/context/vision.md =====
+<!--
+  Product Vision — maintained by the Autopilot Architect.
+  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  so keep it CONCISE: a shared north star every play must conform to, not a spec.
+-->
+
+### Product Vision
+
+#### Problem
+_What problem does this product solve, and for whom? Why does it matter?_
+
+#### Vision
+_The desired end state, in 1–3 sentences._
+
+#### Target users
+_The primary users / personas and what they need._
+
+#### Core value & principles
+_The few things this product must do well, and the guiding principles that decisions
+should honour (e.g. simplicity over configurability, auditability, offline-first)._
+
+#### Non-goals
+_What this product deliberately will NOT do — the boundaries that keep it focused._
+
+PHASE 2 — Tech stack. Do the exact same thing: first ask me — again as a question ending in a question mark — to type, as free text, the technology and architecture I have in mind — again, no options and no assumptions — and wait for my answer. Then, as the architect, iterate with me over a few rounds until we share a clear understanding (including the technology for each repository), and write `documentation/context/tech.md` following this structure:
+
+===== documentation/context/tech.md =====
+<!--
+  Tech Stack — maintained by the Autopilot Architect.
+  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  so keep it CONCISE. A play may touch every repository or just a subset, so the
+  per-repository section below must make it explicit which technology each repo uses —
+  that is the Developer's source of truth for what to build with, where.
+-->
+
+### Tech Stack
+
+#### Architecture overview
+_How the product's pieces fit together: the components/services, how they communicate,
+and the cross-cutting choices they share (data storage, auth, deployment/runtime)._
+
+#### Conventions
+_Product-wide standards every repository follows: language versions, formatting/linting,
+testing approach, commit/branch style, error handling._
+
+#### Per-repository tech stack
+_One section per repository. Add a block for each repo in the project so it is clear,
+per repo, what technology is used and how to build/test/run it._
+
+##### <repo-name>
+- **Purpose:** _what this repository is responsible for._
+- **Language / runtime:** _e.g. TypeScript / Node 20._
+- **Frameworks / key libraries:** _the main frameworks and libraries used here._
+- **Build / test / run:** _the commands to build, test, and run this repo._
+- **Notes:** _conventions or constraints specific to this repository._
+
+The project has these repositories: the repositories attached to your session. In tech.md, add one "### <repo>" block under "Per-repository tech stack" for EACH of them, making the technology used in each repo explicit.
+
+Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+
+## Reviewing a play against the vision
+
+REVIEW: `documentation/context/vision.md` and `documentation/context/tech.md` already exist. Read `$play/intent.md`, then read both documents. Validate that this play's intent is consistent with the product vision. If the intent implies changes to the vision or the tech stack — a new goal, a new technology, an additional repository — update `documentation/context/vision.md` and/or `documentation/context/tech.md` to keep them accurate and concise. Ask me before making any substantive change.
+
+Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls docume...)
+  ⎿ documentation/context:
+  ⎿ tech.md
+  ⎿ vision.md
+  ⎿ 
+  ⎿ plays/001-project-structure:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design
+  ⎿ design.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ Create the base app, only feature is the map centered on the user location, smart zoom to show the nearest stop (maybe nearest bus also). Create readme, .gitignore, import libs, project scafolding=====
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿   per-repository section below must make it explicit which technology each repo uses —
+  ⎿   that is the Developer's source of truth for what to build with, where.
+  ⎿ … +286 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls plays/...)
+  ⎿ plays/001-project-structure/design:
+  ⎿ brief.md
+  ⎿ canvas
+  ⎿ design.md
+  ⎿ 
+  ⎿ plays/001-project-structure/sessions:
+  ⎿ 001-alice.pty
+  ⎿ 001-alice.txt
+  ⎿ 002-paula.pty
+  ⎿ 002-paula.txt
+  ⎿ 003-paula.pty
+  ⎿ 003-paula.txt
+  ⎿ info.yaml
+  ⎿ events:
+  ⎿   - kind: transition
+  ⎿     at: '2026-09-25T17:46:05.697Z'
+  ⎿     from: ideation
+  ⎿     to: working
+  ⎿   - kind: decision
+  ⎿     at: '2026-09-25T17:50:09.700Z'
+  ⎿ … +90 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro/plays/001-pro...)
+  ⎿ sessions:
+  ⎿   - id: 12f39e166b1845d6b0afea2b7fac6097
+  ⎿     state: finished
+  ⎿     seq: 1
+  ⎿     datetime: '2026-09-25T17:46:05.719Z'
+  ⎿     team: Autopilot
+  ⎿     agent: Alice
+  ⎿     logs:
+  ⎿       pty: 001-alice.pty
+  ⎿       txt: 001-alice.txt
+  ⎿     cols: 180
+  ⎿     rows: 50
+  ⎿     generic:
+  ⎿       waiting: false
+  ⎿       question: null
+  ⎿     usage:
+  ⎿       claude-opus-5-5:
+  ⎿         input: 10
+  ⎿         output: 1878
+  ⎿         cache_read: 194622
+  ⎿ … +115 more lines
+
+● I left `vision.md` and `tech.md` as they are. This play's intent already fits both.
+
+**What the play asks for:** a base app with scaffolding, a README, a `.gitignore` and the libraries installed. Its one feature is a map centred on the user's location, zoomed to show the nearest stop and, optionally, the nearest bus.
+
+**How it fits:**
+- **Vision:** it is the core of "opens straight onto a map showing where you are, your nearest Metrobus stop". It follows the Glanceable, Location-aware and Mobile-first principles and touches none of the non-goals.
+- **Tech stack:** it follows the current `tech.md`, which now describes an app that runs entirely in the browser with no backend. This play needs no new technology, repository or goal.
+
+**Notes for the Planner:**
+- **The architecture changed after the last planning session.** That session assumed the old `apps/api` / `apps/web` / `packages/shared` layout, and it has been replaced by one npm package at the repo root with `src/sources/`, `src/domain/` and `src/ui/`. The browser fetches `stops.json` directly through an adapter in `src/sources/`, because the source allows cross-origin requests. There is no API or proxy.
+- **Nearest stop:** the nearest-stop logic belongs in `src/domain/`, with Vitest unit tests.
+- **Nearest bus:** showing it is optional in the intent. Including it brings the shapes and trips adapters, the interpolation logic and the "Scheduled" label into scope. The prototype already shows that label, but the Planner may prefer to leave the bus for a later play.
+- **The new `tech.md` isn't committed yet.** It only exists as an uncommitted change on `main` in the main clone, so play branches cut from `HEAD` would still get the old backend version. It needs committing before DevOps creates this play's branch.
+
+The vision and tech stack are ready, and the play can go to the Planner.

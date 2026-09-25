@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Metro — map screens prototype</title>
+<style>
+body{margin:0;padding:32px 24px 64px;background:#f6f7f9;color:#14161a;font-family:'Aptos','Segoe UI',system-ui,-apple-system,sans-serif}
+.intro{max-width:880px;margin:0 0 40px}
+.intro h1{margin:0 0 8px;font-family:'Aptos Narrow','Aptos','Segoe UI',system-ui,sans-serif;font-size:32px;letter-spacing:-0.02em}
+.intro p{margin:0 0 8px;font-size:15px;line-height:1.5;color:#2c313a}
+.url{font-family:'Aptos Mono',ui-monospace,Consolas,monospace;font-size:14px;color:#14161a;word-break:break-all}
+.screen{margin:0 0 56px}
+.screen h2{margin:0 0 4px;font-size:20px}
+.screen .desc{margin:0 0 16px;font-size:14px;color:#474d58;max-width:720px;line-height:1.5}
+.frame{position:relative;overflow:hidden;background:#f1f0eb;box-shadow:0 4px 12px rgba(20,22,26,.08),0 2px 4px rgba(20,22,26,.04);border:1px solid #e5e7ec}
+.phone{width:390px;height:844px;border-radius:24px}
+.desk{width:1440px;height:900px;border-radius:8px}
+.map{position:absolute;left:0;top:0}
+.wordmark{position:absolute;left:16px;top:16px;height:40px;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(20,22,26,.08),0 1px 2px rgba(20,22,26,.04);font-family:'Aptos Narrow','Aptos','Segoe UI',system-ui,sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.02em}
+.locate{position:absolute;width:48px;height:48px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;border:1px solid #e5e7ec;border-radius:8px;background:#fff;box-shadow:0 4px 12px rgba(20,22,26,.08),0 2px 4px rgba(20,22,26,.04)}
+.attr{position:absolute;padding:2px 6px;background:rgba(255,255,255,.85);border-radius:2px;font-size:11px;color:#474d58}
+.sheet{position:absolute;left:0;width:390px;box-sizing:border-box;padding:10px 20px 24px;background:#fff;border-radius:16px 16px 0 0;box-shadow:0 -4px 24px rgba(20,22,26,.10);display:flex;flex-direction:column;gap:16px}
+.grab{align-self:center;width:36px;height:4px;border-radius:999px;background:#d8dbe1}
+.eyebrow{font-family:'Aptos Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12px;font-weight:700;letter-spacing:.14em;color:#dc1a32}
+.stopname{margin:0;font-family:'Aptos Narrow','Aptos','Segoe UI',system-ui,sans-serif;font-size:30px;line-height:1.1;font-weight:700;letter-spacing:-0.02em}
+.muted{font-size:14px;color:#656c78;white-space:nowrap}
+.chip{min-width:36px;height:24px;box-sizing:border-box;padding:0 8px;display:inline-flex;align-items:center;justify-content:center;border-radius:4px;font-size:13px;font-weight:700}
+.rule{height:1px;background:#e5e7ec}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:4px;background:#fbf1de;color:#7a4e05;font-size:12px;font-weight:600;white-space:nowrap}
+.badge i{width:6px;height:6px;border-radius:50%;background:#b97608;display:block}
+.label{position:absolute;transform:translateX(-50%);padding:4px 8px;background:#fff;border-radius:4px;box-shadow:0 1px 3px rgba(20,22,26,.08),0 1px 2px rgba(20,22,26,.04);font-size:13px;font-weight:600;white-space:nowrap}
+.bus{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:3px}
+.buspill{display:flex;align-items:center;gap:4px;padding:3px 8px 3px 6px;background:#47548a;color:#fff;border:2px dashed #fff;border-radius:6px;box-shadow:0 4px 12px rgba(20,22,26,.12),0 2px 4px rgba(20,22,26,.06);font-size:13px;font-weight:700}
+.bustag{padding:1px 6px;background:#fbf1de;color:#7a4e05;border-radius:2px;font-size:11px;font-weight:600}
+.skel{border-radius:4px;background:#eeeff2}
+.btn{display:flex;align-items:center;justify-content:center;height:48px;border-radius:4px;background:#dc1a32;color:#fff;font-size:16px;font-weight:600}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<g id="map">
+<rect x="-400" y="-200" width="1400" height="1400" fill="#f1f0eb"></rect>
+<path d="M250 110 L372 92 L392 206 L292 236 Z" fill="#dde7d4"></path>
+<path d="M-30 560 L40 548 L58 660 L-12 690 Z" fill="#dde7d4"></path>
+<path d="M430 470 L540 450 L560 560 L450 580 Z" fill="#dde7d4"></path>
+<path d="M-300 200 L-180 180 L-160 300 L-280 320 Z" fill="#dde7d4"></path>
+<path d="M40 -200 C 70 0, 90 200, 60 330 S 100 460, 105 560 S 130 760, 110 1100" fill="none" stroke="#cad9e5" stroke-width="54" stroke-linecap="round"></path>
+<g id="minor" fill="none" stroke="#e2e1da" stroke-width="8" stroke-linecap="round">
+<path d="M-400 700 L800 620"></path><path d="M-100 -200 L-60 1100"></path><path d="M-250 -200 L-220 1100"></path><path d="M300 -200 L345 1100"></path><path d="M470 -200 L500 1100"></path><path d="M600 -200 L640 1100"></path><path d="M200 600 L800 520"></path><path d="M220 520 L520 700"></path><path d="M-400 330 L20 320"></path><path d="M-400 900 L800 840"></path><path d="M390 380 L420 700"></path><path d="M230 -200 L262 250"></path>
+</g>
+<g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round">
+<path d="M-400 700 L800 620"></path><path d="M-100 -200 L-60 1100"></path><path d="M-250 -200 L-220 1100"></path><path d="M300 -200 L345 1100"></path><path d="M470 -200 L500 1100"></path><path d="M600 -200 L640 1100"></path><path d="M200 600 L800 520"></path><path d="M220 520 L520 700"></path><path d="M-400 330 L20 320"></path><path d="M-400 900 L800 840"></path><path d="M390 380 L420 700"></path><path d="M230 -200 L262 250"></path>
+</g>
+<g fill="none" stroke="#e2e1da" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-400 470 L800 400"></path><path d="M-400 150 L800 260"></path><path d="M120 -200 L140 140 L150 300 L175 440 L200 600 L195 1100"></path><path d="M150 300 L262 250 L800 200"></path><path d="M175 440 L262 388 L800 330"></path>
+</g>
+<g fill="none" stroke="#ffffff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-400 470 L800 400"></path><path d="M-400 150 L800 260"></path><path d="M120 -200 L140 140 L150 300 L175 440 L200 600 L195 1100"></path><path d="M150 300 L262 250 L800 200"></path><path d="M175 440 L262 388 L800 330"></path>
+</g>
+<g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M120 -200 L140 140 L150 300 L175 440 L200 600 L195 1100" stroke="#346b45"></path>
+<path d="M150 300 L262 250 L800 200" stroke="#5993bd"></path>
+<path d="M175 440 L262 388 L800 330" stroke="#47548a"></path>
+<path d="M177 447 L264 395 L800 337" stroke="#dca64b"></path>
+</g>
+<g fill="#ffffff" stroke="#2c313a" stroke-width="2">
+<circle cx="126" cy="-100" r="4.5"></circle><circle cx="140" cy="140" r="4.5"></circle><circle cx="150" cy="300" r="4.5"></circle><circle cx="175" cy="440" r="4.5"></circle><circle cx="200" cy="600" r="4.5"></circle><circle cx="197" cy="780" r="4.5"></circle><circle cx="262" cy="250" r="4.5"></circle><circle cx="360" cy="241" r="4.5"></circle><circle cx="520" cy="226" r="4.5"></circle><circle cx="700" cy="209" r="4.5"></circle><circle cx="262" cy="388" r="4.5"></circle><circle cx="360" cy="377" r="4.5"></circle><circle cx="520" cy="360" r="4.5"></circle><circle cx="700" cy="341" r="4.5"></circle>
+</g>
+</g>
+<symbol id="i-locate" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h3"></path><path d="M19 12h3"></path><path d="M12 2v3"></path><path d="M12 19v3"></path><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="3"></circle></g></symbol>
+<symbol id="i-locate-off" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h3"></path><path d="M19 12h3"></path><path d="M12 2v3"></path><path d="M12 19v3"></path><circle cx="12" cy="12" r="7"></circle><path d="m5 5 14 14"></path></g></symbol>
+<symbol id="i-bus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"></path><path d="M4 11h16"></path><path d="M8 15h.01"></path><path d="M16 15h.01"></path><path d="M6 18v2"></path><path d="M18 18v2"></path></g></symbol>
+<symbol id="i-spinner" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+<symbol id="i-pin-off" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12.75 7.09a3 3 0 0 1 2.16 2.16"></path><path d="M17.072 17.072c-1.634 2.17-3.527 3.912-4.471 4.727a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 1.432-4.568"></path><path d="m2 2 20 20"></path><path d="M8.475 2.818A8 8 0 0 1 20 10c0 1.183-.31 2.377-.81 3.533"></path><path d="M9.13 9.13a3 3 0 0 0 3.74 3.74"></path></g></symbol>
+</defs>
+</svg>
+
+<div class="intro">
+<h1>Metro: map screens prototype</h1>
+<p>Play 001 (project structure). This is a static copy of the design canvas for review. The live, editable canvas is here:</p>
+<p class="url">https://claude.ai/artifact/6vttGVud6vExLWRoN6ZCUB</p>
+<p><a href="https://claude.ai/artifact/6vttGVud6vExLWRoN6ZCUB">Open the design canvas</a> (copy the address above if the link does not open from here).</p>
+<p>The line colours (U1, U3, U2, S1) and the stop name "Portagem" are placeholders. The real values come from the Metrobus stop and route data. The map is illustrative; the app uses MapLibre on OpenStreetMap tiles.</p>
+</div>
+
+<section class="screen">
+<h2>Map: nearest stop (phone)</h2>
+<p class="desc">The home screen. The map is centred on your location, zoomed to frame the nearest stop and the nearest bus. The bottom sheet shows the stop, its distance and its lines, then the nearest bus, clearly marked as scheduled.</p>
+<div class="frame phone">
+<svg class="map" width="390" height="844" viewBox="0 0 390 844" aria-hidden="true">
+<use href="#map" transform="translate(-175.5 -191.5) scale(1.3)"></use>
+<circle cx="165" cy="313" r="18" fill="#dc1a32" fill-opacity="0.16"></circle>
+<circle cx="165" cy="313" r="9" fill="#dc1a32" stroke="#fff" stroke-width="3"></circle>
+<circle cx="165" cy="313" r="3" fill="#fff"></circle>
+<circle cx="195" cy="400" r="34" fill="#1f5fa8" fill-opacity="0.12" stroke="#1f5fa8" stroke-opacity="0.35" stroke-width="1"></circle>
+<circle cx="195" cy="400" r="9" fill="#1f5fa8" stroke="#fff" stroke-width="3"></circle>
+</svg>
+<div class="label" style="left:165px;top:267px">Portagem</div>
+<div class="bus" style="left:238px;top:291px"><div class="buspill"><svg width="14" height="14"><use href="#i-bus"></use></svg><span>U1</span></div><div class="bustag">Scheduled</div></div>
+<div class="wordmark">Metro</div>
+<div class="locate" style="right:16px;top:476px;color:#1f5fa8"><svg width="22" height="22"><use href="#i-locate"></use></svg></div>
+<div class="attr" style="left:8px;top:518px">© OpenStreetMap contributors</div>
+<div class="sheet" style="top:544px;height:300px">
+<div class="grab"></div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<div class="eyebrow">// NEAREST STOP</div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px"><h3 class="stopname">Portagem</h3><span class="muted">180 m away</span></div>
+</div>
+<div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#656c78">Lines</span><span class="chip" style="background:#47548a;color:#fff">U1</span><span class="chip" style="background:#dca64b;color:#14161a">U3</span></div>
+<div class="rule"></div>
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:40px;height:40px;flex-shrink:0;border-radius:8px;background:#47548a;color:#fff;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-bus"></use></svg></div>
+<div style="flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:600">Nearest bus · U1</div><div style="font-size:13px;color:#656c78">Heading towards this stop</div></div>
+<span class="badge"><i></i>Scheduled</span>
+</div>
+<p style="margin:0;font-size:12px;line-height:1.4;color:#656c78">Position estimated from the timetable at 10:42. Live positions replace it once a live feed is available.</p>
+</div>
+</div>
+</section>
+
+<section class="screen">
+<h2>Finding your location (phone)</h2>
+<p class="desc">Shown while the app waits for a location fix or for the browser's permission prompt. It shows the default view over Coimbra, with placeholders where the nearest stop will appear. The locate button is disabled.</p>
+<div class="frame phone">
+<svg class="map" width="390" height="844" viewBox="0 0 390 844" aria-hidden="true"><use href="#map"></use></svg>
+<div class="wordmark">Metro</div>
+<div class="locate" style="right:16px;top:540px;color:#8a909c"><svg width="22" height="22"><use href="#i-locate"></use></svg></div>
+<div class="attr" style="left:8px;top:578px">© OpenStreetMap contributors</div>
+<div class="sheet" style="top:604px;height:240px">
+<div class="grab"></div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;align-items:center;gap:10px;color:#1f5fa8"><svg width="20" height="20"><use href="#i-spinner"></use></svg><h3 style="margin:0;font-size:18px;line-height:1.3;font-weight:600;color:#14161a">Finding your location…</h3></div>
+<p style="margin:0;font-size:14px;line-height:1.45;color:#474d58">When your browser asks, allow location access so Metro can find the stop nearest to you.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div class="eyebrow" style="color:#656c78">// NEAREST STOP</div>
+<div class="skel" style="width:168px;height:28px"></div>
+<div style="display:flex;gap:8px"><div class="skel" style="width:36px;height:24px"></div><div class="skel" style="width:36px;height:24px"></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="screen">
+<h2>Location unavailable (phone)</h2>
+<p class="desc">Shown when location permission is denied or the device can't get a fix. The map stays usable over Coimbra, and a non-blocking sheet explains why the nearest stop is missing and offers "Try again".</p>
+<div class="frame phone">
+<svg class="map" width="390" height="844" viewBox="0 0 390 844" aria-hidden="true"><use href="#map"></use></svg>
+<div class="wordmark">Metro</div>
+<div class="locate" style="right:16px;top:520px;color:#656c78"><svg width="22" height="22"><use href="#i-locate-off"></use></svg></div>
+<div class="attr" style="left:8px;top:558px">© OpenStreetMap contributors</div>
+<div class="sheet" style="top:584px;height:260px">
+<div class="grab"></div>
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:40px;height:40px;flex-shrink:0;border-radius:8px;background:#fbf1de;color:#7a4e05;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-pin-off"></use></svg></div>
+<h3 style="margin:0;font-family:'Aptos Narrow','Aptos','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.15;font-weight:700;letter-spacing:-0.02em">Location is off</h3>
+</div>
+<p style="margin:0;font-size:14px;line-height:1.5;color:#474d58">Metro uses your location to find your nearest stop. Allow location for this site in your browser, then try again. You can still explore the map.</p>
+<div class="btn">Try again</div>
+</div>
+</div>
+</section>
+
+<section class="screen">
+<h2>Map: desktop</h2>
+<p class="desc">The home screen at desktop width. The map fills the window, the nearest-stop content moves into a floating panel at the top left, and the locate button and attribution sit bottom right.</p>
+<div class="frame desk">
+<svg class="map" width="1440" height="900" viewBox="0 0 1440 900" aria-hidden="true">
+<use href="#map" transform="translate(444 -228) scale(1.6)"></use>
+<circle cx="863" cy="393" r="20" fill="#dc1a32" fill-opacity="0.16"></circle>
+<circle cx="863" cy="393" r="10" fill="#dc1a32" stroke="#fff" stroke-width="3"></circle>
+<circle cx="863" cy="393" r="3.5" fill="#fff"></circle>
+<circle cx="900" cy="500" r="40" fill="#1f5fa8" fill-opacity="0.12" stroke="#1f5fa8" stroke-opacity="0.35" stroke-width="1"></circle>
+<circle cx="900" cy="500" r="10" fill="#1f5fa8" stroke="#fff" stroke-width="3"></circle>
+</svg>
+<div class="label" style="left:863px;top:345px">Portagem</div>
+<div class="bus" style="left:960px;top:368px"><div class="buspill"><svg width="14" height="14"><use href="#i-bus"></use></svg><span>U1</span></div><div class="bustag">Scheduled</div></div>
+<div style="position:absolute;left:24px;top:24px;width:380px;box-sizing:border-box;padding:20px 24px 24px;background:#fff;border-radius:12px;box-shadow:0 12px 32px rgba(20,22,26,.12),0 4px 8px rgba(20,22,26,.05);display:flex;flex-direction:column;gap:16px">
+<div style="font-family:'Aptos Narrow','Aptos','Segoe UI',system-ui,sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.02em">Metro</div>
+<div class="rule"></div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<div class="eyebrow">// NEAREST STOP</div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px"><h3 class="stopname" style="font-size:32px">Portagem</h3><span class="muted">180 m away</span></div>
+</div>
+<div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#656c78">Lines</span><span class="chip" style="background:#47548a;color:#fff">U1</span><span class="chip" style="background:#dca64b;color:#14161a">U3</span></div>
+<div class="rule"></div>
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:40px;height:40px;flex-shrink:0;border-radius:8px;background:#47548a;color:#fff;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-bus"></use></svg></div>
+<div style="flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:600">Nearest bus · U1</div><div style="font-size:13px;color:#656c78">Heading towards this stop</div></div>
+<span class="badge"><i></i>Scheduled</span>
+</div>
+<p style="margin:0;font-size:12px;line-height:1.4;color:#656c78">Position estimated from the timetable at 10:42. Live positions replace it once a live feed is available.</p>
+</div>
+<div class="locate" style="right:24px;top:800px;color:#1f5fa8"><svg width="22" height="22"><use href="#i-locate"></use></svg></div>
+<div class="attr" style="right:8px;top:872px">© OpenStreetMap contributors</div>
+</div>
+</section>
+
+</body>
+</html>
