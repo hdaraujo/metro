@@ -1,0 +1,272 @@
+> how long is the refresh time for the timetable?
+
+  → Grep(pattern: (?i)refresh|setInterval|interval|poll, glob: !**/node_modules/**, output_mode: content, head_limit: 60)
+  ⎿ documentation\modules\timetable-and-estimates.md:35:- **Refreshing.** The network and the trips are re-fetched every 6 hours while the app is open.
+  ⎿ documentation\modules\timetable-and-estimates.md:36:  If a refresh fails, the last good data is kept. If a day type's trips fail to load, that day type
+  ⎿ package.json:39:    "eslint-plugin-react-refresh": "^0.5.7",
+  ⎿ package-lock.json:28:        "eslint-plugin-react-refresh": "^0.5.7",
+  ⎿ package-lock.json:5198:    "node_modules/eslint-plugin-react-refresh": {
+  ⎿ package-lock.json:5200:      "resolved": "https://registry.npmjs.org/eslint-plugin-react-refresh/-/eslint-plugin-react-refresh-0.5.7.tgz",
+  ⎿ eslint.config.js:5:import reactRefresh from 'eslint-plugin-react-refresh';
+  ⎿ eslint.config.js:36:    plugins: { 'react-refresh': reactRefresh },
+  ⎿ eslint.config.js:38:      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+  ⎿ documentation\context\tech.md:37:- **Updates:** `web` polls `api` every few seconds (the interval is configurable).
+  ⎿ documentation\context\tech.md:38:- **No database, no auth, no accounts.** State is an in-memory cache of source data, refreshed
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:139:[Omitted long matching line]
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:150:  ⎿  [mUpdated [1mdocumentation\context\tech.md[22m [38;2;153;153;153m(+3 -2)[K[38;2;248;248;242m[2m[13;6H 37 [22m - **Updates:** `web` polls `api` every few seconds (the interval is configurable).[K[m
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:151:[Omitted long matching line]
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:156:[Omitted long matching line]
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:243:[Omitted long matching line]
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:252:[Omitted long matching line]
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:259:[Omitted long matching line]
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:268:[Omitted long matching line]
+  ⎿ plays\003-setup-github-page\sessions\001-joana.pty:290:[Omitted long matching line]
+  ⎿ … +42 more lines
+
+● The timetable data refreshes **every 6 hours**. `src/ui/hooks/useNetwork.ts:5` sets `REFRESH_INTERVAL_MS = 6 * 60 * 60 * 1000`, and that timer re-fetches the stops and shapes. Each time the network is refreshed, the trips (the timetable itself) are fetched again with it (`src/ui/hooks/useTimetable.ts:27`). If a refresh fails, the app keeps the last data that loaded successfully (`documentation/modules/timetable-and-estimates.md:35`).
+
+Separately, the app's clock updates **every 5 seconds** (`useNow` in `src/ui/hooks/useNow.ts:4`). So the arrival estimates shown on screen are recalculated from the timetable already loaded every 5 seconds, even though the timetable itself is only fetched again every 6 hours.
+
+> but the app label tells that timetable is from the current minute, why is it only read every 6 hours
+
+  → Grep(pattern: (?i)horário|timetable|minut|updated|atualiz, path: src, output_mode: content, head_limit: 80)
+  ⎿ src\ui\App.tsx:15:import { useTimetable } from './hooks/useTimetable';
+  ⎿ src\ui\App.tsx:25:/** How long the first automatic framing waits for the timetable before framing without the bus. */
+  ⎿ src\ui\App.tsx:33:  const { tripsByDayType, loading: tripsLoading } = useTimetable(network, now);
+  ⎿ src\sources\metrobusTimetable.ts:2: * Source adapter for the Metro Mondego timetable ("Horários Metrobus"): undocumented static JSON
+  ⎿ src\sources\metrobusTimetable.ts:21:  throw new SourceFormatError(`Metrobus timetable: ${what} ${detail}`);
+  ⎿ src\sources\metrobusTimetable.ts:109: * one warning per distinct problem, rather than failing the whole timetable.
+  ⎿ src\sources\metrobusTimetable.ts:120:    console.warn(`Metrobus timetable (${dayType}): skipping trips with ${problem}`);
+  ⎿ src\ui\sheet\ScheduledBadge.tsx:1:/** Marks a position or time as estimated from the timetable, never live. */
+  ⎿ src\ui\sheet\NearestStopContent.tsx:16:  /** When the timetable data was fetched, UTC ISO 8601. */
+  ⎿ src\ui\sheet\NearestStopContent.tsx:53:            Positions and times estimated from the timetable at{' '}
+  ⎿ src\ui\sheet\NearestStopContent.tsx:56:            {stale && ` Timetable data from ${formatLisbonDate(fetched)} may be out of date.`}
+  ⎿ src\sources\metrobusTimetable.test.ts:12:} from './metrobusTimetable';
+  ⎿ src\ui\map\markers.ts:52: * A bus whose position is estimated from the timetable: a dashed pill in the line colour, so that
+  ⎿ src\ui\hooks\useTimetable.ts:5:import { fetchTrips, stopIdsByName } from '../../sources/metrobusTimetable';
+  ⎿ src\ui\hooks\useTimetable.ts:10:interface TimetableState {
+  ⎿ src\ui\hooks\useTimetable.ts:29:export function useTimetable(
+  ⎿ src\ui\hooks\useTimetable.ts:33:  const [state, setState] = useState<TimetableState>({ trips: new Map(), failedAt: new Map() });
+  ⎿ src\ui\hooks\useTimetable.ts:54:      const settle = (update: (s: TimetableState) => void) => {
+  ⎿ src\ui\hooks\useTimetable.ts:59:          const base: TimetableState =
+  ⎿ src\ui\map\MapView.tsx:106:/** Keeps one DOM marker in sync with `value`: created, moved/updated, or removed. */
+  ⎿ … +29 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\mod...)
+  ⎿ 1	# Timetable data and bus estimates
+  ⎿ 2	
+  ⎿ 3	There is no backend. The browser fetches the Metro Mondego timetable ("Horários Metrobus")
+  ⎿ 4	directly, because the source allows cross-origin requests. Bus positions are **estimated from the
+  ⎿ 5	timetable**. Every estimate carries `source: 'scheduled'`, and the UI always marks it as estimated (see
+  ⎿ 6	`map-screen.md` for how).
+  ⎿ 7	There is no live feed yet.
+  ⎿ 8	
+  ⎿ 9	The code is split in two:
+  ⎿ 10	- `src/sources/metrobusTimetable.ts` is the only code that knows the source's format.
+  ⎿ 11	- `src/domain/` holds pure logic with no DOM or React code.
+  ⎿ 12	
+  ⎿ 13	## Source adapter
+  ⎿ 14	
+  ⎿ 15	The files are fetched from `https://planearviagem.metromondego.pt/data/`. The data is
+  ⎿ 16	undocumented, has no stated licence, and may change without notice.
+  ⎿ 17	
+  ⎿ 18	| File | Becomes | Notes |
+  ⎿ 19	| --- | --- | --- |
+  ⎿ 20	| `stops.json` | `Stop[]` | 39 stops. Names are unique. Câmara, Mercado and República each exist twice, as `(asc)` and `(desc)` stops, one per direction. |
+  ⎿ … +87 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\src\ui\sheet\Near..., offset: 40, limit: 25)
+  ⎿ 40	        </div>
+  ⎿ 41	      </div>
+  ⎿ 42	      <div className="lines-row">
+  ⎿ 43	        <span className="lines-row__label">Lines</span>
+  ⎿ 44	        {stop.lines.map((line) => (
+  ⎿ 45	          <LineChip key={line} line={line} color={colorOf(line)} />
+  ⎿ 46	        ))}
+  ⎿ 47	      </div>
+  ⎿ 48	      {approaching[0] && (
+  ⎿ 49	        <>
+  ⎿ 50	          <div className="rule" />
+  ⎿ 51	          <ApproachingBuses buses={approaching} colorOf={colorOf} />
+  ⎿ 52	          <p className="estimate-note">
+  ⎿ 53	            Positions and times estimated from the timetable at{' '}
+  ⎿ 54	            {formatLisbonHM(new Date(approaching[0].at))}. Live data replaces them once a live feed
+  ⎿ 55	            is available.
+  ⎿ 56	            {stale && ` Timetable data from ${formatLisbonDate(fetched)} may be out of date.`}
+  ⎿ 57	          </p>
+  ⎿ 58	        </>
+  ⎿ 59	      )}
+  ⎿ … +4 more lines
+
+● The label is telling you when the estimate was calculated, not when the timetable was fetched. The wording makes it easy to read it the second way.
+
+**What the time in the label is.** In `src/ui/sheet\NearestStopContent.tsx:53-54` the note reads "Positions and times estimated from the timetable at {time}". That time comes from `approaching[0].at`, which is the moment the bus positions and countdowns were last worked out from the current clock. The clock updates every 5 seconds, so the time always shows the current minute.
+
+**Why fetching every 6 hours is enough.** The data is Metro Mondego's published schedule: three static files of about 600 KB each, one per day type (weekdays, Saturday, Sunday). It has no live information, so fetching it every minute would just download the same schedule again. The live part is the calculation: the app takes the current time and works out from the schedule where each bus should be and how long until it reaches your stop.
+
+**A related quirk.** There is a separate "Timetable data from … may be out of date" note that is meant to show when the data was actually fetched. The browser usually hides the header that fetch time is read from (`Date`), so the code falls back to the current time. As a result, that note almost never appears (`documentation/modules/timetable-and-estimates.md:38-41`).
+
+If the wording is confusing, I can change it to something like "Estimated at 14:32 from the published timetable". I could also show the real fetch time, for example "schedule loaded 09:10". Do you want me to do either?
+
+> yes, reword the label to be clearer
+
+  → Grep(pattern: estimated from the timetable at|estimate-note|Live data replaces, output_mode: content, glob: !plays/**/sessions/**)
+  ⎿ documentation\context\vision.md:29:  it need not carry its own label. Live data replaces the estimates when it becomes available.
+  ⎿ documentation\modules\map-screen.md:47:- A note follows the list: "Positions and times estimated from the timetable at HH:MM. Live data
+  ⎿ documentation\design\001-project-structure-prototype.html:118:<p style="margin:0;font-size:12px;line-height:1.4;color:#656c78">Position estimated from the timetable at 10:42. Live positions replace it once a live feed is available.</p>
+  ⎿ documentation\design\001-project-structure-prototype.html:194:<p style="margin:0;font-size:12px;line-height:1.4;color:#656c78">Position estimated from the timetable at 10:42. Live positions replace it once a live feed is available.</p>
+  ⎿ tests\e2e\map.spec.ts:71:      sheet.getByText(/Positions and times estimated from the timetable at 10:44\./),
+  ⎿ plays\002-all-buses\plan.md:246:- **Estimate note** copy: `Positions and times estimated from the timetable at {formatLisbonHM(new Date(approaching[0].at))}. Live data replaces them once a live feed is available.`
+  ⎿ plays\001-project-structure\plan.md:409:    - A 12px muted paragraph: "Position estimated from the timetable at {HH:MM Lisbon}. Live
+  ⎿ src\ui\styles\app.css:500:.estimate-note {
+  ⎿ src\ui\sheet\NearestStopContent.tsx:52:          <p className="estimate-note">
+  ⎿ src\ui\sheet\NearestStopContent.tsx:53:            Positions and times estimated from the timetable at{' '}
+  ⎿ src\ui\sheet\NearestStopContent.tsx:54:            {formatLisbonHM(new Date(approaching[0].at))}. Live data replaces them once a live feed
+  ⎿ plays\001-project-structure\design\canvas\project\Desktop.dc.html:136:<p style="margin: 0; font-size: 12px; line-height: 1.4; color: #656c78">Position estimated from the timetable at 10:42. Live positions replace it once a live feed is available.</p>
+  ⎿ plays\001-project-structure\design\canvas\project\Main.dc.html:140:<p style="margin: 0; font-size: 12px; line-height: 1.4; color: #656c78">Position estimated from the timetable at 10:42. Live positions replace it once a live feed is available.</p>
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\mod..., offset: 44, limit: 6)
+  ⎿ 44	  63 minutes away shows `63:05`.
+  ⎿ 45	- At most **5** rows are shown, so that the phone sheet never grows enough to make the page
+  ⎿ 46	  scroll. Any others appear as "+N more heading here". The map still shows every one of them.
+  ⎿ 47	- A note follows the list: "Positions and times estimated from the timetable at HH:MM. Live data
+  ⎿ 48	  replaces them once a live feed is available." The stale-timetable sentence is added to it when
+  ⎿ 49	  it applies.
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\tests\e2e\map.spe..., offset: 66, limit: 8)
+  ⎿ 66	    await expect(rows).toHaveCount(2);
+  ⎿ 67	    await expect(rows.nth(0)).toContainText('to Vale das Flores');
+  ⎿ 68	    await expect(rows.nth(1)).toContainText('to Coimbra B');
+  ⎿ 69	    await expect(sheet.getByText('Scheduled', { exact: true })).toHaveCount(1);
+  ⎿ 70	    await expect(
+  ⎿ 71	      sheet.getByText(/Positions and times estimated from the timetable at 10:44\./),
+  ⎿ 72	    ).toBeVisible();
+  ⎿ 73	
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\src\ui\sheet\Near..., old_string:             Positions and times estimated from the timetable at{' '}
+        ..., new_string:             Estimated at {formatLisbonHM(new Date(approaching[0].at))} from t...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\tests\e2e\map.spe..., old_string:       sheet.getByText(/Positions and times estimated from the timetable at 10..., new_string:       sheet.getByText(/Estimated at 10:44 from the published timetable\./),)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\mod..., old_string: - A note follows the list: "Positions and times estimated from the timetable ..., new_string: - A note follows the list: "Estimated at HH:MM from the published timetable. ...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\src\ui\sheet\NearestStopContent.tsx has been updated successfully.
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\tests\e2e\map.spec.ts has been updated successfully.
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\modules\map-screen.md has been updated successfully.
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && grep -E '..., description: Show test scripts, typecheck and lint changed files, timeout: 180000)
+  ⎿     "typecheck": "node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json",
+  ⎿     "test": "vitest run",
+  ⎿     "test:watch": "vitest",
+  ⎿     "test:e2e": "playwright test",
+  ⎿     "lint": "eslint . && prettier --check .",
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && npm run t..., description: Typecheck, format check and run the map e2e tests, timeout: 400000)
+  ⎿ Exit code 1
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ [[33mwarn[39m] src/ui/sheet/NearestStopContent.tsx
+  ⎿ [[33mwarn[39m] Code style issues found in the above file. Run Prettier with --write to fix.
+
+● Typecheck passes. Prettier flagged the new line wrapping, so I'm fixing that and then running the map e2e tests.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && npx prett..., description: Format the file, show diff, run map e2e tests, timeout: 400000)
+  ⎿ src/ui/sheet/NearestStopContent.tsx 59ms
+  ⎿ diff --git a/src/ui/sheet/NearestStopContent.tsx b/src/ui/sheet/NearestStopContent.tsx
+  ⎿ index 251d1c1..35ed249 100644
+  ⎿ --- a/src/ui/sheet/NearestStopContent.tsx
+  ⎿ +++ b/src/ui/sheet/NearestStopContent.tsx
+  ⎿ @@ -50,9 +50,8 @@ export function NearestStopContent({
+  ⎿            <div className="rule" />
+  ⎿            <ApproachingBuses buses={approaching} colorOf={colorOf} />
+  ⎿            <p className="estimate-note">
+  ⎿ -            Positions and times estimated from the timetable at{' '}
+  ⎿ -            {formatLisbonHM(new Date(approaching[0].at))}. Live data replaces them once a live feed
+  ⎿ -            is available.
+  ⎿ +            Estimated at {formatLisbonHM(new Date(approaching[0].at))} from the published timetable.
+  ⎿ +            Live data replaces these estimates once a live feed is available.
+  ⎿              {stale && ` Timetable data from ${formatLisbonDate(fetched)} may be out of date.`}
+  ⎿            </p>
+  ⎿          </>
+  ⎿   ok  1 [mobile] › tests\e2e\map.spec.ts:110:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (1.8s)
+  ⎿   ok  5 [mobile] › tests\e2e\map.spec.ts:156:3 › located near Portagem › countdown ticks every second (2.0s)
+  ⎿   ok  7 [mobile] › tests\e2e\map.spec.ts:141:3 › located near Portagem › the map loads and the locate button re-frames without errors (2.0s)
+  ⎿ … +13 more lines
+
+● I've reworded the note under the list of approaching buses. It used to say:
+
+> Positions and times estimated from the timetable at 10:44. Live data replaces them once a live feed is available.
+
+It now says:
+
+> Estimated at 10:44 from the published timetable. Live data replaces these estimates once a live feed is available.
+
+With the time right after "Estimated at", it reads as when the estimate was made, not when the timetable was fetched. The "may be out of date" warning still gets added at the end when it applies.
+
+I changed three files:
+- `src/ui/sheet/NearestStopContent.tsx:53-54`: the new wording.
+- `tests/e2e/map.spec.ts:71`: the test now looks for the new text.
+- `documentation/modules/map-screen.md:47`: the new wording, plus a line saying the time shown follows the clock and is not when the timetable was fetched.
+
+The typecheck and the formatting check pass, and the map tests pass (14 passed, 2 skipped because they only apply to the other screen size).
+
+The changes are not committed. You're on `main`, and this repo's workflow does each change on its own play branch. If you want it committed, tell me whether to open a new play for it or put it in the untracked `plays/005-uyth/`.
+
+> commit
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git statu..., description: Check status, the untracked play, and branches)
+  ⎿  M documentation/modules/map-screen.md
+  ⎿ A  plays/005-uyth/CLAUDE.md
+  ⎿ A  plays/005-uyth/config.yaml
+  ⎿ A  plays/005-uyth/history.yaml
+  ⎿ A  plays/005-uyth/intent.md
+  ⎿ A  plays/005-uyth/positions.yaml
+  ⎿ A  plays/005-uyth/sessions/info.yaml
+  ⎿  M src/ui/sheet/NearestStopContent.tsx
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ A  tsconfig.tsbuildinfo
+  ⎿ plays/005-uyth:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ 
+  ⎿ plays/005-uyth/sessions:
+  ⎿ info.yaml
+  ⎿ … +8 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat plays..., description: Read play 005 files and check build artifact)
+  ⎿ # Play `005` — session instructions
+  ⎿ 
+  ⎿ Your session starts at the root of the project's **specs repository** — the one
+  ⎿ holding `documentation/` and `plays/`. This play is `plays/005-uyth/`.
+  ⎿ 
+  ⎿ Your primary instructions for this work are in the intent document. Read it
+  ⎿ first and treat it as the source of truth for what to build:
+  ⎿ 
+  ⎿ - [Intent](intent.md)
+  ⎿ 
+  ⎿ Read `documentation/context/` before starting: those documents are shared by every
+  ⎿ play and apply to all work in this project.
+  ⎿ 
+  ⎿ ## Repositories
+  ⎿ 
+  ⎿ The project's repositories are on this machine at:
+  ⎿ 
+  ⎿ - `metro` — `C:\Users\Hugo\.building\data\projects\001-metro\repos\metro`
+  ⎿ events:
+  ⎿   - kind: transition
+  ⎿ … +57 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git rm --..., description: Drop build cache, commit play 005 with the label change)
+  ⎿ 8a00f01 Play 005: improve timetable label
+  ⎿ 
+  ⎿  documentation/modules/map-screen.md |  7 ++++---
+  ⎿  plays/005-uyth/CLAUDE.md            | 18 ++++++++++++++++++
+  ⎿  plays/005-uyth/config.yaml          |  5 +++++
+  ⎿  plays/005-uyth/history.yaml         | 18 ++++++++++++++++++
+  ⎿  plays/005-uyth/intent.md            |  1 +
+  ⎿  plays/005-uyth/positions.yaml       |  2 ++
+  ⎿  plays/005-uyth/sessions/info.yaml   | 24 ++++++++++++++++++++++++
+  ⎿  src/ui/sheet/NearestStopContent.tsx |  5 ++---
+  ⎿  tests/e2e/map.spec.ts               |  2 +-
+  ⎿  9 files changed, 75 insertions(+), 7 deletions(-)
+
+● I committed the label change on `main` as `8a00f01 Play 005: improve timetable label`. It's a single commit, like play 004. It contains the new wording, the updated e2e test, the updated `map-screen.md`, and the `plays/005-uyth/` folder. I spelled "label" correctly in the commit message, though the play's own name still says "lable".
+
+I didn't commit `tsconfig.tsbuildinfo`, which was also staged. It's a compiler cache my `tsc -b` check created, so I deleted it. It isn't in `.gitignore`, so it could get staged again next time the compiler writes one; adding it there would stop that.
+
+Nothing has been pushed. The working tree is clean.

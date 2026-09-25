@@ -44,9 +44,10 @@ If any bus is heading to the stop, a **"Heading to this stop"** section follows
   63 minutes away shows `63:05`.
 - At most **5** rows are shown, so that the phone sheet never grows enough to make the page
   scroll. Any others appear as "+N more heading here". The map still shows every one of them.
-- A note follows the list: "Positions and times estimated from the timetable at HH:MM. Live data
-  replaces them once a live feed is available." The stale-timetable sentence is added to it when
-  it applies.
+- A note follows the list: "Estimated at HH:MM from the published timetable. Live data replaces
+  these estimates once a live feed is available." HH:MM is when the estimate was computed (it
+  follows the clock), not when the timetable was fetched. The stale-timetable sentence is added to
+  it when it applies.
 
 If no bus is heading to the stop, the section is not shown, even if other buses are on the map.
 

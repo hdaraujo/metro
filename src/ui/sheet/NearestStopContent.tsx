@@ -50,9 +50,8 @@ export function NearestStopContent({
           <div className="rule" />
           <ApproachingBuses buses={approaching} colorOf={colorOf} />
           <p className="estimate-note">
-            Positions and times estimated from the timetable at{' '}
-            {formatLisbonHM(new Date(approaching[0].at))}. Live data replaces them once a live feed
-            is available.
+            Estimated at {formatLisbonHM(new Date(approaching[0].at))} from the published timetable.
+            Live data replaces these estimates once a live feed is available.
             {stale && ` Timetable data from ${formatLisbonDate(fetched)} may be out of date.`}
           </p>
         </>

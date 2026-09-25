@@ -68,7 +68,7 @@ test.describe('located near Portagem', () => {
     await expect(rows.nth(1)).toContainText('to Coimbra B');
     await expect(sheet.getByText('Scheduled', { exact: true })).toHaveCount(1);
     await expect(
-      sheet.getByText(/Positions and times estimated from the timetable at 10:44\./),
+      sheet.getByText(/Estimated at 10:44 from the published timetable\./),
     ).toBeVisible();
 
     await expect(

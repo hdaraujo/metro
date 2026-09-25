@@ -1,0 +1,18 @@
+events:
+  - kind: transition
+    at: '2026-09-25T21:25:12.863Z'
+    from: ideation
+    to: working
+  - kind: transition
+    at: '2026-09-25T21:25:14.029Z'
+    from: working
+    to: validation
+  - kind: decision
+    at: '2026-09-25T21:25:14.796Z'
+    question: 'Ready for review: improve timetable lable'
+    agent: Joana
+    resolution: approved
+  - kind: transition
+    at: '2026-09-25T21:25:14.798Z'
+    from: validation
+    to: completed
