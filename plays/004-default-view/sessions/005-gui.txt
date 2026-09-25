@@ -1,0 +1,233 @@
+> You are the Autopilot Developer for this play. Read `plays/004-default-view/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/004-default-view/design/` folder exists, this play already has a UI design I approved: read `plays/004-default-view/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-developer)
+  ⎿ Launching skill: autopilot-developer
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004\metro\.claude\skills\autopilot-developer
+
+You are the Autopilot Developer for this play. Read `$play/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; ls;..., description: Read plan, intent and context docs)
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ plays
+  ⎿ playwright.config.ts
+  ⎿ public
+  ⎿ pwa-assets.config.ts
+  ⎿ src
+  ⎿ tests
+  ⎿ tsconfig.json
+  ⎿ vite.config.ts
+  ⎿ ls: cannot access 'plays/004-default-view/design': No such file or directory
+  ⎿ plays/004-default-view:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design.yaml
+  ⎿ … +334 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; cat..., description: Read source files to change)
+  ⎿ import { dayTypeFor } from './holidays';
+  ⎿ import { positionAt } from './interpolation';
+  ⎿ import { previousDate, type LisbonClock } from './lisbonTime';
+  ⎿ import { stopDistancesForTrip, type MeasuredShape } from './shape';
+  ⎿ import type { BusPosition, DayType, Direction, LatLng, LineId, Stop, Trip } from './types';
+  ⎿ 
+  ⎿ const DAY_SECONDS = 86_400;
+  ⎿ /** Before this Lisbon time, trips from yesterday's service day (times past 24:00) may still run. */
+  ⎿ const PREVIOUS_SERVICE_DAY_UNTIL = 4 * 3600;
+  ⎿ 
+  ⎿ export interface BusesInput {
+  ⎿   /** The selected (nearest) stop, or null when none is known yet. */
+  ⎿   stop: Stop | null;
+  ⎿   clock: LisbonClock;
+  ⎿   tripsByDayType: ReadonlyMap<DayType, readonly Trip[]>;
+  ⎿   shapesById: ReadonlyMap<string, MeasuredShape>;
+  ⎿   stopsById: ReadonlyMap<string, Stop>;
+  ⎿   now: Date;
+  ⎿ }
+  ⎿ 
+  ⎿ … +418 more lines
+
+● Now the edits.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; sed..., description: Read CSS and tests)
+  ⎿   color: var(--color-text);
+  ⎿   white-space: nowrap;
+  ⎿ }
+  ⎿ 
+  ⎿ .marker-bus {
+  ⎿   display: flex;
+  ⎿   flex-direction: column;
+  ⎿   align-items: center;
+  ⎿   gap: 3px;
+  ⎿   font-family: var(--font-sans);
+  ⎿   pointer-events: none;
+  ⎿ }
+  ⎿ 
+  ⎿ .marker-bus__pill {
+  ⎿   display: flex;
+  ⎿   align-items: center;
+  ⎿   gap: 4px;
+  ⎿   padding: 3px 8px 3px 6px;
+  ⎿   border: 2px dashed #ffffff;
+  ⎿   border-radius: 6px;
+  ⎿ … +302 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; sed..., description: Read rest of buses test and types)
+  ⎿     const buses = busesAt(null, weekdayMorning);
+  ⎿     expect(buses.map((b) => b.tripId).sort()).toEqual([
+  ⎿       's2-DU-0-701',
+  ⎿       'u1-DU-0-852',
+  ⎿       'u1-DU-1-823',
+  ⎿     ]);
+  ⎿     for (const bus of buses) {
+  ⎿       expect(bus.towardsStopId).toBeNull();
+  ⎿       expect(bus.arrivalAtStopSeconds).toBeNull();
+  ⎿     }
+  ⎿     expect(approachingBuses(buses)).toEqual([]);
+  ⎿   });
+  ⎿ 
+  ⎿   it('labels every bus as scheduled, at `now`, with its destination', () => {
+  ⎿     for (const bus of busesAt('Portagem', weekdayMorning)) {
+  ⎿       expect(bus.source).toBe('scheduled');
+  ⎿       expect(bus.at).toBe('2026-09-23T09:44:00.000Z');
+  ⎿       expect(bus.destination).not.toBe('');
+  ⎿     }
+  ⎿   });
+  ⎿ … +101 more lines
+
+● Implementing the domain function and tests.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; cat..., description: Add soonestPerDirection and its unit tests)
+  ⎿ 10:export type Direction = 'outbound' | 'inbound';
+
+● Now App.tsx, markers, MapView, CSS.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; pyt..., description: Apply UI edits for framing and marker tags)
+  ⎿  plays/004-default-view/devops.yaml        |  2 ++
+  ⎿  plays/004-default-view/positions.yaml     |  2 +-
+  ⎿  plays/004-default-view/sessions/info.yaml | 35 ++++++++++++++++++++-
+  ⎿  src/domain/buses.test.ts                  | 51 +++++++++++++++++++++++++++++--
+  ⎿  src/domain/buses.ts                       | 15 +++++++++
+  ⎿  src/ui/App.tsx                            | 11 +++----
+  ⎿  src/ui/map/MapView.tsx                    |  2 +-
+  ⎿  src/ui/map/markers.ts                     | 17 ++++++-----
+  ⎿  src/ui/styles/app.css                     |  4 +++
+  ⎿  9 files changed, 120 insertions(+), 19 deletions(-)
+
+● Now the e2e tests.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; pyt..., description: Update Playwright map tests)
+  ⎿ <stdin>:9: SyntaxWarning: "\d" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\d"? A raw string is also an option.
+  ⎿ 23:  projects: [
+  ⎿ 25:      name: 'mobile',
+  ⎿ 34:      name: 'desktop',
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; gre..., description: Check regexes in e2e spec)
+  ⎿ 28:const U1_TO_VALE_DAS_FLORES = /^Scheduled position of line U1 bus to Vale das Flores, /;
+  ⎿ 29:const U1_TO_COIMBRA_B = /^Scheduled position of line U1 bus to Coimbra B, /;
+  ⎿ 30:const S2_TO_SERPINS = 'Scheduled position of line S2 bus to Serpins';
+  ⎿ 78:    await expect(page.getByRole('img', { name: /^Scheduled position of line/ })).toHaveCount(3);
+  ⎿ 82:    await expect(approachingMarker.locator('.marker-bus__time')).toHaveText(/^\d+:\d{2}$/);
+  ⎿ 83:    await expect(approachingMarker.locator('.marker-bus__tag')).toHaveText(/^\d+:\d{2}$/);
+
+● Fine (the warning came from the unchanged search string). Running verification.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; ls ..., description: Run lint, typecheck and unit tests, timeout: 600000)
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ 
+  ⎿ > metro@0.0.0 test
+  ⎿ > vitest run
+  ⎿ 
+  ⎿ 
+  ⎿  RUN  v5.0.2 C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  10 passed (10)
+  ⎿       Tests  95 passed (95)
+  ⎿    Start at  21:35:39
+  ⎿ … +1 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; npm..., description: Build and run Playwright e2e tests, timeout: 600000)
+  ⎿ [32m✓ built in 1.06s[39m
+  ⎿ 
+  ⎿ PWA v1.3.0
+  ⎿ mode      generateSW
+  ⎿ precache  12 entries (1841.97 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  ⎿ 
+  ⎿ > metro@0.0.0 test:e2e
+  ⎿ > playwright test
+  ⎿ 
+  ⎿ 
+  ⎿ Running 16 tests using 8 workers
+  ⎿ 
+  ⎿   -   3 [mobile] › tests\e2e\map.spec.ts:175:3 › located near Portagem › desktop: renders inside the 380px panel
+  ⎿   ok  6 [mobile] › tests\e2e\map.spec.ts:213:1 › attribution links to the OpenStreetMap copyright page (895ms)
+  ⎿   ok  2 [mobile] › tests\e2e\map.spec.ts:203:3 › location denied › explains that location is off and keeps the map (1.5s)
+  ⎿   ok  5 [mobile] › tests\e2e\map.spec.ts:141:3 › located near Portagem › the map loads and the locate button re-frames without errors (1.6s)
+  ⎿   ok  1 [mobile] › tests\e2e\map.spec.ts:187:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark (1.7s)
+  ⎿ … +14 more lines
+
+● All checks pass. Next I'll confirm the new framing test actually fails when only one bus is framed.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; cp ..., description: Temporarily frame one bus to check the test catches it, timeout: 300000)
+  ⎿ 61:  const framedBuses = useMemo(() => soonestPerDirection(approaching).slice(0, 1), [approaching]);
+  ⎿ 
+  ⎿     Error Context: test-results\map-located-near-Portagem--a1357-onest-bus-in-each-direction-desktop\error-context.md
+  ⎿ 
+  ⎿   2 failed
+  ⎿     [mobile] › tests\e2e\map.spec.ts:110:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction 
+  ⎿     [desktop] › tests\e2e\map.spec.ts:110:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction 
+  ⎿  src/ui/App.tsx | 11 +++++------
+  ⎿  1 file changed, 5 insertions(+), 6 deletions(-)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; git..., description: Show working tree status)
+  ⎿  M plays/004-default-view/devops.yaml
+  ⎿  M plays/004-default-view/positions.yaml
+  ⎿  M plays/004-default-view/sessions/info.yaml
+  ⎿  M src/domain/buses.test.ts
+  ⎿  M src/domain/buses.ts
+  ⎿  M src/ui/App.tsx
+  ⎿  M src/ui/map/MapView.tsx
+  ⎿  M src/ui/map/markers.ts
+  ⎿  M src/ui/styles/app.css
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ ?? plays/004-default-view/sessions/004-dave.pty
+  ⎿ ?? plays/004-default-view/sessions/004-dave.txt
+
+● I've implemented the plan in the `metro` worktree. The "Scheduled" label no longer appears under the buses, and the first automatic view now shows the stop plus the next bus from each direction. Lint, typecheck, build, unit tests (95 passed) and end-to-end tests (14 passed, 2 skipped because they only apply to one screen size) all pass. I didn't do the manual check on a phone with `npm run dev`. Nothing is committed.
+
+- **Buses on the map:** a bus heading to your stop now shows only its countdown (for example `3:04`) under the dashed pill. Every other bus has no tag at all. The screen-reader text still says "Scheduled position of…", so estimated buses are still announced as scheduled. The one Scheduled badge in the sheet is unchanged.
+- **Default view:** the view that fits the map automatically at start-up now covers you, the nearest stop, and the soonest approaching bus in each direction. That is up to two buses, or one at a stop served in one direction only. The locate button gives the same view, and everything else about the framing is unchanged.
+- **Code:**
+  - The new `soonestPerDirection` function is in `src/domain/buses.ts`, and `src/ui/App.tsx` uses it for the framing.
+  - The tag handling is in `src/ui/map/markers.ts`.
+  - I added a style rule in `src/ui/styles/app.css` so a hidden tag really disappears.
+  - One comment changed in `src/ui/map/MapView.tsx`.
+- **Tests:**
+  - `src/domain/buses.test.ts` has the four cases the plan asked for. I also added one it didn't: at 10:44, both U1 buses approaching Portagem are picked.
+  - In `tests/e2e/map.spec.ts`, the marker checks now expect no "Scheduled" text on the map. A new test checks that the stop and both U1 buses are on screen, above the sheet on mobile and right of the panel on desktop.
+- **Framing test catches the old behaviour:** as a check, I temporarily framed only one bus, and the new test failed on both mobile and desktop. I then put the code back.

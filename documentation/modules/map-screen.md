@@ -67,21 +67,27 @@ such as "3 minutes 4 seconds away" takes its place (the `.visually-hidden` utili
   heading to the user's stop. `useBusMarkers` in `MapView.tsx` keeps one MapLibre marker per
   `tripId`. On each tick it moves and updates the existing markers in place, adds markers for new
   trips and removes the markers of trips that have ended.
-- A **bus marker** is a pill in the line colour with a dashed white border. A "Scheduled" tag
-  hangs under it. The dashed border is how the design marks an estimated position. There are three
-  variants:
+- A **bus marker** is a pill in the line colour with a dashed white border. The dashed border is
+  how the design marks an estimated position; **no map marker carries the word "Scheduled"**. The
+  only visible "Scheduled" label is the badge in the sheet's "Heading to this stop" header. So
+  while location is off or still being found (no sheet list), the buses on the map are marked as
+  estimated only by their dashed border and their accessible names — an accepted trade-off for a
+  less cluttered map. There are three variants:
 
-  | The bus is… | Tag | Class |
+  | The bus is… | Tag under the pill | Class |
   | --- | --- | --- |
-  | heading to the nearest stop | `3:04 Scheduled` (bold countdown first) | `marker-bus--approaching`, drawn above the others |
-  | not heading there (going elsewhere, or already past it) | `Scheduled` | `marker-bus--dimmed` (55% opacity) |
-  | on the map with no known location, so no stop | `Scheduled` | none. Nothing is dimmed. |
+  | heading to the nearest stop | the countdown only, e.g. `3:04` | `marker-bus--approaching`, drawn above the others |
+  | not heading there (going elsewhere, or already past it) | none | `marker-bus--dimmed` (55% opacity) |
+  | on the map with no known location, so no stop | none | none. Nothing is dimmed. |
 
-  The countdown always sits *inside* the Scheduled tag, so it can never be read as a live time.
-  Each marker is `role="img"` with an `aria-label` such as "Scheduled position of line U1 bus to
-  Vale das Flores, 3 minutes 4 seconds from Portagem". The tag is built from DOM nodes with
-  `textContent`, never with `innerHTML`, and it is rebuilt only when the variant changes.
-  Otherwise, only the time text is updated.
+  The `.marker-bus__tag` element always exists in the marker. With no countdown it is emptied and
+  given the `hidden` attribute; `app.css` needs `.marker-bus__tag[hidden] { display: none; }`
+  because the tag's `display: flex` would otherwise override `hidden` and draw an empty yellow
+  box. Each marker is `role="img"` with an `aria-label` such as "Scheduled position of line U1 bus
+  to Vale das Flores, 3 minutes 4 seconds from Portagem" — this label keeps "Scheduled" and must
+  keep it, since it is what tells assistive technology the position is estimated. The tag is built
+  from DOM nodes with `textContent`, never with `innerHTML`. On each tick only the time text is
+  updated; the tag's children are replaced only when the bus starts or stops approaching.
 - Two buses on the same line can be on the map at once, for example U1 in each direction. Tests
   must tell markers apart by destination as well as by line.
 - MapLibre's own attribution control is turned off and replaced by an attribution element that is
@@ -90,14 +96,18 @@ such as "3 minutes 4 seconds away" takes its place (the `.visually-hidden` utili
 
 ## Smart zoom
 
-The map is framed with `fitBounds` over the user, the nearest stop and, if there is one, the
-**soonest** approaching bus. It never frames every bus in service. The maximum zoom is 17. The animation takes 800 ms, or is instant under
+The map is framed with `fitBounds` over the user, the nearest stop and the **soonest approaching
+bus in each direction of travel** (`soonestPerDirection` in `src/domain/buses.ts`): the next
+`outbound` bus and the next `inbound` bus heading to the stop, so up to two buses. A stop served in
+one direction only (for example `República (desc)`), or with buses approaching from one side only,
+frames one bus; with none approaching, only the user and the stop are framed. It never frames every
+bus in service. The maximum zoom is 17. The animation takes 800 ms, or is instant under
 `prefers-reduced-motion`. The padding keeps the points clear of the sheet or panel: on phones, the
 bottom padding is the sheet's measured height.
 
 - Framing happens **automatically once**, when both the location and the nearest stop are known.
-  If the trips have not loaded within 3 seconds, the map is framed without the bus, and it is not
-  reframed when the bus appears later.
+  If the trips have not loaded within 3 seconds, the map is framed without the buses, and it is
+  not reframed when they appear later.
 - After that, the map is reframed only when the user presses the locate button. Position updates
   move the markers but never move the camera, so the user's panning is respected.
 

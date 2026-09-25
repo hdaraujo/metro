@@ -3,11 +3,11 @@ import stopsJson from '../../tests/fixtures/stops.json';
 import shapesJson from '../../tests/fixtures/route-shapes.json';
 import tripsJson from '../../tests/fixtures/trips-DU.sample.json';
 import { parseShapes, parseStops, parseTrips, stopIdsByName } from '../sources/metrobusTimetable';
-import { approachingBuses, busesInService } from './buses';
+import { approachingBuses, busesInService, soonestPerDirection } from './buses';
 import { haversineMeters } from './geo';
 import { lisbonClock } from './lisbonTime';
 import { measureShape } from './shape';
-import type { DayType, Stop, Trip } from './types';
+import type { BusPosition, DayType, Direction, Stop, Trip } from './types';
 
 const stops = parseStops(stopsJson);
 const stopsById = new Map<string, Stop>(stops.map((s) => [s.id, s]));
@@ -180,6 +180,53 @@ describe('busesInService', () => {
     const trips = new Map<DayType, Trip[]>([['DU', [noShape, unknownStop, running]]]);
     expect(busesAt('Portagem', weekdayMorning, trips).map((b) => b.tripId)).toEqual([
       'u1-DU-0-852',
+    ]);
+  });
+});
+
+describe('soonestPerDirection', () => {
+  const bus = (
+    tripId: string,
+    direction: Direction,
+    arrivalAtStopSeconds: number | null,
+  ): BusPosition => ({
+    tripId,
+    line: 'U1',
+    direction,
+    destination: direction === 'outbound' ? 'Vale das Flores' : 'Coimbra B',
+    coords: stopNamed('Portagem').coords,
+    source: 'scheduled',
+    at: '2026-09-23T09:44:00.000Z',
+    towardsStopId: arrivalAtStopSeconds === null ? null : stopNamed('Portagem').id,
+    arrivalAtStopSeconds,
+  });
+
+  it('returns nothing when no bus is approaching', () => {
+    expect(soonestPerDirection([])).toEqual([]);
+  });
+
+  it('keeps the soonest bus in each direction, soonest first', () => {
+    const out120 = bus('out-120', 'outbound', 120);
+    const in200 = bus('in-200', 'inbound', 200);
+    const out300 = bus('out-300', 'outbound', 300);
+    expect(soonestPerDirection([out120, in200, out300])).toEqual([out120, in200]);
+  });
+
+  it('returns just the soonest bus when only one direction is approaching', () => {
+    const in90 = bus('in-90', 'inbound', 90);
+    expect(soonestPerDirection([in90, bus('in-400', 'inbound', 400)])).toEqual([in90]);
+  });
+
+  it('ignores a bus with no countdown to the stop', () => {
+    const in200 = bus('in-200', 'inbound', 200);
+    expect(soonestPerDirection([bus('out-none', 'outbound', null), in200])).toEqual([in200]);
+  });
+
+  it('frames both U1 buses approaching Portagem at 10:44', () => {
+    const approaching = approachingBuses(busesAt('Portagem', '2026-09-23T09:44:00Z'));
+    expect(soonestPerDirection(approaching).map((b) => b.tripId)).toEqual([
+      'u1-DU-0-852',
+      'u1-DU-1-823',
     ]);
   });
 });

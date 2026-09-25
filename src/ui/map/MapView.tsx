@@ -134,7 +134,7 @@ function useMarker<T>(
 
 const USER_MARKER: MarkerOptions = { anchor: 'center' };
 const STOP_MARKER: MarkerOptions = { anchor: 'center' };
-// Centre the bus pill (about 28px tall) on the position; the "Scheduled" tag hangs below it.
+// Centre the bus pill (about 28px tall) on the position; the countdown tag hangs below it.
 const BUS_MARKER: MarkerOptions = { anchor: 'top', offset: [0, -14] };
 
 function busMarkerView(

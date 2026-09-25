@@ -1,0 +1,134 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `004-default-view`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/004-default-view/intent.md` and `plays/004-default-view/plan.md`, then read the real changes on the `004-default-view` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/`, which is yours to write in this session.
+
+  → Bash(command: cat documentation/context/*.md; echo ----; cat plays/004-default-view/intent...., description: Read context, play docs, and branch changes)
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿   per-repository section below must make it explicit which technology each repo uses —
+  ⎿   that is the Developer's source of truth for what to build with, where.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Tech Stack
+  ⎿ 
+  ⎿ ## Architecture overview
+  ⎿ - **One repo (`metro`), npm-workspaces monorepo:** `apps/api` (Node backend), `apps/web`
+  ⎿   (React PWA), `packages/shared` (TypeScript types and pure logic shared by both).
+  ⎿ - **Data flow:** data source → `api` (fetch, cache, normalise, compute) → small JSON API → `web`.
+  ⎿   The web app never calls third-party data sources directly.
+  ⎿ - **Data sources, behind source adapters in `api`.** Each source is one adapter that maps into
+  ⎿   our own domain model (stops, line shapes, trips). Nothing outside an adapter knows a source's format.
+  ⎿   - **Timetable (current):** Horários Metrobus, the Metro Mondego planner app. Undocumented
+  ⎿     static JSON, no stated licence, and it may change without notice:
+  ⎿     - `https://planearviagem.metromondego.pt/data/stops.json`: stops with id, code, name,
+  ⎿ … +292 more lines
+  → Bash(command: cat documentation/modules/map-screen.md; echo ----; git diff main -- src tests, description: Read map-screen doc and code diff)
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop, every Metrobus bus in service, and a countdown for each bus
+  ⎿ heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content. Its grab handle is
+  ⎿   decorative, and the sheet cannot be dragged.
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet. The locate button sits at the bottom right, with the
+  ⎿   attribution below it.
+  ⎿ - The page never scrolls (`100dvh`). All styling is plain CSS with custom properties
+  ⎿   (`src/ui/styles/tokens.css` and `app.css`). There is no CSS framework, and the Aptos fonts in the
+  ⎿   font stacks are not bundled, so they fall back to Segoe UI or the system font.
+  ⎿ … +369 more lines
+  → Bash(command: grep -n -i "scheduled\|soonest\|tag" documentation/modules/timetable-and-esti..., description: Check other module docs for related mentions)
+  ⎿ documentation/modules/timetable-and-estimates.md:5:timetable**. Every estimate carries `source: 'scheduled'`, and the UI always labels it "Scheduled".
+  ⎿ documentation/modules/timetable-and-estimates.md:74:   interpolated linearly in time between the scheduled stop times on either side of now. Stop
+  ⎿ documentation/modules/timetable-and-estimates.md:82:   `arrivalAtStopSeconds`, the whole seconds until the scheduled call, always at least 1. Every
+  ⎿ documentation/modules/timetable-and-estimates.md:85:5. **Order (deterministic).** Approaching buses come first, soonest first. The rest follow,
+  ⎿ documentation/modules/timetable-and-estimates.md:87:   buses, in the same order, so its first entry is the soonest bus, which smart zoom frames.
+  ⎿ documentation/modules/timetable-and-estimates.md:89:Each bus also carries the trip's `destination` as it appears in the data, `source: 'scheduled'`,
+  ⎿ documentation/modules/app-platform.md:39:timetable it saw. The estimates stay labelled "Scheduled", because they are never live anyway.
+  ⎿ documentation/modules/app-platform.md:78:  three: U1 `u1-DU-0-852` to Vale das Flores (Portagem in 3:04), U1 `u1-DU-1-823` to Coimbra B
+  ⎿ documentation/modules/app-platform.md:79:  (Portagem in 9:18), and S2 `s2-DU-0-701` to Serpins, which has already passed Portagem. The
+  → Bash(command: sed -n 1,10p documentation/modules/timetable-and-estimates.md; echo ...; sed ..., description: Read context around those mentions)
+  ⎿ # Timetable data and bus estimates
+  ⎿ 
+  ⎿ There is no backend. The browser fetches the Metro Mondego timetable ("Horários Metrobus")
+  ⎿ directly, because the source allows cross-origin requests. Bus positions are **estimated from the
+  ⎿ timetable**. Every estimate carries `source: 'scheduled'`, and the UI always labels it "Scheduled".
+  ⎿ There is no live feed yet.
+  ⎿ 
+  ⎿ The code is split in two:
+  ⎿ - `src/sources/metrobusTimetable.ts` is the only code that knows the source's format.
+  ⎿ - `src/domain/` holds pure logic with no DOM or React code.
+  ⎿ ...
+  ⎿ 3. **Robustness.** A trip is silently skipped if it has no shape, if no position can be
+  ⎿    estimated, or if it references a stop that is not known. One bad trip must never blank the map.
+  ⎿ 4. **Countdown.** When a stop is given, a bus is *approaching* if its trip has a call at that stop
+  ⎿    **later than now**. The countdown uses the first such call. That bus gets `towardsStopId` and
+  ⎿    `arrivalAtStopSeconds`, the whole seconds until the scheduled call, always at least 1. Every
+  ⎿    other bus has `null` in both fields. That covers buses that have passed the stop, buses that
+  ⎿    never call there, and every bus when there is no stop.
+  ⎿ 5. **Order (deterministic).** Approaching buses come first, soonest first. The rest follow,
+  ⎿    ordered by line. Ties are broken by `tripId`. `approachingBuses()` keeps only the approaching
+  ⎿ … +23 more lines
+  → Bash(command: python - <<'EOF'
+import io
+p='documentation/modules/map-screen.md'
+s=open(p,e..., description: Update map-screen and timetable module docs)
+  ⎿  documentation/modules/map-screen.md              | 46 ++++++++++++++----------
+  ⎿  documentation/modules/timetable-and-estimates.md |  6 ++--
+  ⎿  2 files changed, 32 insertions(+), 20 deletions(-)
+  ⎿ 30:| Located, but the stops failed to load and no earlier data exists | "Couldn't load Metrobus stops", with **Try again** (not in the prototype) |
+  ⎿ 109:  If the trips have not loaded within 3 seconds, the map is framed without the buses, and it is
+
+● The docs are updated. I'm checking the edited sections one last time.
+
+  → Bash(command: sed -n 60,112p documentation/modules/map-screen.md, description: Review edited map-screen sections)
+  ⎿ - The base map is MapLibre GL with OpenStreetMap raster tiles, muted (desaturated and brightened)
+  ⎿   so that route colours stand out. Rotation and pitch are disabled. Before a location is known,
+  ⎿   the map opens on Coimbra at zoom 13.
+  ⎿ - Layers: every line shape in its line colour, and every stop as a small white circle. There are
+  ⎿   no map glyphs or sprites. The user dot, the nearest-stop marker (a red dot with a name pill) and
+  ⎿   the bus markers are DOM markers (`src/ui/map/markers.ts`).
+  ⎿ - **Every bus in service has a marker**: every line, both directions, whether or not the bus is
+  ⎿   heading to the user's stop. `useBusMarkers` in `MapView.tsx` keeps one MapLibre marker per
+  ⎿   `tripId`. On each tick it moves and updates the existing markers in place, adds markers for new
+  ⎿   trips and removes the markers of trips that have ended.
+  ⎿ - A **bus marker** is a pill in the line colour with a dashed white border. The dashed border is
+  ⎿   how the design marks an estimated position; **no map marker carries the word "Scheduled"**. The
+  ⎿   only visible "Scheduled" label is the badge in the sheet's "Heading to this stop" header. So
+  ⎿   while location is off or still being found (no sheet list), the buses on the map are marked as
+  ⎿   estimated only by their dashed border and their accessible names — an accepted trade-off for a
+  ⎿   less cluttered map. There are three variants:
+  ⎿ 
+  ⎿   | The bus is… | Tag under the pill | Class |
+  ⎿   | --- | --- | --- |
+  ⎿   | heading to the nearest stop | the countdown only, e.g. `3:04` | `marker-bus--approaching`, drawn above the others |
+  ⎿ … +33 more lines
+
+● I updated the existing `documentation/modules/map-screen.md`, since it already covered this part of the product. I didn't add a new document. The plan and the code match, and nothing is committed.
+
+- **Bus markers:** No bus on the map shows the word "Scheduled" any more. A bus heading to the nearest stop shows only its countdown under the pill (for example `3:04`). Other buses have no tag. The doc notes three things a future implementer could trip over:
+  - The dashed border and the sheet's single Scheduled badge are now the only visible sign that a position is estimated. While location is off or still being found, the map's buses have only the border.
+  - The tag element stays in every marker and is hidden when empty. It needs a CSS rule (`.marker-bus__tag[hidden] { display: none; }`), or it draws an empty yellow box.
+  - Each marker's screen-reader label still says "Scheduled", and it has to stay that way.
+- **Default zoom:** The first frame shows you, the nearest stop, and the next approaching bus in each direction, so up to two buses. A stop served in one direction only frames one bus, and a stop with no approaching bus frames just you and the stop.
+
+I also made two small edits to `documentation/modules/timetable-and-estimates.md` so it doesn't contradict the map doc. It no longer says the UI "always labels" estimates as "Scheduled". It now describes how the new `soonestPerDirection()` picks the buses the default zoom frames.

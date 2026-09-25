@@ -1,0 +1,330 @@
+> You are the Autopilot DevOps engineer for this play, wrapping up development. Read `plays/004-default-view/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`plays/004-default-view`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004/<repo-folder-name>`, checked out on branch `004-default-view`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `004-default-view`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-devops)
+  ⎿ Launching skill: autopilot-devops
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004\metro\.claude\skills\autopilot-devops
+
+You are the Autopilot DevOps engineer for this play, opened as an interactive session that the user drives directly. You are in the project's specs repository, on this play's branch; read `$play/plan.md` for context. The play's code changes live in isolated git worktrees under `$worktrees`. Do NOT start working on your own: wait for the user's first message and follow their direction.
+
+## 1. Prepare the repositories
+
+You are the Autopilot DevOps engineer for this play, preparing repositories for development. Read `$play/plan.md` — it states which of the attached repositories are part of this play; only touch those.
+
+Each play is developed on its own branch, `$branch`, in an isolated git worktree per repository, so several plays can be in progress at once without interfering. The specs repository (`this repository`) is already on that branch — you are working inside its worktree right now, which is why this play's folder is here. Your job is to do the same for each TARGET CODE repository, under the directory `$worktrees`.
+
+For each target repository (its main clone is one of the attached directories — call its path <clone> and its folder name <name>):
+1. Run `git -C <clone> fetch` so the clone is current.
+2. Create the play worktree at exactly `$worktrees/<name>`:
+   `git -C <clone> worktree add "$worktrees/<name>" -b $branch`
+
+Handle these cases without asking me:
+- If a worktree already exists at `$worktrees/<name>`, this is a resumed iteration of the same play — leave it as-is and continue; do not recreate it.
+- If the branch `$branch` already exists but has no worktree, add the worktree from that existing branch instead (omit `-b`): `git -C <clone> worktree add "$worktrees/<name>" $branch`.
+- If a target repository IS the specs repository you are already in, it already has its worktree — skip it.
+
+Only stop and ask me how to proceed if something genuinely conflicts — the worktree path is occupied by an unrelated directory, or the repository is in a broken state — do not guess and do not act destructively. Wait for my answer.
+
+Once every target repository has its `$branch` worktree under `$worktrees`, end your turn with a short factual summary of what you did. That summary must NOT end with a question — only end with a question mark when you are genuinely asking me how to proceed with a real conflict per the rule above.
+
+## 2. Finalize — commit and hand over for testing
+
+You are the Autopilot DevOps engineer for this play, wrapping up development. Read `$play/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`$play`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `$worktrees/<repo-folder-name>`, checked out on branch `$branch`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "$worktrees/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `$branch`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+## 3. Close, once the play is approved
+
+The play was just approved. Do NOT merge the play's branch `$branch` into the default branch in any repository yourself. In the target code repositories it stays unmerged, so I can review and merge it myself; in the specs repository — the directory you are in — Building commits whatever is left, squash-merges the branch into the default branch as a single commit and deletes it, once the play has been documented.
+
+Your only job now is to make sure nothing is left uncommitted in the target code repositories. For each worktree under `$worktrees`, check `git -C "$worktrees/<name>" status`; if anything changed since you finalized (for example while I was validating), stage all of it (`add -A`) and commit it on `$branch` with a clear conventional commit message. Skip any worktree with no changes. You do not need to commit in the specs repository.
+
+Do NOT merge, rebase, squash or push, and do NOT delete the worktrees or the `$branch` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`, `$branch`, `$worktrees`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; cat..., description: Read plan, context docs, and worktree status)
+  ⎿ # Play 004 — Default view: fewer map labels, and a first frame that shows both directions
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The user asked for two changes to the map screen (`plays/004-default-view/intent.md`):
+  ⎿ 
+  ⎿ 1. **Remove the "Scheduled" label below the buses.** Today every bus marker has a yellow tag
+  ⎿    hanging under it that says `Scheduled`, or `3:04 Scheduled` for a bus heading to the user's
+  ⎿    stop. With several buses on the map, those tags make it cluttered.
+  ⎿ 2. **The default zoom should show the nearest stop and the nearest bus arriving from each side.**
+  ⎿    Today the first automatic framing covers the user, the nearest stop and only the *single
+  ⎿    soonest* approaching bus. The user wants to see the next bus in each direction of travel.
+  ⎿ 
+  ⎿ The product vision (`documentation/context/vision.md`, "Real time, honestly labelled") now allows
+  ⎿ this: scheduled data must be covered by a visible label, and a scheduled bus must always look
+  ⎿ different from a live one, *but it need not carry its own label*. The dashed white border on the
+  ⎿ bus pill is still what marks an estimated position. The single **Scheduled** badge in the sheet's
+  ⎿ "Heading to this stop" header still covers the list.
+  ⎿ 
+  ⎿ The user decided the following:
+  ⎿ … +276 more lines
+
+● The specs repository and the code repository are the same one (`metro`), so there is one worktree to commit. Reviewing the diff first.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; git..., description: Show code diff and session files)
+  ⎿ diff --git a/src/domain/buses.test.ts b/src/domain/buses.test.ts
+  ⎿ index 19461d4..a9f9f60 100644
+  ⎿ --- a/src/domain/buses.test.ts
+  ⎿ +++ b/src/domain/buses.test.ts
+  ⎿ @@ -3,11 +3,11 @@ import stopsJson from '../../tests/fixtures/stops.json';
+  ⎿  import shapesJson from '../../tests/fixtures/route-shapes.json';
+  ⎿  import tripsJson from '../../tests/fixtures/trips-DU.sample.json';
+  ⎿  import { parseShapes, parseStops, parseTrips, stopIdsByName } from '../sources/metrobusTimetable';
+  ⎿ -import { approachingBuses, busesInService } from './buses';
+  ⎿ +import { approachingBuses, busesInService, soonestPerDirection } from './buses';
+  ⎿  import { haversineMeters } from './geo';
+  ⎿  import { lisbonClock } from './lisbonTime';
+  ⎿  import { measureShape } from './shape';
+  ⎿ -import type { DayType, Stop, Trip } from './types';
+  ⎿ +import type { BusPosition, DayType, Direction, Stop, Trip } from './types';
+  ⎿  
+  ⎿  const stops = parseStops(stopsJson);
+  ⎿  const stopsById = new Map<string, Stop>(stops.map((s) => [s.id, s]));
+  ⎿ @@ -183,3 +183,50 @@ describe('busesInService', () => {
+  ⎿      ]);
+  ⎿ … +272 more lines
+
+● The diff matches the plan. Before committing I'll run the checks and read the README for run instructions.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; ls;..., description: Inspect repo layout, scripts, and Playwright config)
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ dist
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ node_modules
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ plays
+  ⎿ playwright.config.ts
+  ⎿ public
+  ⎿ pwa-assets.config.ts
+  ⎿ src
+  ⎿ test-results
+  ⎿ tests
+  ⎿ tsconfig.json
+  ⎿ vite.config.ts
+  ⎿ HAS_NODE_MODULES
+  ⎿ {
+  ⎿ … +87 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; cat..., description: Read README and gitignore)
+  ⎿ # Metro
+  ⎿ 
+  ⎿ ## What Metro is
+  ⎿ 
+  ⎿ Metro is a mobile-first web app for Coimbra Metrobus riders. It opens straight onto a map showing
+  ⎿ where you are, your nearest Metrobus stop and the bus heading towards it, so you can glance at it
+  ⎿ and decide when to leave. Until a live feed exists, bus positions are estimated from the timetable
+  ⎿ and always labelled "Scheduled"; estimated data is never shown as live. There are no accounts and
+  ⎿ nothing to set up.
+  ⎿ 
+  ⎿ ## Requirements
+  ⎿ 
+  ⎿ - Node.js 24 (see `.nvmrc`) and the npm that comes with it.
+  ⎿ 
+  ⎿ ## Getting started
+  ⎿ 
+  ⎿ ```sh
+  ⎿ npm install
+  ⎿ npm run dev
+  ⎿ ```
+  ⎿ … +124 more lines
+
+● README already covers running and testing, so I don't need to write new instructions. Now the checks from the plan.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; npm..., description: Run lint, typecheck, and unit tests, timeout: 300000)
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ LINT EXIT 0
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ TC EXIT 0
+  ⎿ 
+  ⎿ > metro@0.0.0 test
+  ⎿ > vitest run
+  ⎿ 
+  ⎿ 
+  ⎿  RUN  v5.0.2 C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  10 passed (10)
+  ⎿ … +5 more lines
+
+● Lint, typecheck and the unit tests all pass. Before running the end-to-end tests, I'll check that no other server is already on port 4173, since Playwright would reuse it and test the wrong build.
+
+  → PowerShell(command: Get-NetTCPConnection -LocalPort 4173 -State Listen -ErrorAction SilentlyConti..., description: Check whether port 4173 is in use)
+  ⎿ done
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; npm..., description: Run Playwright end-to-end tests, timeout: 600000)
+  ⎿ > metro@0.0.0 test:e2e
+  ⎿ > playwright test
+  ⎿ 
+  ⎿ 
+  ⎿ Running 16 tests using 8 workers
+  ⎿ 
+  ⎿   -   8 [mobile] › tests\e2e\map.spec.ts:175:3 › located near Portagem › desktop: renders inside the 380px panel
+  ⎿   ok  5 [mobile] › tests\e2e\map.spec.ts:213:1 › attribution links to the OpenStreetMap copyright page (806ms)
+  ⎿   ok  3 [mobile] › tests\e2e\map.spec.ts:203:3 › location denied › explains that location is off and keeps the map (902ms)
+  ⎿   ok  2 [mobile] › tests\e2e\map.spec.ts:187:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark (1.2s)
+  ⎿   ok  4 [mobile] › tests\e2e\map.spec.ts:110:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (1.5s)
+  ⎿   ok  7 [mobile] › tests\e2e\map.spec.ts:141:3 › located near Portagem › the map loads and the locate button re-frames without errors (1.5s)
+  ⎿   ok  1 [mobile] › tests\e2e\map.spec.ts:52:3 › located near Portagem › shows the nearest stop and every scheduled bus (1.9s)
+  ⎿   ok  6 [mobile] › tests\e2e\map.spec.ts:156:3 › located near Portagem › countdown ticks every second (1.9s)
+  ⎿   -  13 [desktop] › tests\e2e\map.spec.ts:187:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark
+  ⎿   ok 12 [desktop] › tests\e2e\map.spec.ts:141:3 › located near Portagem › the map loads and the locate button re-frames without errors (2.9s)
+  ⎿   ok  9 [desktop] › tests\e2e\map.spec.ts:52:3 › located near Portagem › shows the nearest stop and every scheduled bus (3.4s)
+  ⎿   ok 10 [desktop] › tests\e2e\map.spec.ts:110:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (3.3s)
+  ⎿   ok 11 [desktop] › tests\e2e\map.spec.ts:156:3 › located near Portagem › countdown ticks every second (3.4s)
+  ⎿   ok 15 [desktop] › tests\e2e\map.spec.ts:203:3 › location denied › explains that location is off and keeps the map (3.2s)
+  ⎿ … +6 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; gre..., description: Scan session transcripts for credentials and view play metadata diff)
+  ⎿ scan-done
+  ⎿ diff --git a/plays/004-default-view/devops.yaml b/plays/004-default-view/devops.yaml
+  ⎿ index 018189b..51f03b2 100644
+  ⎿ --- a/plays/004-default-view/devops.yaml
+  ⎿ +++ b/plays/004-default-view/devops.yaml
+  ⎿ @@ -1 +1,3 @@
+  ⎿  branch: 004-default-view
+  ⎿ +phase: finalize
+  ⎿ +session_id: 970c925a60a74510ac65b488b33cbec6
+  ⎿ diff --git a/plays/004-default-view/positions.yaml b/plays/004-default-view/positions.yaml
+  ⎿ index 2eef0e3..18c1820 100644
+  ⎿ --- a/plays/004-default-view/positions.yaml
+  ⎿ +++ b/plays/004-default-view/positions.yaml
+  ⎿ @@ -2,4 +2,4 @@ rooms:
+  ⎿    Alice: whiteboards
+  ⎿    Paula: whiteboards
+  ⎿    Gui: whiteboards
+  ⎿ -  Dave: whiteboards
+  ⎿ +  Dave: code
+
+● No credentials found. Staging everything and committing on `004-default-view`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; git..., description: Stage all changes and commit on the play branch)
+  ⎿ M  plays/004-default-view/devops.yaml
+  ⎿ M  plays/004-default-view/positions.yaml
+  ⎿ A  plays/004-default-view/sessions/004-dave.pty
+  ⎿ A  plays/004-default-view/sessions/004-dave.txt
+  ⎿ A  plays/004-default-view/sessions/005-gui.pty
+  ⎿ A  plays/004-default-view/sessions/005-gui.txt
+  ⎿ M  plays/004-default-view/sessions/info.yaml
+  ⎿ M  src/domain/buses.test.ts
+  ⎿ M  src/domain/buses.ts
+  ⎿ M  src/ui/App.tsx
+  ⎿ M  src/ui/map/MapView.tsx
+  ⎿ M  src/ui/map/markers.ts
+  ⎿ M  src/ui/styles/app.css
+  ⎿ M  tests/e2e/map.spec.ts
+  ⎿ 9dcbf79 feat(map): drop "Scheduled" bus tags and frame the soonest bus per direction
+  ⎿ d2c0e0f Start play 004
+  ⎿ aaec536 003-setup-github-page
+  ⎿ 0
+
+● Play 004 is committed as `9dcbf79` on branch `004-default-view`, and nothing is left uncommitted. The plan's automated checks all pass: lint, typecheck, 95 unit tests, and 14 end-to-end tests on both mobile and desktop (the other 2 are layout tests that only apply to one screen size).
+
+`metro` is the only repository in this play, and it holds both the specs and the code. So one commit on one branch covers everything:
+- **The two changes you asked for:** buses no longer show a "Scheduled" tag, and the first view now shows the soonest bus in each direction.
+- **Tests:** new unit tests for picking the soonest bus per direction, and end-to-end tests for both changes.
+- **The play folder:** the new session transcripts and the play's bookkeeping files.
+
+The diff matches the plan, and nothing outside `plays/004-default-view` and the code was touched. I merged nothing: the branch is yours to review, and Building merges it when the play closes.
+
+`README.md` still says bus positions are "always labelled Scheduled". That is still true of the sheet's badge, but the buses on the map no longer carry the word, so you may want to reword that line.
+
+## How to test and validate play 004
+
+Everything runs from the worktree, which is where the changes are:
+
+```sh
+cd "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004\metro"
+```
+
+Dependencies are already installed there. If you use a fresh clone, run `npm install` first (Node 24), and before the first end-to-end run, `npx playwright install chromium`.
+
+### 1. Automated checks
+```sh
+npm run lint        # ESLint + Prettier check
+npm run typecheck   # TypeScript 7
+npm test            # Vitest, including the new soonestPerDirection cases
+npm run test:e2e    # builds, serves on http://localhost:4173, runs Playwright on mobile and desktop
+```
+Before `npm run test:e2e`, make sure nothing else is using port 4173. Playwright reuses any server already running there, so it could test another worktree's build.
+
+The end-to-end tests use recorded timetable data at a fixed clock (a weekday, 10:44, near Portagem), so they are repeatable. Two tests check this play:
+- **"shows the nearest stop and every scheduled bus":** no bus marker contains "Scheduled", the approaching bus shows only `M:SS`, and the sheet still has exactly one Scheduled badge.
+- **"default view frames the stop and the soonest bus in each direction":** the stop and both U1 buses (to Vale das Flores and to Coimbra B) are on screen, above the sheet on mobile and right of the panel on desktop.
+
+### 2. Try it in the browser
+```sh
+npm run dev
+```
+1. Open **http://localhost:5173** (or the URL Vite prints).
+2. In Chrome DevTools, open the device toolbar (Ctrl+Shift+M) and pick a phone size, for example 390×844.
+3. Open DevTools → ⋮ → More tools → **Sensors**, and set Location to `40.2075, -8.4307` (near Portagem, which buses serve in both directions). Reload and allow location.
+4. Check:
+   - **No bus on the map shows the word "Scheduled".** Buses heading to Portagem show only a `M:SS` countdown in a yellow tag under a dashed pill. Every other bus has no tag, and no empty yellow box either.
+   - **The sheet** still shows one **Scheduled** badge in "Heading to this stop", with the "estimated from the timetable" note.
+   - **The first view** shows your position, Portagem, and the next bus in each direction, all clear of the sheet.
+   - **The locate button** (after panning away) gives the same view again.
+   - At desktop width, everything in the view sits to the right of the 380 px side panel.
+5. Optional: try a stop served in one direction only, such as `República (desc)`. The first view should include just one bus.
+
+The app uses the live timetable and the real clock. A direction shows a bus only if one is currently heading to the stop, so test while Metrobus is running. Late at night you may see one bus or none; for a fixed, repeatable view, use `npm run test:e2e` above.
+
+> OT delete the worktrees or the `004-default-view` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; git..., description: Check for changes since finalizing)
+  ⎿  M plays/004-default-view/config.yaml
+  ⎿  M plays/004-default-view/devops.yaml
+  ⎿  M plays/004-default-view/history.yaml
+  ⎿  M plays/004-default-view/sessions/info.yaml
+  ⎿ 9dcbf79 feat(map): drop "Scheduled" bus tags and frame the soonest bus per direction
+  ⎿ d2c0e0f Start play 004
+  ⎿ aaec536 003-setup-github-page
+  ⎿ 004-default-view
+
+● Nothing needed committing at close: no code has changed since `9dcbf79`, the commit I made at finalize.
+
+- **The one worktree:** `metro` is this play's only repository, so the code and the specs share the worktree at `worktrees\004\metro`, on branch `004-default-view`.
+- **Code:** `src/` and `tests/` are unchanged since `9dcbf79`.
+- **Play files:** the only uncommitted changes are Building's own records of closing the play. They are `config.yaml`, `devops.yaml`, `history.yaml` and `sessions/info.yaml` in `plays/004-default-view/`. I left them for Building to commit with the specs merge.
+
+I did not merge, rebase, squash or push anything, and I left the worktree and the `004-default-view` branch in place. The code branch stays unmerged for you to review.

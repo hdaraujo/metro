@@ -24,9 +24,10 @@ approaching bus is from that stop. You look at it and decide when to leave.
 ## Core value & principles
 - **Glanceable.** Open it, see the map, get the answer in seconds. The map is the product.
 - **Real time, honestly labelled.** Bus positions and "minutes away" update continuously. Until
-  a live feed exists, they are estimated from the timetable and clearly labelled "scheduled". Live
-  data replaces the estimates when it becomes available. Estimated or stale data is never shown
-  as live.
+  a live feed exists, they are estimated from the timetable and clearly marked as scheduled: a
+  visible label covers them, and a scheduled bus always looks different from a live one, though
+  it need not carry its own label. Live data replaces the estimates when it becomes available.
+  Estimated or stale data is never shown as live.
 - **Location-aware.** Use the device's location to find the nearest stop automatically.
 - **Mobile first.** Designed for a phone screen and one-handed use. Desktop is secondary.
 - **Simple over featureful.** Show information and let the user decide. No planning logic.

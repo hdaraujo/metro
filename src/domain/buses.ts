@@ -130,3 +130,18 @@ export function busesInService({
 export function approachingBuses(buses: readonly BusPosition[]): BusPosition[] {
   return buses.filter((bus) => bus.arrivalAtStopSeconds !== null);
 }
+
+/**
+ * The soonest approaching bus in each direction of travel, so that the default framing shows the
+ * next bus arriving from each side of the stop. At most one bus per direction, soonest first.
+ */
+export function soonestPerDirection(approaching: readonly BusPosition[]): BusPosition[] {
+  const seen = new Set<Direction>();
+  const soonest: BusPosition[] = [];
+  for (const bus of approaching) {
+    if (bus.arrivalAtStopSeconds === null || seen.has(bus.direction)) continue;
+    seen.add(bus.direction);
+    soonest.push(bus);
+  }
+  return soonest;
+}

@@ -49,9 +49,9 @@ export interface BusMarkerView {
 }
 
 /**
- * A bus whose position is estimated from the timetable: a dashed pill in the line colour, with a
- * "Scheduled" tag under it, so that an estimate never looks like a live position. A bus heading to
- * the selected stop shows its countdown inside that tag.
+ * A bus whose position is estimated from the timetable: a dashed pill in the line colour, so that
+ * an estimate never looks like a live position. A bus heading to the selected stop shows its
+ * countdown in a tag under the pill.
  */
 export function createBusMarker(view: BusMarkerView): HTMLElement {
   const el = div('marker-bus');
@@ -94,11 +94,12 @@ export function updateBusMarker(el: HTMLElement, view: BusMarkerView): void {
       const newTime = document.createElement('span');
       newTime.className = 'marker-bus__time';
       newTime.textContent = formatCountdown(secondsToStop);
-      const label = document.createElement('span');
-      label.textContent = 'Scheduled';
-      tag.replaceChildren(newTime, label);
+      tag.replaceChildren(newTime);
     }
-  } else if (time || tag.textContent !== 'Scheduled') {
-    tag.replaceChildren('Scheduled');
+    tag.hidden = false;
+  } else {
+    // No tag at all, rather than an empty yellow box.
+    if (tag.hasChildNodes()) tag.replaceChildren();
+    tag.hidden = true;
   }
 }

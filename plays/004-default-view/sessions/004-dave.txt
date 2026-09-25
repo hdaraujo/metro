@@ -1,0 +1,52 @@
+> You are the Autopilot DevOps engineer for this play, preparing repositories for development. Read `plays/004-default-view/plan.md` — it states which of the attached repositories are part of this play; only touch those.
+
+Each play is developed on its own branch, `004-default-view`, in an isolated git worktree per repository, so several plays can be in progress at once without interfering. The specs repository (`metro`) is already on that branch — you are working inside its worktree right now, which is why this play's folder is here. Your job is to do the same for each TARGET CODE repository, under the directory `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004`.
+
+For each target repository (its main clone is one of the attached directories — call its path <clone> and its folder name <name>):
+1. Run `git -C <clone> fetch` so the clone is current.
+2. Create the play worktree at exactly `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004/<name>`:
+   `git -C <clone> worktree add "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004/<name>" -b 004-default-view`
+
+Handle these cases without asking me:
+- If a worktree already exists at `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004/<name>`, this is a resumed iteration of the same play — leave it as-is and continue; do not recreate it.
+- If the branch `004-default-view` already exists but has no worktree, add the worktree from that existing branch instead (omit `-b`): `git -C <clone> worktree add "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004/<name>" 004-default-view`.
+- If a target repository IS the specs repository you are already in, it already has its worktree — skip it.
+
+Only stop and ask me how to proceed if something genuinely conflicts — the worktree path is occupied by an unrelated directory, or the repository is in a broken state — do not guess and do not act destructively. Wait for my answer.
+
+Once every target repository has its `004-default-view` worktree under `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004`, end your turn with a short factual summary of what you did. That summary must NOT end with a question — only end with a question mark when you are genuinely asking me how to proceed with a real conflict per the rule above.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro"; cat..., description: Read plan and context docs)
+  ⎿ # Play 004 — Default view: fewer map labels, and a first frame that shows both directions
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The user asked for two changes to the map screen (`plays/004-default-view/intent.md`):
+  ⎿ 
+  ⎿ 1. **Remove the "Scheduled" label below the buses.** Today every bus marker has a yellow tag
+  ⎿    hanging under it that says `Scheduled`, or `3:04 Scheduled` for a bus heading to the user's
+  ⎿    stop. With several buses on the map, those tags make it cluttered.
+  ⎿ 2. **The default zoom should show the nearest stop and the nearest bus arriving from each side.**
+  ⎿    Today the first automatic framing covers the user, the nearest stop and only the *single
+  ⎿    soonest* approaching bus. The user wants to see the next bus in each direction of travel.
+  ⎿ 
+  ⎿ The product vision (`documentation/context/vision.md`, "Real time, honestly labelled") now allows
+  ⎿ this: scheduled data must be covered by a visible label, and a scheduled bus must always look
+  ⎿ different from a live one, *but it need not carry its own label*. The dashed white border on the
+  ⎿ bus pill is still what marks an estimated position. The single **Scheduled** badge in the sheet's
+  ⎿ "Heading to this stop" header still covers the list.
+  ⎿ 
+  ⎿ The user decided the following:
+  ⎿ … +263 more lines
+  → Bash(command: git -C "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" worktree..., description: Confirm attached clone owns this worktree)
+  ⎿ C:/Users/Hugo/.building/data/projects/001-metro/repos/metro         d2c0e0f [main]
+  ⎿ C:/Users/Hugo/.building/data/projects/001-metro/worktrees/004/metro d2c0e0f [004-default-view]
+  ⎿ 004-default-view
+
+● I didn't create any new worktrees, because this play doesn't need one.
+
+- **Which repositories:** `plays/004-default-view/plan.md` names `metro` as the only repository touched. It holds both the code and the specs.
+- **Why nothing was created:** `metro` is the specs repository. The only attached clone, `repos/metro`, is that same repository: its `git worktree list` shows `worktrees/004/metro` already checked out on `004-default-view` at `d2c0e0f`. Under your skip rule for the specs repository, I left it as it was. I didn't run `git fetch`, because that step only applies to target code repositories and there aren't any here.
+- **Result:** `004-default-view` has its worktree at `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\004\metro`. I made no other changes to either repository.

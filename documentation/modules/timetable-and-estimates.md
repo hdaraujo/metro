@@ -2,7 +2,8 @@
 
 There is no backend. The browser fetches the Metro Mondego timetable ("Horários Metrobus")
 directly, because the source allows cross-origin requests. Bus positions are **estimated from the
-timetable**. Every estimate carries `source: 'scheduled'`, and the UI always labels it "Scheduled".
+timetable**. Every estimate carries `source: 'scheduled'`, and the UI always marks it as estimated (see
+`map-screen.md` for how).
 There is no live feed yet.
 
 The code is split in two:
@@ -84,7 +85,8 @@ network. It takes the nearest stop, or `null` when none is known yet, and return
    never call there, and every bus when there is no stop.
 5. **Order (deterministic).** Approaching buses come first, soonest first. The rest follow,
    ordered by line. Ties are broken by `tripId`. `approachingBuses()` keeps only the approaching
-   buses, in the same order, so its first entry is the soonest bus, which smart zoom frames.
+   buses, in the same order. `soonestPerDirection()` takes that list and keeps the first bus of
+   each `direction` (so at most two, soonest first); those are the buses smart zoom frames.
 
 Each bus also carries the trip's `destination` as it appears in the data, `source: 'scheduled'`,
 and `at`, the time of the estimate.

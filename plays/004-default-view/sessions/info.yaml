@@ -57,4 +57,88 @@ sessions:
       waiting: false
       question: null
       waiting_since: '2026-09-25T20:30:34.819Z'
-next_seq: 4
+  - id: ade1a7e14bd54ab0990ac3a29dbd9d89
+    state: finished
+    seq: 4
+    datetime: '2026-09-25T20:33:22.925Z'
+    team: Autopilot
+    agent: Dave
+    logs:
+      pty: 004-dave.pty
+      txt: 004-dave.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 8
+        output: 982
+        cache_read: 166043
+        cache_write_5m: 0
+        cache_write_1h: 29924
+  - id: 5b03db83373045f5ac5bd7aecc6e3c30
+    state: finished
+    seq: 5
+    datetime: '2026-09-25T20:33:44.746Z'
+    team: Autopilot
+    agent: Gui
+    logs:
+      pty: 005-gui.pty
+      txt: 005-gui.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 52
+        output: 14559
+        cache_read: 1657964
+        cache_write_5m: 0
+        cache_write_1h: 78732
+  - id: 970c925a60a74510ac65b488b33cbec6
+    state: finished
+    seq: 6
+    datetime: '2026-09-25T20:37:11.508Z'
+    team: Autopilot
+    agent: Dave
+    logs:
+      pty: 006-dave.pty
+      txt: 006-dave.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 58
+        output: 11208
+        cache_read: 1718314
+        cache_write_5m: 0
+        cache_write_1h: 86105
+  - id: 4390c1f78fd74a27a23ccdda045b6572
+    state: finished
+    seq: 7
+    datetime: '2026-09-25T20:39:18.344Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 007-paula.pty
+      txt: 007-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 26
+        output: 5529
+        cache_read: 683871
+        cache_write_5m: 0
+        cache_write_1h: 66952
+next_seq: 8

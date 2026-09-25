@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { PaddingOptions } from 'maplibre-gl';
-import { approachingBuses, busesInService } from '../domain/buses';
+import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
 import { lisbonClock } from '../domain/lisbonTime';
 import { nearestStop } from '../domain/nearestStop';
 import { measureShape } from '../domain/shape';
@@ -58,7 +58,7 @@ export function App() {
     [nearest, now, tripsByDayType, shapesById, stopsById],
   );
   const approaching = useMemo(() => approachingBuses(buses), [buses]);
-  const soonest = approaching[0] ?? null;
+  const framedBuses = useMemo(() => soonestPerDirection(approaching), [approaching]);
 
   // ---------- Smart zoom ----------
   const mapRef = useRef<MapHandle>(null);
@@ -66,14 +66,13 @@ export function App() {
 
   const fit = useCallback(() => {
     if (!position || !nearest) return;
-    const points: LatLng[] = [position, nearest.stop.coords];
-    // Only the soonest approaching bus is framed, never every bus in service.
-    if (soonest) points.push(soonest.coords);
+    // The soonest approaching bus in each direction is framed, never every bus in service.
+    const points: LatLng[] = [position, nearest.stop.coords, ...framedBuses.map((b) => b.coords)];
     const padding: PaddingOptions = desktop
       ? { top: 64, right: 96, bottom: 64, left: 24 + DESKTOP_PANEL_WIDTH + 48 }
       : { top: 72, left: 40, right: 80, bottom: (sheetRef.current?.offsetHeight ?? 0) + 48 };
     mapRef.current?.fitTo(points, padding);
-  }, [position, nearest, soonest, desktop]);
+  }, [position, nearest, framedBuses, desktop]);
 
   const readyToFit = position !== null && nearest !== null;
   const [busWaitOver, setBusWaitOver] = useState(false);

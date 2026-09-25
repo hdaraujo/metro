@@ -194,6 +194,10 @@ button {
   line-height: 1.35;
 }
 
+.marker-bus__tag[hidden] {
+  display: none;
+}
+
 .marker-bus__time {
   font-size: 13px;
   font-weight: 700;

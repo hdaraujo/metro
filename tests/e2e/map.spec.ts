@@ -26,6 +26,7 @@ const NEAR_PORTAGEM = { latitude: 40.2075, longitude: -8.4307 };
 const WEEKDAY_10_44_LISBON = new Date('2026-09-23T09:44:00Z');
 
 const U1_TO_VALE_DAS_FLORES = /^Scheduled position of line U1 bus to Vale das Flores, /;
+const U1_TO_COIMBRA_B = /^Scheduled position of line U1 bus to Coimbra B, /;
 const S2_TO_SERPINS = 'Scheduled position of line S2 bus to Serpins';
 
 async function stubNetwork(page: Page) {
@@ -79,12 +80,16 @@ test.describe('located near Portagem', () => {
     await expect(approachingMarker).toBeVisible();
     await expect(approachingMarker).toHaveClass(/marker-bus--approaching/);
     await expect(approachingMarker.locator('.marker-bus__time')).toHaveText(/^\d+:\d{2}$/);
-    await expect(approachingMarker).toContainText('Scheduled');
+    await expect(approachingMarker.locator('.marker-bus__tag')).toHaveText(/^\d+:\d{2}$/);
+    await expect(approachingMarker).not.toContainText('Scheduled');
     const passedMarker = page.getByRole('img', { name: S2_TO_SERPINS, exact: true });
     await expect(passedMarker).toBeAttached();
     await expect(passedMarker).toHaveClass(/marker-bus--dimmed/);
     await expect(passedMarker.locator('.marker-bus__time')).toHaveCount(0);
-    await expect(passedMarker.locator('.marker-bus__tag')).toHaveText('Scheduled');
+    await expect(passedMarker.locator('.marker-bus__tag')).toBeHidden();
+    await expect(passedMarker).not.toContainText('Scheduled');
+    // No bus on the map carries the word; the sheet's single badge covers the list.
+    await expect(page.locator('.marker-bus').getByText('Scheduled')).toHaveCount(0);
     const stopMarker = page.getByRole('img', { name: 'Nearest stop: Portagem' });
     await expect(stopMarker).toBeVisible();
 
@@ -96,6 +101,41 @@ test.describe('located near Portagem', () => {
     const user = await centre(page.getByRole('img', { name: 'Your location' }).boundingBox());
     const stop = await centre(stopMarker.boundingBox());
     expect(Math.hypot(user.x - stop.x, user.y - stop.y)).toBeLessThan(10);
+  });
+
+  test.describe('default view', () => {
+    // Without animation, `fitBounds` lands on the final frame at once.
+    test.use({ reducedMotion: 'reduce' });
+
+    test('default view frames the stop and the soonest bus in each direction', async ({
+      page,
+    }, testInfo) => {
+      await page.goto('/');
+      const sheet = page.getByRole('region', { name: 'Nearest stop' });
+      await expect(sheet).toBeVisible();
+      const markers = [
+        page.getByRole('img', { name: 'Nearest stop: Portagem' }),
+        page.getByRole('img', { name: U1_TO_VALE_DAS_FLORES }),
+        page.getByRole('img', { name: U1_TO_COIMBRA_B }),
+      ];
+      for (const marker of markers) await expect(marker).toBeVisible();
+
+      const viewport = page.viewportSize()!;
+      const mobile = testInfo.project.name === 'mobile';
+      await expect(async () => {
+        const sheetTop = mobile ? (await sheet.boundingBox())!.y : viewport.height;
+        const panelRight = mobile ? 0 : 24 + 380;
+        for (const marker of markers) {
+          const box = (await marker.boundingBox())!;
+          const x = box.x + box.width / 2;
+          const y = box.y + box.height / 2;
+          expect(x).toBeGreaterThan(panelRight);
+          expect(x).toBeLessThan(viewport.width);
+          expect(y).toBeGreaterThan(0);
+          expect(y).toBeLessThan(sheetTop);
+        }
+      }).toPass();
+    });
   });
 
   test('the map loads and the locate button re-frames without errors', async ({ page }) => {
