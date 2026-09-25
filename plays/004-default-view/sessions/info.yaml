@@ -1,0 +1,60 @@
+sessions:
+  - id: 6ec63b9986044c8fa0461a9f670234f5
+    state: finished
+    seq: 1
+    datetime: '2026-09-25T20:27:27.828Z'
+    team: Autopilot
+    agent: Alice
+    logs:
+      pty: 001-alice.pty
+      txt: 001-alice.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T20:28:04.509Z'
+    usage:
+      claude-opus-5-5:
+        input: 18
+        output: 4445
+        cache_read: 395165
+        cache_write_5m: 0
+        cache_write_1h: 38208
+  - id: 38e30417dbbf4582af2d05497eb70fde
+    state: finished
+    seq: 2
+    datetime: '2026-09-25T20:28:56.223Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 002-paula.pty
+      txt: 002-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 6
+        output: 343
+        cache_read: 115484
+        cache_write_5m: 0
+        cache_write_1h: 24418
+  - id: 19a8a4ca06d040eebe3a1905779d5e4d
+    state: finished
+    seq: 3
+    datetime: '2026-09-25T20:29:10.009Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 003-paula.pty
+      txt: 003-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T20:30:34.819Z'
+next_seq: 4

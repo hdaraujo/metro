@@ -1,0 +1,444 @@
+> You are the Autopilot Planner for this play, running in plan mode. Read `plays/004-default-view/CLAUDE.md` and `plays/004-default-view/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `plays/004-default-view/design/` folder exists, this play already has a UI design I approved: read `plays/004-default-view/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-planner)
+  ⎿ Launching skill: autopilot-planner
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\.claude\skills\autopilot-planner
+
+You are the Autopilot Planner for this play, opened as an interactive session that the user drives directly. Your job is to shape a complete, unambiguous implementation plan from `$play/CLAUDE.md` and `$play/intent.md` — that plan becomes the Developer's sole specification. Do NOT start planning on your own: wait for the user's first message and follow their direction.
+
+## 1. Design triage (before any planning)
+
+You are the Autopilot Planner for this play, but you are NOT writing the implementation plan yet — that happens in a separate session straight after this one. This session exists to answer ONE question and, depending on the answer, to produce a visual design.
+
+STEP 1 — Read `$play/CLAUDE.md` and `$play/intent.md`, plus the project context documents named below. Then decide: does this play introduce a NEW user-facing screen, page, view or surface? Be strict about this. Changing, extending or restyling a screen that already exists does NOT count, and neither does work with no user interface at all (an API, a job, a migration, a refactor).
+
+STEP 2 — If the answer is NO: do nothing else. End your turn with a single line saying this play introduces no new user interface, so planning can start. That must be a statement, NOT a question — the statement is what hands off to planning.
+
+STEP 3 — If the answer is YES: end your turn with a clear question — ending in a question mark, which is what tells the app you are waiting on me — asking whether I want you to design a visual prototype of the new screens before you write the implementation plan. Name the screens you mean, in one line each, so I know what I would be getting. Then wait for my answer.
+- If I decline, end your turn with a single line saying we are going straight to planning — again a statement, not a question.
+- If I accept, do STEP 4.
+
+STEP 4 — Write the design brief, and STOP. Do NOT try to run the `design` skill yourself: it is reserved for explicit user invocation and the Skill tool will refuse it. I will run it for you the moment your brief is on disk.
+
+Write the brief to `$play/design/brief.md` — one short paragraph on what the product is, who it is for and the look and feel it should have, then one line per new screen naming it and saying what it does. Brief it from intent.md, the product vision and the tech stack, and look at the attached repositories first: if this product already has a frontend, say so and name its real colours, type and spacing so the design matches rather than inventing a new look. End the brief by saying the canvas payload must be saved as `$play/design/canvas.html`.
+
+Keep it compact — it is passed to the design skill as a single line, so write it as flowing prose with no headings, no bullet characters and no code blocks. Then end your turn with one short statement saying the brief is ready. NOT a question: that statement is what starts the design run.
+
+STEP 5 — Once the design skill has produced the canvas, leave the design in two places, both of which matter:
+1. `$play/design/design.md` — the published canvas URL, then one line per screen saying what it is and what it does. The Planner and the Developer read this file; keep it short and factual.
+2. `documentation/design/<play-id>-<play-name>-prototype.html` — how I actually LOOK at the prototype, from the Documentation tab of the project screen. Create the folder if it is not there. This file is rendered inside a sandboxed iframe with NO scripting, NO navigation and NO network, so it must be ONE self-contained page: every artboard's markup stacked one under another with a heading naming the screen, every style inline or in a `<style>` block in that same file, no script tags, and no references to any external file, font or image (inline any image as a data URI). Put the canvas URL at the top as plain visible text as well as a link — a link alone cannot be opened from that sandbox. Do NOT copy the canvas payload itself here; it needs JavaScript and would render as a blank page.
+
+If the canvas cannot be PUBLISHED, that is fine: keep the artboards the skill produced, still write both documents from them, and say plainly that the canvas was not published. That is the only fallback. If the design skill did not run at all, do NOT hand-write a canvas file or a prototype in its place — say plainly that the skill did not run and stop, so the problem is visible instead of being papered over with something that only looks like a design.
+
+STEP 6 — Hand the prototype to me for review, and STOP. Once both documents are written, end your turn by telling me in a few lines what you designed and where I can look at it, and then ASKING me to review the prototype and confirm it is what I want before you plan the implementation. End that turn on that question and wait — planning does not start until I have approved the design.
+- If I ask for changes, revise the design and both documents, then ask me again. Keep ending those turns on a question.
+- Only once I have actually approved it, end your turn with a single short statement saying the design is approved. That statement — and nothing else — is what starts the planning session. Never write it while I still owe you an answer.
+
+You are designing only. Do not modify anything in the repositories, do not implement anything, and do not write `$play/plan.md`.
+
+## 2. The implementation plan
+
+You are the Autopilot Planner for this play, running in plan mode. Read `$play/CLAUDE.md` and `$play/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+## 3. Documenting what shipped (once the play is approved)
+
+You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `$branch`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `$play/intent.md` and `$play/plan.md`, then read the real changes on the `$branch` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\plays\004-default...)
+  ⎿ 1	# Play `004` — Autopilot session instructions
+  ⎿ 2	
+  ⎿ 3	This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ 4	vision + tech stack, the Planner then checks whether the play introduces a new
+  ⎿ 5	user interface and — if the user wants one — designs a visual prototype before
+  ⎿ 6	shaping an implementation plan (in plan mode), DevOps prepares an isolated git
+  ⎿ 7	worktree carrying the play's branch in each target repo, the Developer implements
+  ⎿ 8	the plan inside those worktrees, then DevOps commits the changes and posts testing
+  ⎿ 9	instructions before the play goes to validation.
+  ⎿ 10	
+  ⎿ 11	Your session starts at the root of the project's **specs repository** — the one
+  ⎿ 12	holding `documentation/` and `plays/`. While this play is in progress that root is
+  ⎿ 13	its own git worktree, checked out on the play's branch, so everything you write
+  ⎿ 14	here belongs to this play and lands on the default branch as a single commit
+  ⎿ 15	when the play closes.
+  ⎿ 16	
+  ⎿ 17	## Product context (read first)
+  ⎿ 18	
+  ⎿ 19	This project's `documentation/context/` folder holds context documents shared by
+  ⎿ 20	every play — the product vision and tech stack the Architect maintains, plus any
+  ⎿ … +28 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\plays\004-default...)
+  ⎿ 1	Remove the Scheduled label below the buses.
+  ⎿ 2	
+  ⎿ 3	Default zoom should show the nearest bus stop and both nearest buses arriving from each side. 
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\con...)
+  ⎿ 1	<!--
+  ⎿ 2	  Product Vision — maintained by the Autopilot Architect.
+  ⎿ 3	  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿ 4	  so keep it CONCISE: a shared north star every play must conform to, not a spec.
+  ⎿ 5	-->
+  ⎿ 6	
+  ⎿ 7	# Product Vision
+  ⎿ 8	
+  ⎿ 9	## Problem
+  ⎿ 10	Coimbra Metrobus riders can't easily see where the buses are right now or how soon one
+  ⎿ 11	will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿ 12	
+  ⎿ 13	## Vision
+  ⎿ 14	A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ 15	Metrobus stop, the live position of every Metrobus bus, and how many minutes each
+  ⎿ 16	approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ 17	
+  ⎿ 18	## Target users
+  ⎿ 19	- **Primary: the owner.** A regular Metrobus rider checking a phone before heading out.
+  ⎿ 20	  They need to see at a glance how far away the next buses are.
+  ⎿ … +20 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\con...)
+  ⎿ 1	<!--
+  ⎿ 2	  Tech Stack — maintained by the Autopilot Architect.
+  ⎿ 3	  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿ 4	  so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿ 5	  per-repository section below must make it explicit which technology each repo uses —
+  ⎿ 6	  that is the Developer's source of truth for what to build with, where.
+  ⎿ 7	-->
+  ⎿ 8	
+  ⎿ 9	# Tech Stack
+  ⎿ 10	
+  ⎿ 11	## Architecture overview
+  ⎿ 12	- **One repo (`metro`), npm-workspaces monorepo:** `apps/api` (Node backend), `apps/web`
+  ⎿ 13	  (React PWA), `packages/shared` (TypeScript types and pure logic shared by both).
+  ⎿ 14	- **Data flow:** data source → `api` (fetch, cache, normalise, compute) → small JSON API → `web`.
+  ⎿ 15	  The web app never calls third-party data sources directly.
+  ⎿ 16	- **Data sources, behind source adapters in `api`.** Each source is one adapter that maps into
+  ⎿ 17	  our own domain model (stops, line shapes, trips). Nothing outside an adapter knows a source's format.
+  ⎿ 18	  - **Timetable (current):** Horários Metrobus, the Metro Mondego planner app. Undocumented
+  ⎿ 19	    static JSON, no stated licence, and it may change without notice:
+  ⎿ 20	    - `https://planearviagem.metromondego.pt/data/stops.json`: stops with id, code, name,
+  ⎿ … +57 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls plays/..., description: List play folder, vision diff and source tree)
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ diff --git a/documentation/context/vision.md b/documentation/context/vision.md
+  ⎿ index 289f4b4..f9c3192 100644
+  ⎿ --- a/documentation/context/vision.md
+  ⎿ +++ b/documentation/context/vision.md
+  ⎿ @@ -24,9 +24,10 @@ approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿  ## Core value & principles
+  ⎿  - **Glanceable.** Open it, see the map, get the answer in seconds. The map is the product.
+  ⎿  - **Real time, honestly labelled.** Bus positions and "minutes away" update continuously. Until
+  ⎿ -  a live feed exists, they are estimated from the timetable and clearly labelled "scheduled". Live
+  ⎿ -  data replaces the estimates when it becomes available. Estimated or stale data is never shown
+  ⎿ -  as live.
+  ⎿ +  a live feed exists, they are estimated from the timetable and clearly marked as scheduled: a
+  ⎿ +  visible label covers them, and a scheduled bus always looks different from a live one, though
+  ⎿ … +16 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git ls-fi..., description: List tracked files and play metadata)
+  ⎿ .claude/settings.json
+  ⎿ .claude/skills/autopilot-architect/SKILL.md
+  ⎿ .claude/skills/autopilot-developer/SKILL.md
+  ⎿ .claude/skills/autopilot-devops/SKILL.md
+  ⎿ .claude/skills/autopilot-planner/SKILL.md
+  ⎿ .claude/skills/manual-claude/SKILL.md
+  ⎿ .editorconfig
+  ⎿ .github/workflows/pages.yml
+  ⎿ .gitignore
+  ⎿ .nvmrc
+  ⎿ .prettierignore
+  ⎿ .prettierrc.json
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ documentation/context/.gitkeep
+  ⎿ documentation/context/tech.md
+  ⎿ documentation/context/vision.md
+  ⎿ documentation/design/001-project-structure-prototype.html
+  ⎿ documentation/modules/.gitkeep
+  ⎿ documentation/modules/app-platform.md
+  ⎿ … +92 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git ls-fi..., description: List remaining files, read map-screen doc and package.json)
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop, every Metrobus bus in service, and a countdown for each bus
+  ⎿ heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content. Its grab handle is
+  ⎿   decorative, and the sheet cannot be dragged.
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet. The locate button sits at the bottom right, with the
+  ⎿   attribution below it.
+  ⎿ - The page never scrolls (`100dvh`). All styling is plain CSS with custom properties
+  ⎿   (`src/ui/styles/tokens.css` and `app.css`). There is no CSS framework, and the Aptos fonts in the
+  ⎿   font stacks are not bundled, so they fall back to Segoe UI or the system font.
+  ⎿ … +150 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git ls-fi..., description: List remaining source and test files)
+  ⎿ Exit code 2
+  ⎿ src/ui/sheet/LocationOffContent.tsx
+  ⎿ src/ui/sheet/NearestStopContent.tsx
+  ⎿ src/ui/sheet/ScheduledBadge.tsx
+  ⎿ src/ui/sheet/Sheet.tsx
+  ⎿ src/ui/styles/app.css
+  ⎿ src/ui/styles/tokens.css
+  ⎿ tests/e2e/map.spec.ts
+  ⎿ tests/fixtures/README.md
+  ⎿ tests/fixtures/route-shapes.json
+  ⎿ tests/fixtures/stops.json
+  ⎿ tests/fixtures/trips-DU.sample.json
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ dist
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ node_modules
+  ⎿ package-lock.json
+  ⎿ … +9 more lines
+
+● Reading the map, marker and framing code now, so the plan points at the real functions.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git ls-fi..., description: List UI files and line counts)
+  ⎿ src/ui/hooks/useNow.ts
+  ⎿ src/ui/hooks/useTimetable.ts
+  ⎿ src/ui/icons.tsx
+  ⎿ src/ui/map/MapView.tsx
+  ⎿ src/ui/map/mapStyle.ts
+  ⎿ src/ui/map/markers.ts
+  ⎿ src/ui/sheet/ApproachingBuses.tsx
+  ⎿ src/ui/sheet/DataErrorContent.tsx
+  ⎿ src/ui/sheet/LineChip.tsx
+  ⎿ src/ui/sheet/LocatingContent.tsx
+  ⎿ src/ui/sheet/LocationOffContent.tsx
+  ⎿ src/ui/sheet/NearestStopContent.tsx
+  ⎿ src/ui/sheet/ScheduledBadge.tsx
+  ⎿ src/ui/sheet/Sheet.tsx
+  ⎿ src/ui/styles/app.css
+  ⎿ src/ui/styles/tokens.css
+  ⎿   281 src/ui/map/MapView.tsx
+  ⎿    34 src/ui/map/mapStyle.ts
+  ⎿   104 src/ui/map/markers.ts
+  ⎿   170 src/ui/App.tsx
+  ⎿ … +4 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\src\ui\map\MapVie...)
+  ⎿ 1	import 'maplibre-gl/dist/maplibre-gl.css';
+  ⎿ 2	import {
+  ⎿ 3	  LngLatBounds,
+  ⎿ 4	  Map as MapLibreMap,
+  ⎿ 5	  Marker,
+  ⎿ 6	  setWorkerUrl,
+  ⎿ 7	  type GeoJSONSource,
+  ⎿ 8	  type MarkerOptions,
+  ⎿ 9	  type PaddingOptions,
+  ⎿ 10	} from 'maplibre-gl';
+  ⎿ 11	// MapLibre 6 loads its worker from a separate module next to its own file, which a bundle does not
+  ⎿ 12	// have; let Vite build the worker and point MapLibre at it.
+  ⎿ 13	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+  ⎿ 14	import type { FeatureCollection } from 'geojson';
+  ⎿ 15	import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
+  ⎿ 16	import type { BusPosition, LatLng, LineId, Network, Stop } from '../../domain/types';
+  ⎿ 17	import { prefersReducedMotion } from '../hooks/useMediaQuery';
+  ⎿ 18	import { mapStyle } from './mapStyle';
+  ⎿ 19	import {
+  ⎿ 20	  createBusMarker,
+  ⎿ … +262 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\src\ui\map\marker...)
+  ⎿ 1	/** DOM builders for the map's markers. Styles live in `styles/app.css` (`.marker-*`). */
+  ⎿ 2	import { readableTextColor } from '../../domain/color';
+  ⎿ 3	import { formatCountdown, spokenCountdown } from '../../domain/countdown';
+  ⎿ 4	
+  ⎿ 5	// The same bus glyph as `BusIcon` in `icons.tsx`, as markup for a non-React element.
+  ⎿ 6	const BUS_ICON_SVG =
+  ⎿ 7	  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+  ⎿ 8	  '<path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 11h16"/>' +
+  ⎿ 9	  '<path d="M8 15h.01"/><path d="M16 15h.01"/><path d="M6 18v2"/><path d="M18 18v2"/></svg>';
+  ⎿ 10	
+  ⎿ 11	function div(className: string): HTMLDivElement {
+  ⎿ 12	  const el = document.createElement('div');
+  ⎿ 13	  el.className = className;
+  ⎿ 14	  return el;
+  ⎿ 15	}
+  ⎿ 16	
+  ⎿ 17	/** The user's position: an 18px blue dot inside a 68px halo. */
+  ⎿ 18	export function createUserMarker(): HTMLElement {
+  ⎿ 19	  const el = div('marker-user');
+  ⎿ 20	  el.setAttribute('role', 'img');
+  ⎿ … +85 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\src\domain\buses.ts)
+  ⎿ 1	import { dayTypeFor } from './holidays';
+  ⎿ 2	import { positionAt } from './interpolation';
+  ⎿ 3	import { previousDate, type LisbonClock } from './lisbonTime';
+  ⎿ 4	import { stopDistancesForTrip, type MeasuredShape } from './shape';
+  ⎿ 5	import type { BusPosition, DayType, Direction, LatLng, LineId, Stop, Trip } from './types';
+  ⎿ 6	
+  ⎿ 7	const DAY_SECONDS = 86_400;
+  ⎿ 8	/** Before this Lisbon time, trips from yesterday's service day (times past 24:00) may still run. */
+  ⎿ 9	const PREVIOUS_SERVICE_DAY_UNTIL = 4 * 3600;
+  ⎿ 10	
+  ⎿ 11	export interface BusesInput {
+  ⎿ 12	  /** The selected (nearest) stop, or null when none is known yet. */
+  ⎿ 13	  stop: Stop | null;
+  ⎿ 14	  clock: LisbonClock;
+  ⎿ 15	  tripsByDayType: ReadonlyMap<DayType, readonly Trip[]>;
+  ⎿ 16	  shapesById: ReadonlyMap<string, MeasuredShape>;
+  ⎿ 17	  stopsById: ReadonlyMap<string, Stop>;
+  ⎿ 18	  now: Date;
+  ⎿ 19	}
+  ⎿ 20	
+  ⎿ … +113 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\src\ui\App.tsx)
+  ⎿ 1	import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿ 2	import type { PaddingOptions } from 'maplibre-gl';
+  ⎿ 3	import { approachingBuses, busesInService } from '../domain/buses';
+  ⎿ 4	import { lisbonClock } from '../domain/lisbonTime';
+  ⎿ 5	import { nearestStop } from '../domain/nearestStop';
+  ⎿ 6	import { measureShape } from '../domain/shape';
+  ⎿ 7	import type { LatLng } from '../domain/types';
+  ⎿ 8	import { Attribution } from './chrome/Attribution';
+  ⎿ 9	import { LocateButton } from './chrome/LocateButton';
+  ⎿ 10	import { Wordmark } from './chrome/Wordmark';
+  ⎿ 11	import { useGeolocation } from './hooks/useGeolocation';
+  ⎿ 12	import { useMediaQuery } from './hooks/useMediaQuery';
+  ⎿ 13	import { useNetwork } from './hooks/useNetwork';
+  ⎿ 14	import { useNow } from './hooks/useNow';
+  ⎿ 15	import { useTimetable } from './hooks/useTimetable';
+  ⎿ 16	import { MapView, type MapHandle } from './map/MapView';
+  ⎿ 17	import { DataErrorContent } from './sheet/DataErrorContent';
+  ⎿ 18	import { LocatingContent } from './sheet/LocatingContent';
+  ⎿ 19	import { LocationOffContent } from './sheet/LocationOffContent';
+  ⎿ 20	import { NearestStopContent } from './sheet/NearestStopContent';
+  ⎿ … +151 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && head -c 1..., description: Inspect stops fixture and domain types)
+  ⎿ [
+  ⎿   {
+  ⎿     "id": "271",
+  ⎿     "code": "cbr_mm029",
+  ⎿     "name": "Açude",
+  ⎿     "lines": [
+  ⎿       "S1",
+  ⎿       "U1",
+  ⎿       "U3"
+  ⎿     ],
+  ⎿     "isSuburbanOnly": false,
+  ⎿     "coords": {
+  ⎿       "lat": 40.21697,
+  ⎿       "lng": -8.438565
+  ⎿     }
+  ⎿   },
+  ⎿   {
+  ⎿     "id": "269",
+  ⎿     "code": "cbr_mm027",
+  ⎿     "name": "Aeminium",
+  ⎿ … +189 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && head -c 8..., description: Inspect trips fixture and direction mapping)
+  ⎿ [
+  ⎿   {
+  ⎿     "id": "s1-DU-0-633",
+  ⎿     "line": "S1",
+  ⎿     "lineType": "suburbana",
+  ⎿     "dayType": "DU",
+  ⎿     "direction": "P-S",
+  ⎿     "finalDestination": "Corvo",
+  ⎿     "stops": [
+  ⎿       {
+  ⎿         "name": "Coimbra B",
+  ⎿         "time": "07:40:00"
+  ⎿       },
+  ⎿       {
+  ⎿         "name": "Casa do Sal",
+  ⎿         "time": "07:41:18"
+  ⎿       },
+  ⎿       {
+  ⎿         "name": "Açude",
+  ⎿         "time": "07:42:25"
+  ⎿ … +28 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && node -e "..., description: Summarise trip stop sequences per line and direction)
+  ⎿ S1 P-S: Coimbra B > Casa do Sal > Açude > Arnado > Aeminium > Portagem > Parque > Colégios > Arregaça > Norton de Matos > São José > Solum > Fernando Namora > Casa Branca > Vale das Flores > Portela > Quinta da Ponte > Ceira > Sobral de Ceira > Vale de Açor > Trémoa > Moinhos > Lobazes > Miranda do Corvo > Corvo
+  ⎿ 
+  ⎿ S2 P-S: República (desc) > Mercado (desc) > Câmara (desc) > Loja do Cidadão > Portagem > Parque > Colégios > Arregaça > Norton de Matos > São José > Solum > Fernando Namora > Casa Branca > Vale das Flores > Portela > Quinta da Ponte > Ceira > Sobral de Ceira > Vale de Açor > Trémoa > Moinhos > Lobazes > Miranda do Corvo > Corvo > Padrão > Meiral > Lousã - Parque de Exposições > Lousã - Estação > Casal do Espírito Santo > Casal de Santo António > Serpins
+  ⎿ 
+  ⎿ U1 P-S: Coimbra B > Casa do Sal > Açude > Arnado > Aeminium > Portagem > Parque > Colégios > Arregaça > Norton de Matos > São José > Solum > Fernando Namora > Casa Branca > Vale das Flores
+  ⎿ 
+  ⎿ U1 S-P: Vale das Flores > Casa Branca > Fernando Namora > Solum > São José > Norton de Matos > Arregaça > Colégios > Parque > Portagem > Aeminium > Arnado > Açude > Casa do Sal > Coimbra B
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat src/u..., description: Read badge, list, wordmark, bus CSS and e2e references)
+  ⎿ /** Marks a position or time as estimated from the timetable, never live. */
+  ⎿ export function ScheduledBadge() {
+  ⎿   return <span className="scheduled-badge">Scheduled</span>;
+  ⎿ }
+  ⎿ import { formatCountdown, spokenCountdown } from '../../domain/countdown';
+  ⎿ import type { BusPosition, LineId } from '../../domain/types';
+  ⎿ import { LineChip } from './LineChip';
+  ⎿ import { ScheduledBadge } from './ScheduledBadge';
+  ⎿ 
+  ⎿ /** At most this many rows, so the phone sheet never pushes the page into scrolling. */
+  ⎿ const MAX_ROWS = 5;
+  ⎿ 
+  ⎿ interface ApproachingBusesProps {
+  ⎿   /** The buses heading to the stop, soonest first. */
+  ⎿   buses: readonly BusPosition[];
+  ⎿   colorOf: (line: LineId) => string;
+  ⎿ }
+  ⎿ 
+  ⎿ /** The buses heading to the nearest stop, each with a countdown, all under one Scheduled badge. */
+  ⎿ export function ApproachingBuses({ buses, colorOf }: ApproachingBusesProps) {
+  ⎿ … +96 more lines
+
+● I've read the map, marker and framing code. Two points in the intent could be read more than one way, so I'll ask before writing the plan.
+
+  → AskUserQuestion(questions: [{"question":"When 'Scheduled' is removed from under the map buses, what shou...)
+  ⎿ Your questions have been answered: "When 'Scheduled' is removed from under the map buses, what should happen to the countdown tag under a bus heading to your stop (it currently reads '3:04 Scheduled')?"="Keep countdown only (Recommended)", "Vision says a visible label must cover scheduled buses. When location is off or still loading, the sheet has no Scheduled badge, so the map buses would have no label at all. What should we do?"="Sheet badge is enough", "'Both nearest buses arriving from each side': how should the default zoom pick the buses?"="Soonest per direction (Recommended)". You can now continue with these answers in mind.
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\tests\e2e\map.spe...)
+  ⎿ 1	import { readFileSync } from 'node:fs';
+  ⎿ 2	import { expect, test, type Page } from '@playwright/test';
+  ⎿ 3	
+  ⎿ 4	const fixture = (name: string) =>
+  ⎿ 5	  readFileSync(new URL(`../fixtures/${name}`, import.meta.url), 'utf8');
+  ⎿ 6	
+  ⎿ 7	const FIXTURES: Record<string, string> = {
+  ⎿ 8	  'stops.json': fixture('stops.json'),
+  ⎿ 9	  'route-shapes.json': fixture('route-shapes.json'),
+  ⎿ 10	  // Every day type gets the weekday sample; the clock below is a weekday anyway.
+  ⎿ 11	  trips: fixture('trips-DU.sample.json'),
+  ⎿ 12	};
+  ⎿ 13	
+  ⎿ 14	const TRANSPARENT_PNG = Buffer.from(
+  ⎿ 15	  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+  ⎿ 16	  'base64',
+  ⎿ 17	);
+  ⎿ 18	
+  ⎿ 19	/** Portagem stop, Coimbra. */
+  ⎿ 20	const NEAR_PORTAGEM = { latitude: 40.2075, longitude: -8.4307 };
+  ⎿ … +160 more lines
+  → Write(file_path: C:\Users\Hugo\.claude\plans\you-are-the-autopilot-quirky-raccoon.md, content: # Play 004 — Default view: fewer map labels, and a first frame that shows bot...)
+  ⎿ File created successfully at: C:\Users\Hugo\.claude\plans\you-are-the-autopilot-quirky-raccoon.md (file state is current in your context — no need to Read it back)
+  → ToolSearch(query: select:ExitPlanMode, max_results: 1)

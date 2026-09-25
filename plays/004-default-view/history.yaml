@@ -1,0 +1,17 @@
+events:
+  - kind: transition
+    at: '2026-09-25T20:27:27.790Z'
+    from: ideation
+    to: working
+  - kind: decision
+    at: '2026-09-25T20:28:44.248Z'
+    question: I read the intent for play 004, `vision.md`, `tech.md` and the map-screen module doc. The zoom change fits the vision and needs no change to either document; how the map frames things is up to the Pl…
+    agent: Alice
+    resolution: answered
+    session_id: 6ec63b9986044c8fa0461a9f670234f5
+  - kind: decision
+    at: '2026-09-25T20:32:18.024Z'
+    question: Is asking for a clarification
+    agent: Paula
+    resolution: answered
+    session_id: 19a8a4ca06d040eebe3a1905779d5e4d

@@ -1,0 +1,104 @@
+> You are the Autopilot Architect for this play — you run FIRST, before the Planner. You own two PRODUCT-LEVEL documents shared by every play in this project: the product vision at `documentation/context/vision.md` and the tech stack at `documentation/context/tech.md` (both under `documentation/context/`, relative to the repository root you are in). Keep BOTH concise — they are loaded into every other agent's context, like CLAUDE.md. That folder may hold further context documents the user added; read and respect those too, but they are the user's — only these two are yours to write.
+
+REVIEW: `documentation/context/vision.md` and `documentation/context/tech.md` already exist. Read `plays/004-default-view/intent.md`, then read both documents. Validate that this play's intent is consistent with the product vision. If the intent implies changes to the vision or the tech stack — a new goal, a new technology, an additional repository — update `documentation/context/vision.md` and/or `documentation/context/tech.md` to keep them accurate and concise. Ask me before making any substantive change.
+
+Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cat plays/004-default-view/intent.md; echo ----; cat documentation/context/vi..., description: Read play intent and context documents)
+  ⎿ Remove the Scheduled label below the buses.
+  ⎿ 
+  ⎿ Default zoom should show the nearest bus stop and both nearest buses arriving from each side. ----
+  ⎿ <!--
+  ⎿   Product Vision — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE: a shared north star every play must conform to, not a spec.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Product Vision
+  ⎿ 
+  ⎿ ## Problem
+  ⎿ Coimbra Metrobus riders can't easily see where the buses are right now or how soon one
+  ⎿ will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿ 
+  ⎿ ## Vision
+  ⎿ A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ Metrobus stop, the live position of every Metrobus bus, and how many minutes each
+  ⎿ approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ 
+  ⎿ … +110 more lines
+  → Bash(command: cat plays/004-default-view/CLAUDE.md plays/004-default-view/config.yaml; grep..., description: Check play files and how the web app labels scheduled data)
+  ⎿ # Play `004` — Autopilot session instructions
+  ⎿ 
+  ⎿ This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ vision + tech stack, the Planner then checks whether the play introduces a new
+  ⎿ user interface and — if the user wants one — designs a visual prototype before
+  ⎿ shaping an implementation plan (in plan mode), DevOps prepares an isolated git
+  ⎿ worktree carrying the play's branch in each target repo, the Developer implements
+  ⎿ the plan inside those worktrees, then DevOps commits the changes and posts testing
+  ⎿ instructions before the play goes to validation.
+  ⎿ 
+  ⎿ Your session starts at the root of the project's **specs repository** — the one
+  ⎿ holding `documentation/` and `plays/`. While this play is in progress that root is
+  ⎿ its own git worktree, checked out on the play's branch, so everything you write
+  ⎿ here belongs to this play and lands on the default branch as a single commit
+  ⎿ when the play closes.
+  ⎿ 
+  ⎿ ## Product context (read first)
+  ⎿ 
+  ⎿ This project's `documentation/context/` folder holds context documents shared by
+  ⎿ every play — the product vision and tech stack the Architect maintains, plus any
+  ⎿ … +36 more lines
+  → Bash(command: ls; cat documentation/modules/map-screen.md; git ls-files | grep -i web | head, description: Read map screen module doc and locate web code)
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ dist
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ node_modules
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ plays
+  ⎿ playwright.config.ts
+  ⎿ public
+  ⎿ pwa-assets.config.ts
+  ⎿ src
+  ⎿ tests
+  ⎿ tsconfig.json
+  ⎿ vite.config.ts
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ … +118 more lines
+
+● I read the intent for play 004, `vision.md`, `tech.md` and the map-screen module doc. The zoom change fits the vision and needs no change to either document; how the map frames things is up to the Planner. Removing the label is different: it clashes with one of the vision's principles, so I need your decision first.
+
+**The clash.** The vision says estimated data is "clearly labelled 'scheduled'" and "never shown as live". Right now every bus marker on the map has a "Scheduled" tag under it, and the tag holds that bus's countdown (e.g. `3:04 Scheduled`). The tag was put there so a countdown on the map can't be mistaken for a live time.
+
+The intent can still be met honestly, because the screen already marks estimates in other places:
+- a single **Scheduled** badge on the "Heading to this stop" list in the sheet;
+- the note under that list ("Positions and times estimated from the timetable…");
+- the **dashed border** on every bus marker, which is how the design marks an estimated position.
+
+**What I'd change.** I'd reword only that one principle in `vision.md`, to say that estimates must be clearly marked on screen but each bus doesn't need its own label:
+
+> **Real time, honestly labelled.** Bus positions and "minutes away" update continuously. Until a live feed exists, they are estimated from the timetable and clearly marked as scheduled: a visible label covers them, and a scheduled bus always looks different from a live one, though it need not carry its own label. Live data replaces the estimates when it becomes available. Estimated or stale data is never shown as live.
+
+`tech.md` stays as it is: its rule that "the UI always shows which one it is" still holds.
+
+The Planner will settle whether the map countdown next to each approaching bus stays once the tag is gone.
+
+Should I apply this rewording to `vision.md`, or would you rather keep a per-bus label and narrow this play's intent?
+
+> yes, apply the rewording
+
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\con..., old_string: - **Real time, honestly labelled.** Bus positions and "minutes away" update c..., new_string: - **Real time, honestly labelled.** Bus positions and "minutes away" update c...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\context\vision.md has been updated successfully.
+
+● I've applied your rewording to the "Real time, honestly labelled" principle in `documentation/context/vision.md`. Estimates must still be clearly marked as scheduled on screen, but each bus no longer needs its own label, so this play can remove the "Scheduled" tag under the bus markers.
+
+I left `tech.md` unchanged: nothing in it conflicts with this play. The new default zoom, framing the nearest stop and the nearest approaching bus on each side, fits the vision and is for the Planner to design. The Planner will also decide whether an approaching bus keeps its countdown on the map once the tag is gone.
+
+The vision and tech stack are ready for this play, so it can go to the Planner.
