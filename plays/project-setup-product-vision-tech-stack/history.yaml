@@ -1,0 +1,67 @@
+events:
+  - kind: decision
+    at: '2026-09-25T17:19:13.522Z'
+    question: 'The project''s context folder is empty for now, so we''re starting from scratch. **In your own words, what is your vision for this product: what are you building, who is it for, and what problem does i…'
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: decision
+    at: '2026-09-25T17:20:48.013Z'
+    question: 'Here''s what I understand so far: a mobile-first web app that shows Coimbra''s Metrobus buses moving on a map in real time. Before we get to features, I want to pin down the person using it and what th…'
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: decision
+    at: '2026-09-25T17:21:47.584Z'
+    question: So the main user is you, though anyone could use it. You open the app, it uses your location to find the stop(s) near you, and it helps you decide when to leave. "Help me decide when to leave" could …
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: decision
+    at: '2026-09-25T17:22:20.646Z'
+    question: That makes it clear. The app is a glanceable live map with no trip planning. It shows where you are, your nearest stop, the Metrobus buses in real time, and how far each approaching bus is from that …
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: decision
+    at: '2026-09-25T17:23:17.836Z'
+    question: 'I wrote a first draft of `documentation/context/vision.md`. In summary: - **Problem:** there''s no easy way to see where Metrobus buses are or how soon one reaches your stop. - **Vision:** a mobile-fi…'
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: decision
+    at: '2026-09-25T17:25:38.197Z'
+    question: The vision is locked in, so on to the tech stack. **What technology and architecture do you have in mind for this product, including languages, frameworks, hosting, and where you expect the real-time…
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: decision
+    at: '2026-09-25T17:27:19.710Z'
+    question: 'Noted: - **Backend:** Node 24 - **Frontend:** React + Vite - **Language:** TypeScript 7 - **Versions:** latest for everything - **UI:** mobile first, adapts responsively to desktop, installable as a …'
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: decision
+    at: '2026-09-25T17:39:59.384Z'
+    question: 'I''ve finished the research. Here''s where the data stands today: **Agit Planner API** ([docs](https://api.planner.agit.pt/docs/v1/)) is the best fit, and I found nothing better. - It has a `metro-mond…'
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: decision
+    at: '2026-09-25T17:42:26.929Z'
+    question: 'I found where Horários Metrobus gets its timetable. It loads static JSON files from its own domain: | File | Contents | | --- | --- | | `/data/stops.json` | 39 stops, each with id, code, name, lat/ln…'
+    agent: Alice
+    resolution: answered
+    session_id: 3e7ad45b5f8e4467a66b6dedd835280c
+  - kind: transition
+    at: '2026-09-25T17:43:07.439Z'
+    from: ideation
+    to: working
+  - kind: transition
+    at: '2026-09-25T17:43:07.445Z'
+    from: working
+    to: validation
+  - kind: transition
+    at: '2026-09-25T17:43:07.452Z'
+    from: validation
+    to: completed

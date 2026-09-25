@@ -1,0 +1,30 @@
+sessions:
+  - id: 3e7ad45b5f8e4467a66b6dedd835280c
+    state: finished
+    seq: 1
+    datetime: '2026-09-25T17:15:41.357Z'
+    team: Autopilot
+    agent: Alice
+    logs:
+      pty: 001-alice.pty
+      txt: 001-alice.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T17:41:02.362Z'
+    usage:
+      <synthetic>:
+        input: 0
+        output: 0
+        cache_read: 0
+        cache_write_5m: 0
+        cache_write_1h: 0
+      claude-opus-5-5:
+        input: 152
+        output: 32741
+        cache_read: 3293917
+        cache_write_5m: 0
+        cache_write_1h: 94389
+next_seq: 2
