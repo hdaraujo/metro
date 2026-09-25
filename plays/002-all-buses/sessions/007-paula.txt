@@ -1,0 +1,215 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `002-all-buses`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/002-all-buses/intent.md` and `plays/002-all-buses/plan.md`, then read the real changes on the `002-all-buses` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/`, which is yours to write in this session.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c..., description: Read context, play docs, and documentation tree)
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿   per-repository section below must make it explicit which technology each repo uses —
+  ⎿   that is the Developer's source of truth for what to build with, where.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Tech Stack
+  ⎿ 
+  ⎿ ## Architecture overview
+  ⎿ - **One repo (`metro`), npm-workspaces monorepo:** `apps/api` (Node backend), `apps/web`
+  ⎿   (React PWA), `packages/shared` (TypeScript types and pure logic shared by both).
+  ⎿ - **Data flow:** data source → `api` (fetch, cache, normalise, compute) → small JSON API → `web`.
+  ⎿   The web app never calls third-party data sources directly.
+  ⎿ - **Data sources, behind source adapters in `api`.** Each source is one adapter that maps into
+  ⎿   our own domain model (stops, line shapes, trips). Nothing outside an adapter knows a source's format.
+  ⎿   - **Timetable (current):** Horários Metrobus, the Metro Mondego planner app. Undocumented
+  ⎿     static JSON, no stated licence, and it may change without notice:
+  ⎿     - `https://planearviagem.metromondego.pt/data/stops.json`: stops with id, code, name,
+  ⎿ … +485 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c..., description: Read existing module docs and branch log)
+  ⎿ # App platform
+  ⎿ 
+  ⎿ Metro is one static, client-side React PWA at the root of the `metro` repository. It has no
+  ⎿ server, no database and no accounts. The code is organised as follows:
+  ⎿ - `src/sources/`: data source adapters.
+  ⎿ - `src/domain/`: pure logic and types.
+  ⎿ - `src/ui/`: React, MapLibre and CSS.
+  ⎿ - `tests/`: fixtures and Playwright end-to-end tests.
+  ⎿ 
+  ⎿ `README.md` lists the scripts and how to run the app.
+  ⎿ 
+  ⎿ ## Build and hosting
+  ⎿ 
+  ⎿ - Vite builds the app into `dist/` with `base: './'`, so every path is relative and the build
+  ⎿   works on any static host or under any sub-path. The host has not been chosen yet, on purpose.
+  ⎿ - The build is a single bundle. MapLibre alone is about 1 MB, and the chunk-size warning limit is
+  ⎿   raised to allow it.
+  ⎿ - MapLibre GL 6 loads its web worker from a file next to its own module, and a bundle has no such
+  ⎿   file. `MapView.tsx` builds the worker with Vite's `?worker&url` and passes the result to
+  ⎿   `setWorkerUrl`. Keep this if MapLibre is upgraded or moved.
+  ⎿ … +250 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && g..., description: Show code diff against main)
+  ⎿ <persisted-output>
+  ⎿ Output too large (43KB). Full output saved to: C:\Users\Hugo\.claude\projects\C--Users-Hugo--building-data-projects-001-metro-worktrees-002-metro\e2f5009a-57b5-4d1a-960f-a306217b4845\tool-results\bzf9tjc40.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ diff --git a/src/domain/buses.test.ts b/src/domain/buses.test.ts
+  ⎿ new file mode 100644
+  ⎿ index 0000000..19461d4
+  ⎿ --- /dev/null
+  ⎿ +++ b/src/domain/buses.test.ts
+  ⎿ @@ -0,0 +1,185 @@
+  ⎿ +import { describe, expect, it } from 'vitest';
+  ⎿ +import stopsJson from '../../tests/fixtures/stops.json';
+  ⎿ +import shapesJson from '../../tests/fixtures/route-shapes.json';
+  ⎿ +import tripsJson from '../../tests/fixtures/trips-DU.sample.json';
+  ⎿ +import { parseShapes, parseStops, parseTrips, stopIdsByName } from '../sources/metrobusTimetable';
+  ⎿ +import { approachingBuses, busesInService } from './buses';
+  ⎿ +import { haversineMeters } from './geo';
+  ⎿ +import { lisbonClock } from './lisbonTime';
+  ⎿ +import { measureShape } from './shape';
+  ⎿ +import type { DayType, Stop, Trip } from './types';
+  ⎿ … +31 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c..., description: Read new domain files and UI diffs)
+  ⎿ import { dayTypeFor } from './holidays';
+  ⎿ import { positionAt } from './interpolation';
+  ⎿ import { previousDate, type LisbonClock } from './lisbonTime';
+  ⎿ import { stopDistancesForTrip, type MeasuredShape } from './shape';
+  ⎿ import type { BusPosition, DayType, Direction, LatLng, LineId, Stop, Trip } from './types';
+  ⎿ 
+  ⎿ const DAY_SECONDS = 86_400;
+  ⎿ /** Before this Lisbon time, trips from yesterday's service day (times past 24:00) may still run. */
+  ⎿ const PREVIOUS_SERVICE_DAY_UNTIL = 4 * 3600;
+  ⎿ 
+  ⎿ export interface BusesInput {
+  ⎿   /** The selected (nearest) stop, or null when none is known yet. */
+  ⎿   stop: Stop | null;
+  ⎿   clock: LisbonClock;
+  ⎿   tripsByDayType: ReadonlyMap<DayType, readonly Trip[]>;
+  ⎿   shapesById: ReadonlyMap<string, MeasuredShape>;
+  ⎿   stopsById: ReadonlyMap<string, Stop>;
+  ⎿   now: Date;
+  ⎿ }
+  ⎿ 
+  ⎿ … +711 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && g..., description: Check clock seconds precision and useNow hook)
+  ⎿ 8:  seconds: number;
+  ⎿ 34:    seconds: Number(p.hour) * 3600 + Number(p.minute) * 60 + Number(p.second),
+  ⎿ --
+  ⎿ --
+  ⎿ src/ui/hooks/useNow.ts:4:export function useNow(intervalMs = 5000): Date {
+  ⎿ src/ui/hooks/useNow.ts-5-  const [now, setNow] = useState(() => new Date());
+  ⎿ src/ui/hooks/useNow.ts-6-  useEffect(() => {
+  ⎿ src/ui/hooks/useNow.ts-7-    const timer = window.setInterval(() => setNow(new Date()), intervalMs);
+  ⎿ src/ui/hooks/useNow.ts-8-    return () => window.clearInterval(timer);
+  ⎿ src/ui/hooks/useNow.ts-9-  }, [intervalMs]);
+  ⎿ src/ui/hooks/useNow.ts-10-  return now;
+  ⎿ src/ui/hooks/useNow.ts-11-}
+
+● I've read the plan and the real diff. The code matches the plan. Now I'm updating the three existing module docs.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro/docum..., description: Update the three module documents)
+  ⎿ Exit code 2
+  ⎿ /usr/bin/bash: -c: line 112: unexpected EOF while looking for matching `''
+  → Bash(command: ls "C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-proj..., description: Check scratchpad and python availability)
+  ⎿ /c/Python314/python
+  ⎿ /c/Users/Hugo/AppData/Local/Microsoft/WindowsApps/python3
+
+● The shell heredoc hit a quoting problem, so I'll make the edits with the editor instead.
+
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta...)
+  ⎿ 1	# Map screen
+  ⎿ 2	
+  ⎿ 3	Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ 4	is, their nearest Metrobus stop, and the nearest bus heading towards that stop. The approved
+  ⎿ 5	prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ 6	specification. Code lives in `src/ui/`.
+  ⎿ 7	
+  ⎿ 8	## Layout
+  ⎿ 9	
+  ⎿ 10	- **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿ 11	  there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿ 12	  right) above a bottom sheet. The sheet's height follows its content. Its grab handle is
+  ⎿ 13	  decorative, and the sheet cannot be dragged.
+  ⎿ 14	- **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿ 15	  the same content as the phone sheet. The locate button sits at the bottom right, with the
+  ⎿ 16	  attribution below it.
+  ⎿ 17	- The page never scrolls (`100dvh`). All styling is plain CSS with custom properties
+  ⎿ 18	  (`src/ui/styles/tokens.css` and `app.css`). There is no CSS framework, and the Aptos fonts in the
+  ⎿ 19	  font stacks are not bundled, so they fall back to Segoe UI or the system font.
+  ⎿ 20	
+  ⎿ … +64 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., offset: 60)
+  ⎿ 60	## Nearest approaching bus
+  ⎿ 61	
+  ⎿ 62	`nearestApproachingBus` in `nearestBus.ts` works as follows:
+  ⎿ 63	
+  ⎿ 64	1. **Candidates.** A candidate is a trip, on today's service day (or on yesterday's before
+  ⎿ 65	   04:00), that **has already started** and **has not yet reached** the nearest stop. Trips that
+  ⎿ 66	   have not left their first stop are ignored, even if they would arrive sooner than any bus
+  ⎿ 67	   already running.
+  ⎿ 68	2. **Choice.** The candidate with the soonest scheduled arrival at the stop wins.
+  ⎿ 69	3. **Position.** The bus is placed along its line's shape. Each of the trip's stops is projected
+  ⎿ 70	   onto the shape in order, and each projection only searches the shape from the previous stop's
+  ⎿ 71	   segment onwards, so the distances never decrease. This keeps stops that sit beside the line,
+  ⎿ 72	   such as the asc/desc pairs, on the correct stretch. The distance along the shape is then
+  ⎿ 73	   interpolated linearly in time between the scheduled stop times on either side of now. Stop
+  ⎿ 74	   distances are memoised for each shape and stop sequence.
+  ⎿ 75	4. **No bus.** The result is `null` when there is no candidate, for example late at night or at a
+  ⎿ 76	   terminus with no trip in progress.
+  ⎿ 77	
+  ⎿ 78	The result is a `BusPosition` that includes `arrivalAtStopSeconds`, the time until the scheduled
+  ⎿ 79	arrival. This is the basis for a future "minutes away" display, which the UI does not show yet.
+  ⎿ … +9 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., offset: 68)
+  ⎿ 68	  - Tile requests are answered with a 1×1 PNG.
+  ⎿ 69	  - The clock is fixed at a weekday, 10:44 in Lisbon.
+  ⎿ 70	- **Fixtures.** `tests/fixtures/` holds recordings of the live source. `stops.json` and
+  ⎿ 71	  `route-shapes.json` are full copies. `trips-DU.sample.json` is a trimmed weekday sample. The
+  ⎿ 72	  e2e scenario depends on the U1 trip `u1-DU-0-852` approaching Portagem. The fixtures `README.md`
+  ⎿ 73	  explains how to re-record them. Tests never call the live source.
+  ⎿ 74	
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., old_string: The
+  e2e scenario depends on the U1 trip `u1-DU-0-852` approaching Portagem...., new_string: At the
+  e2e scenario's time, the sample has exactly three buses running, and...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., old_string: ## Nearest approaching bus
+
+`nearestApproachingBus` in `nearestBus.ts` works ..., new_string: ## Buses in service
+
+`busesInService` in `buses.ts` estimates **every bus run...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., old_string: is, their nearest Metrobus stop, and the nearest bus heading towards that sto..., new_string: is, their nearest Metrobus stop, every Metrobus bus in service, and a countdo...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., old_string: chosen for contrast. If a bus is approaching, a "Nearest bus · U1" row follow..., new_string: chosen for contrast.
+
+If any bus is heading to the stop, a **"Heading to this...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., old_string:   the bus marker are DOM markers (`src/ui/map/markers.ts`).
+- The **bus marke..., new_string:   the bus markers are DOM markers (`src/ui/map/markers.ts`).
+- **Every bus in...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., old_string: the nearest stop and, if there is one, the bus.
+The maximum zoom, new_string: the nearest stop and, if there is one, the
+**soonest** approaching bus. It ne...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documenta..., old_string: - A `now` value ticks every 5 seconds. The nearest bus is re-estimated on eve..., new_string: - A `now` value ticks **every second**. Every bus is re-estimated on each tic...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documentation\modules\app-platform.md has been updated successfully.
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documentation\modules\timetable-and-estimates.md has been updated successfully.
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documentation\modules\map-screen.md has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documentation\modules\map-screen.md has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documentation\modules\map-screen.md has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documentation\modules\map-screen.md has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\documentation\modules\map-screen.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+● I updated the three existing module documents so they describe what's in the code now. `documentation/modules/` already had three flat documents, so I kept it flat and didn't add a new one. Nothing is committed yet; Building will commit it on `002-all-buses`. The code matched the approved plan.
+
+- **`documentation/modules/map-screen.md`:**
+  - **Map:** every bus in service now has its own marker. The table of marker variants covers a bus approaching the nearest stop, which shows an `M:SS` countdown inside its Scheduled tag. It also covers a faded bus that isn't heading there, and the case with no location, where nothing is faded.
+  - **Sheet:** the "Heading to this stop" list shows at most 5 rows, followed by "+N more heading here", with the updated note underneath.
+  - **Accessibility:** the list is set so the per-second countdown doesn't flood screen readers, and there's a hidden spoken version of each time.
+  - **Behaviour:** smart zoom still frames only the soonest approaching bus, the clock now ticks every second, and buses appear even without a location.
+- **`documentation/modules/timetable-and-estimates.md`:** "Nearest approaching bus" is replaced by "Buses in service". It covers which trips count as running, how positions are estimated, how bad trips are skipped, how the countdown to the stop works, and the fixed order. It also describes how `countdown.ts` formats times.
+- **`documentation/modules/app-platform.md`:** the fixtures note now names the three trips running in the end-to-end test scenario, which those tests rely on.

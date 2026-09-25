@@ -57,26 +57,43 @@ The nearest stop is the one with the smallest straight-line (haversine) distance
 Every stop is considered, including suburban-only ones. Ties go to the lower `id`. There is no
 walking-distance or routing logic, which the vision rules out.
 
-## Nearest approaching bus
+## Buses in service
 
-`nearestApproachingBus` in `nearestBus.ts` works as follows:
+`busesInService` in `buses.ts` estimates **every bus running right now** across the whole
+network. It takes the nearest stop, or `null` when none is known yet, and returns one
+`BusPosition` per trip:
 
-1. **Candidates.** A candidate is a trip, on today's service day (or on yesterday's before
-   04:00), that **has already started** and **has not yet reached** the nearest stop. Trips that
-   have not left their first stop are ignored, even if they would arrive sooner than any bus
-   already running.
-2. **Choice.** The candidate with the soonest scheduled arrival at the stop wins.
-3. **Position.** The bus is placed along its line's shape. Each of the trip's stops is projected
+1. **In service.** A trip is in service, on today's service day (or on yesterday's before 04:00),
+   when it **has left its first stop** and **has not reached its last**. A trip that has not left
+   its first stop is not shown, even if it would reach the stop sooner than any bus already
+   running. If the same `tripId` turns up on both service days, today's is kept.
+2. **Position.** The bus is placed along its line's shape. Each of the trip's stops is projected
    onto the shape in order, and each projection only searches the shape from the previous stop's
    segment onwards, so the distances never decrease. This keeps stops that sit beside the line,
    such as the asc/desc pairs, on the correct stretch. The distance along the shape is then
    interpolated linearly in time between the scheduled stop times on either side of now. Stop
-   distances are memoised for each shape and stop sequence.
-4. **No bus.** The result is `null` when there is no candidate, for example late at night or at a
-   terminus with no trip in progress.
+   distances are memoised for each shape and stop sequence. The `(line, direction)` → shape
+   lookup is built once for each shapes map (in a module-level `WeakMap`), because the function
+   runs every second over about 450 weekday trips.
+3. **Robustness.** A trip is silently skipped if it has no shape, if no position can be
+   estimated, or if it references a stop that is not known. One bad trip must never blank the map.
+4. **Countdown.** When a stop is given, a bus is *approaching* if its trip has a call at that stop
+   **later than now**. The countdown uses the first such call. That bus gets `towardsStopId` and
+   `arrivalAtStopSeconds`, the whole seconds until the scheduled call, always at least 1. Every
+   other bus has `null` in both fields. That covers buses that have passed the stop, buses that
+   never call there, and every bus when there is no stop.
+5. **Order (deterministic).** Approaching buses come first, soonest first. The rest follow,
+   ordered by line. Ties are broken by `tripId`. `approachingBuses()` keeps only the approaching
+   buses, in the same order, so its first entry is the soonest bus, which smart zoom frames.
 
-The result is a `BusPosition` that includes `arrivalAtStopSeconds`, the time until the scheduled
-arrival. This is the basis for a future "minutes away" display, which the UI does not show yet.
+Each bus also carries the trip's `destination` as it appears in the data, `source: 'scheduled'`,
+and `at`, the time of the estimate.
+
+`countdown.ts` formats the countdowns:
+- `formatCountdown` gives `M:SS` with uncapped minutes: `184` → `3:04`, `3785` → `63:05`. Negative
+  values clamp to `0:00`.
+- `spokenCountdown` gives the screen-reader text: `184` → "3 minutes 4 seconds", `61` → "1 minute
+  1 second", `120` → "2 minutes".
 
 ## Line colours
 

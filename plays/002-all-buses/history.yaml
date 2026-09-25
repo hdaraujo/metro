@@ -15,3 +15,35 @@ events:
     agent: Paula
     resolution: answered
     session_id: b753ceb4eebd4f96a413a11d93f89e1e
+  - kind: transition
+    at: '2026-09-25T19:49:47.992Z'
+    from: working
+    to: validation
+  - kind: decision
+    at: '2026-09-25T19:51:35.462Z'
+    question: 'Ready for review: all buses'
+    agent: Dave
+    resolution: approved
+    session_id: 7f012a7651c842a38a4f9ddc67308f81
+  - kind: transition
+    at: '2026-09-25T19:51:35.464Z'
+    from: validation
+    to: completed
+  - kind: document
+    at: '2026-09-25T19:53:53.693Z'
+    folder: modules
+    name: app-platform.md
+    agent: Paula
+    action: updated
+  - kind: document
+    at: '2026-09-25T19:53:53.695Z'
+    folder: modules
+    name: map-screen.md
+    agent: Paula
+    action: updated
+  - kind: document
+    at: '2026-09-25T19:53:53.697Z'
+    folder: modules
+    name: timetable-and-estimates.md
+    agent: Paula
+    action: updated

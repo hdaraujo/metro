@@ -19,6 +19,7 @@ import { mapStyle } from './mapStyle';
 import {
   createBusMarker,
   createStopMarker,
+  type BusMarkerView,
   createUserMarker,
   updateBusMarker,
   updateStopMarker,
@@ -41,7 +42,10 @@ interface MapViewProps {
   network?: Network;
   user: LatLng | null;
   nearestStop: Stop | null;
-  bus: BusPosition | null;
+  /** Every bus in service; each gets its own marker. */
+  buses: readonly BusPosition[];
+  /** The selected stop's name, which the approaching buses count down to. */
+  stopName: string | null;
   lineColors: Record<LineId, string>;
 }
 
@@ -133,7 +137,78 @@ const STOP_MARKER: MarkerOptions = { anchor: 'center' };
 // Centre the bus pill (about 28px tall) on the position; the "Scheduled" tag hangs below it.
 const BUS_MARKER: MarkerOptions = { anchor: 'top', offset: [0, -14] };
 
-export function MapView({ ref, network, user, nearestStop, bus, lineColors }: MapViewProps) {
+function busMarkerView(
+  bus: BusPosition,
+  lineColors: Record<LineId, string>,
+  stopName: string | null,
+): BusMarkerView {
+  return {
+    line: bus.line,
+    color: lineColors[bus.line] ?? FALLBACK_LINE_COLOR,
+    destination: bus.destination,
+    secondsToStop: bus.arrivalAtStopSeconds,
+    stopName,
+    dimmed: stopName !== null && bus.arrivalAtStopSeconds === null,
+  };
+}
+
+/** Keeps one DOM marker per bus, keyed by trip: created, moved/updated, or removed. */
+function useBusMarkers(
+  map: MapLibreMap | null,
+  buses: readonly BusPosition[],
+  lineColors: Record<LineId, string>,
+  stopName: string | null,
+) {
+  const markers = useRef(new Map<string, Marker>());
+  useEffect(() => {
+    const current = markers.current;
+    if (!map) {
+      for (const marker of current.values()) marker.remove();
+      current.clear();
+      return;
+    }
+    const seen = new Set<string>();
+    for (const bus of buses) {
+      seen.add(bus.tripId);
+      const view = busMarkerView(bus, lineColors, stopName);
+      const marker = current.get(bus.tripId);
+      if (marker) {
+        updateBusMarker(marker.getElement(), view);
+        marker.setLngLat(toLngLat(bus.coords));
+      } else {
+        current.set(
+          bus.tripId,
+          new Marker({ ...BUS_MARKER, element: createBusMarker(view) })
+            .setLngLat(toLngLat(bus.coords))
+            .addTo(map),
+        );
+      }
+    }
+    for (const [tripId, marker] of current) {
+      if (seen.has(tripId)) continue;
+      marker.remove();
+      current.delete(tripId);
+    }
+  }, [map, buses, lineColors, stopName]);
+
+  useEffect(() => {
+    const current = markers.current;
+    return () => {
+      for (const marker of current.values()) marker.remove();
+      current.clear();
+    };
+  }, []);
+}
+
+export function MapView({
+  ref,
+  network,
+  user,
+  nearestStop,
+  buses,
+  stopName,
+  lineColors,
+}: MapViewProps) {
   const container = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   // Set once the style has loaded; layers and markers wait for it.
@@ -200,15 +275,7 @@ export function MapView({ ref, network, user, nearestStop, bus, lineColors }: Ma
     (el, stop) => updateStopMarker(el, stop.name),
     STOP_MARKER,
   );
-  const busColor = bus ? (lineColors[bus.line] ?? FALLBACK_LINE_COLOR) : FALLBACK_LINE_COLOR;
-  useMarker(
-    map,
-    bus,
-    bus?.coords ?? null,
-    (b) => createBusMarker(b.line, busColor),
-    (el, b) => updateBusMarker(el, b.line, busColor),
-    BUS_MARKER,
-  );
+  useBusMarkers(map, buses, lineColors, stopName);
 
   return <div ref={container} className="map" />;
 }

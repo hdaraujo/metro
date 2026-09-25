@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { PaddingOptions } from 'maplibre-gl';
+import { approachingBuses, busesInService } from '../domain/buses';
 import { lisbonClock } from '../domain/lisbonTime';
-import { nearestApproachingBus } from '../domain/nearestBus';
 import { nearestStop } from '../domain/nearestStop';
 import { measureShape } from '../domain/shape';
 import type { LatLng } from '../domain/types';
@@ -29,7 +29,7 @@ export function App() {
   const desktop = useMediaQuery(DESKTOP_QUERY);
   const geo = useGeolocation();
   const { network, error: networkError, retry: retryNetwork } = useNetwork();
-  const now = useNow(5000);
+  const now = useNow(1000);
   const { tripsByDayType, loading: tripsLoading } = useTimetable(network, now);
 
   const stopsById = useMemo(() => new Map(network?.stops.map((s) => [s.id, s])), [network]);
@@ -43,21 +43,22 @@ export function App() {
     () => (network && position ? nearestStop(network.stops, position) : null),
     [network, position],
   );
-  // Re-estimated on every tick of `now`, without any network call.
-  const bus = useMemo(
+  // Every bus in service, re-estimated on every tick of `now` without any network call. Without a
+  // location there is no stop, so the buses are shown without countdowns.
+  const buses = useMemo(
     () =>
-      nearest
-        ? nearestApproachingBus({
-            stop: nearest.stop,
-            clock: lisbonClock(now),
-            tripsByDayType,
-            shapesById,
-            stopsById,
-            now,
-          })
-        : null,
+      busesInService({
+        stop: nearest?.stop ?? null,
+        clock: lisbonClock(now),
+        tripsByDayType,
+        shapesById,
+        stopsById,
+        now,
+      }),
     [nearest, now, tripsByDayType, shapesById, stopsById],
   );
+  const approaching = useMemo(() => approachingBuses(buses), [buses]);
+  const soonest = approaching[0] ?? null;
 
   // ---------- Smart zoom ----------
   const mapRef = useRef<MapHandle>(null);
@@ -66,12 +67,13 @@ export function App() {
   const fit = useCallback(() => {
     if (!position || !nearest) return;
     const points: LatLng[] = [position, nearest.stop.coords];
-    if (bus) points.push(bus.coords);
+    // Only the soonest approaching bus is framed, never every bus in service.
+    if (soonest) points.push(soonest.coords);
     const padding: PaddingOptions = desktop
       ? { top: 64, right: 96, bottom: 64, left: 24 + DESKTOP_PANEL_WIDTH + 48 }
       : { top: 72, left: 40, right: 80, bottom: (sheetRef.current?.offsetHeight ?? 0) + 48 };
     mapRef.current?.fitTo(points, padding);
-  }, [position, nearest, bus, desktop]);
+  }, [position, nearest, soonest, desktop]);
 
   const readyToFit = position !== null && nearest !== null;
   const [busWaitOver, setBusWaitOver] = useState(false);
@@ -114,7 +116,7 @@ export function App() {
         stop={nearest.stop}
         distanceMeters={nearest.distanceMeters}
         lineColors={network.lineColors}
-        bus={bus}
+        approaching={approaching}
         fetchedAt={network.fetchedAt}
         now={now}
       />
@@ -137,7 +139,8 @@ export function App() {
         network={network}
         user={position}
         nearestStop={nearest?.stop ?? null}
-        bus={bus}
+        buses={buses}
+        stopName={nearest?.stop.name ?? null}
         lineColors={network?.lineColors ?? {}}
       />
       {desktop ? (

@@ -1,5 +1,6 @@
 /** DOM builders for the map's markers. Styles live in `styles/app.css` (`.marker-*`). */
 import { readableTextColor } from '../../domain/color';
+import { formatCountdown, spokenCountdown } from '../../domain/countdown';
 
 // The same bus glyph as `BusIcon` in `icons.tsx`, as markup for a non-React element.
 const BUS_ICON_SVG =
@@ -36,29 +37,68 @@ export function updateStopMarker(el: HTMLElement, name: string): void {
   if (label) label.textContent = name;
 }
 
+export interface BusMarkerView {
+  line: string;
+  color: string;
+  destination: string;
+  /** Seconds until the bus reaches `stopName`; null when it is not heading there. */
+  secondsToStop: number | null;
+  stopName: string | null;
+  /** Faded: a stop is selected but this bus is not heading to it. */
+  dimmed: boolean;
+}
+
 /**
  * A bus whose position is estimated from the timetable: a dashed pill in the line colour, with a
- * "Scheduled" tag under it, so that an estimate never looks like a live position.
+ * "Scheduled" tag under it, so that an estimate never looks like a live position. A bus heading to
+ * the selected stop shows its countdown inside that tag.
  */
-export function createBusMarker(line: string, color: string): HTMLElement {
+export function createBusMarker(view: BusMarkerView): HTMLElement {
   const el = div('marker-bus');
   el.setAttribute('role', 'img');
   const pill = div('marker-bus__pill');
   pill.innerHTML = BUS_ICON_SVG;
   pill.append(document.createElement('span'));
-  const tag = div('marker-bus__tag');
-  tag.textContent = 'Scheduled';
-  el.append(pill, tag);
-  updateBusMarker(el, line, color);
+  el.append(pill, div('marker-bus__tag'));
+  updateBusMarker(el, view);
   return el;
 }
 
-export function updateBusMarker(el: HTMLElement, line: string, color: string): void {
-  el.setAttribute('aria-label', `Scheduled position of line ${line} bus`);
+export function updateBusMarker(el: HTMLElement, view: BusMarkerView): void {
+  const { line, color, destination, secondsToStop, stopName, dimmed } = view;
+  const approaching = secondsToStop !== null;
+  el.classList.toggle('marker-bus--approaching', approaching);
+  el.classList.toggle('marker-bus--dimmed', dimmed);
+  el.setAttribute(
+    'aria-label',
+    approaching
+      ? `Scheduled position of line ${line} bus to ${destination}, ${spokenCountdown(secondsToStop)} from ${stopName ?? 'the stop'}`
+      : `Scheduled position of line ${line} bus to ${destination}`,
+  );
+
   const pill = el.querySelector<HTMLElement>('.marker-bus__pill');
-  if (!pill) return;
-  pill.style.background = color;
-  pill.style.color = readableTextColor(color);
-  const span = pill.querySelector('span');
-  if (span) span.textContent = line;
+  if (pill) {
+    pill.style.background = color;
+    pill.style.color = readableTextColor(color);
+    const span = pill.querySelector('span');
+    if (span) span.textContent = line;
+  }
+
+  const tag = el.querySelector<HTMLElement>('.marker-bus__tag');
+  if (!tag) return;
+  const time = tag.querySelector<HTMLElement>('.marker-bus__time');
+  if (approaching) {
+    if (time) {
+      time.textContent = formatCountdown(secondsToStop);
+    } else {
+      const newTime = document.createElement('span');
+      newTime.className = 'marker-bus__time';
+      newTime.textContent = formatCountdown(secondsToStop);
+      const label = document.createElement('span');
+      label.textContent = 'Scheduled';
+      tag.replaceChildren(newTime, label);
+    }
+  } else if (time || tag.textContent !== 'Scheduled') {
+    tag.replaceChildren('Scheduled');
+  }
 }

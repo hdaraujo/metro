@@ -19,10 +19,14 @@ const TRANSPARENT_PNG = Buffer.from(
 /** Portagem stop, Coimbra. */
 const NEAR_PORTAGEM = { latitude: 40.2075, longitude: -8.4307 };
 /**
- * Wednesday 23 September 2026, 10:44 in Lisbon. U1 trip u1-DU-0-852 left Coimbra B at 10:41 and
- * reaches Portagem at 10:47:04, so it is the nearest bus heading to the stop.
+ * Wednesday 23 September 2026, 10:44 in Lisbon. Three buses are running: U1 u1-DU-0-852 to Vale
+ * das Flores reaches Portagem at 10:47:04, U1 u1-DU-1-823 to Coimbra B at 10:53:18, and S2
+ * s2-DU-0-701 to Serpins passed it at 10:25:35.
  */
 const WEEKDAY_10_44_LISBON = new Date('2026-09-23T09:44:00Z');
+
+const U1_TO_VALE_DAS_FLORES = /^Scheduled position of line U1 bus to Vale das Flores, /;
+const S2_TO_SERPINS = 'Scheduled position of line S2 bus to Serpins';
 
 async function stubNetwork(page: Page) {
   await page.route('https://planearviagem.metromondego.pt/data/**', (route) => {
@@ -44,7 +48,7 @@ test.beforeEach(async ({ page }) => {
 test.describe('located near Portagem', () => {
   test.use({ geolocation: NEAR_PORTAGEM, permissions: ['geolocation'] });
 
-  test('shows the nearest stop and the nearest scheduled bus', async ({ page }) => {
+  test('shows the nearest stop and every scheduled bus', async ({ page }) => {
     await page.goto('/');
     const sheet = page.getByRole('region', { name: 'Nearest stop' });
     await expect(sheet).toBeVisible();
@@ -52,19 +56,35 @@ test.describe('located near Portagem', () => {
     await expect(sheet.getByRole('heading', { level: 1, name: 'Portagem' })).toBeVisible();
     await expect(sheet.getByText(/\d+ m away/)).toBeVisible();
     for (const line of ['S1', 'S2', 'U1', 'U2']) {
-      await expect(sheet.getByText(line, { exact: true })).toBeVisible();
+      await expect(sheet.locator('.lines-row').getByText(line, { exact: true })).toBeVisible();
     }
-    await expect(sheet.getByText('Nearest bus · U1')).toBeVisible();
-    await expect(sheet.getByText('Scheduled', { exact: true })).toBeVisible();
-    await expect(sheet.getByText(/Position estimated from the timetable at 10:44\./)).toBeVisible();
+    await expect(
+      sheet.getByRole('heading', { level: 2, name: 'Heading to this stop' }),
+    ).toBeVisible();
+    const rows = sheet.getByRole('listitem');
+    await expect(rows).toHaveCount(2);
+    await expect(rows.nth(0)).toContainText('to Vale das Flores');
+    await expect(rows.nth(1)).toContainText('to Coimbra B');
+    await expect(sheet.getByText('Scheduled', { exact: true })).toHaveCount(1);
+    await expect(
+      sheet.getByText(/Positions and times estimated from the timetable at 10:44\./),
+    ).toBeVisible();
 
     await expect(
       page.getByRole('button', { name: 'Centre on my location', exact: true }),
     ).toBeEnabled();
 
-    const busMarker = page.getByRole('img', { name: 'Scheduled position of line U1 bus' });
-    await expect(busMarker).toBeVisible();
-    await expect(busMarker).toContainText('Scheduled');
+    await expect(page.getByRole('img', { name: /^Scheduled position of line/ })).toHaveCount(3);
+    const approachingMarker = page.getByRole('img', { name: U1_TO_VALE_DAS_FLORES });
+    await expect(approachingMarker).toBeVisible();
+    await expect(approachingMarker).toHaveClass(/marker-bus--approaching/);
+    await expect(approachingMarker.locator('.marker-bus__time')).toHaveText(/^\d+:\d{2}$/);
+    await expect(approachingMarker).toContainText('Scheduled');
+    const passedMarker = page.getByRole('img', { name: S2_TO_SERPINS, exact: true });
+    await expect(passedMarker).toBeAttached();
+    await expect(passedMarker).toHaveClass(/marker-bus--dimmed/);
+    await expect(passedMarker.locator('.marker-bus__time')).toHaveCount(0);
+    await expect(passedMarker.locator('.marker-bus__tag')).toHaveText('Scheduled');
     const stopMarker = page.getByRole('img', { name: 'Nearest stop: Portagem' });
     await expect(stopMarker).toBeVisible();
 
@@ -86,11 +106,30 @@ test.describe('located near Portagem', () => {
     });
     await page.goto('/');
     await expect(page.getByRole('region', { name: 'Nearest stop' })).toBeVisible();
-    await expect(page.getByText('Nearest bus · U1')).toBeVisible();
+    await expect(page.getByText('Heading to this stop')).toBeVisible();
     await page.getByRole('button', { name: 'Centre on my location', exact: true }).click();
     await expect(page.getByRole('img', { name: 'Your location' })).toBeVisible();
     // Includes MapLibre's "Worker failed to load", which would leave the routes and stops undrawn.
     expect(errors).toEqual([]);
+  });
+
+  test('countdown ticks every second', async ({ page }) => {
+    await page.goto('/');
+    const sheet = page.getByRole('region', { name: 'Nearest stop' });
+    await expect(sheet.getByRole('listitem').first()).toBeVisible();
+    const sheetTime = sheet.locator('.bus-list__time').first();
+    const marker = page.getByRole('img', { name: U1_TO_VALE_DAS_FLORES });
+    // The map (and so its markers) must finish loading before the clock is paused.
+    await expect(marker).toBeVisible();
+    const markerTime = marker.locator('.marker-bus__time');
+
+    // u1-DU-0-852 reaches Portagem at 10:47:04. Pause a minute in, well after loading has finished.
+    await page.clock.pauseAt(new Date('2026-09-23T09:45:00Z'));
+    await expect(sheetTime).toHaveText('2:04');
+    await expect(markerTime).toHaveText('2:04');
+    await page.clock.runFor(1000);
+    await expect(sheetTime).toHaveText('2:03');
+    await expect(markerTime).toHaveText('2:03');
   });
 
   test('desktop: renders inside the 380px panel', async ({ page }, testInfo) => {

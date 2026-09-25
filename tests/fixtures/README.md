@@ -20,9 +20,10 @@ All files were recorded on **2026-09-25 at 19:00 UTC** from
 - `s2-DU-0-701`: S2 trip from República (desc) at 10:20, which passes the `(desc)` stops;
 - `s1-DU-0-726`: S1 trip Coimbra B → Serpins, with stop times past 24:00 (up to `25:29:28`).
 
-The end-to-end test fixes the clock at a weekday 10:44 in Lisbon. At that time U1 trip
-`u1-DU-0-852` (Coimbra B 10:41 → Portagem 10:47:04) is the soonest bus approaching Portagem in
-this sample.
+The end-to-end test fixes the clock at a weekday 10:44 in Lisbon. At that time exactly three buses
+are running in this sample: U1 trip `u1-DU-0-852` to Vale das Flores (Coimbra B 10:41 → Portagem
+10:47:04) is the soonest bus approaching Portagem, U1 trip `u1-DU-1-823` to Coimbra B reaches it at
+10:53:18, and S2 trip `s2-DU-0-701` to Serpins already passed it at 10:25:35.
 
 To re-record, download the files again with `curl` and re-apply the same filter by trip `id` and
 `line`.

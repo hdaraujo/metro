@@ -50,12 +50,16 @@ export interface BusPosition {
   tripId: string;
   line: LineId;
   direction: Direction;
+  /** The trip's final destination, as in the data (e.g. 'Vale das Flores'). */
+  destination: string;
   coords: LatLng;
   source: DataSource;
   /** When the position was estimated or observed, UTC ISO 8601. */
   at: string;
-  nextStopId: string;
-  arrivalAtStopSeconds: number;
+  /** The stop `arrivalAtStopSeconds` counts down to; null when the bus is not heading to the selected stop. */
+  towardsStopId: string | null;
+  /** Seconds until the bus is scheduled to reach `towardsStopId` (≥ 1); null alongside it. */
+  arrivalAtStopSeconds: number | null;
 }
 
 export interface Network {

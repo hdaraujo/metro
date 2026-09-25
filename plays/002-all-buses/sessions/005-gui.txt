@@ -1,0 +1,520 @@
+> You are the Autopilot Developer for this play. Read `plays/002-all-buses/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/002-all-buses/design/` folder exists, this play already has a UI design I approved: read `plays/002-all-buses/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-developer)
+  ⎿ Launching skill: autopilot-developer
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\.claude\skills\autopilot-developer
+
+You are the Autopilot Developer for this play. Read `$play/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c...)
+  ⎿ # Play 002 — All buses, with minutes and seconds away
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ Intent: *"Display all buses and the minutes and seconds away below them."*
+  ⎿ 
+  ⎿ Today the map screen draws **one** bus: `nearestApproachingBus` (`src/domain/nearestBus.ts`) returns
+  ⎿ only the trip due soonest at the user's nearest stop. The time-to-arrival
+  ⎿ (`arrivalAtStopSeconds`) is already calculated, but nothing shows it. The vision promises "the
+  ⎿ position of every Metrobus bus" and how far away each approaching bus is. This play delivers
+  ⎿ both.
+  ⎿ 
+  ⎿ Decisions confirmed with the user:
+  ⎿ 1. **Every bus in service** goes on the map: every trip currently running on any line or
+  ⎿    direction, across the whole network, not only the buses heading to the user's stop.
+  ⎿ 2. **Countdown under the marker.** A bus approaching the user's nearest stop shows an `M:SS`
+  ⎿    countdown under its marker, and the countdown updates every second. Every other bus (heading
+  ⎿    elsewhere, or already past the stop) keeps only its "Scheduled" tag and is visually
+  ⎿    de-emphasised.
+  ⎿ 3. **The sheet/panel** replaces the single "Nearest bus · U1" row with a **list of every bus
+  ⎿ … +480 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && g...)
+  ⎿ .claude/settings.json
+  ⎿ .claude/skills/autopilot-architect/SKILL.md
+  ⎿ .claude/skills/autopilot-developer/SKILL.md
+  ⎿ .claude/skills/autopilot-devops/SKILL.md
+  ⎿ .claude/skills/autopilot-planner/SKILL.md
+  ⎿ .claude/skills/manual-claude/SKILL.md
+  ⎿ .editorconfig
+  ⎿ .gitignore
+  ⎿ .nvmrc
+  ⎿ .prettierignore
+  ⎿ .prettierrc.json
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ playwright.config.ts
+  ⎿ public/apple-touch-icon-180x180.png
+  ⎿ public/favicon.ico
+  ⎿ … +108 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c...)
+  ⎿ /* Layout and components. Values follow the Main, Locating, LocationOff and Desktop artboards. */
+  ⎿ 
+  ⎿ *,
+  ⎿ *::before,
+  ⎿ *::after {
+  ⎿   box-sizing: border-box;
+  ⎿ }
+  ⎿ 
+  ⎿ html,
+  ⎿ body,
+  ⎿ #root {
+  ⎿   height: 100%;
+  ⎿   height: 100dvh;
+  ⎿   margin: 0;
+  ⎿   overflow: hidden;
+  ⎿ }
+  ⎿ 
+  ⎿ body {
+  ⎿   font-family: var(--font-sans);
+  ⎿   color: var(--color-text);
+  ⎿ … +723 more lines
+  ⎿ /** Geographic coordinates. Inside the domain always `{ lat, lng }`; MapLibre's `[lng, lat]` lives in `src/ui/map/`. */
+  ⎿ export interface LatLng {
+  ⎿   lat: number;
+  ⎿   lng: number;
+  ⎿ }
+  ⎿ 
+  ⎿ /** A Metrobus line, e.g. 'S1' | 'S2' | 'U1' | 'U2' | 'U3' in the current data. */
+  ⎿ export type LineId = string;
+  ⎿ 
+  ⎿ export type Direction = 'outbound' | 'inbound';
+  ⎿ 
+  ⎿ /** Timetable day type: weekday (`DU`), Saturday (`Sab`), Sunday and public holidays (`Dom`). */
+  ⎿ export type DayType = 'DU' | 'Sab' | 'Dom';
+  ⎿ 
+  ⎿ export interface Stop {
+  ⎿   id: string;
+  ⎿   code: string;
+  ⎿   name: string;
+  ⎿   lines: LineId[];
+  ⎿   coords: LatLng;
+  ⎿ … +466 more lines
+  ⎿ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿ import type { PaddingOptions } from 'maplibre-gl';
+  ⎿ import { lisbonClock } from '../domain/lisbonTime';
+  ⎿ import { nearestApproachingBus } from '../domain/nearestBus';
+  ⎿ import { nearestStop } from '../domain/nearestStop';
+  ⎿ import { measureShape } from '../domain/shape';
+  ⎿ import type { LatLng } from '../domain/types';
+  ⎿ import { Attribution } from './chrome/Attribution';
+  ⎿ import { LocateButton } from './chrome/LocateButton';
+  ⎿ import { Wordmark } from './chrome/Wordmark';
+  ⎿ import { useGeolocation } from './hooks/useGeolocation';
+  ⎿ import { useMediaQuery } from './hooks/useMediaQuery';
+  ⎿ import { useNetwork } from './hooks/useNetwork';
+  ⎿ import { useNow } from './hooks/useNow';
+  ⎿ import { useTimetable } from './hooks/useTimetable';
+  ⎿ import { MapView, type MapHandle } from './map/MapView';
+  ⎿ import { DataErrorContent } from './sheet/DataErrorContent';
+  ⎿ import { LocatingContent } from './sheet/LocatingContent';
+  ⎿ import { LocationOffContent } from './sheet/LocationOffContent';
+  ⎿ import { NearestStopContent } from './sheet/NearestStopContent';
+  ⎿ … +527 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c...)
+  ⎿ import type { ReactNode, Ref } from 'react';
+  ⎿ 
+  ⎿ interface SheetProps {
+  ⎿   ref?: Ref<HTMLElement>;
+  ⎿   /** `phone`: bottom sheet with a grab handle. `panel`: the desktop floating panel with the title. */
+  ⎿   variant: 'phone' | 'panel';
+  ⎿   label: string;
+  ⎿   busy?: boolean;
+  ⎿   children: ReactNode;
+  ⎿ }
+  ⎿ 
+  ⎿ export function Sheet({ ref, variant, label, busy, children }: SheetProps) {
+  ⎿   return (
+  ⎿     <section
+  ⎿       ref={ref}
+  ⎿       className={`sheet sheet--${variant}`}
+  ⎿       aria-label={label}
+  ⎿       aria-live="polite"
+  ⎿       aria-busy={busy || undefined}
+  ⎿     >
+  ⎿ … +30 more lines
+
+● I've read the plan and the code. Next I'm installing dependencies in the background, then writing the domain code.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && g..., run_in_background: true)
+  ⎿ Command running in background with ID: b68knnf7z. Output is being written to: C:\Users\Hugo\AppData\Local\Temp\claude\C--Users-Hugo--building-data-projects-001-metro-worktrees-002-metro\fd89f80d-ba69-42d5-95c7-12a6d0b758b5\tasks\b68knnf7z.output. You will be notified when it completes. To check interim output, use Read on that file path.
+  ⎿ Session cwd remains C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+● Now the domain types:
+
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domai..., old_string:   direction: Direction;
+  coords: LatLng;
+  source: DataSource;
+  /** When th..., new_string:   direction: Direction;
+  /** The trip's final destination, as in the data (e...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domai..., content: import { dayTypeFor } from './holidays';
+import { positionAt } from './interp...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domai..., content: const wholeSeconds = (seconds: number) => Math.max(0, Math.floor(seconds));
+
+...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domain\types.ts has been updated successfully.
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domain\buses.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domain\countdown.ts (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c...)
+  ⎿ 5:node_modules/
+  ⎿ 
+  ⎿ 147 packages are looking for funding
+  ⎿   run `npm fund` for details
+  ⎿ 
+  ⎿ found 0 vulnerabilities
+  ⎿ 
+  ⎿ [exited with code 0]
+  ⎿  M plays/002-all-buses/devops.yaml
+  ⎿  M plays/002-all-buses/positions.yaml
+  ⎿  M plays/002-all-buses/sessions/info.yaml
+  ⎿ D  src/domain/nearestBus.test.ts
+  ⎿ D  src/domain/nearestBus.ts
+  ⎿  M src/domain/types.ts
+  ⎿ D  src/ui/sheet/NearestBusRow.tsx
+  ⎿ ?? plays/002-all-buses/sessions/004-dave.pty
+  ⎿ ?? plays/002-all-buses/sessions/004-dave.txt
+  ⎿ ?? src/domain/buses.ts
+  ⎿ ?? src/domain/countdown.ts
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && g...)
+  ⎿  D src/domain/nearestBus.test.ts
+  ⎿  D src/domain/nearestBus.ts
+  ⎿  M src/domain/types.ts
+  ⎿  D src/ui/sheet/NearestBusRow.tsx
+  ⎿ ?? src/domain/buses.ts
+  ⎿ ?? src/domain/countdown.ts
+
+● Now the unit tests.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import stopsJson from '../../t...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import { formatCountdown, spok...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && n...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domain\buses.test.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\domain\countdown.test.ts (file state is current in your context — no need to Read it back)
+  ⎿  RUN  v5.0.2 C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  9 passed (9)
+  ⎿       Tests  77 passed (77)
+  ⎿    Start at  20:42:39
+  ⎿    Duration  823ms (transform 51%, import 27%, worker 17%, tests 5%)
+
+● Domain tests pass. Now the UI: markers first.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p...)
+  ⎿     }
+  ⎿   } else if (time || tag.textContent !== 'Scheduled') {
+  ⎿     tag.replaceChildren('Scheduled');
+  ⎿   }
+  ⎿ }
+
+● Now `MapView.tsx`:
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p...)
+  ⎿ (Bash completed with no output)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p...)
+  ⎿ const USER_MARKER: MarkerOptions = { anchor: 'center' };
+  ⎿ const STOP_MARKER: MarkerOptions = { anchor: 'center' };
+  ⎿ // Centre the bus pill (about 28px tall) on the position; the "Scheduled" tag hangs below it.
+  ⎿ const BUS_MARKER: MarkerOptions = { anchor: 'top', offset: [0, -14] };
+  ⎿ 
+  ⎿ function busMarkerView(
+  ⎿   bus: BusPosition,
+  ⎿   lineColors: Record<LineId, string>,
+  ⎿   stopName: string | null,
+  ⎿ ): BusMarkerView {
+  ⎿   return {
+  ⎿     line: bus.line,
+  ⎿     color: lineColors[bus.line] ?? FALLBACK_LINE_COLOR,
+  ⎿     destination: bus.destination,
+  ⎿     secondsToStop: bus.arrivalAtStopSeconds,
+  ⎿     stopName,
+  ⎿     dimmed: stopName !== null && bus.arrivalAtStopSeconds === null,
+  ⎿   };
+  ⎿ }
+
+● Now `App.tsx`, the sheet components and the CSS.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\ui\sh..., content: import { formatCountdown, spokenCountdown } from '../../domain/countdown';
+im...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p...)
+  ⎿ (Bash completed with no output)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\src\ui\sheet\ApproachingBuses.tsx (file state is current in your context — no need to Read it back)
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ [[33mwarn[39m] src/domain/buses.ts
+  ⎿ [[33mwarn[39m] Code style issues found in the above file. Run Prettier with --write to fix.
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && n...)
+  ⎿ src/domain/buses.ts 78ms
+  ⎿         </div>
+  ⎿       </div>
+  ⎿       <div className="lines-row">
+  ⎿         <span className="lines-row__label">Lines</span>
+  ⎿         {stop.lines.map((line) => (
+  ⎿           <LineChip key={line} line={line} color={colorOf(line)} />
+  ⎿         ))}
+  ⎿       </div>
+  ⎿       {approaching[0] && (
+  ⎿         <>
+  ⎿           <div className="rule" />
+  ⎿           <ApproachingBuses buses={approaching} colorOf={colorOf} />
+  ⎿           <p className="estimate-note">
+  ⎿             Positions and times estimated from the timetable at{' '}
+  ⎿             {formatLisbonHM(new Date(approaching[0].at))}. Live data replaces them once a live feed
+  ⎿             is available.
+  ⎿             {stale && ` Timetable data from ${formatLisbonDate(fetched)} may be out of date.`}
+  ⎿           </p>
+  ⎿         </>
+  ⎿ … +3 more lines
+
+● Now the end-to-end tests and the fixtures README.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p...)
+  ⎿ <stdin>:23: SyntaxWarning: "\." is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\."? A raw string is also an option.
+  ⎿ <stdin>:31: SyntaxWarning: "\." is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\."? A raw string is also an option.
+  ⎿ <stdin>:41: SyntaxWarning: "\d" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\d"? A raw string is also an option.
+  ⎿ tests/e2e/map.spec.ts 98ms
+  ⎿ 
+  ⎿ 
+  ⎿ C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\tests\e2e\map.spec.ts
+  ⎿   80:49  error  Unexpected control character(s) in regular expression: \x08, \x08  no-control-regex
+  ⎿   85:44  error  Unexpected control character(s) in regular expression: \x08, \x08  no-control-regex
+  ⎿ 
+  ⎿ ✖ 2 problems (2 errors, 0 warnings)
+  ⎿ 
+  ⎿  Test Files  10 passed (10)
+  ⎿       Tests  90 passed (90)
+  ⎿    Start at  20:44:51
+  ⎿    Duration  411ms (transform 53%, import 34%, tests 8%, worker 4%)
+
+● Python escaping mangled a couple of regexes; fixing them directly.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p...)
+  ⎿ 80:    await expect(approachingMarker).toHaveClass(/marker-bus--approaching/);
+  ⎿ 85:    await expect(passedMarker).toHaveClass(/marker-bus--dimmed/);
+  ⎿   85:44  error  Unexpected control character(s) in regular expression: \x08, \x08  no-control-regex
+  ⎿ 
+  ⎿ ✖ 2 problems (2 errors, 0 warnings)
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\tests\e2e..., offset: 60, limit: 30)
+  ⎿ 60	    }
+  ⎿ 61	    await expect(
+  ⎿ 62	      sheet.getByRole('heading', { level: 2, name: 'Heading to this stop' }),
+  ⎿ 63	    ).toBeVisible();
+  ⎿ 64	    const rows = sheet.getByRole('listitem');
+  ⎿ 65	    await expect(rows).toHaveCount(2);
+  ⎿ 66	    await expect(rows.nth(0)).toContainText('to Vale das Flores');
+  ⎿ 67	    await expect(rows.nth(1)).toContainText('to Coimbra B');
+  ⎿ 68	    await expect(sheet.getByText('Scheduled', { exact: true })).toHaveCount(1);
+  ⎿ 69	    await expect(
+  ⎿ 70	      sheet.getByText(/Positions and times estimated from the timetable at 10:44\./),
+  ⎿ 71	    ).toBeVisible();
+  ⎿ 72	
+  ⎿ 73	    await expect(
+  ⎿ 74	      page.getByRole('button', { name: 'Centre on my location', exact: true }),
+  ⎿ 75	    ).toBeEnabled();
+  ⎿ 76	
+  ⎿ 77	    await expect(page.getByRole('img', { name: /^Scheduled position of line/ })).toHaveCount(3);
+  ⎿ 78	    const approachingMarker = page.getByRole('img', { name: U1_TO_VALE_DAS_FLORES });
+  ⎿ 79	    await expect(approachingMarker).toBeVisible();
+  ⎿ … +10 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && g...)
+  ⎿ 2
+  ⎿ 0
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+
+● Lint is clean. Now build and run the end-to-end tests.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && c...)
+  ⎿ import { defineConfig, devices } from '@playwright/test';
+  ⎿ 
+  ⎿ const BASE_URL = 'http://localhost:4173';
+  ⎿ 
+  ⎿ export default defineConfig({
+  ⎿   testDir: 'tests/e2e',
+  ⎿   fullyParallel: true,
+  ⎿   forbidOnly: !!process.env.CI,
+  ⎿   retries: process.env.CI ? 1 : 0,
+  ⎿   reporter: process.env.CI ? 'github' : 'list',
+  ⎿   webServer: {
+  ⎿     command: 'npm run build && npm run preview -- --port 4173 --strictPort',
+  ⎿     url: BASE_URL,
+  ⎿     reuseExistingServer: !process.env.CI,
+  ⎿     timeout: 180_000,
+  ⎿   },
+  ⎿   use: {
+  ⎿     baseURL: BASE_URL,
+  ⎿     serviceWorkers: 'block',
+  ⎿     locale: 'en-GB',
+  ⎿ … +24 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && (..., timeout: 400000)
+  ⎿ 000
+  ⎿ free
+  ⎿     > 128 |     await expect(markerTime).toHaveText('3:02');
+  ⎿           |                              ^
+  ⎿       129 |     await page.clock.runFor(1000);
+  ⎿       130 |     await expect(sheetTime).toHaveText('3:01');
+  ⎿       131 |     await expect(markerTime).toHaveText('3:01');
+  ⎿         at C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\tests\e2e\map.spec.ts:128:30
+  ⎿ 
+  ⎿     Error Context: test-results\map-located-near-Portagem-countdown-ticks-every-second-desktop\error-context.md
+  ⎿ 
+  ⎿     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+  ⎿ 
+  ⎿     Error: expect(locator).toHaveText(expected) failed
+  ⎿ 
+  ⎿     Locator: getByRole('img', { name: /^Scheduled position of line U1 bus to Vale das Flores, / }).locator('.marker-bus__time')
+  ⎿     Expected: "3:02"
+  ⎿     Timeout: 5000ms
+  ⎿     Error: element(s) not found
+  ⎿ 
+  ⎿ … +22 more lines
+
+● The sheet countdown ticks correctly; the marker locator fails. Checking the first failure's details:
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && n..., timeout: 300000)
+  ⎿ Running 1 test using 1 worker
+  ⎿   x  1 [desktop] › tests\e2e\map.spec.ts:51:3 › located near Portagem › shows the nearest stop and every scheduled bus (566ms)
+  ⎿   1) [desktop] › tests\e2e\map.spec.ts:51:3 › located near Portagem › shows the nearest stop and every scheduled bus 
+  ⎿     Error: expect(locator).toBeVisible() failed
+  ⎿     Locator: getByRole('region', { name: 'Nearest stop' }).getByText('U1', { exact: true })
+  ⎿     Expected: visible
+  ⎿     Error: strict mode violation: getByRole('region', { name: 'Nearest stop' }).getByText('U1', { exact: true }) resolved to 3 elements:
+  ⎿         1) <span class="line-chip">U1</span> aka getByText('U1').first()
+  ⎿         2) <span class="line-chip">U1</span> aka getByText('U1').nth(1)
+  ⎿         3) <span class="line-chip">U1</span> aka getByText('U1').nth(2)
+  ⎿     Call log:
+  ⎿       - Expect "toBeVisible" getByRole('region', { name: 'Nearest stop' }).getByText('U1', { exact: true }) with timeout 5000ms
+  ⎿       - waiting for getByRole('region', { name: 'Nearest stop' }).getByText('U1', { exact: true })
+  ⎿       57 |     await expect(sheet.getByText(/\d+ m away/)).toBeVisible();
+  ⎿       58 |     for (const line of ['S1', 'S2', 'U1', 'U2']) {
+  ⎿     > 59 |       await expect(sheet.getByText(line, { exact: true })).toBeVisible();
+  ⎿          |                                                            ^
+  ⎿       60 |     }
+  ⎿       61 |     await expect(
+  ⎿       62 |       sheet.getByRole('heading', { level: 2, name: 'Heading to this stop' }),
+  ⎿ … +16 more lines
+
+● Two issues: the line chip lookup now matches the list rows too, so I'll scope it to the Lines row. Rerunning to see the marker failure on its own:
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && s..., timeout: 300000)
+  ⎿   x  1 [mobile] › tests\e2e\map.spec.ts:51:3 › located near Portagem › shows the nearest stop and every scheduled bus (6.5s)
+  ⎿   x  3 [desktop] › tests\e2e\map.spec.ts:51:3 › located near Portagem › shows the nearest stop and every scheduled bus (7.3s)
+  ⎿   1) [mobile] › tests\e2e\map.spec.ts:51:3 › located near Portagem › shows the nearest stop and every scheduled bus 
+  ⎿     Error: expect(locator).toHaveText(expected) failed
+  ⎿     Locator:  getByRole('img', { name: 'Scheduled position of line S2 bus to Serpins', exact: true })
+  ⎿     Expected: "Scheduled"
+  ⎿     Received: "S2Scheduled"
+  ⎿     Timeout:  5000ms
+  ⎿     Call log:
+  ⎿       - Expect "toHaveText" getByRole('img', { name: 'Scheduled position of line S2 bus to Serpins', exact: true }) with timeout 5000ms
+  ⎿       - waiting for getByRole('img', { name: 'Scheduled position of line S2 bus to Serpins', exact: true })
+  ⎿         14 × locator resolved to <div role="img" aria-label="Scheduled position of line S2 bus to Serpins" class="marker-bus marker-bus--dimmed maplibregl-marker maplibregl-marker-anchor-top">…</div>
+  ⎿            - unexpected value "S2Scheduled"
+  ⎿       85 |     await expect(passedMarker).toHaveClass(/marker-bus--dimmed/);
+  ⎿       86 |     await expect(passedMarker.locator('.marker-bus__time')).toHaveCount(0);
+  ⎿     > 87 |     await expect(passedMarker).toHaveText('Scheduled');
+  ⎿          |                                ^
+  ⎿       88 |     const stopMarker = page.getByRole('img', { name: 'Nearest stop: Portagem' });
+  ⎿ --
+  ⎿         at C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\tests\e2e\map.spec.ts:87:32
+  ⎿ … +41 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p..., timeout: 400000)
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿   ok 15 [desktop] › tests\e2e\map.spec.ts:116:3 › located near Portagem › countdown ticks every second (retry #1) (1.6s)
+  ⎿ 
+  ⎿ 
+  ⎿   1) [desktop] › tests\e2e\map.spec.ts:116:3 › located near Portagem › countdown ticks every second 
+  ⎿ 
+  ⎿     Error: clock.pauseAt: Error: Cannot fast-forward to the past
+  ⎿         at ClockController._innerFastForwardTo (<anonymous>:202:13)
+  ⎿         at ClockController.pauseAt (<anonymous>:133:16)
+  ⎿         at async <anonymous>:337:30
+  ⎿         at ClockController._innerFastForwardTo (<anonymous>:202:13)
+  ⎿         at ClockController.pauseAt (<anonymous>:133:16)
+  ⎿         at async <anonymous>:337:30
+  ⎿         at C:\Users\Hugo\.building\data\projects\001-metro\worktrees\002\metro\tests\e2e\map.spec.ts:127:22
+  ⎿ 
+  ⎿     Error Context: test-results\map-located-near-Portagem-countdown-ticks-every-second-desktop\error-context.md
+  ⎿ 
+  ⎿   1 flaky
+  ⎿     [desktop] › tests\e2e\map.spec.ts:116:3 › located near Portagem › countdown ticks every second ─
+  ⎿ … +3 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && p..., timeout: 500000)
+  ⎿ All matched files use Prettier code style!
+  ⎿   ok 37 [desktop] › tests\e2e\map.spec.ts:101:3 › located near Portagem › the map loads and the locate button re-frames without errors (2.5s)
+  ⎿   ok 42 [desktop] › tests\e2e\map.spec.ts:173:1 › attribution links to the OpenStreetMap copyright page (640ms)
+  ⎿   ok 39 [desktop] › tests\e2e\map.spec.ts:116:3 › located near Portagem › countdown ticks every second (2.7s)
+  ⎿ 
+  ⎿   6 skipped
+  ⎿   36 passed (24.7s)
+
+● All 36 runs pass across 3 repeats. Final full check and a look at the working tree:
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/002/metro" && n..., timeout: 200000)
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿  Test Files  10 passed (10)
+  ⎿       Tests  90 passed (90)
+  ⎿  M plays/002-all-buses/devops.yaml
+  ⎿  M plays/002-all-buses/positions.yaml
+  ⎿  M plays/002-all-buses/sessions/info.yaml
+  ⎿  D src/domain/nearestBus.test.ts
+  ⎿  D src/domain/nearestBus.ts
+  ⎿  M src/domain/types.ts
+  ⎿  M src/ui/App.tsx
+  ⎿  M src/ui/map/MapView.tsx
+  ⎿  M src/ui/map/markers.ts
+  ⎿  D src/ui/sheet/NearestBusRow.tsx
+  ⎿  M src/ui/sheet/NearestStopContent.tsx
+  ⎿  M src/ui/styles/app.css
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿  M tests/fixtures/README.md
+  ⎿ ?? plays/002-all-buses/sessions/004-dave.pty
+  ⎿ ?? plays/002-all-buses/sessions/004-dave.txt
+  ⎿ … +20 more lines
+
+● I've implemented the whole plan in the `metro` worktree. Lint, typecheck, the 90 unit tests and the build are clean. The end-to-end tests pass on both mobile and desktop, three times in a row. I didn't do the manual `npm run dev` check on a phone (verification steps 3 and 4). Nothing is committed and nothing under `documentation/` was touched.
+
+**One change from the plan.** In the new "countdown ticks every second" test, the plan paused the clock at 10:44:02. On a cold run the page takes longer than 2 seconds to load, so that moment has already passed and the test fails. It now pauses at 10:45:00 and expects `2:04`, then `2:03`. The test also waits for the bus marker to appear before pausing, because a paused clock stops the map from finishing loading.
+
+**Domain**
+- **New `buses.ts`:** every bus in service across the network, not just the one due soonest. Approaching buses come first, soonest first, each with a countdown to the nearest stop. A trip with a missing shape or an unknown stop is skipped, so one bad trip can't blank the map. It replaces `nearestBus.ts`, which is deleted.
+- **Tests:** the old `nearestBus` tests moved to `buses.test.ts`, alongside new ones for the three buses running at 10:44 and the no-stop case.
+- **New `countdown.ts`:** gives `3:04` for display and "3 minutes 4 seconds" for screen readers, with tests.
+- **`types.ts`:** `BusPosition` now carries the destination, and its countdown fields can be empty for buses not heading to the stop.
+
+**UI**
+- **Every second:** the app now updates every second instead of every 5. It shows every bus, including when location is off (then with no countdowns and no fading).
+- **Smart zoom:** still frames only you, the stop and the soonest approaching bus.
+- **Map:** one marker per bus. Buses heading to your stop show a bold `M:SS` inside their "Scheduled" tag, so it can't be mistaken for live data, and draw above the others. Other buses are faded and keep just "Scheduled".
+- **Sheet:** the single "Nearest bus" row is replaced by a "Heading to this stop" list: line, destination and a ticking countdown, at most 5 rows plus "+N more heading here", under one Scheduled badge. The per-second ticking is kept out of the screen-reader announcements.
+- **Styles:** `app.css` gains the marker, list and screen-reader-only styles, and the unused old row styles are gone.
+
+**Other tests and docs**
+- **End-to-end:** the main test now checks the two list rows, a single Scheduled badge, the new estimate note and three bus markers (the approaching U1 and the faded S2).
+- **Fixtures README:** now describes the three buses running at 10:44.

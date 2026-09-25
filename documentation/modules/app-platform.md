@@ -68,6 +68,9 @@ visible on screen.
   - Tile requests are answered with a 1×1 PNG.
   - The clock is fixed at a weekday, 10:44 in Lisbon.
 - **Fixtures.** `tests/fixtures/` holds recordings of the live source. `stops.json` and
-  `route-shapes.json` are full copies. `trips-DU.sample.json` is a trimmed weekday sample. The
-  e2e scenario depends on the U1 trip `u1-DU-0-852` approaching Portagem. The fixtures `README.md`
+  `route-shapes.json` are full copies. `trips-DU.sample.json` is a trimmed weekday sample. At the
+  e2e scenario's time, the sample has exactly three buses running, and the e2e tests depend on all
+  three: U1 `u1-DU-0-852` to Vale das Flores (Portagem in 3:04), U1 `u1-DU-1-823` to Coimbra B
+  (Portagem in 9:18), and S2 `s2-DU-0-701` to Serpins, which has already passed Portagem. The
+  fixtures `README.md`
   explains how to re-record them. Tests never call the live source.

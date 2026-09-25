@@ -1,7 +1,8 @@
 # Map screen
 
 Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
-is, their nearest Metrobus stop, and the nearest bus heading towards that stop. The approved
+is, their nearest Metrobus stop, every Metrobus bus in service, and a countdown for each bus
+heading towards that stop. The approved
 prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
 specification. Code lives in `src/ui/`.
 
@@ -33,11 +34,26 @@ The first matching rule decides the content:
 The **nearest stop** content shows `// NEAREST STOP`, the stop name exactly as in the data (for
 example `República (desc)`), the distance ("180 m away" or "1.2 km away"), and a chip for each
 line that serves the stop. Each chip uses the line's colour from the data, with white or dark text
-chosen for contrast. If a bus is approaching, a "Nearest bus · U1" row follows, with a
-**Scheduled** badge and the note "Position estimated from the timetable at HH:MM". If there is no
-approaching bus, that part is not shown.
+chosen for contrast.
 
-The sheet is an `aria-live="polite"` region, and its `aria-label` matches its current state.
+If any bus is heading to the stop, a **"Heading to this stop"** section follows
+(`sheet/ApproachingBuses.tsx`):
+- A single **Scheduled** badge in the section header covers the whole list.
+- Each bus gets one row, soonest first: its line chip, "to {destination}" (with an ellipsis if it
+  is too long), and an `M:SS` countdown in large tabular figures. Minutes are not capped, so a bus
+  63 minutes away shows `63:05`.
+- At most **5** rows are shown, so that the phone sheet never grows enough to make the page
+  scroll. Any others appear as "+N more heading here". The map still shows every one of them.
+- A note follows the list: "Positions and times estimated from the timetable at HH:MM. Live data
+  replaces them once a live feed is available." The stale-timetable sentence is added to it when
+  it applies.
+
+If no bus is heading to the stop, the section is not shown, even if other buses are on the map.
+
+The sheet is an `aria-live="polite"` region, and its `aria-label` matches its current state. The
+bus list inside it is `aria-live="off"`: without that, the countdowns, which tick every second,
+would flood screen readers. Each row's visible time is `aria-hidden`, and a visually hidden text
+such as "3 minutes 4 seconds away" takes its place (the `.visually-hidden` utility in `app.css`).
 
 ## Map
 
@@ -46,17 +62,36 @@ The sheet is an `aria-live="polite"` region, and its `aria-label` matches its cu
   the map opens on Coimbra at zoom 13.
 - Layers: every line shape in its line colour, and every stop as a small white circle. There are
   no map glyphs or sprites. The user dot, the nearest-stop marker (a red dot with a name pill) and
-  the bus marker are DOM markers (`src/ui/map/markers.ts`).
-- The **bus marker** is a pill in the line colour with a dashed white border. A "Scheduled" tag
-  hangs under it. The dashed border is how the design marks an estimated position.
+  the bus markers are DOM markers (`src/ui/map/markers.ts`).
+- **Every bus in service has a marker**: every line, both directions, whether or not the bus is
+  heading to the user's stop. `useBusMarkers` in `MapView.tsx` keeps one MapLibre marker per
+  `tripId`. On each tick it moves and updates the existing markers in place, adds markers for new
+  trips and removes the markers of trips that have ended.
+- A **bus marker** is a pill in the line colour with a dashed white border. A "Scheduled" tag
+  hangs under it. The dashed border is how the design marks an estimated position. There are three
+  variants:
+
+  | The bus is… | Tag | Class |
+  | --- | --- | --- |
+  | heading to the nearest stop | `3:04 Scheduled` (bold countdown first) | `marker-bus--approaching`, drawn above the others |
+  | not heading there (going elsewhere, or already past it) | `Scheduled` | `marker-bus--dimmed` (55% opacity) |
+  | on the map with no known location, so no stop | `Scheduled` | none. Nothing is dimmed. |
+
+  The countdown always sits *inside* the Scheduled tag, so it can never be read as a live time.
+  Each marker is `role="img"` with an `aria-label` such as "Scheduled position of line U1 bus to
+  Vale das Flores, 3 minutes 4 seconds from Portagem". The tag is built from DOM nodes with
+  `textContent`, never with `innerHTML`, and it is rebuilt only when the variant changes.
+  Otherwise, only the time text is updated.
+- Two buses on the same line can be on the map at once, for example U1 in each direction. Tests
+  must tell markers apart by destination as well as by line.
 - MapLibre's own attribution control is turned off and replaced by an attribution element that is
   always visible: "© OpenStreetMap contributors".
 - If WebGL is unavailable, the map fails to start and logs an error. The sheet still works.
 
 ## Smart zoom
 
-The map is framed with `fitBounds` over the user, the nearest stop and, if there is one, the bus.
-The maximum zoom is 17. The animation takes 800 ms, or is instant under
+The map is framed with `fitBounds` over the user, the nearest stop and, if there is one, the
+**soonest** approaching bus. It never frames every bus in service. The maximum zoom is 17. The animation takes 800 ms, or is instant under
 `prefers-reduced-motion`. The padding keeps the points clear of the sheet or panel: on phones, the
 bottom padding is the sheet's measured height.
 
@@ -79,5 +114,8 @@ bottom padding is the sheet's measured height.
 - Geolocation uses `watchPosition` with high accuracy, a maximum position age of 10 s and a 15 s
   timeout. A timeout that arrives after a first fix keeps the last known position rather than
   switching to "unavailable".
-- A `now` value ticks every 5 seconds. The nearest bus is re-estimated on every tick with no
-  network request, so the bus marker moves along its route between ticks.
+- A `now` value ticks **every second**. Every bus is re-estimated on each tick, with no network
+  request, so the markers move along their routes and the sheet and map countdowns tick down
+  together.
+- Buses are shown even while the location is still being found, or when it is off. The sheet then
+  shows its locating or "Location is off" state, and the map shows the buses with no countdowns.
