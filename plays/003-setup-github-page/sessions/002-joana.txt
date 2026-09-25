@@ -1,0 +1,111 @@
+> not working, see: https://hdaraujo.github.io/metro/
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls -a && ..., description: Inspect repo, last commit, and deploy config)
+  → Bash(command: curl -sL -w "\nHTTP %{http_code}\n" https://hdaraujo.github.io/metro/ | head -50, description: Fetch the deployed GitHub Pages site)
+  ⎿ .
+  ⎿ ..
+  ⎿ .claude
+  ⎿ .editorconfig
+  ⎿ .git
+  ⎿ .github
+  ⎿ .gitignore
+  ⎿ .idea
+  ⎿ .nvmrc
+  ⎿ .prettierignore
+  ⎿ .prettierrc.json
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ dist
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ node_modules
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ … +192 more lines
+  ⎿ <!doctype html>
+  ⎿ <html lang="en">
+  ⎿   <head>
+  ⎿     <meta charset="utf-8" />
+  ⎿     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  ⎿     <meta name="theme-color" content="#ffffff" />
+  ⎿     <meta
+  ⎿       name="description"
+  ⎿       content="Coimbra Metrobus on a map: where you are, your nearest stop and the nearest bus."
+  ⎿     />
+  ⎿     <title>Metro — Coimbra Metrobus</title>
+  ⎿     <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  ⎿     <link rel="icon" href="/icon.svg" sizes="any" type="image/svg+xml" />
+  ⎿     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+  ⎿   </head>
+  ⎿   <body>
+  ⎿     <div id="root"></div>
+  ⎿     <script type="module" src="/src/main.tsx"></script>
+  ⎿   </body>
+  ⎿ </html>
+  ⎿ … +2 more lines
+
+● The live site is serving the raw source `index.html` (`/src/main.tsx`), not the built `dist/`. That means Pages is deploying the branch root, not the workflow's artifact. Let me confirm.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && gh api re..., description: Check Pages source setting and recent workflow runs)
+  ⎿ Exit code 127
+  ⎿ /usr/bin/bash: line 1: gh: command not found
+  ⎿ 
+  ⎿ /usr/bin/bash: line 1: gh: command not found
+  → Bash(command: curl -s https://api.github.com/repos/hdaraujo/metro/pages; echo; curl -s "htt..., description: Query GitHub API for Pages config and workflow runs)
+  ⎿ {
+  ⎿   "message": "Not Found",
+  ⎿   "documentation_url": "https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site",
+  ⎿   "status": "404"
+  ⎿ }
+  ⎿ 
+  ⎿       "name": "pages build and deployment",
+  ⎿       "head_sha": "63e850eee053e3e962ba93733e54504adcdbfdbf",
+  ⎿       "event": "dynamic",
+  ⎿       "status": "completed",
+  ⎿       "conclusion": "success",
+  ⎿           "name": "Hugo Araújo",
+  ⎿           "name": "Hugo Araújo",
+  ⎿         "name": "metro",
+  ⎿         "name": "metro",
+  ⎿       "name": "Deploy to GitHub Pages",
+  ⎿       "head_sha": "63e850eee053e3e962ba93733e54504adcdbfdbf",
+  ⎿       "event": "push",
+  ⎿       "status": "completed",
+  ⎿       "conclusion": "success",
+  ⎿ … +13 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git statu..., description: Build locally and inspect the built index.html, timeout: 300000)
+  ⎿ dist
+  ⎿ ignored
+  ⎿ <!doctype html>
+  ⎿ <html lang="en">
+  ⎿   <head>
+  ⎿     <meta charset="utf-8" />
+  ⎿     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  ⎿     <meta name="theme-color" content="#ffffff" />
+  ⎿     <meta
+  ⎿       name="description"
+  ⎿       content="Coimbra Metrobus on a map: where you are, your nearest stop and the nearest bus."
+  ⎿     />
+  ⎿     <title>Metro — Coimbra Metrobus</title>
+  ⎿     <link rel="icon" href="./favicon.ico" sizes="48x48" />
+  ⎿     <link rel="icon" href="./icon.svg" sizes="any" type="image/svg+xml" />
+  ⎿     <link rel="apple-touch-icon" href="./apple-touch-icon-180x180.png" />
+  ⎿     <script type="module" crossorigin src="./assets/index-BZeq5p9E.js"></script>
+  ⎿     <link rel="stylesheet" crossorigin href="./assets/index-KJoW76uK.css">
+  ⎿   <link rel="manifest" href="./manifest.webmanifest"></head>
+  ⎿   <body>
+  ⎿ … +3 more lines
+
+● The site is broken because of a repository setting, not the code. The workflow ran and succeeded, but GitHub Pages is still set to publish straight from the `main` branch. So it serves the source `index.html` exactly as committed. That file points the browser at `/src/main.tsx`, which only works under the Vite dev server, so the page loads blank.
+
+GitHub's own branch deploy ran on the same commit as our workflow, and its output is what's live. The workflow's build itself is fine: I built locally, and `dist/index.html` uses relative paths (`./assets/…`), which work under `/metro/`.
+
+**To fix it (I can't change repo settings from here):**
+1. Go to https://github.com/hdaraujo/metro/settings/pages
+2. Under **Build and deployment → Source**, change "Deploy from a branch" to **GitHub Actions**.
+3. Under **Actions → Deploy to GitHub Pages**, click **Run workflow** (or push any commit) to redeploy.
+
+After that only our workflow publishes, and the built app should appear at https://hdaraujo.github.io/metro/. If the page is still blank once the workflow has run again, send me the link and I'll dig further.
+
+I haven't changed any files. I'd suggest adding step 2 to the README's deploy section so nobody hits this again. Want me to do that?

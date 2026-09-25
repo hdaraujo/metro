@@ -1,0 +1,46 @@
+sessions:
+  - id: bd43f7a3a2d34e929affbf17e1c621cf
+    state: finished
+    seq: 1
+    datetime: '2026-09-25T20:05:43.805Z'
+    team: Manual
+    agent: Joana
+    logs:
+      pty: 001-joana.pty
+      txt: 001-joana.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T20:10:47.202Z'
+    usage:
+      claude-opus-5-5:
+        input: 56
+        output: 15095
+        cache_read: 1599287
+        cache_write_5m: 0
+        cache_write_1h: 62722
+  - id: 69d4597f4bdc4c13978622099fe36a39
+    state: finished
+    seq: 2
+    datetime: '2026-09-25T20:15:35.771Z'
+    team: Manual
+    agent: Joana
+    logs:
+      pty: 002-joana.pty
+      txt: 002-joana.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-25T20:16:36.213Z'
+    usage:
+      claude-opus-5-5:
+        input: 24
+        output: 5661
+        cache_read: 512081
+        cache_write_5m: 0
+        cache_write_1h: 50021
+next_seq: 3

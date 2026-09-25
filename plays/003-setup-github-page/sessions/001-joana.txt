@@ -1,0 +1,214 @@
+> help me setup a github page for this repo
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls -la &&..., description: Inspect repo layout and the play 003 folder)
+  ⎿ total 514
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 21:04 .
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 18:15 ..
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 18:15 .claude
+  ⎿ -rw-r--r-- 1 Hugo 197121    188 Sep 25 20:28 .editorconfig
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 21:04 .git
+  ⎿ -rw-r--r-- 1 Hugo 197121    275 Sep 25 21:04 .gitignore
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 21:03 .idea
+  ⎿ -rw-r--r-- 1 Hugo 197121      3 Sep 25 20:28 .nvmrc
+  ⎿ -rw-r--r-- 1 Hugo 197121    186 Sep 25 20:28 .prettierignore
+  ⎿ -rw-r--r-- 1 Hugo 197121     89 Sep 25 20:28 .prettierrc.json
+  ⎿ -rw-r--r-- 1 Hugo 197121   2829 Sep 25 18:15 CLAUDE.md
+  ⎿ -rw-r--r-- 1 Hugo 197121   6238 Sep 25 20:28 README.md
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 18:58 documentation
+  ⎿ -rw-r--r-- 1 Hugo 197121   1134 Sep 25 20:28 eslint.config.js
+  ⎿ -rw-r--r-- 1 Hugo 197121    725 Sep 25 20:28 index.html
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 20:32 node_modules
+  ⎿ -rw-r--r-- 1 Hugo 197121 325979 Sep 25 20:31 package-lock.json
+  ⎿ -rw-r--r-- 1 Hugo 197121   1397 Sep 25 20:28 package.json
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 21:05 plays
+  ⎿ … +103 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat vite...., description: Read build config, context docs and network usage)
+  ⎿ /// <reference types="vitest/config" />
+  ⎿ import react from '@vitejs/plugin-react';
+  ⎿ import { defineConfig } from 'vite';
+  ⎿ import { VitePWA } from 'vite-plugin-pwa';
+  ⎿ 
+  ⎿ const DESCRIPTION =
+  ⎿   'Coimbra Metrobus on a map: where you are, your nearest stop and the nearest bus, estimated from the timetable until live positions are available.';
+  ⎿ 
+  ⎿ export default defineConfig({
+  ⎿   base: './',
+  ⎿   plugins: [
+  ⎿     react(),
+  ⎿     VitePWA({
+  ⎿       registerType: 'autoUpdate',
+  ⎿       includeAssets: ['favicon.ico', 'apple-touch-icon-180x180.png'],
+  ⎿       manifest: {
+  ⎿         name: 'Metro — Coimbra Metrobus',
+  ⎿         short_name: 'Metro',
+  ⎿         description: DESCRIPTION,
+  ⎿         theme_color: '#ffffff',
+  ⎿ … +239 more lines
+  → Skill(skill: manual-claude, args: 003 — help me setup a github page for this repo)
+  ⎿ Launching skill: manual-claude
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\.claude\skills\manual-claude
+
+You are working on a play in this project's specs repository. The play is `$play`.
+
+Read `$play/intent.md` first and treat it as the source of truth for what to build,
+then read everything in `documentation/context/` — those documents are shared by every
+play and apply to all work here. The play's own notes, plan and session record live
+beside the intent in `$play/`.
+
+Arguments: `$play` — the play folder, e.g. `plays/001-checkout`.
+
+ARGUMENTS: 003 — help me setup a github page for this repo
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat docum..., description: Read vision, platform docs, play 002 records and README)
+  ⎿ <!--
+  ⎿   Product Vision — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE: a shared north star every play must conform to, not a spec.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Product Vision
+  ⎿ 
+  ⎿ ## Problem
+  ⎿ Coimbra Metrobus riders can't easily see where the buses are right now or how soon one
+  ⎿ will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿ 
+  ⎿ ## Vision
+  ⎿ A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ Metrobus stop, the live position of every Metrobus bus, and how many minutes each
+  ⎿ approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ 
+  ⎿ ## Target users
+  ⎿ - **Primary: the owner.** A regular Metrobus rider checking a phone before heading out.
+  ⎿   They need to see at a glance how far away the next buses are.
+  ⎿ … +345 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && gh --vers..., description: Check gh CLI, repo visibility and Pages status)
+  ⎿ /usr/bin/bash: line 1: gh: command not found
+  ⎿ /usr/bin/bash: line 1: gh: command not found
+  ⎿ ?? plays/003-setup-github-page/
+  ⎿ * main
+  ⎿   remotes/origin/HEAD -> origin/main
+  ⎿   remotes/origin/main
+
+● Found it: the app is already a static Vite build with relative paths, so GitHub Pages will work under `/metro/`. I'm adding a GitHub Actions deploy workflow on the play's branch now.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git switc..., description: Create play branch, add Pages workflow, run lint/test/build, timeout: 300000)
+  ⎿ Switched to a new branch '003-setup-github-page'
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿  Test Files  10 passed (10)
+  ⎿       Tests  90 passed (90)
+  ⎿    Start at  21:06:58
+  ⎿    Duration  407ms (transform 53%, import 33%, tests 9%, worker 5%)
+  ⎿ 
+  ⎿ [32m✓ built in 475ms[39m
+  ⎿ 
+  ⎿ PWA v1.3.0
+  ⎿ mode      generateSW
+  ⎿ precache  12 entries (1841.89 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿ … +1 more lines
+
+● Lint, tests and build all pass. Now I'm updating the docs and the play record.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && python - ..., description: Update README, platform doc, tech context and play intent)
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿  README.md                             | 8 +++++++-
+  ⎿  documentation/context/tech.md         | 5 +++--
+  ⎿  documentation/modules/app-platform.md | 7 ++++++-
+  ⎿  3 files changed, 16 insertions(+), 4 deletions(-)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git add ...., description: Commit the Pages setup on the play branch)
+  ⎿ b19660e Deploy the app to GitHub Pages
+  ⎿ ?? plays/003-setup-github-page/CLAUDE.md
+  ⎿ ?? plays/003-setup-github-page/config.yaml
+  ⎿ ?? plays/003-setup-github-page/positions.yaml
+  ⎿ ?? plays/003-setup-github-page/sessions/
+
+● I've set up GitHub Pages deployment and committed it on the play's branch, `003-setup-github-page` (commit `b19660e`). It hasn't been pushed. Lint, the 90 unit tests and the production build all pass locally. The workflow itself hasn't run on GitHub yet.
+
+**What I added**
+- **`.github/workflows/pages.yml`:** on every push to `main`, or when you start it by hand from the Actions tab, it installs dependencies, lints, runs the unit tests, builds, and deploys `dist/` to Pages. It doesn't run the Playwright end-to-end tests.
+- **No app changes:** the build already uses relative paths, so the app, manifest and service worker work unchanged at `https://hdaraujo.github.io/metro/`.
+- **Docs:** I updated the Deployment section of `README.md`, the hosting notes in `documentation/modules/app-platform.md`, and the deployment line in `documentation/context/tech.md`, which used to say the host was undecided. I also filled in the play's `intent.md`. The play's other files (`CLAUDE.md`, `config.yaml`, `positions.yaml`, `sessions/`) are left uncommitted for Building to manage.
+
+**What you need to do on GitHub** (`gh` isn't installed here, so I couldn't):
+1. In the repo, go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**. This is a one-time setting.
+2. Push and merge: `git push -u origin 003-setup-github-page`, then merge into `main`. The first deploy runs on that push. By default, GitHub only lets `main` deploy to Pages, so starting the workflow from this branch won't publish anything.
+
+**Things to know**
+- **Private repo:** if `hdaraujo/metro` is private, Pages needs a paid GitHub plan, and the published site is public either way. I couldn't check which it is.
+- **Map tiles:** the app uses OpenStreetMap's free tile servers, which only allow light, personal use. Once the site is public, it's worth moving to a dedicated tile provider before sharing it widely.
+- **Outdated doc:** `tech.md` still describes a monorepo (`apps/api`, `apps/web`), but the repo is one static app. I only changed the deployment line; the rest needs a separate cleanup.
+
+Do you want me to push the branch?
+
+> yes, push it
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git push ..., description: Push the play branch to GitHub, timeout: 60000)
+  ⎿ remote: 
+  ⎿ remote: Create a pull request for '003-setup-github-page' on GitHub by visiting:        
+  ⎿ remote:      https://github.com/hdaraujo/metro/pull/new/003-setup-github-page        
+  ⎿ remote: 
+  ⎿ To github.com:hdaraujo/metro.git
+  ⎿  * [new branch]      003-setup-github-page -> 003-setup-github-page
+  ⎿ branch '003-setup-github-page' set up to track 'origin/003-setup-github-page'.
+
+● The branch `003-setup-github-page` is now on GitHub, and your local branch tracks it. Nothing has deployed yet, because the workflow only runs on pushes to `main`.
+
+To get the site live:
+1. In the repo, go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
+2. Open a pull request at https://github.com/hdaraujo/metro/pull/new/003-setup-github-page and merge it into `main`. The merge starts the first deploy, and the site should appear at https://hdaraujo.github.io/metro/ a minute or two after it finishes.
+
+If the first run fails, paste its log from the Actions tab and I'll fix it.
+
+> i deleted the branch, commit the same changes to main
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git fetch..., description: Check branches and remote main state)
+  ⎿ * main
+  ⎿   remotes/origin/HEAD -> origin/main
+  ⎿   remotes/origin/main
+  ⎿ A  plays/003-setup-github-page/CLAUDE.md
+  ⎿ A  plays/003-setup-github-page/config.yaml
+  ⎿ A  plays/003-setup-github-page/positions.yaml
+  ⎿ A  plays/003-setup-github-page/sessions/info.yaml
+  ⎿ 9b96f00 Remove dist folder
+  ⎿ 582adc1 Add dist folder
+  ⎿ 37f9c47 Play 002: all buses
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git show ..., description: Reapply the Pages commit onto main, leaving play files staged)
+  ⎿ b19660e Deploy the app to GitHub Pages
+  ⎿  .github/workflows/pages.yml           | 44 +++++++++++++++++++++++++++++++++++
+  ⎿  README.md                             |  8 ++++++-
+  ⎿  documentation/context/tech.md         |  5 ++--
+  ⎿  documentation/modules/app-platform.md |  7 +++++-
+  ⎿  plays/003-setup-github-page/intent.md |  1 +
+  ⎿  5 files changed, 61 insertions(+), 4 deletions(-)
+  ⎿ 63e850e Deploy the app to GitHub Pages
+  ⎿ 9b96f00 Remove dist folder
+  ⎿ 
+  ⎿  .github/workflows/pages.yml           | 44 +++++++++++++++++++++++++++++++++++
+  ⎿  README.md                             |  8 ++++++-
+  ⎿  documentation/context/tech.md         |  5 ++--
+  ⎿  documentation/modules/app-platform.md |  7 +++++-
+  ⎿  plays/003-setup-github-page/intent.md |  1 +
+  ⎿  5 files changed, 61 insertions(+), 4 deletions(-)
+  ⎿ A  plays/003-setup-github-page/CLAUDE.md
+  ⎿ A  plays/003-setup-github-page/config.yaml
+  ⎿ A  plays/003-setup-github-page/positions.yaml
+  ⎿ A  plays/003-setup-github-page/sessions/info.yaml
+
+● I've committed the same changes to your local `main` as `63e850e`, with the same five files and message as the branch commit. The local branch was gone too, so I copied the change over from the original commit. I haven't pushed it.
+
+Someone had already staged the play's other files (`CLAUDE.md`, `config.yaml`, `positions.yaml`, `sessions/info.yaml`), probably Building. I left them staged and out of this commit.
+
+Pushing `main` starts the first deploy, as long as **Settings → Pages → Source** is set to **GitHub Actions**. Do you want me to push it?
+
+> nop
+
+● Understood, I won't push. The Pages commit `63e850e` is only on your local `main`. When you want to deploy, run `git push origin main`; the first deploy runs as long as the Pages source is set to **GitHub Actions**.

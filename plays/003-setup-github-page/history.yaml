@@ -1,0 +1,39 @@
+events:
+  - kind: transition
+    at: '2026-09-25T20:14:38.126Z'
+    from: ideation
+    to: working
+  - kind: transition
+    at: '2026-09-25T20:14:38.886Z'
+    from: working
+    to: validation
+  - kind: decision
+    at: '2026-09-25T20:14:39.786Z'
+    question: 'Ready for review: setup github page'
+    agent: Joana
+    resolution: approved
+  - kind: transition
+    at: '2026-09-25T20:14:39.787Z'
+    from: validation
+    to: completed
+  - kind: transition
+    at: '2026-09-25T20:15:29.792Z'
+    from: completed
+    to: ideation
+  - kind: transition
+    at: '2026-09-25T20:15:31.797Z'
+    from: ideation
+    to: working
+  - kind: transition
+    at: '2026-09-25T20:20:07.655Z'
+    from: working
+    to: validation
+  - kind: decision
+    at: '2026-09-25T20:20:08.360Z'
+    question: 'Ready for review: setup github page'
+    agent: Joana
+    resolution: approved
+  - kind: transition
+    at: '2026-09-25T20:20:08.361Z'
+    from: validation
+    to: completed
