@@ -1,0 +1,6894 @@
+[
+  {
+    "id": "s1-DU-0-633",
+    "line": "S1",
+    "lineType": "suburbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Corvo",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "07:40:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "07:41:18"
+      },
+      {
+        "name": "Açude",
+        "time": "07:42:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "07:43:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "07:44:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "07:46:04"
+      },
+      {
+        "name": "Parque",
+        "time": "07:47:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "07:49:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "07:50:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "07:51:25"
+      },
+      {
+        "name": "São José",
+        "time": "07:52:29"
+      },
+      {
+        "name": "Solum",
+        "time": "07:54:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "07:55:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "07:56:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "07:58:28"
+      },
+      {
+        "name": "Portela",
+        "time": "08:00:59"
+      },
+      {
+        "name": "Quinta da Ponte",
+        "time": "08:02:51"
+      },
+      {
+        "name": "Ceira",
+        "time": "08:04:34"
+      },
+      {
+        "name": "Sobral de Ceira",
+        "time": "08:06:32"
+      },
+      {
+        "name": "Vale de Açor",
+        "time": "08:08:55"
+      },
+      {
+        "name": "Trémoa",
+        "time": "08:12:57"
+      },
+      {
+        "name": "Moinhos",
+        "time": "08:16:23"
+      },
+      {
+        "name": "Lobazes",
+        "time": "08:18:59"
+      },
+      {
+        "name": "Miranda do Corvo",
+        "time": "08:23:17"
+      },
+      {
+        "name": "Corvo",
+        "time": "08:24:59"
+      }
+    ]
+  },
+  {
+    "id": "s1-DU-0-726",
+    "line": "S1",
+    "lineType": "suburbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Serpins",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "24:25:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "24:26:18"
+      },
+      {
+        "name": "Açude",
+        "time": "24:27:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "24:28:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "24:29:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "24:31:04"
+      },
+      {
+        "name": "Parque",
+        "time": "24:32:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "24:34:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "24:35:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "24:36:25"
+      },
+      {
+        "name": "São José",
+        "time": "24:37:29"
+      },
+      {
+        "name": "Solum",
+        "time": "24:39:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "24:40:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "24:41:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "24:43:13"
+      },
+      {
+        "name": "Portela",
+        "time": "24:45:44"
+      },
+      {
+        "name": "Quinta da Ponte",
+        "time": "24:47:12"
+      },
+      {
+        "name": "Ceira",
+        "time": "24:48:55"
+      },
+      {
+        "name": "Sobral de Ceira",
+        "time": "24:50:53"
+      },
+      {
+        "name": "Vale de Açor",
+        "time": "24:53:16"
+      },
+      {
+        "name": "Trémoa",
+        "time": "24:57:18"
+      },
+      {
+        "name": "Moinhos",
+        "time": "25:00:44"
+      },
+      {
+        "name": "Lobazes",
+        "time": "25:03:20"
+      },
+      {
+        "name": "Miranda do Corvo",
+        "time": "25:07:38"
+      },
+      {
+        "name": "Corvo",
+        "time": "25:09:50"
+      },
+      {
+        "name": "Padrão",
+        "time": "25:12:52"
+      },
+      {
+        "name": "Meiral",
+        "time": "25:16:54"
+      },
+      {
+        "name": "Lousã - Parque de Exposições",
+        "time": "25:19:42"
+      },
+      {
+        "name": "Lousã - Estação",
+        "time": "25:21:42"
+      },
+      {
+        "name": "Casal do Espírito Santo",
+        "time": "25:23:32"
+      },
+      {
+        "name": "Casal de Santo António",
+        "time": "25:28:34"
+      },
+      {
+        "name": "Serpins",
+        "time": "25:29:28"
+      }
+    ]
+  },
+  {
+    "id": "s2-DU-0-701",
+    "line": "S2",
+    "lineType": "suburbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Serpins",
+    "stops": [
+      {
+        "name": "República (desc)",
+        "time": "10:20:00"
+      },
+      {
+        "name": "Mercado (desc)",
+        "time": "10:21:39"
+      },
+      {
+        "name": "Câmara (desc)",
+        "time": "10:23:01"
+      },
+      {
+        "name": "Loja do Cidadão",
+        "time": "10:24:07"
+      },
+      {
+        "name": "Portagem",
+        "time": "10:25:35"
+      },
+      {
+        "name": "Parque",
+        "time": "10:26:59"
+      },
+      {
+        "name": "Colégios",
+        "time": "10:28:32"
+      },
+      {
+        "name": "Arregaça",
+        "time": "10:29:35"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "10:30:56"
+      },
+      {
+        "name": "São José",
+        "time": "10:32:00"
+      },
+      {
+        "name": "Solum",
+        "time": "10:33:44"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "10:34:55"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "10:36:08"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "10:37:44"
+      },
+      {
+        "name": "Portela",
+        "time": "10:40:15"
+      },
+      {
+        "name": "Quinta da Ponte",
+        "time": "10:41:43"
+      },
+      {
+        "name": "Ceira",
+        "time": "10:43:26"
+      },
+      {
+        "name": "Sobral de Ceira",
+        "time": "10:45:24"
+      },
+      {
+        "name": "Vale de Açor",
+        "time": "10:47:47"
+      },
+      {
+        "name": "Trémoa",
+        "time": "10:51:49"
+      },
+      {
+        "name": "Moinhos",
+        "time": "10:55:15"
+      },
+      {
+        "name": "Lobazes",
+        "time": "10:57:51"
+      },
+      {
+        "name": "Miranda do Corvo",
+        "time": "11:02:09"
+      },
+      {
+        "name": "Corvo",
+        "time": "11:04:21"
+      },
+      {
+        "name": "Padrão",
+        "time": "11:07:23"
+      },
+      {
+        "name": "Meiral",
+        "time": "11:12:34"
+      },
+      {
+        "name": "Lousã - Parque de Exposições",
+        "time": "11:15:22"
+      },
+      {
+        "name": "Lousã - Estação",
+        "time": "11:17:22"
+      },
+      {
+        "name": "Casal do Espírito Santo",
+        "time": "11:19:12"
+      },
+      {
+        "name": "Casal de Santo António",
+        "time": "11:24:14"
+      },
+      {
+        "name": "Serpins",
+        "time": "11:25:08"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-771",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "05:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "05:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "05:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "05:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "05:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "05:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "05:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "05:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "05:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "05:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "05:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "05:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "05:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "05:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "05:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-528",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "05:20:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "05:21:18"
+      },
+      {
+        "name": "Açude",
+        "time": "05:22:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "05:23:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "05:24:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "05:26:04"
+      },
+      {
+        "name": "Parque",
+        "time": "05:27:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "05:29:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "05:30:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "05:31:25"
+      },
+      {
+        "name": "São José",
+        "time": "05:32:29"
+      },
+      {
+        "name": "Solum",
+        "time": "05:34:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "05:35:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "05:36:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "05:37:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-552",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "05:35:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "05:36:18"
+      },
+      {
+        "name": "Açude",
+        "time": "05:37:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "05:38:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "05:39:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "05:41:04"
+      },
+      {
+        "name": "Parque",
+        "time": "05:42:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "05:44:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "05:45:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "05:46:25"
+      },
+      {
+        "name": "São José",
+        "time": "05:47:29"
+      },
+      {
+        "name": "Solum",
+        "time": "05:49:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "05:50:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "05:51:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "05:52:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-770",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "06:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "06:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "06:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "06:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "06:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "06:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "06:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "06:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "06:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "06:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "06:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "06:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "06:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "06:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "06:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-964",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "07:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "07:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "07:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "07:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "07:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "07:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "07:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "07:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "07:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "07:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "07:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "07:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "07:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "07:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "07:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-841",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "07:35:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "07:36:18"
+      },
+      {
+        "name": "Açude",
+        "time": "07:37:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "07:38:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "07:39:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "07:41:04"
+      },
+      {
+        "name": "Parque",
+        "time": "07:42:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "07:44:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "07:45:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "07:46:25"
+      },
+      {
+        "name": "São José",
+        "time": "07:47:29"
+      },
+      {
+        "name": "Solum",
+        "time": "07:49:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "07:50:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "07:51:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "07:52:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-965",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "08:15:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "08:16:18"
+      },
+      {
+        "name": "Açude",
+        "time": "08:17:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "08:18:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "08:19:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "08:21:04"
+      },
+      {
+        "name": "Parque",
+        "time": "08:22:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "08:24:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "08:25:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "08:26:25"
+      },
+      {
+        "name": "São José",
+        "time": "08:27:29"
+      },
+      {
+        "name": "Solum",
+        "time": "08:29:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "08:30:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "08:31:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "08:32:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-844",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "08:35:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "08:36:18"
+      },
+      {
+        "name": "Açude",
+        "time": "08:37:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "08:38:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "08:39:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "08:41:04"
+      },
+      {
+        "name": "Parque",
+        "time": "08:42:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "08:44:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "08:45:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "08:46:25"
+      },
+      {
+        "name": "São José",
+        "time": "08:47:29"
+      },
+      {
+        "name": "Solum",
+        "time": "08:49:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "08:50:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "08:51:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "08:52:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-845",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "08:45:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "08:46:18"
+      },
+      {
+        "name": "Açude",
+        "time": "08:47:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "08:48:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "08:49:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "08:51:04"
+      },
+      {
+        "name": "Parque",
+        "time": "08:52:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "08:54:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "08:55:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "08:56:25"
+      },
+      {
+        "name": "São José",
+        "time": "08:57:29"
+      },
+      {
+        "name": "Solum",
+        "time": "08:59:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "09:00:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "09:01:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "09:02:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-966",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "09:15:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "09:16:18"
+      },
+      {
+        "name": "Açude",
+        "time": "09:17:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "09:18:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "09:19:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "09:21:04"
+      },
+      {
+        "name": "Parque",
+        "time": "09:22:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "09:24:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "09:25:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "09:26:25"
+      },
+      {
+        "name": "São José",
+        "time": "09:27:29"
+      },
+      {
+        "name": "Solum",
+        "time": "09:29:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "09:30:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "09:31:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "09:32:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-849",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "09:35:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "09:36:18"
+      },
+      {
+        "name": "Açude",
+        "time": "09:37:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "09:38:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "09:39:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "09:41:04"
+      },
+      {
+        "name": "Parque",
+        "time": "09:42:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "09:44:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "09:45:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "09:46:25"
+      },
+      {
+        "name": "São José",
+        "time": "09:47:29"
+      },
+      {
+        "name": "Solum",
+        "time": "09:49:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "09:50:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "09:51:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "09:52:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-822",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "10:04:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "10:05:18"
+      },
+      {
+        "name": "Açude",
+        "time": "10:06:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "10:07:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "10:08:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "10:10:04"
+      },
+      {
+        "name": "Parque",
+        "time": "10:11:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "10:13:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "10:14:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "10:15:25"
+      },
+      {
+        "name": "São José",
+        "time": "10:16:29"
+      },
+      {
+        "name": "Solum",
+        "time": "10:18:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "10:19:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "10:20:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "10:21:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-852",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "10:41:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "10:42:18"
+      },
+      {
+        "name": "Açude",
+        "time": "10:43:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "10:44:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "10:45:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "10:47:04"
+      },
+      {
+        "name": "Parque",
+        "time": "10:48:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "10:50:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "10:51:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "10:52:25"
+      },
+      {
+        "name": "São José",
+        "time": "10:53:29"
+      },
+      {
+        "name": "Solum",
+        "time": "10:55:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "10:56:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "10:57:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "10:58:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-585",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "10:58:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "10:59:18"
+      },
+      {
+        "name": "Açude",
+        "time": "11:00:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "11:01:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "11:02:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "11:04:04"
+      },
+      {
+        "name": "Parque",
+        "time": "11:05:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "11:07:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "11:08:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "11:09:25"
+      },
+      {
+        "name": "São José",
+        "time": "11:10:29"
+      },
+      {
+        "name": "Solum",
+        "time": "11:12:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "11:13:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "11:14:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "11:15:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-967",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "11:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "11:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "11:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "11:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "11:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "11:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "11:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "11:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "11:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "11:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "11:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "11:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "11:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "11:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "11:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-968",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "11:27:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "11:28:18"
+      },
+      {
+        "name": "Açude",
+        "time": "11:29:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "11:30:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "11:31:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "11:33:04"
+      },
+      {
+        "name": "Parque",
+        "time": "11:34:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "11:36:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "11:37:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "11:38:25"
+      },
+      {
+        "name": "São José",
+        "time": "11:39:29"
+      },
+      {
+        "name": "Solum",
+        "time": "11:41:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "11:42:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "11:43:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "11:44:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-532",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "11:43:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "11:44:18"
+      },
+      {
+        "name": "Açude",
+        "time": "11:45:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "11:46:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "11:47:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "11:49:04"
+      },
+      {
+        "name": "Parque",
+        "time": "11:50:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "11:52:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "11:53:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "11:54:25"
+      },
+      {
+        "name": "São José",
+        "time": "11:55:29"
+      },
+      {
+        "name": "Solum",
+        "time": "11:57:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "11:58:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "11:59:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "12:00:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-534",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "11:58:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "11:59:18"
+      },
+      {
+        "name": "Açude",
+        "time": "12:00:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "12:01:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "12:02:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "12:04:04"
+      },
+      {
+        "name": "Parque",
+        "time": "12:05:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "12:07:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "12:08:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "12:09:25"
+      },
+      {
+        "name": "São José",
+        "time": "12:10:29"
+      },
+      {
+        "name": "Solum",
+        "time": "12:12:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "12:13:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "12:14:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "12:15:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-548",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "12:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "12:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "12:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "12:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "12:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "12:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "12:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "12:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "12:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "12:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "12:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "12:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "12:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "12:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "12:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-560",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "12:27:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "12:28:18"
+      },
+      {
+        "name": "Açude",
+        "time": "12:29:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "12:30:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "12:31:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "12:33:04"
+      },
+      {
+        "name": "Parque",
+        "time": "12:34:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "12:36:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "12:37:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "12:38:25"
+      },
+      {
+        "name": "São José",
+        "time": "12:39:29"
+      },
+      {
+        "name": "Solum",
+        "time": "12:41:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "12:42:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "12:43:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "12:44:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-572",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "12:43:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "12:44:18"
+      },
+      {
+        "name": "Açude",
+        "time": "12:45:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "12:46:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "12:47:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "12:49:04"
+      },
+      {
+        "name": "Parque",
+        "time": "12:50:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "12:52:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "12:53:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "12:54:25"
+      },
+      {
+        "name": "São José",
+        "time": "12:55:29"
+      },
+      {
+        "name": "Solum",
+        "time": "12:57:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "12:58:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "12:59:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "13:00:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-542",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "12:58:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "12:59:18"
+      },
+      {
+        "name": "Açude",
+        "time": "13:00:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "13:01:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "13:02:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "13:04:04"
+      },
+      {
+        "name": "Parque",
+        "time": "13:05:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "13:07:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "13:08:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "13:09:25"
+      },
+      {
+        "name": "São José",
+        "time": "13:10:29"
+      },
+      {
+        "name": "Solum",
+        "time": "13:12:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "13:13:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "13:14:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "13:15:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-580",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "13:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "13:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "13:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "13:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "13:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "13:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "13:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "13:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "13:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "13:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "13:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "13:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "13:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "13:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "13:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-591",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "13:27:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "13:28:18"
+      },
+      {
+        "name": "Açude",
+        "time": "13:29:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "13:30:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "13:31:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "13:33:04"
+      },
+      {
+        "name": "Parque",
+        "time": "13:34:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "13:36:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "13:37:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "13:38:25"
+      },
+      {
+        "name": "São José",
+        "time": "13:39:29"
+      },
+      {
+        "name": "Solum",
+        "time": "13:41:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "13:42:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "13:43:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "13:44:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-599",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "13:43:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "13:44:18"
+      },
+      {
+        "name": "Açude",
+        "time": "13:45:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "13:46:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "13:47:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "13:49:04"
+      },
+      {
+        "name": "Parque",
+        "time": "13:50:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "13:52:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "13:53:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "13:54:25"
+      },
+      {
+        "name": "São José",
+        "time": "13:55:29"
+      },
+      {
+        "name": "Solum",
+        "time": "13:57:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "13:58:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "13:59:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "14:00:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-550",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "13:58:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "13:59:18"
+      },
+      {
+        "name": "Açude",
+        "time": "14:00:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "14:01:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "14:02:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "14:04:04"
+      },
+      {
+        "name": "Parque",
+        "time": "14:05:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "14:07:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "14:08:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "14:09:25"
+      },
+      {
+        "name": "São José",
+        "time": "14:10:29"
+      },
+      {
+        "name": "Solum",
+        "time": "14:12:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "14:13:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "14:14:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "14:15:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-607",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "14:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "14:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "14:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "14:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "14:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "14:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "14:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "14:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "14:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "14:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "14:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "14:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "14:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "14:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "14:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-615",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "14:27:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "14:28:18"
+      },
+      {
+        "name": "Açude",
+        "time": "14:29:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "14:30:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "14:31:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "14:33:04"
+      },
+      {
+        "name": "Parque",
+        "time": "14:34:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "14:36:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "14:37:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "14:38:25"
+      },
+      {
+        "name": "São José",
+        "time": "14:39:29"
+      },
+      {
+        "name": "Solum",
+        "time": "14:41:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "14:42:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "14:43:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "14:44:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-619",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "14:43:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "14:44:18"
+      },
+      {
+        "name": "Açude",
+        "time": "14:45:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "14:46:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "14:47:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "14:49:04"
+      },
+      {
+        "name": "Parque",
+        "time": "14:50:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "14:52:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "14:53:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "14:54:25"
+      },
+      {
+        "name": "São José",
+        "time": "14:55:29"
+      },
+      {
+        "name": "Solum",
+        "time": "14:57:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "14:58:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "14:59:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "15:00:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-831",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "14:58:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "14:59:18"
+      },
+      {
+        "name": "Açude",
+        "time": "15:00:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "15:01:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "15:02:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "15:04:04"
+      },
+      {
+        "name": "Parque",
+        "time": "15:05:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "15:07:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "15:08:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "15:09:25"
+      },
+      {
+        "name": "São José",
+        "time": "15:10:29"
+      },
+      {
+        "name": "Solum",
+        "time": "15:12:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "15:13:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "15:14:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "15:15:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-623",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "15:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "15:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "15:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "15:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "15:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "15:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "15:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "15:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "15:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "15:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "15:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "15:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "15:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "15:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "15:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-795",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "15:27:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "15:28:18"
+      },
+      {
+        "name": "Açude",
+        "time": "15:29:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "15:30:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "15:31:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "15:33:04"
+      },
+      {
+        "name": "Parque",
+        "time": "15:34:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "15:36:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "15:37:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "15:38:25"
+      },
+      {
+        "name": "São José",
+        "time": "15:39:29"
+      },
+      {
+        "name": "Solum",
+        "time": "15:41:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "15:42:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "15:43:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "15:44:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-801",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "15:43:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "15:44:18"
+      },
+      {
+        "name": "Açude",
+        "time": "15:45:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "15:46:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "15:47:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "15:49:04"
+      },
+      {
+        "name": "Parque",
+        "time": "15:50:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "15:52:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "15:53:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "15:54:25"
+      },
+      {
+        "name": "São José",
+        "time": "15:55:29"
+      },
+      {
+        "name": "Solum",
+        "time": "15:57:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "15:58:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "15:59:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "16:00:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-829",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "15:55:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "15:56:18"
+      },
+      {
+        "name": "Açude",
+        "time": "15:57:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "15:58:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "15:59:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "16:01:04"
+      },
+      {
+        "name": "Parque",
+        "time": "16:02:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "16:04:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "16:05:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "16:06:25"
+      },
+      {
+        "name": "São José",
+        "time": "16:07:29"
+      },
+      {
+        "name": "Solum",
+        "time": "16:09:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "16:10:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "16:11:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "16:12:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-900",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "16:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "16:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "16:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "16:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "16:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "16:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "16:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "16:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "16:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "16:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "16:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "16:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "16:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "16:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "16:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-529",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "16:25:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "16:26:18"
+      },
+      {
+        "name": "Açude",
+        "time": "16:27:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "16:28:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "16:29:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "16:31:04"
+      },
+      {
+        "name": "Parque",
+        "time": "16:32:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "16:34:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "16:35:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "16:36:25"
+      },
+      {
+        "name": "São José",
+        "time": "16:37:29"
+      },
+      {
+        "name": "Solum",
+        "time": "16:39:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "16:40:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "16:41:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "16:42:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-904",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "16:55:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "16:56:18"
+      },
+      {
+        "name": "Açude",
+        "time": "16:57:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "16:58:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "16:59:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "17:01:04"
+      },
+      {
+        "name": "Parque",
+        "time": "17:02:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "17:04:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "17:05:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "17:06:25"
+      },
+      {
+        "name": "São José",
+        "time": "17:07:29"
+      },
+      {
+        "name": "Solum",
+        "time": "17:09:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "17:10:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "17:11:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "17:12:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-551",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "17:25:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "17:26:18"
+      },
+      {
+        "name": "Açude",
+        "time": "17:27:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "17:28:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "17:29:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "17:31:04"
+      },
+      {
+        "name": "Parque",
+        "time": "17:32:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "17:34:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "17:35:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "17:36:25"
+      },
+      {
+        "name": "São José",
+        "time": "17:37:29"
+      },
+      {
+        "name": "Solum",
+        "time": "17:39:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "17:40:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "17:41:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "17:42:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-563",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "17:36:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "17:37:18"
+      },
+      {
+        "name": "Açude",
+        "time": "17:38:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "17:39:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "17:40:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "17:42:04"
+      },
+      {
+        "name": "Parque",
+        "time": "17:43:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "17:45:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "17:46:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "17:47:25"
+      },
+      {
+        "name": "São José",
+        "time": "17:48:29"
+      },
+      {
+        "name": "Solum",
+        "time": "17:50:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "17:51:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "17:52:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "17:53:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-581",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "17:55:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "17:56:18"
+      },
+      {
+        "name": "Açude",
+        "time": "17:57:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "17:58:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "17:59:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "18:01:04"
+      },
+      {
+        "name": "Parque",
+        "time": "18:02:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "18:04:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "18:05:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "18:06:25"
+      },
+      {
+        "name": "São José",
+        "time": "18:07:29"
+      },
+      {
+        "name": "Solum",
+        "time": "18:09:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "18:10:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "18:11:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "18:12:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-906",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "18:14:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "18:15:18"
+      },
+      {
+        "name": "Açude",
+        "time": "18:16:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "18:17:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "18:18:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "18:20:04"
+      },
+      {
+        "name": "Parque",
+        "time": "18:21:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "18:23:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "18:24:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "18:25:25"
+      },
+      {
+        "name": "São José",
+        "time": "18:26:29"
+      },
+      {
+        "name": "Solum",
+        "time": "18:28:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "18:29:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "18:30:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "18:31:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-588",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "18:58:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "18:59:18"
+      },
+      {
+        "name": "Açude",
+        "time": "19:00:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "19:01:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "19:02:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "19:04:04"
+      },
+      {
+        "name": "Parque",
+        "time": "19:05:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "19:07:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "19:08:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "19:09:25"
+      },
+      {
+        "name": "São José",
+        "time": "19:10:29"
+      },
+      {
+        "name": "Solum",
+        "time": "19:12:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "19:13:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "19:14:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "19:15:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-595",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "19:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "19:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "19:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "19:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "19:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "19:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "19:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "19:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "19:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "19:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "19:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "19:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "19:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "19:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "19:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-596",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "19:41:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "19:42:18"
+      },
+      {
+        "name": "Açude",
+        "time": "19:43:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "19:44:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "19:45:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "19:47:04"
+      },
+      {
+        "name": "Parque",
+        "time": "19:48:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "19:50:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "19:51:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "19:52:25"
+      },
+      {
+        "name": "São José",
+        "time": "19:53:29"
+      },
+      {
+        "name": "Solum",
+        "time": "19:55:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "19:56:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "19:57:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "19:58:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-611",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "20:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "20:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "20:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "20:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "20:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "20:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "20:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "20:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "20:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "20:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "20:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "20:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "20:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "20:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "20:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-639",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "21:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "21:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "21:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "21:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "21:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "21:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "21:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "21:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "21:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "21:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "21:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "21:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "21:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "21:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "21:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-621",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "22:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "22:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "22:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "22:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "22:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "22:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "22:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "22:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "22:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "22:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "22:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "22:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "22:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "22:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "22:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-629",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "23:05:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "23:06:18"
+      },
+      {
+        "name": "Açude",
+        "time": "23:07:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "23:08:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "23:09:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "23:11:04"
+      },
+      {
+        "name": "Parque",
+        "time": "23:12:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "23:14:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "23:15:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "23:16:25"
+      },
+      {
+        "name": "São José",
+        "time": "23:17:29"
+      },
+      {
+        "name": "Solum",
+        "time": "23:19:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "23:20:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "23:21:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "23:22:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-0-600",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "P-S",
+    "finalDestination": "Vale das Flores",
+    "stops": [
+      {
+        "name": "Coimbra B",
+        "time": "24:08:00"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "24:09:18"
+      },
+      {
+        "name": "Açude",
+        "time": "24:10:25"
+      },
+      {
+        "name": "Arnado",
+        "time": "24:11:38"
+      },
+      {
+        "name": "Aeminium",
+        "time": "24:12:47"
+      },
+      {
+        "name": "Portagem",
+        "time": "24:14:04"
+      },
+      {
+        "name": "Parque",
+        "time": "24:15:28"
+      },
+      {
+        "name": "Colégios",
+        "time": "24:17:01"
+      },
+      {
+        "name": "Arregaça",
+        "time": "24:18:04"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "24:19:25"
+      },
+      {
+        "name": "São José",
+        "time": "24:20:29"
+      },
+      {
+        "name": "Solum",
+        "time": "24:22:13"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "24:23:24"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "24:24:37"
+      },
+      {
+        "name": "Vale das Flores",
+        "time": "24:25:53"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-978",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "04:42:45"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "04:44:22"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "04:45:33"
+      },
+      {
+        "name": "Solum",
+        "time": "04:46:55"
+      },
+      {
+        "name": "São José",
+        "time": "04:48:30"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "04:49:33"
+      },
+      {
+        "name": "Arregaça",
+        "time": "04:50:54"
+      },
+      {
+        "name": "Colégios",
+        "time": "04:51:57"
+      },
+      {
+        "name": "Parque",
+        "time": "04:53:28"
+      },
+      {
+        "name": "Portagem",
+        "time": "04:55:03"
+      },
+      {
+        "name": "Aeminium",
+        "time": "04:56:09"
+      },
+      {
+        "name": "Arnado",
+        "time": "04:57:16"
+      },
+      {
+        "name": "Açude",
+        "time": "04:58:34"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "04:59:40"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "05:01:11"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-979",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "04:56:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "04:57:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "04:58:48"
+      },
+      {
+        "name": "Solum",
+        "time": "05:00:10"
+      },
+      {
+        "name": "São José",
+        "time": "05:01:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "05:02:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "05:04:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "05:05:12"
+      },
+      {
+        "name": "Parque",
+        "time": "05:06:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "05:08:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "05:09:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "05:10:31"
+      },
+      {
+        "name": "Açude",
+        "time": "05:11:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "05:12:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "05:14:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-536",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "05:13:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "05:14:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "05:15:48"
+      },
+      {
+        "name": "Solum",
+        "time": "05:17:10"
+      },
+      {
+        "name": "São José",
+        "time": "05:18:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "05:19:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "05:21:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "05:22:12"
+      },
+      {
+        "name": "Parque",
+        "time": "05:23:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "05:25:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "05:26:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "05:27:31"
+      },
+      {
+        "name": "Açude",
+        "time": "05:28:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "05:29:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "05:31:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-773",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "05:32:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "05:33:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "05:34:48"
+      },
+      {
+        "name": "Solum",
+        "time": "05:36:10"
+      },
+      {
+        "name": "São José",
+        "time": "05:37:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "05:38:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "05:40:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "05:41:12"
+      },
+      {
+        "name": "Parque",
+        "time": "05:42:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "05:44:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "05:45:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "05:46:31"
+      },
+      {
+        "name": "Açude",
+        "time": "05:47:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "05:48:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "05:50:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-809",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "06:32:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "06:33:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "06:34:48"
+      },
+      {
+        "name": "Solum",
+        "time": "06:36:10"
+      },
+      {
+        "name": "São José",
+        "time": "06:37:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "06:38:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "06:40:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "06:41:12"
+      },
+      {
+        "name": "Parque",
+        "time": "06:42:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "06:44:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "06:45:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "06:46:31"
+      },
+      {
+        "name": "Açude",
+        "time": "06:47:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "06:48:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "06:50:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-556",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "07:24:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "07:25:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "07:26:48"
+      },
+      {
+        "name": "Solum",
+        "time": "07:28:10"
+      },
+      {
+        "name": "São José",
+        "time": "07:29:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "07:30:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "07:32:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "07:33:12"
+      },
+      {
+        "name": "Parque",
+        "time": "07:34:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "07:36:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "07:37:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "07:38:31"
+      },
+      {
+        "name": "Açude",
+        "time": "07:39:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "07:40:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "07:42:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-833",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "07:42:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "07:43:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "07:44:48"
+      },
+      {
+        "name": "Solum",
+        "time": "07:46:10"
+      },
+      {
+        "name": "São José",
+        "time": "07:47:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "07:48:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "07:50:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "07:51:12"
+      },
+      {
+        "name": "Parque",
+        "time": "07:52:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "07:54:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "07:55:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "07:56:31"
+      },
+      {
+        "name": "Açude",
+        "time": "07:57:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "07:58:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "08:00:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-836",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "08:23:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "08:24:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "08:25:48"
+      },
+      {
+        "name": "Solum",
+        "time": "08:27:10"
+      },
+      {
+        "name": "São José",
+        "time": "08:28:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "08:29:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "08:31:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "08:32:12"
+      },
+      {
+        "name": "Parque",
+        "time": "08:33:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "08:35:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "08:36:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "08:37:31"
+      },
+      {
+        "name": "Açude",
+        "time": "08:38:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "08:39:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "08:41:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-837",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "08:44:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "08:45:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "08:46:48"
+      },
+      {
+        "name": "Solum",
+        "time": "08:48:10"
+      },
+      {
+        "name": "São José",
+        "time": "08:49:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "08:50:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "08:52:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "08:53:12"
+      },
+      {
+        "name": "Parque",
+        "time": "08:54:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "08:56:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "08:57:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "08:58:31"
+      },
+      {
+        "name": "Açude",
+        "time": "08:59:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "09:00:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "09:02:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-839",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "09:24:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "09:25:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "09:26:48"
+      },
+      {
+        "name": "Solum",
+        "time": "09:28:10"
+      },
+      {
+        "name": "São José",
+        "time": "09:29:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "09:30:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "09:32:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "09:33:12"
+      },
+      {
+        "name": "Parque",
+        "time": "09:34:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "09:36:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "09:37:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "09:38:31"
+      },
+      {
+        "name": "Açude",
+        "time": "09:39:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "09:40:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "09:42:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-840",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "09:34:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "09:35:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "09:36:48"
+      },
+      {
+        "name": "Solum",
+        "time": "09:38:10"
+      },
+      {
+        "name": "São José",
+        "time": "09:39:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "09:40:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "09:42:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "09:43:12"
+      },
+      {
+        "name": "Parque",
+        "time": "09:44:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "09:46:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "09:47:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "09:48:31"
+      },
+      {
+        "name": "Açude",
+        "time": "09:49:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "09:50:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "09:52:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-535",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "10:13:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "10:14:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "10:15:48"
+      },
+      {
+        "name": "Solum",
+        "time": "10:17:10"
+      },
+      {
+        "name": "São José",
+        "time": "10:18:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "10:19:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "10:21:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "10:22:12"
+      },
+      {
+        "name": "Parque",
+        "time": "10:23:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "10:25:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "10:26:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "10:27:31"
+      },
+      {
+        "name": "Açude",
+        "time": "10:28:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "10:29:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "10:31:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-823",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "10:41:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "10:42:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "10:43:48"
+      },
+      {
+        "name": "Solum",
+        "time": "10:45:10"
+      },
+      {
+        "name": "São José",
+        "time": "10:46:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "10:47:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "10:49:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "10:50:12"
+      },
+      {
+        "name": "Parque",
+        "time": "10:51:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "10:53:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "10:54:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "10:55:31"
+      },
+      {
+        "name": "Açude",
+        "time": "10:56:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "10:57:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "10:59:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-539",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "10:56:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "10:57:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "10:58:48"
+      },
+      {
+        "name": "Solum",
+        "time": "11:00:10"
+      },
+      {
+        "name": "São José",
+        "time": "11:01:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "11:02:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "11:04:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "11:05:12"
+      },
+      {
+        "name": "Parque",
+        "time": "11:06:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "11:08:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "11:09:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "11:10:31"
+      },
+      {
+        "name": "Açude",
+        "time": "11:11:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "11:12:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "11:14:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-541",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "11:10:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "11:11:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "11:12:48"
+      },
+      {
+        "name": "Solum",
+        "time": "11:14:10"
+      },
+      {
+        "name": "São José",
+        "time": "11:15:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "11:16:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "11:18:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "11:19:12"
+      },
+      {
+        "name": "Parque",
+        "time": "11:20:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "11:22:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "11:23:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "11:24:31"
+      },
+      {
+        "name": "Açude",
+        "time": "11:25:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "11:26:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "11:28:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-543",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "11:31:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "11:32:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "11:33:48"
+      },
+      {
+        "name": "Solum",
+        "time": "11:35:10"
+      },
+      {
+        "name": "São José",
+        "time": "11:36:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "11:37:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "11:39:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "11:40:12"
+      },
+      {
+        "name": "Parque",
+        "time": "11:41:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "11:43:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "11:44:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "11:45:31"
+      },
+      {
+        "name": "Açude",
+        "time": "11:46:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "11:47:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "11:49:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-547",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "11:56:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "11:57:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "11:58:48"
+      },
+      {
+        "name": "Solum",
+        "time": "12:00:10"
+      },
+      {
+        "name": "São José",
+        "time": "12:01:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "12:02:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "12:04:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "12:05:12"
+      },
+      {
+        "name": "Parque",
+        "time": "12:06:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "12:08:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "12:09:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "12:10:31"
+      },
+      {
+        "name": "Açude",
+        "time": "12:11:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "12:12:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "12:14:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-549",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "12:11:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "12:12:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "12:13:48"
+      },
+      {
+        "name": "Solum",
+        "time": "12:15:10"
+      },
+      {
+        "name": "São José",
+        "time": "12:16:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "12:17:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "12:19:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "12:20:12"
+      },
+      {
+        "name": "Parque",
+        "time": "12:21:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "12:23:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "12:24:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "12:25:31"
+      },
+      {
+        "name": "Açude",
+        "time": "12:26:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "12:27:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "12:29:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-553",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "12:34:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "12:35:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "12:36:48"
+      },
+      {
+        "name": "Solum",
+        "time": "12:38:10"
+      },
+      {
+        "name": "São José",
+        "time": "12:39:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "12:40:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "12:42:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "12:43:12"
+      },
+      {
+        "name": "Parque",
+        "time": "12:44:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "12:46:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "12:47:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "12:48:31"
+      },
+      {
+        "name": "Açude",
+        "time": "12:49:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "12:50:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "12:52:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-793",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "12:56:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "12:57:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "12:58:48"
+      },
+      {
+        "name": "Solum",
+        "time": "13:00:10"
+      },
+      {
+        "name": "São José",
+        "time": "13:01:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "13:02:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "13:04:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "13:05:12"
+      },
+      {
+        "name": "Parque",
+        "time": "13:06:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "13:08:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "13:09:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "13:10:31"
+      },
+      {
+        "name": "Açude",
+        "time": "13:11:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "13:12:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "13:14:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-797",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "13:11:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "13:12:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "13:13:48"
+      },
+      {
+        "name": "Solum",
+        "time": "13:15:10"
+      },
+      {
+        "name": "São José",
+        "time": "13:16:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "13:17:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "13:19:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "13:20:12"
+      },
+      {
+        "name": "Parque",
+        "time": "13:21:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "13:23:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "13:24:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "13:25:31"
+      },
+      {
+        "name": "Açude",
+        "time": "13:26:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "13:27:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "13:29:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-800",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "13:32:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "13:33:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "13:34:48"
+      },
+      {
+        "name": "Solum",
+        "time": "13:36:10"
+      },
+      {
+        "name": "São José",
+        "time": "13:37:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "13:38:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "13:40:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "13:41:12"
+      },
+      {
+        "name": "Parque",
+        "time": "13:42:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "13:44:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "13:45:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "13:46:31"
+      },
+      {
+        "name": "Açude",
+        "time": "13:47:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "13:48:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "13:50:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-803",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "13:56:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "13:57:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "13:58:48"
+      },
+      {
+        "name": "Solum",
+        "time": "14:00:10"
+      },
+      {
+        "name": "São José",
+        "time": "14:01:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "14:02:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "14:04:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "14:05:12"
+      },
+      {
+        "name": "Parque",
+        "time": "14:06:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "14:08:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "14:09:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "14:10:31"
+      },
+      {
+        "name": "Açude",
+        "time": "14:11:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "14:12:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "14:14:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-807",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "14:12:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "14:13:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "14:14:48"
+      },
+      {
+        "name": "Solum",
+        "time": "14:16:10"
+      },
+      {
+        "name": "São José",
+        "time": "14:17:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "14:18:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "14:20:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "14:21:12"
+      },
+      {
+        "name": "Parque",
+        "time": "14:22:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "14:24:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "14:25:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "14:26:31"
+      },
+      {
+        "name": "Açude",
+        "time": "14:27:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "14:28:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "14:30:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-810",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "14:35:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "14:36:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "14:37:48"
+      },
+      {
+        "name": "Solum",
+        "time": "14:39:10"
+      },
+      {
+        "name": "São José",
+        "time": "14:40:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "14:41:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "14:43:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "14:44:12"
+      },
+      {
+        "name": "Parque",
+        "time": "14:45:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "14:47:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "14:48:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "14:49:31"
+      },
+      {
+        "name": "Açude",
+        "time": "14:50:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "14:51:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "14:53:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-812",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "14:56:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "14:57:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "14:58:48"
+      },
+      {
+        "name": "Solum",
+        "time": "15:00:10"
+      },
+      {
+        "name": "São José",
+        "time": "15:01:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "15:02:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "15:04:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "15:05:12"
+      },
+      {
+        "name": "Parque",
+        "time": "15:06:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "15:08:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "15:09:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "15:10:31"
+      },
+      {
+        "name": "Açude",
+        "time": "15:11:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "15:12:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "15:14:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-531",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "15:11:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "15:12:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "15:13:48"
+      },
+      {
+        "name": "Solum",
+        "time": "15:15:10"
+      },
+      {
+        "name": "São José",
+        "time": "15:16:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "15:17:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "15:19:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "15:20:12"
+      },
+      {
+        "name": "Parque",
+        "time": "15:21:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "15:23:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "15:24:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "15:25:31"
+      },
+      {
+        "name": "Açude",
+        "time": "15:26:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "15:27:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "15:29:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-537",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "15:32:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "15:33:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "15:34:48"
+      },
+      {
+        "name": "Solum",
+        "time": "15:36:10"
+      },
+      {
+        "name": "São José",
+        "time": "15:37:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "15:38:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "15:40:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "15:41:12"
+      },
+      {
+        "name": "Parque",
+        "time": "15:42:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "15:44:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "15:45:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "15:46:31"
+      },
+      {
+        "name": "Açude",
+        "time": "15:47:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "15:48:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "15:50:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-562",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "16:07:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "16:08:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "16:09:48"
+      },
+      {
+        "name": "Solum",
+        "time": "16:11:10"
+      },
+      {
+        "name": "São José",
+        "time": "16:12:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "16:13:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "16:15:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "16:16:12"
+      },
+      {
+        "name": "Parque",
+        "time": "16:17:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "16:19:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "16:20:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "16:21:31"
+      },
+      {
+        "name": "Açude",
+        "time": "16:22:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "16:23:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "16:25:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-891",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "16:23:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "16:24:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "16:25:48"
+      },
+      {
+        "name": "Solum",
+        "time": "16:27:10"
+      },
+      {
+        "name": "São José",
+        "time": "16:28:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "16:29:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "16:31:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "16:32:12"
+      },
+      {
+        "name": "Parque",
+        "time": "16:33:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "16:35:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "16:36:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "16:37:31"
+      },
+      {
+        "name": "Açude",
+        "time": "16:38:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "16:39:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "16:41:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-893",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "16:42:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "16:43:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "16:44:48"
+      },
+      {
+        "name": "Solum",
+        "time": "16:46:10"
+      },
+      {
+        "name": "São José",
+        "time": "16:47:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "16:48:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "16:50:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "16:51:12"
+      },
+      {
+        "name": "Parque",
+        "time": "16:52:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "16:54:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "16:55:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "16:56:31"
+      },
+      {
+        "name": "Açude",
+        "time": "16:57:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "16:58:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "17:00:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-567",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "17:24:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "17:25:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "17:26:48"
+      },
+      {
+        "name": "Solum",
+        "time": "17:28:10"
+      },
+      {
+        "name": "São José",
+        "time": "17:29:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "17:30:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "17:32:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "17:33:12"
+      },
+      {
+        "name": "Parque",
+        "time": "17:34:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "17:36:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "17:37:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "17:38:31"
+      },
+      {
+        "name": "Açude",
+        "time": "17:39:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "17:40:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "17:42:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-575",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "17:43:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "17:44:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "17:45:48"
+      },
+      {
+        "name": "Solum",
+        "time": "17:47:10"
+      },
+      {
+        "name": "São José",
+        "time": "17:48:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "17:49:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "17:51:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "17:52:12"
+      },
+      {
+        "name": "Parque",
+        "time": "17:53:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "17:55:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "17:56:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "17:57:31"
+      },
+      {
+        "name": "Açude",
+        "time": "17:58:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "17:59:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "18:01:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-579",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "18:23:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "18:24:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "18:25:48"
+      },
+      {
+        "name": "Solum",
+        "time": "18:27:10"
+      },
+      {
+        "name": "São José",
+        "time": "18:28:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "18:29:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "18:31:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "18:32:12"
+      },
+      {
+        "name": "Parque",
+        "time": "18:33:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "18:35:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "18:36:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "18:37:31"
+      },
+      {
+        "name": "Açude",
+        "time": "18:38:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "18:39:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "18:41:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-898",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "18:43:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "18:44:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "18:45:48"
+      },
+      {
+        "name": "Solum",
+        "time": "18:47:10"
+      },
+      {
+        "name": "São José",
+        "time": "18:48:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "18:49:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "18:51:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "18:52:12"
+      },
+      {
+        "name": "Parque",
+        "time": "18:53:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "18:55:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "18:56:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "18:57:31"
+      },
+      {
+        "name": "Açude",
+        "time": "18:58:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "18:59:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "19:01:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-899",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "19:05:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "19:06:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "19:07:48"
+      },
+      {
+        "name": "Solum",
+        "time": "19:09:10"
+      },
+      {
+        "name": "São José",
+        "time": "19:10:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "19:11:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "19:13:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "19:14:12"
+      },
+      {
+        "name": "Parque",
+        "time": "19:15:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "19:17:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "19:18:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "19:19:31"
+      },
+      {
+        "name": "Açude",
+        "time": "19:20:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "19:21:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "19:23:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-578",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "19:24:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "19:25:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "19:26:48"
+      },
+      {
+        "name": "Solum",
+        "time": "19:28:10"
+      },
+      {
+        "name": "São José",
+        "time": "19:29:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "19:30:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "19:32:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "19:33:12"
+      },
+      {
+        "name": "Parque",
+        "time": "19:34:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "19:36:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "19:37:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "19:38:31"
+      },
+      {
+        "name": "Açude",
+        "time": "19:39:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "19:40:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "19:42:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-606",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "19:36:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "19:37:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "19:38:48"
+      },
+      {
+        "name": "Solum",
+        "time": "19:40:10"
+      },
+      {
+        "name": "São José",
+        "time": "19:41:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "19:42:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "19:44:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "19:45:12"
+      },
+      {
+        "name": "Parque",
+        "time": "19:46:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "19:48:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "19:49:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "19:50:31"
+      },
+      {
+        "name": "Açude",
+        "time": "19:51:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "19:52:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "19:54:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-570",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "19:43:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "19:44:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "19:45:48"
+      },
+      {
+        "name": "Solum",
+        "time": "19:47:10"
+      },
+      {
+        "name": "São José",
+        "time": "19:48:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "19:49:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "19:51:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "19:52:12"
+      },
+      {
+        "name": "Parque",
+        "time": "19:53:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "19:55:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "19:56:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "19:57:31"
+      },
+      {
+        "name": "Açude",
+        "time": "19:58:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "19:59:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "20:01:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-751",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "20:04:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "20:05:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "20:06:48"
+      },
+      {
+        "name": "Solum",
+        "time": "20:08:10"
+      },
+      {
+        "name": "São José",
+        "time": "20:09:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "20:10:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "20:12:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "20:13:12"
+      },
+      {
+        "name": "Parque",
+        "time": "20:14:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "20:16:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "20:17:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "20:18:31"
+      },
+      {
+        "name": "Açude",
+        "time": "20:19:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "20:20:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "20:22:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-608",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "20:34:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "20:35:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "20:36:48"
+      },
+      {
+        "name": "Solum",
+        "time": "20:38:10"
+      },
+      {
+        "name": "São José",
+        "time": "20:39:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "20:40:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "20:42:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "20:43:12"
+      },
+      {
+        "name": "Parque",
+        "time": "20:44:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "20:46:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "20:47:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "20:48:31"
+      },
+      {
+        "name": "Açude",
+        "time": "20:49:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "20:50:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "20:52:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-610",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "21:32:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "21:33:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "21:34:48"
+      },
+      {
+        "name": "Solum",
+        "time": "21:36:10"
+      },
+      {
+        "name": "São José",
+        "time": "21:37:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "21:38:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "21:40:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "21:41:12"
+      },
+      {
+        "name": "Parque",
+        "time": "21:42:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "21:44:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "21:45:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "21:46:31"
+      },
+      {
+        "name": "Açude",
+        "time": "21:47:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "21:48:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "21:50:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-612",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "22:32:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "22:33:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "22:34:48"
+      },
+      {
+        "name": "Solum",
+        "time": "22:36:10"
+      },
+      {
+        "name": "São José",
+        "time": "22:37:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "22:38:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "22:40:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "22:41:12"
+      },
+      {
+        "name": "Parque",
+        "time": "22:42:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "22:44:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "22:45:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "22:46:31"
+      },
+      {
+        "name": "Açude",
+        "time": "22:47:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "22:48:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "22:50:26"
+      }
+    ]
+  },
+  {
+    "id": "u1-DU-1-614",
+    "line": "U1",
+    "lineType": "urbana",
+    "dayType": "DU",
+    "direction": "S-P",
+    "finalDestination": "Coimbra B",
+    "stops": [
+      {
+        "name": "Vale das Flores",
+        "time": "23:32:00"
+      },
+      {
+        "name": "Casa Branca",
+        "time": "23:33:37"
+      },
+      {
+        "name": "Fernando Namora",
+        "time": "23:34:48"
+      },
+      {
+        "name": "Solum",
+        "time": "23:36:10"
+      },
+      {
+        "name": "São José",
+        "time": "23:37:45"
+      },
+      {
+        "name": "Norton de Matos",
+        "time": "23:38:48"
+      },
+      {
+        "name": "Arregaça",
+        "time": "23:40:09"
+      },
+      {
+        "name": "Colégios",
+        "time": "23:41:12"
+      },
+      {
+        "name": "Parque",
+        "time": "23:42:43"
+      },
+      {
+        "name": "Portagem",
+        "time": "23:44:18"
+      },
+      {
+        "name": "Aeminium",
+        "time": "23:45:24"
+      },
+      {
+        "name": "Arnado",
+        "time": "23:46:31"
+      },
+      {
+        "name": "Açude",
+        "time": "23:47:49"
+      },
+      {
+        "name": "Casa do Sal",
+        "time": "23:48:55"
+      },
+      {
+        "name": "Coimbra B",
+        "time": "23:50:26"
+      }
+    ]
+  }
+]

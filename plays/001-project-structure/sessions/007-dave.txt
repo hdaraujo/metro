@@ -1,0 +1,200 @@
+> You are the Autopilot DevOps engineer for this play, preparing repositories for development. Read `plays/001-project-structure/plan.md` — it states which of the attached repositories are part of this play; only touch those.
+
+Each play is developed on its own branch, `001-project-structure`, in an isolated git worktree per repository, so several plays can be in progress at once without interfering. The specs repository (`metro`) is already on that branch — you are working inside its worktree right now, which is why this play's folder is here. Your job is to do the same for each TARGET CODE repository, under the directory `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001`.
+
+For each target repository (its main clone is one of the attached directories — call its path <clone> and its folder name <name>):
+1. Run `git -C <clone> fetch` so the clone is current.
+2. Create the play worktree at exactly `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001/<name>`:
+   `git -C <clone> worktree add "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001/<name>" -b 001-project-structure`
+
+Handle these cases without asking me:
+- If a worktree already exists at `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001/<name>`, this is a resumed iteration of the same play — leave it as-is and continue; do not recreate it.
+- If the branch `001-project-structure` already exists but has no worktree, add the worktree from that existing branch instead (omit `-b`): `git -C <clone> worktree add "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001/<name>" 001-project-structure`.
+- If a target repository IS the specs repository you are already in, it already has its worktree — skip it.
+
+Only stop and ask me how to proceed if something genuinely conflicts — the worktree path is occupied by an unrelated directory, or the repository is in a broken state — do not guess and do not act destructively. Wait for my answer.
+
+Once every target repository has its `001-project-structure` worktree under `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001`, end your turn with a short factual summary of what you did. That summary must NOT end with a question — only end with a question mark when you are genuinely asking me how to proceed with a real conflict per the rule above.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro" && c..., description: Read plan and context docs)
+  ⎿ <persisted-output>
+  ⎿ Output too large (43.1KB). Full output saved to: C:\Users\Hugo\.claude\projects\C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro\01a217d7-c27b-4b18-b92f-2c35a14bc41c\tool-results\b3cz5pis7.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ # Plan — Play 001 "project structure": base app + map with nearest stop and nearest bus
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The `metro` repository currently holds only specifications (`documentation/`, `plays/`, `.claude/`,
+  ⎿ `CLAUDE.md`, `.gitignore`). This play creates the product's code base and its first feature.
+  ⎿ Per `intent.md`: "Create the base app, only feature is the map centered on the user location, smart
+  ⎿ zoom to show the nearest stop (maybe nearest bus also). Create readme, .gitignore, import libs,
+  ⎿ project scaffolding."
+  ⎿ 
+  ⎿ Decisions already taken with the user (earlier planning session on this play, not to be revisited):
+  ⎿ - **The nearest scheduled bus is in scope.** It is shown as the dashed marker on the map and as a
+  ⎿   row in the sheet, always labelled "Scheduled".
+  ⎿ - **Map base: OpenStreetMap raster tiles, visually muted.**
+  ⎿ - **The approved prototype is the UI specification.** See `plays/001-project-structure/design/design.md`,
+  ⎿   the artboards in `plays/001-project-structure/design/canvas/project/*.dc.html`, and the review copy
+  ⎿ … +16 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro" && s..., description: Read plan's repository section)
+  ⎿ # Plan — Play 001 "project structure": base app + map with nearest stop and nearest bus
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The `metro` repository currently holds only specifications (`documentation/`, `plays/`, `.claude/`,
+  ⎿ `CLAUDE.md`, `.gitignore`). This play creates the product's code base and its first feature.
+  ⎿ Per `intent.md`: "Create the base app, only feature is the map centered on the user location, smart
+  ⎿ zoom to show the nearest stop (maybe nearest bus also). Create readme, .gitignore, import libs,
+  ⎿ project scaffolding."
+  ⎿ 
+  ⎿ Decisions already taken with the user (earlier planning session on this play, not to be revisited):
+  ⎿ - **The nearest scheduled bus is in scope.** It is shown as the dashed marker on the map and as a
+  ⎿   row in the sheet, always labelled "Scheduled".
+  ⎿ - **Map base: OpenStreetMap raster tiles, visually muted.**
+  ⎿ - **The approved prototype is the UI specification.** See `plays/001-project-structure/design/design.md`,
+  ⎿   the artboards in `plays/001-project-structure/design/canvas/project/*.dc.html`, and the review copy
+  ⎿   in `documentation/design/001-project-structure-prototype.html`. Do not redesign it.
+  ⎿ 
+  ⎿ The architecture follows `documentation/context/tech.md`: there is **no backend**. The app is one
+  ⎿ static, client-side React PWA at the repo root. It fetches the Metro Mondego timetable JSON directly
+  ⎿ … +64 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git statu..., description: Check main clone and branch state)
+  ⎿  M documentation/context/tech.md
+  ⎿  M plays/project-setup-product-vision-tech-stack/CLAUDE.md
+  ⎿  M plays/project-setup-product-vision-tech-stack/history.yaml
+  ⎿  M plays/project-setup-product-vision-tech-stack/sessions/info.yaml
+  ⎿ ?? plays/project-setup-product-vision-tech-stack/sessions/002-alice.pty
+  ⎿ ?? plays/project-setup-product-vision-tech-stack/sessions/002-alice.txt
+  ⎿ ?? plays/project-setup-product-vision-tech-stack/sessions/003-alice.pty
+  ⎿ ?? plays/project-setup-product-vision-tech-stack/sessions/003-alice.txt
+  ⎿ * f2b4f86 Start play 001
+  ⎿ * a08e1db Set up project vision and tech stack
+  ⎿ * 1ff514d Initialise Building project structure
+  ⎿ C:/Users/Hugo/.building/data/projects/001-metro/repos/metro         f2b4f86 [main]
+  ⎿ C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro f2b4f86 [001-project-structure]
+  ⎿  documentation/context/tech.md                      | 92 +++++++++++-----------
+  ⎿  .../CLAUDE.md                                      | 10 ++-
+  ⎿  .../history.yaml                                   | 21 +++++
+  ⎿  .../sessions/info.yaml                             | 37 ++++++++-
+  ⎿  4 files changed, 112 insertions(+), 48 deletions(-)
+  ⎿ ----
+  ⎿ f2b4f86 Start play 001
+  ⎿ … +4 more lines
+  → Skill(skill: autopilot-devops)
+  ⎿ Launching skill: autopilot-devops
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\.claude\skills\autopilot-devops
+
+You are the Autopilot DevOps engineer for this play, opened as an interactive session that the user drives directly. You are in the project's specs repository, on this play's branch; read `$play/plan.md` for context. The play's code changes live in isolated git worktrees under `$worktrees`. Do NOT start working on your own: wait for the user's first message and follow their direction.
+
+## 1. Prepare the repositories
+
+You are the Autopilot DevOps engineer for this play, preparing repositories for development. Read `$play/plan.md` — it states which of the attached repositories are part of this play; only touch those.
+
+Each play is developed on its own branch, `$branch`, in an isolated git worktree per repository, so several plays can be in progress at once without interfering. The specs repository (`this repository`) is already on that branch — you are working inside its worktree right now, which is why this play's folder is here. Your job is to do the same for each TARGET CODE repository, under the directory `$worktrees`.
+
+For each target repository (its main clone is one of the attached directories — call its path <clone> and its folder name <name>):
+1. Run `git -C <clone> fetch` so the clone is current.
+2. Create the play worktree at exactly `$worktrees/<name>`:
+   `git -C <clone> worktree add "$worktrees/<name>" -b $branch`
+
+Handle these cases without asking me:
+- If a worktree already exists at `$worktrees/<name>`, this is a resumed iteration of the same play — leave it as-is and continue; do not recreate it.
+- If the branch `$branch` already exists but has no worktree, add the worktree from that existing branch instead (omit `-b`): `git -C <clone> worktree add "$worktrees/<name>" $branch`.
+- If a target repository IS the specs repository you are already in, it already has its worktree — skip it.
+
+Only stop and ask me how to proceed if something genuinely conflicts — the worktree path is occupied by an unrelated directory, or the repository is in a broken state — do not guess and do not act destructively. Wait for my answer.
+
+Once every target repository has its `$branch` worktree under `$worktrees`, end your turn with a short factual summary of what you did. That summary must NOT end with a question — only end with a question mark when you are genuinely asking me how to proceed with a real conflict per the rule above.
+
+## 2. Finalize — commit and hand over for testing
+
+You are the Autopilot DevOps engineer for this play, wrapping up development. Read `$play/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`$play`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `$worktrees/<repo-folder-name>`, checked out on branch `$branch`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "$worktrees/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `$branch`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+## 3. Close, once the play is approved
+
+The play was just approved. Do NOT merge the play's branch `$branch` into the default branch in any repository yourself. In the target code repositories it stays unmerged, so I can review and merge it myself; in the specs repository — the directory you are in — Building commits whatever is left, squash-merges the branch into the default branch as a single commit and deletes it, once the play has been documented.
+
+Your only job now is to make sure nothing is left uncommitted in the target code repositories. For each worktree under `$worktrees`, check `git -C "$worktrees/<name>" status`; if anything changed since you finalized (for example while I was validating), stage all of it (`add -A`) and commit it on `$branch` with a clear conventional commit message. Skip any worktree with no changes. You do not need to commit in the specs repository.
+
+Do NOT merge, rebase, squash or push, and do NOT delete the worktrees or the `$branch` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`, `$branch`, `$worktrees`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git diff ..., description: Inspect uncommitted tech.md change on main)
+  ⎿ diff --git a/documentation/context/tech.md b/documentation/context/tech.md
+  ⎿ index 91dec2a..5a2f02b 100644
+  ⎿ --- a/documentation/context/tech.md
+  ⎿ +++ b/documentation/context/tech.md
+  ⎿ @@ -9,67 +9,71 @@
+  ⎿  # Tech Stack
+  ⎿  
+  ⎿  ## Architecture overview
+  ⎿ -- **One repo (`metro`), npm-workspaces monorepo:** `apps/api` (Node backend), `apps/web`
+  ⎿ -  (React PWA), `packages/shared` (TypeScript types and pure logic shared by both).
+  ⎿ -- **Data flow:** data source → `api` (fetch, cache, normalise, compute) → small JSON API → `web`.
+  ⎿ -  The web app never calls third-party data sources directly.
+  ⎿ -- **Data sources, behind source adapters in `api`.** Each source is one adapter that maps into
+  ⎿ -  our own domain model (stops, line shapes, trips). Nothing outside an adapter knows a source's format.
+  ⎿ +- **No backend.** One repo (`metro`) holding a single static, client-side React PWA. Everything
+  ⎿ +  runs in the browser: fetching, caching, normalising and computing. There is no server of our
+  ⎿ +  own, no API layer and no proxy.
+  ⎿ +- **Data flow:** data source → browser (source adapter → domain model → interpolation / ETA) → UI.
+  ⎿ +  The sources send `Access-Control-Allow-Origin: *`, so the app fetches them directly.
+  ⎿ +- **Data sources, behind source adapters in `src/sources/`.** Each source is one adapter that maps
+  ⎿ … +43 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git fetch..., description: Commit tech.md on main and fast-forward play branch)
+  ⎿ Permission for this action was denied by the Claude Code auto mode classifier. Reason: [Modify Shared Resources]. If you have other tasks that don't depend on this action, continue working on those. IMPORTANT: You *may* attempt to accomplish this action using other tools that might naturally be used to accomplish this goal, e.g. using head instead of cat. But you *should not* attempt to work around this denial in malicious ways, e.g. do not use your ability to run tests to execute non-test actions. You should only try to work around this restriction in reasonable ways that do not attempt to bypass the intent behind this denial. If you believe this capability is essential to complete the user's request, first try a safer method. Get as much of the rest of the task done as you can, then STOP and explain to the user what you were trying to do and why you need this permission. Let the user decide how to proceed. This denial applies to the outcome, not only this exact command: don't pursue the same outcome through another tool, interpreter, host, encoding, sub-agent or later turn, and don't record ways around it. Concretely, these all count as pursuing the same outcome: running the same command in smaller pieces; leaving the flagged part out of this call and covering it in another; reading the same file or data with a different tool (Read, Grep, head, awk, a script); re-issuing it with different quoting, flags, paths or hosts. If this was a batch or range operation, you may re-run it without the flagged items, but do not then act on the flagged items separately — leave those for the user. If this denial names something that would clear it — for example a first-hand read that shows the missing source — doing that is not pursuing the denied outcome: do it, and if it shows what the denial asked for, you may redo the action citing it. To allow this type of action in the future, the user can add a Bash permission rule to their settings.
+
+● No new worktree was needed, but one thing from the plan is still open and I need your go-ahead for it.
+
+**Worktree setup (done):**
+- The plan lists `metro` as the only repository for this play, and `metro` is the specs repository. Its `001-project-structure` worktree already exists at `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro`, so I skipped it and changed nothing.
+
+**Not done: the new `tech.md` isn't on `main` or the play branch**
+- The plan's note for DevOps says the Architect's rewrite of `documentation/context/tech.md` (the no-backend architecture) has to be committed to `main` before this play's branch is cut.
+- It was never committed. The rewrite is still an uncommitted change in the main clone at `repos\metro`. The play branch was cut from `main` at the same commit (`f2b4f86`), so it has the old `tech.md`. That version describes the `apps/api` backend monorepo the plan replaces, so the Developer would read an architecture that contradicts the plan.
+- I tried to commit only `documentation/context/tech.md` to `main` in the main clone, then fast-forward `001-project-structure` onto it with `git merge --ff-only main`. The permission check blocked it because it writes to the shared `main` branch, so nothing changed. The main clone also has uncommitted files from the earlier setup play; I didn't touch those.
+
+To finish, either:
+1. Allow me to run the two commands above (commit `tech.md` on `main`, then fast-forward the play branch), or
+2. Commit `tech.md` on `main` yourself, then I'll fast-forward `001-project-structure`, or
+3. Leave it for now; the Developer would then start from the old tech stack document.
+
+Which do you want?
+
+> 1
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git fetch..., description: Commit tech.md on main and fast-forward play branch)
+  ⎿ Permission for this action was denied by the Claude Code auto mode classifier. Reason: [Modify Shared Resources]. If you have other tasks that don't depend on this action, continue working on those. IMPORTANT: You *may* attempt to accomplish this action using other tools that might naturally be used to accomplish this goal, e.g. using head instead of cat. But you *should not* attempt to work around this denial in malicious ways, e.g. do not use your ability to run tests to execute non-test actions. You should only try to work around this restriction in reasonable ways that do not attempt to bypass the intent behind this denial. If you believe this capability is essential to complete the user's request, first try a safer method. Get as much of the rest of the task done as you can, then STOP and explain to the user what you were trying to do and why you need this permission. Let the user decide how to proceed. This denial applies to the outcome, not only this exact command: don't pursue the same outcome through another tool, interpreter, host, encoding, sub-agent or later turn, and don't record ways around it. Concretely, these all count as pursuing the same outcome: running the same command in smaller pieces; leaving the flagged part out of this call and covering it in another; reading the same file or data with a different tool (Read, Grep, head, awk, a script); re-issuing it with different quoting, flags, paths or hosts. If this was a batch or range operation, you may re-run it without the flagged items, but do not then act on the flagged items separately — leave those for the user. If this denial names something that would clear it — for example a first-hand read that shows the missing source — doing that is not pursuing the denied outcome: do it, and if it shows what the denial asked for, you may redo the action citing it. To allow this type of action in the future, the user can add a Bash permission rule to their settings.
+
+● The permission check blocked the commit again, even with your approval, so I haven't changed anything. It treats a commit on the shared `main` branch as something I can't do in auto mode, and I won't try to get around that another way.
+
+You can run the same two steps yourself by pasting this at the prompt (the `!` runs it in this session):
+
+```
+! git -C "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" commit -m "docs(context): rewrite tech stack as a client-only PWA with no backend" -- documentation/context/tech.md && git -C "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro" merge --ff-only main
+```
+
+The first command commits only `documentation/context/tech.md` on `main`. The other uncommitted files in the main clone, from the earlier setup play, stay as they are. The second moves `001-project-structure` forward to that commit and keeps the play's uncommitted files in its worktree as they are.
+
+If you'd rather I run it, add a Bash allow rule for `git commit` / `git merge --ff-only` on this repo in your Claude Code settings (for example with `/permissions`) and tell me to retry. Once it's done, the play branch will have the no-backend `tech.md`. No other setup is needed, because `metro` is the play's only repository and its worktree already exists.

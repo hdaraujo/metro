@@ -1,0 +1,13 @@
+dist
+dev-dist
+coverage
+playwright-report
+test-results
+documentation
+plays
+.claude
+public
+package-lock.json
+tests/fixtures/
+# Owned by Building; never reformatted by this repo
+/CLAUDE.md

@@ -1,0 +1,579 @@
+[
+  {
+    "id": "271",
+    "code": "cbr_mm029",
+    "name": "Açude",
+    "lines": [
+      "S1",
+      "U1",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.21697,
+      "lng": -8.438565
+    }
+  },
+  {
+    "id": "269",
+    "code": "cbr_mm027",
+    "name": "Aeminium",
+    "lines": [
+      "S1",
+      "U1"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.209955,
+      "lng": -8.433587
+    }
+  },
+  {
+    "id": "270",
+    "code": "cbr_mm028",
+    "name": "Arnado",
+    "lines": [
+      "S1",
+      "U1",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.212903,
+      "lng": -8.436042
+    }
+  },
+  {
+    "id": "236",
+    "code": "cbr_mm023",
+    "name": "Arregaça",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.199566,
+      "lng": -8.416973
+    }
+  },
+  {
+    "id": "274",
+    "code": "cbr_mm033",
+    "name": "Câmara (asc)",
+    "lines": [
+      "S2",
+      "U2",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.211255,
+      "lng": -8.42977
+    }
+  },
+  {
+    "id": "231",
+    "code": "cbr_mm045",
+    "name": "Câmara (desc)",
+    "lines": [
+      "S2",
+      "U2",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.211257,
+      "lng": -8.429836
+    }
+  },
+  {
+    "id": "241",
+    "code": "cbr_mm018",
+    "name": "Casa Branca",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.200719,
+      "lng": -8.399915
+    }
+  },
+  {
+    "id": "272",
+    "code": "cbr_mm030",
+    "name": "Casa do Sal",
+    "lines": [
+      "S1",
+      "U1",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.220424,
+      "lng": -8.43981
+    }
+  },
+  {
+    "id": "259",
+    "code": "lsa_mm042",
+    "name": "Casal de Santo António",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.155245,
+      "lng": -8.216339
+    }
+  },
+  {
+    "id": "258",
+    "code": "lsa_mm001",
+    "name": "Casal do Espírito Santo",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.126566,
+      "lng": -8.239361
+    }
+  },
+  {
+    "id": "246",
+    "code": "cbr_mm013",
+    "name": "Ceira",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.172865,
+      "lng": -8.393365
+    }
+  },
+  {
+    "id": "273",
+    "code": "cbr_mm031",
+    "name": "Coimbra B",
+    "lines": [
+      "S1",
+      "U1",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.224741,
+      "lng": -8.439876
+    }
+  },
+  {
+    "id": "235",
+    "code": "cbr_mm024",
+    "name": "Colégios",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.19847,
+      "lng": -8.420803
+    }
+  },
+  {
+    "id": "253",
+    "code": "mcv_mm006",
+    "name": "Corvo",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.093477,
+      "lng": -8.32191
+    }
+  },
+  {
+    "id": "240",
+    "code": "cbr_mm019",
+    "name": "Fernando Namora",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.203989,
+      "lng": -8.4009
+    }
+  },
+  {
+    "id": "251",
+    "code": "mcv_mm008",
+    "name": "Lobazes",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.104426,
+      "lng": -8.352192
+    }
+  },
+  {
+    "id": "232",
+    "code": "cbr_mm032",
+    "name": "Loja do Cidadão",
+    "lines": [
+      "S2",
+      "U2",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.21035,
+      "lng": -8.432479
+    }
+  },
+  {
+    "id": "257",
+    "code": "lsa_mm002",
+    "name": "Lousã - Estação",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.118518,
+      "lng": -8.247687
+    }
+  },
+  {
+    "id": "256",
+    "code": "lsa_mm003",
+    "name": "Lousã - Parque de Exposições",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.110834,
+      "lng": -8.249016
+    }
+  },
+  {
+    "id": "255",
+    "code": "lsa_mm004",
+    "name": "Meiral",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.106236,
+      "lng": -8.267951
+    }
+  },
+  {
+    "id": "275",
+    "code": "cbr_mm034",
+    "name": "Mercado (asc)",
+    "lines": [
+      "S2",
+      "U2",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.211565,
+      "lng": -8.42482
+    }
+  },
+  {
+    "id": "230",
+    "code": "cbr_mm047",
+    "name": "Mercado (desc)",
+    "lines": [
+      "S2",
+      "U2",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.211581,
+      "lng": -8.424759
+    }
+  },
+  {
+    "id": "252",
+    "code": "mcv_mm007",
+    "name": "Miranda do Corvo",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.089569,
+      "lng": -8.332515
+    }
+  },
+  {
+    "id": "250",
+    "code": "mcv_mm009",
+    "name": "Moinhos",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.115186,
+      "lng": -8.357221
+    }
+  },
+  {
+    "id": "237",
+    "code": "cbr_mm022",
+    "name": "Norton de Matos",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.201298,
+      "lng": -8.410959
+    }
+  },
+  {
+    "id": "254",
+    "code": "lsa_mm005",
+    "name": "Padrão",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.106349,
+      "lng": -8.300356
+    }
+  },
+  {
+    "id": "234",
+    "code": "cbr_mm025",
+    "name": "Parque",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.203753,
+      "lng": -8.425116
+    }
+  },
+  {
+    "id": "233",
+    "code": "cbr_mm026",
+    "name": "Portagem",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.207526,
+      "lng": -8.430654
+    }
+  },
+  {
+    "id": "244",
+    "code": "cbr_mm015",
+    "name": "Portela",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.186832,
+      "lng": -8.399355
+    }
+  },
+  {
+    "id": "245",
+    "code": "cbr_mm014",
+    "name": "Quinta da Ponte",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.181839,
+      "lng": -8.393125
+    }
+  },
+  {
+    "id": "276",
+    "code": "cbr_mm035",
+    "name": "República (asc)",
+    "lines": [
+      "S2",
+      "U2",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.209594,
+      "lng": -8.420384
+    }
+  },
+  {
+    "id": "229",
+    "code": "cbr_mm048",
+    "name": "República (desc)",
+    "lines": [
+      "S2",
+      "U2",
+      "U3"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.209825,
+      "lng": -8.419701
+    }
+  },
+  {
+    "id": "238",
+    "code": "cbr_mm021",
+    "name": "São José",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.201566,
+      "lng": -8.407223
+    }
+  },
+  {
+    "id": "260",
+    "code": "lsa_mm000",
+    "name": "Serpins",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.15577,
+      "lng": -8.210009
+    }
+  },
+  {
+    "id": "247",
+    "code": "cbr_mm012",
+    "name": "Sobral de Ceira",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.164419,
+      "lng": -8.387348
+    }
+  },
+  {
+    "id": "239",
+    "code": "cbr_mm020",
+    "name": "Solum",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.204888,
+      "lng": -8.40502
+    }
+  },
+  {
+    "id": "249",
+    "code": "mcv_mm010",
+    "name": "Trémoa",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.135481,
+      "lng": -8.357628
+    }
+  },
+  {
+    "id": "242",
+    "code": "cbr_mm017",
+    "name": "Vale das Flores",
+    "lines": [
+      "S1",
+      "S2",
+      "U1",
+      "U2"
+    ],
+    "isSuburbanOnly": false,
+    "coords": {
+      "lat": 40.195444,
+      "lng": -8.398046
+    }
+  },
+  {
+    "id": "248",
+    "code": "mcv_mm011",
+    "name": "Vale de Açor",
+    "lines": [
+      "S1",
+      "S2"
+    ],
+    "isSuburbanOnly": true,
+    "coords": {
+      "lat": 40.156447,
+      "lng": -8.374071
+    }
+  }
+]

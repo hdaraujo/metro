@@ -1,0 +1,575 @@
+/* Layout and components. Values follow the Main, Locating, LocationOff and Desktop artboards. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-map-land);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: var(--color-red);
+}
+
+a:hover {
+  color: var(--color-red-hover);
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ---------- Map ---------- */
+
+.map {
+  position: absolute;
+  inset: 0;
+  background: var(--color-map-land);
+}
+
+.map .maplibregl-canvas:focus-visible {
+  outline-offset: -2px;
+}
+
+/* ---------- Map markers (DOM) ----------
+   The root element of each marker is positioned by MapLibre (`.maplibregl-marker` is absolute),
+   so these rules must not set `position` on it. */
+
+.marker-user {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(31, 95, 168, 0.12);
+  border: 1px solid rgba(31, 95, 168, 0.35);
+  pointer-events: none;
+}
+
+.marker-user::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--color-blue);
+  border: 3px solid #ffffff;
+}
+
+.marker-stop {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(220, 26, 50, 0.16);
+  pointer-events: none;
+}
+
+.marker-stop__dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--color-red);
+  border: 3px solid #ffffff;
+}
+
+.marker-stop__dot::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.marker-stop__label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(50% + 22px);
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background: var(--color-surface);
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-small);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.marker-bus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-sans);
+  pointer-events: none;
+}
+
+.marker-bus__pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 6px;
+  border: 2px dashed #ffffff;
+  border-radius: 6px;
+  box-shadow: var(--shadow-bus);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.marker-bus__tag {
+  padding: 1px 6px;
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* ---------- Chrome: wordmark, locate button, attribution ---------- */
+
+.wordmark {
+  position: absolute;
+  left: var(--gutter-phone);
+  top: var(--gutter-phone);
+  height: 40px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  background: var(--color-surface);
+  border-radius: var(--radius-floating);
+  box-shadow: var(--shadow-small);
+  font-family: var(--font-narrow);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.locate-button {
+  width: var(--touch-target);
+  height: var(--touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-floating);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-button);
+  color: var(--color-blue);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.locate-button:disabled {
+  color: var(--color-icon-disabled);
+  cursor: default;
+}
+
+.locate-button--off {
+  color: var(--color-text-muted);
+}
+
+.attribution {
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 2px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--color-text-secondary);
+  pointer-events: auto;
+}
+
+.attribution a,
+.attribution a:hover {
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Phone layout ---------- */
+
+.bottom-stack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.controls-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 var(--gutter-phone) 0 8px;
+}
+
+.controls-row .attribution {
+  margin-bottom: 8px;
+}
+
+.controls-row .locate-button {
+  margin-bottom: 20px;
+}
+
+/* ---------- Sheet (phone) and panel (desktop) ---------- */
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--color-surface);
+  pointer-events: auto;
+}
+
+.sheet--phone {
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  box-shadow: var(--shadow-sheet);
+  padding: 10px 20px calc(24px + env(safe-area-inset-bottom));
+}
+
+.sheet__handle {
+  align-self: center;
+  width: 36px;
+  height: 4px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--color-grab-handle);
+}
+
+.sheet--panel {
+  position: absolute;
+  left: var(--gutter-desktop);
+  top: var(--gutter-desktop);
+  width: 380px;
+  max-height: calc(100% - 2 * var(--gutter-desktop));
+  overflow-y: auto;
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+  padding: 20px 24px 24px;
+}
+
+.panel__title {
+  font-family: var(--font-narrow);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.rule {
+  height: 1px;
+  flex-shrink: 0;
+  background: var(--color-hairline);
+}
+
+.desktop-locate {
+  position: absolute;
+  right: var(--gutter-desktop);
+  bottom: 52px;
+}
+
+.desktop-attribution {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+}
+
+/* ---------- Sheet contents ---------- */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-red);
+}
+
+.stop-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stop-heading__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.stop-name {
+  font-family: var(--font-narrow);
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sheet--panel .stop-name {
+  font-size: 32px;
+}
+
+.stop-distance {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.lines-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.lines-row__label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.line-chip {
+  min-width: 36px;
+  height: 24px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-control);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.bus-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bus-row__icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-floating);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bus-row__text {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bus-row__title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bus-row__subtitle {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.scheduled-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: var(--radius-control);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.scheduled-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-warning-dot);
+}
+
+.estimate-note {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
+/* Locating */
+
+.locating {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.locating__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-blue);
+}
+
+.locating__title {
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.spinner {
+  flex-shrink: 0;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
+.body-text {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton .eyebrow {
+  color: var(--color-text-muted);
+}
+
+.skeleton__bar {
+  width: 168px;
+  height: 28px;
+  border-radius: var(--radius-control);
+  background: var(--color-skeleton);
+}
+
+.skeleton__chips {
+  display: flex;
+  gap: 8px;
+}
+
+.skeleton__chip {
+  width: 36px;
+  height: 24px;
+  border-radius: var(--radius-control);
+  background: var(--color-skeleton);
+}
+
+/* Location off / data error */
+
+.notice__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notice__icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-floating);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notice__title {
+  font-family: var(--font-narrow);
+  font-size: 24px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.notice__text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.button-primary {
+  width: 100%;
+  height: var(--touch-target);
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--color-red);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button-primary:hover {
+  background: var(--color-red-hover);
+}
+
+.button-primary:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}

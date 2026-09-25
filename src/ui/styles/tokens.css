@@ -1,0 +1,49 @@
+/* Design tokens, taken from the approved artboards (plays/001-project-structure/design/). */
+:root {
+  /* Fonts: the Aptos family is not bundled; these stacks fall back to Segoe UI or the system font. */
+  --font-sans: 'Aptos', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-narrow: 'Aptos Narrow', 'Aptos', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Aptos Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Text */
+  --color-text: #14161a;
+  --color-text-secondary: #474d58;
+  --color-text-muted: #656c78;
+  --color-icon-disabled: #8a909c;
+
+  /* Surfaces */
+  --color-hairline: #e5e7ec;
+  --color-grab-handle: #d8dbe1;
+  --color-skeleton: #eeeff2;
+  --color-surface: #ffffff;
+  --color-map-land: #f1f0eb;
+
+  /* Accents */
+  --color-red: #dc1a32;
+  --color-red-hover: #b31329;
+  --color-blue: #1f5fa8;
+  --color-stop-stroke: #2c313a;
+
+  /* Warning (the "Scheduled" label) */
+  --color-warning-bg: #fbf1de;
+  --color-warning-text: #7a4e05;
+  --color-warning-dot: #b97608;
+
+  /* Radii */
+  --radius-control: 4px;
+  --radius-floating: 8px;
+  --radius-sheet: 16px;
+  --radius-panel: 12px;
+
+  /* Spacing */
+  --gutter-phone: 16px;
+  --gutter-desktop: 24px;
+  --touch-target: 48px;
+
+  /* Shadows */
+  --shadow-small: 0 1px 3px rgba(20, 22, 26, 0.08), 0 1px 2px rgba(20, 22, 26, 0.04);
+  --shadow-button: 0 4px 12px rgba(20, 22, 26, 0.08), 0 2px 4px rgba(20, 22, 26, 0.04);
+  --shadow-sheet: 0 -4px 24px rgba(20, 22, 26, 0.1);
+  --shadow-panel: 0 12px 32px rgba(20, 22, 26, 0.12), 0 4px 8px rgba(20, 22, 26, 0.05);
+  --shadow-bus: 0 4px 12px rgba(20, 22, 26, 0.12), 0 2px 4px rgba(20, 22, 26, 0.06);
+}

@@ -1,0 +1,1211 @@
+> You are the Autopilot Developer for this play. Read `plays/001-project-structure/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/001-project-structure/design/` folder exists, this play already has a UI design I approved: read `plays/001-project-structure/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-developer)
+  ⎿ Launching skill: autopilot-developer
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\.claude\skills\autopilot-developer
+
+You are the Autopilot Developer for this play. Read `$play/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; ls ..., description: Read plan, intent, and context docs)
+  ⎿ <persisted-output>
+  ⎿ Output too large (46.1KB). Full output saved to: C:\Users\Hugo\.claude\projects\C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro\c35fad65-520f-4d72-a084-08d9a397893e\tool-results\bye6bqukl.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ total 14
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 .
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 ..
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 .claude
+  ⎿ -rw-r--r-- 1 Hugo 197121   89 Sep 25 19:24 .git
+  ⎿ -rw-r--r-- 1 Hugo 197121   73 Sep 25 19:24 .gitignore
+  ⎿ -rw-r--r-- 1 Hugo 197121 2829 Sep 25 19:24 CLAUDE.md
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 documentation
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 plays
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design
+  ⎿ design.yaml
+  ⎿ devops.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ … +26 more lines
+  → Read(file_path: C:\Users\Hugo\.claude\projects\C--Users-Hugo--building-data-projects-001-metr...)
+  ⎿ 1	total 14
+  ⎿ 2	drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 .
+  ⎿ 3	drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 ..
+  ⎿ 4	drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 .claude
+  ⎿ 5	-rw-r--r-- 1 Hugo 197121   89 Sep 25 19:24 .git
+  ⎿ 6	-rw-r--r-- 1 Hugo 197121   73 Sep 25 19:24 .gitignore
+  ⎿ 7	-rw-r--r-- 1 Hugo 197121 2829 Sep 25 19:24 CLAUDE.md
+  ⎿ 8	drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 documentation
+  ⎿ 9	drwxr-xr-x 1 Hugo 197121    0 Sep 25 19:24 plays
+  ⎿ 10	CLAUDE.md
+  ⎿ 11	config.yaml
+  ⎿ 12	design
+  ⎿ 13	design.yaml
+  ⎿ 14	devops.yaml
+  ⎿ 15	history.yaml
+  ⎿ 16	intent.md
+  ⎿ 17	plan.md
+  ⎿ 18	positions.yaml
+  ⎿ 19	sessions
+  ⎿ 20	# Plan — Play 001 "project structure": base app + map with nearest stop and nearest bus
+  ⎿ … +773 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; fin..., description: List design files and check environment)
+  ⎿ -rw-r--r-- 1 Hugo 197121     1 Sep 25 19:24 documentation/context/.gitkeep
+  ⎿ -rw-r--r-- 1 Hugo 197121  4896 Sep 25 19:24 documentation/context/tech.md
+  ⎿ -rw-r--r-- 1 Hugo 197121  1929 Sep 25 19:24 documentation/context/vision.md
+  ⎿ -rw-r--r-- 1 Hugo 197121 18561 Sep 25 19:24 documentation/design/001-project-structure-prototype.html
+  ⎿ -rw-r--r-- 1 Hugo 197121     1 Sep 25 19:24 documentation/modules/.gitkeep
+  ⎿ -rw-r--r-- 1 Hugo 197121  2287 Sep 25 19:24 plays/001-project-structure/design/brief.md
+  ⎿ -rw-r--r-- 1 Hugo 197121 10594 Sep 25 19:24 plays/001-project-structure/design/canvas/project/Desktop.dc.html
+  ⎿ -rw-r--r-- 1 Hugo 197121  7618 Sep 25 19:24 plays/001-project-structure/design/canvas/project/Locating.dc.html
+  ⎿ -rw-r--r-- 1 Hugo 197121  7672 Sep 25 19:24 plays/001-project-structure/design/canvas/project/LocationOff.dc.html
+  ⎿ -rw-r--r-- 1 Hugo 197121 10890 Sep 25 19:24 plays/001-project-structure/design/canvas/project/Main.dc.html
+  ⎿ -rw-r--r-- 1 Hugo 197121  1069 Sep 25 19:24 plays/001-project-structure/design/canvas/project/canvas.json
+  ⎿ -rw-r--r-- 1 Hugo 197121  2557 Sep 25 19:24 plays/001-project-structure/design/design.md
+  ⎿ # Design — 001 project structure
+  ⎿ 
+  ⎿ Canvas: https://claude.ai/artifact/6vttGVud6vExLWRoN6ZCUB (private to the owner until shared)
+  ⎿ Canvas source: `design/canvas/project/` (one `.dc.html` per artboard plus `canvas.json`).
+  ⎿ Static review copy: `documentation/design/001-project-structure-prototype.html`.
+  ⎿ 
+  ⎿ Look: the organisation's default design system (Beta_Critical). Aptos, with Aptos Narrow for headings and Aptos Mono for the `// NEAREST STOP` eyebrow. Ink neutrals (#14161a text, #656c78 muted, #e5e7ec hairlines), Critical Red #dc1a32 for the nearest-stop marker and primary button, blue #1f5fa8 for the user's location dot, 4px radius on controls, 16px radius on the bottom sheet, 16px/24px gutters, 48px touch targets. The map base is muted (#f1f0eb land, white roads, #cad9e5 river). The line colours (U1 #47548a, U3 #dca64b, U2 #5993bd, S1 #346b45) and the stop name "Portagem" are placeholders: take the real ones from `route-shapes.json` and `stops.json`.
+  ⎿ 
+  ⎿ … +16 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro/plays..., description: Read Main and Desktop artboards)
+  ⎿ <!doctype html>
+  ⎿ <html lang="en">
+  ⎿ <head>
+  ⎿ <meta charset="utf-8">
+  ⎿ <title>Map — nearest stop</title>
+  ⎿ <script src="./support.js"></script>
+  ⎿ <link rel="stylesheet" href="ds/criticalsoftwaredesignsystem_adefdb/tokens.css">
+  ⎿ <link rel="stylesheet" href="ds/criticalsoftwaredesignsystem_adefdb/components/bundle.css">
+  ⎿ <script src="ds/criticalsoftwaredesignsystem_adefdb/components/bundle.js"></script>
+  ⎿ </head>
+  ⎿ <body>
+  ⎿ <x-dc>
+  ⎿ <helmet>
+  ⎿ <style>
+  ⎿ body{margin:0;font-family:'Aptos','Segoe UI',system-ui,-apple-system,sans-serif;color:#14161a;background:#f1f0eb}
+  ⎿ a{color:#dc1a32}a:hover{color:#b31329}
+  ⎿ </style>
+  ⎿ </helmet>
+  ⎿ <div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #f1f0eb; font-family: 'Aptos', 'Segoe UI', system-ui, -apple-system, sans-serif; color: #14161a">
+  ⎿ <svg width="390" height="844" viewBox="0 0 390 844" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+  ⎿ … +287 more lines
+
+● I've read the plan, the context docs and the Main and Desktop artboards. Next I'll read the Locating and LocationOff artboards, then start scaffolding.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro/plays..., description: Read the non-map parts of two artboards)
+  ⎿ ===== Locating
+  ⎿ </svg>
+  ⎿ <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h3"></path><path d="M19 12h3"></path><path d="M12 2v3"></path><path d="M12 19v3"></path><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+  ⎿ </button>
+  ⎿ <div style="position: absolute; left: 8px; top: 578px; padding: 2px 6px; background: rgba(255,255,255,0.85); border-radius: 2px; font-size: 11px; color: #474d58">© <a href="https://www.openstreetmap.org/copyright" style="color: #474d58">OpenStreetMap</a> contributors</div>
+  ⎿ <section aria-label="Finding your location" aria-busy="true" style="position: absolute; left: 0; top: 604px; width: 390px; height: 240px; box-sizing: border-box; padding: 10px 20px 24px; background: #ffffff; border-radius: 16px 16px 0 0; box-shadow: 0 -4px 24px rgba(20,22,26,0.10); display: flex; flex-direction: column; gap: 16px">
+  ⎿ <div style="align-self: center; width: 36px; height: 4px; flex-shrink: 0; border-radius: 999px; background: #d8dbe1"></div>
+  ⎿ <div style="display: flex; flex-direction: column; gap: 6px">
+  ⎿ <div style="display: flex; align-items: center; gap: 10px; color: #1f5fa8">
+  ⎿ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+  ⎿ <h1 style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 600; color: #14161a">Finding your location…</h1>
+  ⎿ </div>
+  ⎿ <p style="margin: 0; font-size: 14px; line-height: 1.45; color: #474d58">When your browser asks, allow location access so Metro can find the stop nearest to you.</p>
+  ⎿ </div>
+  ⎿ <div style="display: flex; flex-direction: column; gap: 8px" aria-hidden="true">
+  ⎿ <div style="font-family: 'Aptos Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; color: #656c78">// NEAREST STOP</div>
+  ⎿ <div style="width: 168px; height: 28px; border-radius: 4px; background: #eeeff2"></div>
+  ⎿ <div style="display: flex; gap: 8px">
+  ⎿ <div style="width: 36px; height: 24px; border-radius: 4px; background: #eeeff2"></div>
+  ⎿ <div style="width: 36px; height: 24px; border-radius: 4px; background: #eeeff2"></div>
+  ⎿ … +23 more lines
+
+● Now checking the dependency versions available on npm.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; for..., description: Check latest npm versions of planned dependencies, timeout: 300000)
+  ⎿ react 19.3.0
+  ⎿ react-dom 19.3.0
+  ⎿ maplibre-gl 6.11.2
+  ⎿ workbox-window 7.4.1
+  ⎿ typescript 7.0.2
+  ⎿ @typescript/typescript6 6.0.2
+  ⎿ vite 8.3.1
+  ⎿ @vitejs/plugin-react 6.1.1
+  ⎿ vite-plugin-pwa 1.3.0
+  ⎿ @vite-pwa/assets-generator 2.0.0
+  ⎿ vitest 5.0.2
+  ⎿ @playwright/test 1.63.0
+  ⎿ eslint 10.11.0
+  ⎿ @eslint/js 10.0.1
+  ⎿ typescript-eslint 8.70.1
+  ⎿ eslint-plugin-react-hooks 7.1.1
+  ⎿ eslint-plugin-react-refresh 0.5.7
+  ⎿ eslint-config-prettier 10.1.8
+  ⎿ globals 17.12.0
+  ⎿ prettier 3.9.9
+  ⎿ … +3 more lines
+
+● All versions match the plan. Next I'll write package.json with the TS 7 / typescript6 override arrangement (option 1) and install.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\package.json, content: {
+  "name": "metro",
+  "private": true,
+  "version": "0.0.0",
+  "type": "modu...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\package.json (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Install runtime dependencies, timeout: 600000)
+  ⎿ 2 packages are looking for funding
+  ⎿   run `npm fund` for details
+  ⎿ 
+  ⎿ found 0 vulnerabilities
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\package.json, old_string:     "workbox-window": "^7.4.1"
+  }
+}, new_string:     "workbox-window": "^7.4.1"
+  },
+  "overrides": {
+    "typescript-eslint":...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Install dev dependencies, timeout: 600000)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\package.json has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ npm error code ERESOLVE
+  ⎿ npm error ERESOLVE unable to resolve dependency tree
+  ⎿ npm error
+  ⎿ npm error While resolving: metro@0.0.0
+  ⎿ npm error Found: typescript@7.0.2
+  ⎿ npm error node_modules/typescript
+  ⎿ npm error   dev typescript@"7.0.2" from the root project
+  ⎿ npm error
+  ⎿ npm error Could not resolve dependency:
+  ⎿ npm error peer overridden typescript@"npm:@typescript/typescript6@6.0.2" (was ">=4.8.4 <6.1.0") from typescript-eslint@8.70.1
+  ⎿ npm error node_modules/typescript-eslint
+  ⎿ npm error   dev typescript-eslint@"8.70.1" from the root project
+  ⎿ npm error
+  ⎿ npm error Fix the upstream dependency conflict, or retry this command with --force or --legacy-peer-deps to accept an incorrect (and potentially broken) dependency resolution.
+  ⎿ npm error
+  ⎿ npm error
+  ⎿ npm error For a full report see:
+  ⎿ npm error C:\Users\Hugo\AppData\Local\npm-cache\_logs\2026-09-25T18_57_52_053Z-eresolve-report.txt
+  ⎿ npm error A complete log of this run can be found in: C:\Users\Hugo\AppData\Local\npm-cache\_logs\2026-09-25T18_57_52_053Z-debug-0.log
+
+● Option 1 fails as the plan anticipated: typescript-eslint's peer dependency resolves against the root `typescript`, and overrides can't split it. Switching to the fallback, option 2.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; nod..., description: Install dev deps using the fallback TS arrangement, timeout: 600000)
+  ⎿ Exit code 1
+  ⎿ npm error code ERESOLVE
+  ⎿ npm error ERESOLVE could not resolve
+  ⎿ npm error
+  ⎿ npm error While resolving: vite-plugin-pwa@1.3.0
+  ⎿ npm error Found: @vite-pwa/assets-generator@2.0.0
+  ⎿ npm error node_modules/@vite-pwa/assets-generator
+  ⎿ npm error   dev @vite-pwa/assets-generator@"2.0.0" from the root project
+  ⎿ npm error
+  ⎿ npm error Could not resolve dependency:
+  ⎿ npm error peerOptional @vite-pwa/assets-generator@"^1.0.0" from vite-plugin-pwa@1.3.0
+  ⎿ npm error node_modules/vite-plugin-pwa
+  ⎿ npm error   dev vite-plugin-pwa@"1.3.0" from the root project
+  ⎿ npm error
+  ⎿ npm error Conflicting peer dependency: @vite-pwa/assets-generator@1.0.4
+  ⎿ npm error node_modules/@vite-pwa/assets-generator
+  ⎿ npm error   peerOptional @vite-pwa/assets-generator@"^1.0.0" from vite-plugin-pwa@1.3.0
+  ⎿ npm error   node_modules/vite-plugin-pwa
+  ⎿ npm error     dev vite-plugin-pwa@"1.3.0" from the root project
+  ⎿ npm error
+  ⎿ … +44 more lines
+
+● A second conflict: `vite-plugin-pwa@1.3.0` declares an optional peer `@vite-pwa/assets-generator@^1.0.0`. Checking the peer ranges before choosing versions.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Inspect peer dependency ranges)
+  ⎿ {
+  ⎿   '@vite-pwa/assets-generator': '^1.0.0',
+  ⎿   vite: '^3.1.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0',
+  ⎿   'workbox-build': '^7.4.1',
+  ⎿   'workbox-window': '^7.4.1'
+  ⎿ }
+  ⎿   "0.2.6",
+  ⎿   "1.0.0",
+  ⎿   "1.0.1",
+  ⎿   "1.0.2",
+  ⎿   "1.0.3",
+  ⎿   "1.0.4",
+  ⎿   "2.0.0"
+  ⎿ ]
+  ⎿ {
+  ⎿   vite: '^8.0.0',
+  ⎿   'oxc-transform-react': '^0.145.0',
+  ⎿   '@rolldown/plugin-babel': '^0.1.7 || ^0.2.0',
+  ⎿   'babel-plugin-react-compiler': '^1.0.0'
+  ⎿ }
+  ⎿ … +21 more lines
+
+● I'll use `@vite-pwa/assets-generator@1.0.4`, the newest version inside vite-plugin-pwa's peer range, instead of 2.0.0, and record that in the README.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Install dev dependencies with compatible assets-generator, timeout: 600000)
+  ⎿ npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+  ⎿ 
+  ⎿ added 469 packages, and audited 501 packages in 19s
+  ⎿ 
+  ⎿ 147 packages are looking for funding
+  ⎿   run `npm fund` for details
+  ⎿ 
+  ⎿ found 0 vulnerabilities
+  ⎿   "devDependencies": {
+  ⎿     "@eslint/js": "^10.0.1",
+  ⎿     "@playwright/test": "^1.63.0",
+  ⎿     "@types/node": "^26.6.2",
+  ⎿     "@types/react": "^19.3.0",
+  ⎿     "@types/react-dom": "^19.3.0",
+  ⎿     "@vite-pwa/assets-generator": "^1.0.4",
+  ⎿     "@vitejs/plugin-react": "^6.1.1",
+  ⎿     "eslint": "^10.11.0",
+  ⎿     "eslint-config-prettier": "^10.1.8",
+  ⎿     "eslint-plugin-react-hooks": "^7.1.1",
+  ⎿     "eslint-plugin-react-refresh": "^0.5.7",
+  ⎿ … +17 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Inspect which package provides the tsc bin)
+  ⎿ #!/bin/sh
+  ⎿ basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+  ⎿ 
+  ⎿ case `uname` in
+  ⎿     *CYGWIN*|*MINGW*|*MSYS*)
+  ⎿         if command -v cygpath > /dev/null 2>&1; then
+  ⎿             basedir=`cygpath -w "$basedir"`
+  ⎿         fi
+  ⎿     ;;
+  ⎿ esac
+  ⎿ 
+  ⎿ if [ -x "$basedir/node" ]; then
+  ⎿   exec "$basedir/node"  "$basedir/../@typescript/old/bin/tsc" "$@"
+  ⎿ else 
+  ⎿   exec node  "$basedir/../@typescript/old/bin/tsc" "$@"
+  ⎿ fi
+  ⎿ typescript @typescript/typescript6 6.0.2 {"tsc6":"./bin/tsc6"} ./lib/typescript.js undefined
+  ⎿ typescript7 typescript 7.0.2 {"tsc":"./bin/tsc"} undefined {"./package.json":"./package.json",".":"./lib/version.cjs","./unstable/sync":"./dist/api/sync/api.js","./unstable/async":"./dist/api/async/api.js","./unstable/fs":"./dist/api/fs.js","./unstable/proto":"./dist/api/proto.js","./unstable/ast":"./dist/ast/index.js","./unstable/ast/is":"./dist/ast/is.js"
+  ⎿ tsc
+  ⎿ tsc6
+
+● `.bin/tsc` is linked to `@typescript/old` (TS 6.0.3), not to TS 7. Looking into where that package comes from.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Trace the @typescript/old dependency)
+  ⎿ metro@0.0.0 C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro
+  ⎿ `-- typescript@npm:@typescript/typescript6@6.0.2
+  ⎿   `-- @typescript/old@npm:typescript@6.0.3
+  ⎿ 
+  ⎿ typescript 6.0.3 {"tsc":"./bin/tsc","tsserver":"./bin/tsserver"}
+  ⎿ undefined {"@typescript/typescript-win32-x64":"7.0.2","@typescript/typescript-win32-arm64":"7.0.2","@typescript/typescript-linux-x64":"7.0.2","@typescript/typescript-linux-arm":"7.0.2","@typescript/typescript-linux-arm64":"7.0.2","@typescript/typescript-darwin-x64":"7.0.2","@typescript/typescript-darwin-arm64":"7.0.2","@typescript/typescript-aix-ppc64":"7.0.2","@typescript/typescript-freebsd-arm64":"7.0.2","@typescript/typescript-freebsd-x64":"7.0.2","@typescript/typescript-linux-loong64":"7.0.2","@typescript/typescript-linux-mips64el":"7.0.2","@typescript/typescript-linux-ppc64":"7.0.2","@typescript/typescript-linux-riscv64":"7.0.2","@typescript/typescript-linux-s390x":"7.0.2","@typescript/typescript-netbsd-arm64":"7.0.2","@typescript/typescript-netbsd-x64":"7.0.2","@typescript/typescript-openbsd-arm64":"7.0.2","@typescript/typescript-openbsd-x64":"7.0.2","@typescript/typescript-sunos-x64":"7.0.2"}
+  ⎿ #!/usr/bin/env node
+  ⎿ import "../lib/tsc.js";
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; nod..., description: Point typecheck at TS 7 and pin aliases, timeout: 300000)
+  ⎿   run `npm fund` for details
+  ⎿ 
+  ⎿ found 0 vulnerabilities
+  ⎿ Version 7.0.2
+  ⎿ metro@0.0.0 C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro
+  ⎿ +-- typescript-eslint@8.70.1
+  ⎿ | +-- @typescript-eslint/eslint-plugin@8.70.1
+  ⎿ | | +-- @typescript-eslint/type-utils@8.70.1
+  ⎿ | | | `-- typescript@npm:@typescript/typescript6@6.0.2 deduped
+  ⎿ | | +-- ts-api-utils@2.5.0
+  ⎿ | | | `-- typescript@npm:@typescript/typescript6@6.0.2 deduped
+  ⎿ | | `-- typescript@npm:@typescript/typescript6@6.0.2 deduped
+  ⎿ | +-- @typescript-eslint/parser@8.70.1
+  ⎿ | | `-- typescript@npm:@typescript/typescript6@6.0.2 deduped
+  ⎿ | +-- @typescript-eslint/typescript-estree@8.70.1
+  ⎿ | | +-- @typescript-eslint/project-service@8.70.1
+  ⎿ | | | `-- typescript@npm:@typescript/typescript6@6.0.2 deduped
+  ⎿ | | +-- @typescript-eslint/tsconfig-utils@8.70.1
+  ⎿ | | | `-- typescript@npm:@typescript/typescript6@6.0.2 deduped
+  ⎿ | | `-- typescript@npm:@typescript/typescript6@6.0.2 deduped
+  ⎿ … +4 more lines
+
+● Dependencies are installed. Next I'll write the config files.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Write editor, git, prettier, and TS config files)
+  ⎿ `-- vite-plugin-pwa@1.3.0
+  ⎿   `-- workbox-build@7.4.1
+  ⎿ 
+  ⎿ # Building (machine-local — do not commit)
+  ⎿ .claude/settings.local.json
+  ⎿ 
+  ⎿ # Dependencies and build output
+  ⎿ node_modules/
+  ⎿ dist/
+  ⎿ dev-dist/
+  ⎿ coverage/
+  ⎿ 
+  ⎿ # Playwright
+  ⎿ playwright-report/
+  ⎿ test-results/
+  ⎿ blob-report/
+  ⎿ playwright/.cache/
+  ⎿ 
+  ⎿ # Misc
+  ⎿ *.log
+  ⎿ … +3 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Write ESLint flat config and inspect react-hooks configs)
+  ⎿ [ 'recommended', 'recommended-latest', 'flat' ] [ 'recommended-latest', 'recommended' ]
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; sed..., description: Switch to defineConfig and widen react-hooks scope)
+  ⎿ import js from '@eslint/js';
+  ⎿ import { defineConfig } from 'eslint/config';
+  ⎿ import eslintConfigPrettier from 'eslint-config-prettier';
+  ⎿ import reactHooks from 'eslint-plugin-react-hooks';
+  ⎿ import reactRefresh from 'eslint-plugin-react-refresh';
+  ⎿ import globals from 'globals';
+  ⎿ import tseslint from 'typescript-eslint';
+  ⎿ 
+  ⎿ export default defineConfig(
+  ⎿   {
+  ⎿     ignores: [
+  ⎿       'dist',
+  ⎿ 27:    files: ['src/**/*.{ts,tsx}'],
+  ⎿ 28-    languageOptions: { globals: globals.browser },
+  ⎿ --
+  ⎿ 31:    files: ['src/**/*.{ts,tsx}'],
+  ⎿ 32-    ...reactHooks.configs.flat.recommended,
+  ⎿ --
+  ⎿ 35:    files: ['src/**/*.tsx'],
+  ⎿ 36-    plugins: { 'react-refresh': reactRefresh },
+  ⎿ … +3 more lines
+
+● Configs are written. Next I'll record the fixtures from the live Metro Mondego sources.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; mkd..., description: Download live source JSON to scratchpad, timeout: 120000)
+  ⎿ -rw-r--r-- 1 Hugo 197121 8996 Sep 25 20:00 C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro/c35fad65-520f-4d72-a084-08d9a397893e/scratchpad/stops.json
+  ⎿ -rw-r--r-- 1 Hugo 197121 14305 Sep 25 20:00 C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro/c35fad65-520f-4d72-a084-08d9a397893e/scratchpad/route-shapes.json
+  ⎿ -rw-r--r-- 1 Hugo 197121 634090 Sep 25 20:00 C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro/c35fad65-520f-4d72-a084-08d9a397893e/scratchpad/trips-DU.json
+  ⎿ -rw-r--r-- 1 Hugo 197121 405038 Sep 25 20:00 C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro/c35fad65-520f-4d72-a084-08d9a397893e/scratchpad/trips-Sab.json
+  ⎿ -rw-r--r-- 1 Hugo 197121 301705 Sep 25 20:00 C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro/c35fad65-520f-4d72-a084-08d9a397893e/scratchpad/trips-Dom.json
+  ⎿ HTTP/1.1 200 OK
+  ⎿ Accept-Ranges: bytes
+  ⎿ Access-Control-Allow-Origin: *
+  ⎿ Age: 3591
+  ⎿ Cache-Control: public, max-age=300
+  ⎿ Content-Disposition: inline; filename="stops.json"
+  ⎿ Content-Length: 8996
+  ⎿ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline' https://vercel.live; img-src 'self' data: blob: https://*; connect-src 'self' https://formsubmit.co https://vercel.live wss://ws-us3.pusher.com ws://localhost:* http://localhost:*; frame-src 'self' https://vercel.live; font-src 'self' https://vercel.live https://assets.vercel.com;
+  ⎿ Content-Type: application/json; charset=utf-8
+  ⎿ Date: Fri, 25 Sep 2026 19:00:24 GMT
+  ⎿ Etag: "4afb63c17cd0bc93cf98d14c91a9a1af"
+  ⎿ Last-Modified: Fri, 25 Sep 2026 18:00:33 GMT
+  ⎿ Server: Vercel
+  ⎿ Strict-Transport-Security: max-age=63072000
+  ⎿ X-Vercel-Cache: HIT
+  ⎿ … +1 more lines
+  → Bash(command: cd "C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-proj..., description: Inspect structure of recorded source data)
+  ⎿ 39 {"id":"271","code":"cbr_mm029","name":"Açude","lines":["S1","U1","U3"],"isSuburbanOnly":false,"coords":{"lat":40.21697,"lng":-8.438565}}
+  ⎿ 271:Açude:S1/U1/U3  269:Aeminium:S1/U1  270:Arnado:S1/U1/U3  236:Arregaça:S1/S2/U1/U2  274:Câmara (asc):S2/U2/U3  231:Câmara (desc):S2/U2/U3  241:Casa Branca:S1/S2/U1/U2  272:Casa do Sal:S1/U1/U3  259:Casal de Santo António:S1/S2*  258:Casal do Espírito Santo:S1/S2*  246:Ceira:S1/S2*  273:Coimbra B:S1/U1/U3  235:Colégios:S1/S2/U1/U2  253:Corvo:S1/S2*  240:Fernando Namora:S1/S2/U1/U2  251:Lobazes:S1/S2*  232:Loja do Cidadão:S2/U2/U3  257:Lousã - Estação:S1/S2*  256:Lousã - Parque de Exposições:S1/S2*  255:Meiral:S1/S2*  275:Mercado (asc):S2/U2/U3  230:Mercado (desc):S2/U2/U3  252:Miranda do Corvo:S1/S2*  250:Moinhos:S1/S2*  237:Norton de Matos:S1/S2/U1/U2  254:Padrão:S1/S2*  234:Parque:S1/S2/U1/U2  233:Portagem:S1/S2/U1/U2  244:Portela:S1/S2*  245:Quinta da Ponte:S1/S2*  276:República (asc):S2/U2/U3  229:República (desc):S2/U2/U3  238:São José:S1/S2/U1/U2  260:Serpins:S1/S2*  247:Sobral de Ceira:S1/S2*  239:Solum:S1/S2/U1/U2  249:Trémoa:S1/S2*  242:Vale das Flores:S1/S2/U1/U2  248:Vale de Açor:S1/S2*
+  ⎿ S1-0 S1 Ida #0080FF 41 [40.224741,-8.439876]
+  ⎿ S1-1 S1 Volta #0080FF 41 [40.15577,-8.210009]
+  ⎿ S2-0 S2 Ida #FF0000 40 [40.209825,-8.419701]
+  ⎿ S2-1 S2 Volta #FF0000 40 [40.15577,-8.210009]
+  ⎿ U1-0 U1 Ida #2B6CC4 15 [40.224741,-8.439876]
+  ⎿ U1-1 U1 Volta #2B6CC4 15 [40.195444,-8.398046]
+  ⎿ U2-0 U2 Ida #FF5349 14 [40.209825,-8.419701]
+  ⎿ U2-1 U2 Volta #FF5349 14 [40.195444,-8.398046]
+  ⎿ U3-0 U3 Ida #00FF40 8 [40.209825,-8.419701]
+  ⎿ U3-1 U3 Volta #00FF40 8 [40.224741,-8.439876]
+  ⎿ 452 {"id":"s1-DU-0-604","line":"S1","lineType":"suburbana","dayType":"DU","direction":"P-S","finalDestination":"Serpins","stops":[{"name":"Coimbra B","time":"05:50:00"},{"name":"Casa do Sal","time":"05:51:18"},{"name":"Açude","time":"05:52:25"},{"name":"Arnado","time":"05:53:38"},{"name":"Aeminium","time":"05:54:47"},{"name":"Portagem","time":"05:56:04"},{"name":"Parque","time":"05:57:28"},{"name":"Colégios","time":"05:59:01"},{"name":"Arregaça","time":"06:00:04"},{"name":"Norton de Matos","time":"06:01:25"},{"name":"São José","time":"06:02:29"},{"name":"Solum","time":"06:04:13"},{"name":"Fernando
+  ⎿ {
+  ⎿   'S1 P-S': 30,
+  ⎿   'S1 S-P': 32,
+  ⎿   'S2 P-S': 28,
+  ⎿   'S2 S-P': 30,
+  ⎿   'U1 P-S': 49,
+  ⎿   'U1 S-P': 44,
+  ⎿ … +37 more lines
+  → Bash(command: cd "C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-proj..., description: Verify direction mapping and Portagem trips near 10:40)
+  ⎿ S1 P-S Ida start 0 end 0 Coimbra B -> Serpins
+  ⎿ S1 P-S Volta start 20938 end 20938 Coimbra B -> Serpins
+  ⎿ S1 S-P Ida start 20938 end 20938 Serpins -> Coimbra B
+  ⎿ S1 S-P Volta start 0 end 0 Serpins -> Coimbra B
+  ⎿ S2 P-S Ida start 0 end 0 República (desc) -> Serpins
+  ⎿ S2 P-S Volta start 18763 end 18810 República (desc) -> Serpins
+  ⎿ S2 S-P Ida start 18763 end 18810 Serpins -> República (asc)
+  ⎿ S2 S-P Volta start 0 end 0 Serpins -> República (asc)
+  ⎿ U1 P-S Ida start 0 end 0 Coimbra B -> Vale das Flores
+  ⎿ U1 P-S Volta start 4812 end 4812 Coimbra B -> Vale das Flores
+  ⎿ U1 S-P Ida start 4812 end 4812 Vale das Flores -> Coimbra B
+  ⎿ U1 S-P Volta start 0 end 0 Vale das Flores -> Coimbra B
+  ⎿ U2 P-S Ida start 0 end 0 República (desc) -> Vale das Flores
+  ⎿ U2 P-S Volta start 2433 end 2460 República (desc) -> Vale das Flores
+  ⎿ U2 S-P Ida start 2433 end 2460 Vale das Flores -> República (asc)
+  ⎿ U2 S-P Volta start 0 end 0 Vale das Flores -> República (asc)
+  ⎿ U3 P-S Ida start 0 end 0 República (desc) -> Coimbra B
+  ⎿ U3 P-S Volta start 2381 end 2357 República (desc) -> Coimbra B
+  ⎿ U3 S-P Ida start 2381 end 2357 Coimbra B -> República (asc)
+  ⎿ U3 S-P Volta start 0 end 0 Coimbra B -> República (asc)
+  ⎿ … +17 more lines
+  → Bash(command: cd "C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-proj..., description: Pick sample S1/S2 trips for the fixture)
+  ⎿ 18 s2-DU-0-701 República (desc) 10:20:00, Mercado (desc) 10:21:39, Câmara (desc) 10:23:01, Loja do Cidadão 10:24:07, Portagem 10:25:35, Parque 10:26:59, Colégios 10:28:32, Arregaça 10:29:35, Norton de Matos 10:30:56, São José 10:32:00, Solum 10:33:44, Fernando Namora 10:34:55, Casa Branca 10:36:08, Vale das Flores 10:37:44, Portela 10:40:15, Quinta da Ponte 10:41:43, Ceira 10:43:26, Sobral de Ceira 10:45:24, Vale de Açor 10:47:47, Trémoa 10:51:49, Moinhos 10:55:15, Lobazes 10:57:51, Miranda do Corvo 11:02:09, Corvo 11:04:21, Padrão 11:07:23, Meiral 11:12:34, Lousã - Parque de Exposições 11:15:22, Lousã - Estação 11:17:22, Casal do Espírito Santo 11:19:12, Casal de Santo António 11:24:14, Serpins 11:25:08
+  ⎿ [
+  ⎿   's1-DU-0-633 07:40:00',
+  ⎿   's1-DU-0-586 08:40:00',
+  ⎿   's1-DU-0-590 16:40:00',
+  ⎿   's1-DU-0-592 17:40:00',
+  ⎿   's1-DU-0-594 18:40:00'
+  ⎿ ]
+  ⎿ Meiral 25:16:54, Lousã - Parque de Exposições 25:19:42, Lousã - Estação 25:21:42, Casal do Espírito Santo 25:23:32, Casal de Santo António 25:28:34, Serpins 25:29:28
+  ⎿ s2-DU-1-653 São José, Norton de Matos, Arregaça, Colégios, Parque, Portagem, Loja do Cidadão, Câmara (asc), Mercado (asc), República (asc)
+  → Bash(command: S="C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-proje..., description: Write fixture files into tests/fixtures)
+  ⎿ 96 3
+  ⎿ total 156
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 20:01 .
+  ⎿ drwxr-xr-x 1 Hugo 197121      0 Sep 25 20:00 ..
+  ⎿ -rw-r--r-- 1 Hugo 197121  14305 Sep 25 20:01 route-shapes.json
+  ⎿ -rw-r--r-- 1 Hugo 197121   8996 Sep 25 20:01 stops.json
+  ⎿ -rw-r--r-- 1 Hugo 197121 126762 Sep 25 20:01 trips-DU.sample.json
+  ⎿ [
+  ⎿   {
+  ⎿     "id": "271",
+  ⎿     "code": "cbr_mm029",
+  ⎿     "name": "Açude",
+  ⎿     "lines": [
+  ⎿       "S1",
+  ⎿       "U1",
+  ⎿       "U3"
+  ⎿     ],
+  ⎿     "isSuburbanOnly": false,
+  ⎿     "coords": {
+  ⎿       "lat": 40.21697,
+  ⎿ … +11 more lines
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\tests\fix..., content: # Test fixtures
+
+Recorded source data for the Metro Mondego timetable ("Horár...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\tests\fixtures\README.md (file state is current in your context — no need to Read it back)
+
+● The fixtures are recorded. Next I'll write the domain types, the source adapter and the pure domain logic, with their tests.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; mkd..., description: Write domain types and geo module with tests)
+  ⎿ (Bash completed with no output)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; sed..., description: Write nearestStop module and tests)
+  ⎿ (Bash completed with no output)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; sed..., description: Write shape geometry module)
+  ⎿ 25:    const tied = [stop('b', 40.21, -8.41), stop('a', 40.21, -8.41)];
+  ⎿ 26:    expect(nearestStop(tied, { lat: 40.2, lng: -8.4 })?.stop.id).toBe('a');
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; pyt..., description: Scope the stop-distance memo to each measured shape)
+  ⎿ 96:  let cache = stopDistanceCache.get(measured);
+  ⎿ 97:  if (!cache) {
+  ⎿ 98:    cache = new Map();
+  ⎿ 99:    stopDistanceCache.set(measured, cache);
+  ⎿ 101:  const cached = cache.get(key);
+  ⎿ 102:  if (cached) return cached;
+  ⎿ 115:  cache.set(key, distances);
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; sed..., description: Check the memo section of shape.ts)
+  ⎿ }
+  ⎿ 
+  ⎿ /** Memoised per measured shape, keyed by `shapeId|stopId,stopId,…`. */
+  ⎿ const stopDistanceCache = new WeakMap<MeasuredShape, Map<string, number[]>>();
+  ⎿ 
+  ⎿ /**
+  ⎿  * Distance along the shape of each of the trip's stops, in order. Each stop is projected starting
+  ⎿  * from the previous stop's segment, so the distances never decrease — this keeps stops that sit
+  ⎿  * beside the polyline (e.g. the S2 asc/desc pairs) on the right stretch of it.
+  ⎿  */
+  ⎿ export function stopDistancesForTrip(
+  ⎿   measured: MeasuredShape,
+  ⎿   trip: Trip,
+  ⎿   stopsById: ReadonlyMap<string, Stop>,
+  ⎿ ): number[] {
+  ⎿   const key = `${measured.shape.id}|${trip.stopTimes.map((st) => st.stopId).join(',')}`;
+  ⎿   let cache = stopDistanceCache.get(measured);
+  ⎿   if (!cache) {
+  ⎿     cache = new Map();
+  ⎿     stopDistanceCache.set(measured, cache);
+  ⎿ … +18 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"
+cat ..., description: Write Lisbon time and holidays modules with tests)
+  ⎿ Exit code 2
+  ⎿ /usr/bin/bash: -c: line 196: unexpected EOF while looking for matching `''
+
+● Still writing the domain modules. A shell heredoc tripped over quoting, so I'll write the remaining files with the file tool.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; ls ..., description: Check which domain files exist)
+  ⎿ total 32
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 20:02 .
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 20:01 ..
+  ⎿ -rw-r--r-- 1 Hugo 197121 1698 Sep 25 20:02 geo.test.ts
+  ⎿ -rw-r--r-- 1 Hugo 197121 1273 Sep 25 20:01 geo.ts
+  ⎿ -rw-r--r-- 1 Hugo 197121 1342 Sep 25 20:02 nearestStop.test.ts
+  ⎿ -rw-r--r-- 1 Hugo 197121  699 Sep 25 20:02 nearestStop.ts
+  ⎿ -rw-r--r-- 1 Hugo 197121 4241 Sep 25 20:02 shape.ts
+  ⎿ -rw-r--r-- 1 Hugo 197121 1561 Sep 25 20:01 types.ts
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: /** Wall-clock parts of an instant in Europe/Lisbon, which is where the timet...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import { formatLisbonHM, lisbo...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { weekdayOf } from './lisbonTime';
+import type { DayType } from './typ...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import { dayTypeFor, easterSun...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { pointAtDistance, type MeasuredShape } from './shape';
+import type { ...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: const DARK_TEXT = '#14161a';
+const LIGHT_TEXT = '#ffffff';
+
+function relative...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import { contrastRatio, readab...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\lisbonTime.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\lisbonTime.test.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\holidays.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\holidays.test.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\interpolation.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\color.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\color.test.ts (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; nod..., description: Compute WCAG contrast for each line colour)
+  ⎿ #0080FF white 3.80 dark 4.77
+  ⎿ #FF0000 white 4.00 dark 4.53
+  ⎿ #2B6CC4 white 5.19 dark 3.49
+  ⎿ #FF5349 white 3.19 dark 5.68
+  ⎿ #00FF40 white 1.37 dark 13.26
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import { contrastRatio, readab...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\color.test.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+● Next: the nearest-bus logic, the source adapter, and the rest of the tests.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { dayTypeFor } from './holidays';
+import { positionAt } from './interp...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\sourc..., content: /**
+ * Source adapter for the Metro Mondego timetable ("Horários Metrobus"): ...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\nearestBus.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\sources\metrobusTimetable.ts (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; sed..., description: Remove unused field from nearestBus candidate)
+  ⎿ 54:  let best: { trip: Trip; offset: number; wait: number } | null = null;
+  ⎿ 62:      if (best === null || wait < best.wait) best = { trip, offset, wait };
+  ⎿ 65:  if (!best) return null;
+  ⎿ 67:  const { trip, offset, wait } = best;
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import stopsJson from '../../t...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import { positionAt } from './...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\shape.test.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\interpolation.test.ts (file state is current in your context — no need to Read it back)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domai..., content: import { describe, expect, it } from 'vitest';
+import stopsJson from '../../t...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\sourc..., content: import { afterEach, describe, expect, it, vi } from 'vitest';
+import stopsJso...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\domain\nearestBus.test.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\sources\metrobusTimetable.test.ts (file state is current in your context — no need to Read it back)
+
+● Now vite.config.ts (with the PWA setup), then a first test run.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\vite.conf..., content: /// <reference types="vitest/config" />
+import react from '@vitejs/plugin-rea...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npx..., description: Run the unit tests, timeout: 300000)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\vite.config.ts (file state is current in your context — no need to Read it back)
+  ⎿  RUN  v5.0.2 C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro
+  ⎿ 
+  ⎿  ❯ src/domain/nearestBus.test.ts (7 tests | 1 failed) 12ms
+  ⎿    ❯ nearestApproachingBus (7)
+  ⎿      × returns null when no bus is approaching 5ms
+  ⎿ 
+  ⎿ ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+  ⎿ 
+  ⎿  FAIL  src/domain/nearestBus.test.ts > nearestApproachingBus > returns null when no bus is approaching
+  ⎿ AssertionError: expected { tripId: 'u1-DU-1-979', …(7) } to be null
+  ⎿ 
+  ⎿ - Expected:
+  ⎿ null
+  ⎿ 
+  ⎿ + Received:
+  ⎿ {
+  ⎿   "arrivalAtStopSeconds": 498,
+  ⎿   "at": "2026-09-23T04:00:00.000Z",
+  ⎿   "coords": {
+  ⎿     "lat": 40.204778365853656,
+  ⎿ … +24 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; nod..., description: Check earliest sample trip start times)
+  ⎿ [ '04:42:45', '04:56:00', '05:05:00', '05:13:00', '05:20:00' ] Vale das Flores 04:56:00, Casa Branca 04:57:37, Fernando Namora 04:58:48, Solum 05:00:10, São José 05:01:45, Norton de Matos 05:02:48, Arregaça 05:04:09, Colégios 05:05:12, Parque 05:06:43, Portagem 05:08:18, Aeminium 05:09:24, Arnado 05:10:31, Açude 05:11:49, Casa do Sal 05:12:55, Coimbra B 05:14:26
+
+● The weekday service starts at 04:42, so the "no bus" case moves to 04:30 Lisbon.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; sed..., description: Fix the no-bus test time and re-run tests, timeout: 300000)
+  ⎿  Test Files  9 passed (9)
+  ⎿       Tests  80 passed (80)
+  ⎿    Start at  20:07:09
+  ⎿    Duration  381ms (transform 52%, import 35%, tests 8%, worker 4%)
+
+● Unit tests pass (80). Next is the UI. First a check of the maplibre-gl 6 API surface.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro/node_..., description: Inspect maplibre-gl package exports and options)
+  ⎿ undefined dist/maplibre-gl.mjs module {".":{"types":"./dist/maplibre-gl.d.ts","import":"./dist/maplibre-gl.mjs"},"./dist/*":"./dist/*","./package.json":"./package.json"} dist/maplibre-gl.d.ts
+  ⎿ maplibre-gl-dev.mjs
+  ⎿ maplibre-gl-dev.mjs.map
+  ⎿ maplibre-gl-shared-dev.mjs
+  ⎿ maplibre-gl-shared-dev.mjs.map
+  ⎿ maplibre-gl-shared.mjs
+  ⎿ maplibre-gl-shared.mjs.map
+  ⎿ maplibre-gl-worker-dev.mjs
+  ⎿ maplibre-gl-worker-dev.mjs.map
+  ⎿ maplibre-gl-worker.mjs
+  ⎿ maplibre-gl-worker.mjs.map
+  ⎿ maplibre-gl.css
+  ⎿ maplibre-gl.d.ts
+  ⎿ maplibre-gl.mjs
+  ⎿ maplibre-gl.mjs.map
+  ⎿ 17787:export { type Actor, type ActorMessage, type AddLayerObject, type AddProtocolAction, type AddProtocolResponseData, type Alignment, type AlphaImage, type AnchoredCameraOptions, type AnimationOptions, type AroundCenterOptions, type AttributionControlOptions, type BoxZoomEndHandler, type BoxZoomHandlerOptions, type Bucket, type CalculateTileZoomFunction, type CameraForBoundsOptions, type CameraOptions, type CameraUpdateTransformFunction, type CanonicalTileRange, type CanvasSourceSpecification, type CenterZoomBearing, type CollisionBoxArray, type Complete, type ControlPosition, type Coordinates, type CoveringTilesOptions, type CreateTileMeshOptions, type CustomLayerInterface, type CustomLayerProjectionData, type CustomLayerProjectionDataParams, type CustomRenderMethod, type CustomRenderMethodInput, type DashEntry, type Dispatcher, type DistributiveKeys, type DistributiveOmit, type DragPanOptions, type EaseToOptions, type ErrorEventType, Event$1 as Event, type EventTypeMap, type EventedParentData, type ExpiryData, type FeatureIdentifier, type FeatureIndex, type FitBoundsOptions, type FlyToOptions, type FullscreenControlEventType, type FullscreenControlOptions, type GeoJSONFeature, type GeoJSONFeatureDiff, type GeoJSONFeatureId, type GeoJSONSourceDiff, type GeolocateControlEventType, type GeolocateControlOptions, type GestureOptions, type GetClusterOptions, type GetResourceResponse, type GlyphMap, type GlyphPosition, type GlyphPositions, type Handler, type HandlerResult, type IActor, type IControl, type ImageAtlas, type ImageSourceImage, type ImageSourceWarp, type IndicesType, type JumpToOptions, type Listener, type LngLatBoundsLike, type LngLatLike, type LoadTileResult, type LogoControlOptions, Map$1 as Map, Map$1 as MapLibreMap, type MapEventType, type MapGeoJSONFeature, type MapLayerEventType, type MapLayerMouseEvent, type MapLayerTouchEvent, type MapOptions, type MapSourceDataType, type MarkerEventType, type MarkerOptions, type Mat4f32, type Mat4f64, type MessageType, type MissingStyleImageResolver, type NavigationControlOptions, type Offset, type OverscaledTileID, type PaddingOptions, type PaintPropertyEntry, type Painter, Point, type PointLike, type PopupEventType, type PopupOptions, type PositionAnchor, type ProjectionData, type ProjectionDataParams, type ProjectionMatrix, type QueryRenderedFeaturesOptions, type QuerySourceFeatureOptions, type RendererProjectionData, type RequestParameters, type RequestResponseMessageMap, type RequestTransformFunction, type RequireAtLeastOne, type ResourceType, type ScaleControlOptions, type SetClusterOptions, type Source, type SourceClass, type SourceEventType, type StyleGlyph, type StyleImage, type StyleImageData, type StyleImageInterface, type StyleImageMetadata, type StyleImageSource, type StyleImageWebGLData, type StyleImageWebGLTarget, type StyleLayer, type StyleOptions, type StyleSetterOptions, type StyleSwapOptions, type Subscription, type TextFit, type Tile, type TileMesh, type TransformConstrainFunction, type TransformStyleFunction, type Unit, type UnwrappedTileIDLiteral, type UpdateImageOptions, type WebGLContextAttributesWithType, type WorkerGlobalScopeInterface, type WorkerTileResult, getMaxParallelImageRequests, getRTLTextPluginStatus, getVersion, getWorkerCount, getWorkerUrl, importScriptInWorkers, setMaxParallelImageRequests, setRTLTextPlugin, setWorkerCount, setWorkerUrl };
+  ⎿ 11839: * let map = new Map({attributionControl: false})
+  ⎿ 11938:   * map.touchPitch.enable();
+  ⎿ 11947:   * map.touchPitch.disable();
+  ⎿ 12244:   * map.dragRotate.enable();
+  ⎿ … +6 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro/node_..., description: List maplibre-gl runtime exports)
+  ⎿  Event$1 as Event
+  ⎿  Map$1 as Map
+  ⎿  Map$1 as MapLibreMap
+  ⎿  Point
+  ⎿  getMaxParallelImageRequests
+  ⎿  getRTLTextPluginStatus
+  ⎿  getVersion
+  ⎿  getWorkerCount
+  ⎿  getWorkerUrl
+  ⎿  importScriptInWorkers
+  ⎿  setMaxParallelImageRequests
+  ⎿  setRTLTextPlugin
+  ⎿  setWorkerCount
+  ⎿  setWorkerUrl };
+  ⎿ 11981:   * map.touchZoomRotate.setZoomRate(0.5);
+  ⎿ 11991:   * map.touchZoomRotate.setZoomThreshold(0.3);
+  ⎿ 12573:   * map.touchZoomRotate.enable();
+  ⎿ 12574:   * map.touchZoomRotate.enable({ around: 'center' });
+  ⎿ 12583:   * map.touchZoomRotate.disable();
+  ⎿ 8669: * map.getSource('some id').setData({
+  ⎿ … +5 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro/node_..., description: Find all export statements in maplibre typings)
+  ⎿ 8:export type * from "@maplibre/maplibre-gl-style-spec";
+  ⎿ 81:export declare class AJAXError extends Error {
+  ⎿ 139:export declare const config: Config;
+  ⎿ 756:export declare class LngLat {
+  ⎿ 862:export declare class MercatorCoordinate implements IMercatorCoordinate {
+  ⎿ 1045:export declare class ErrorEvent extends Event$1<"error"> {
+  ⎿ 1060:export declare abstract class Evented<EventType extends EventTypeMap = EventTypeMap> {
+  ⎿ 1205:export declare class LngLatBounds {
+  ⎿ 3055:export declare class EdgeInsets {
+  ⎿ 3309:export declare function getGlobalDispatcher(): Dispatcher;
+  ⎿ 3479:export declare class ImageSource extends Evented<SourceEventType> implements Source {
+  ⎿ 3651:export declare class CanvasSource extends ImageSource {
+  ⎿ 3739:export declare class VectorTileSource extends Evented<SourceEventType> implements Source {
+  ⎿ 8510:export declare const addSourceType: (name: string, SourceType: SourceClass) => Promise<void>;
+  ⎿ 8686:export declare class GeoJSONSource extends Evented<SourceEventType> implements Source {
+  ⎿ 9331:export declare class MapLibreEvent<TOrig = unknown> extends Event$1 {
+  ⎿ 9345:export declare class MapMovementEvent extends MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined> {
+  ⎿ 9353:export declare class MapStyleLoadEvent extends MapLibreEvent {
+  ⎿ 9362:export declare class MapStyleDataEvent extends MapLibreEvent {
+  ⎿ 9391:export declare class MapSourceDataEvent extends MapLibreEvent {
+  ⎿ … +54 more lines
+
+● maplibre-gl 6 is ESM-only with named exports. Next, a quick look at the review prototype for interaction details (focus and hover states) before writing the UI.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; gre..., description: Inspect prototype styles and marker aria handling)
+  ⎿ <persisted-output>
+  ⎿ Output too large (222.6KB). Full output saved to: C:\Users\Hugo\.claude\projects\C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro\c35fad65-520f-4d72-a084-08d9a397893e\tool-results\b1xhoq0el.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ 818:`),x=l.createShader(l.FRAGMENT_SHADER);if(l.isContextLost()){this.failedToCreate=!0;return}l.shaderSource(x,y),l.compileShader(x),l.attachShader(this.program,x);let S=l.createShader(l.VERTEX_SHADER);if(l.isContextLost()){this.failedToCreate=!0;return}l.shaderSource(S,b),l.compileShader(S),l.attachShader(this.program,S),this.attributes={};let C={};if(this.numAttributes=f.length,l.linkProgram(this.program),!l.getProgramParameter(this.program,l.LINK_STATUS)){if(l.isContextLost()){this.failedToCreate=!0;return}throw l.getShaderParameter(x,l.COMPILE_STATUS)?l.getShaderParameter(S,l.COMPILE_STATUS)?Error(`Program failed to link: ${l.getProgramInfoLog(this.program)}`):Error(`Could not compile vertex shader: ${l.getShaderInfoLog(S)}`):Error(`Could not compile fragment shader: ${l.getShaderInfoLog(x)}`)}Rl(l,this.program);let w=eu(l,this.program);for(let e of f){if(!e)continue;let t=l.getAttribLocation(this.program,e);t>=0&&(this.attributes[e]={location:t,isInteger:w.has(e)})}l.deleteShader(S),l.deleteShader(x);for(let e of _)if(e&&!C[e]){let t=l.getUniformLocation(this.program,e);t&&(C[e]=t)}this.fixedUniforms=r(e,C),this.terrainUniforms=Ml(e,C),this.binderUniforms=n?n.getUniforms(e,C):[]}draw(e,t,n,r,i,a,o,s,c,l,u,d,f,p,m,h,g,_,v){let y=e.gl;if(this.failedToCreate)return;if(e.program.set(this.program),e.terrainUniformBuffer.bind(),e.frameUniformBuffer.bind(),e.setDepthMode(n),e.setStencilMode(r),e.setColorMode(i),e.setCullFace(a),s){e.activeTexture.set(y.TEXTURE2),y.bindTexture(y.TEXTURE_2D,s.depthTexture),e.activeTexture.set(y.TEXTURE3),y.bindTexture(y.TEXTURE_2D,s.texture);for(let e in this.terrainUniforms)this.terrainUniforms[e].set(s[e]);Ql(e.terrainUniformBuffer,s)}if(Kl(e,c),o)for(let e in this.fixedUniforms)this.fixedUniforms[e].set(o[e]);h&&h.setUniforms(e,this.binderUniforms,p,{zoom:m});let b=0;switch(t){case y.LINES:b=2;break;case y.TRIANGLES:b=3;break;case y.LINE_STRIP:b=1}for(let n of f.get())n.vaos||={},n.vaos[l]||=new jl,n.vaos[l].bind(e,this,u,h?h.getPai
+  ⎿ ...
+  ⎿ </persisted-output>
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; gre..., description: Check marker aria-label behaviour and focus styles)
+  ⎿ node_modules/maplibre-gl/dist/maplibre-gl.mjs:"GeolocateControl.LocationNotAvailable":`Location not available`,"LogoControl.Title":`MapLibre logo`,"Map.Title":`Map`,"Marker.Title":`Map marker`,"NavigationControl.ResetBearing":`Drag to rotate map, click to reset north`,"NavigationControl.ZoomIn":`Z
+  ⎿ node_modules/maplibre-gl/dist/maplibre-gl.mjs:this._defaultMarker&&!this._element.hasAttribute(`aria-label`)&&this._element.setAttribute(`aria-label`,e._getUIString(`Marker.Title`)),this._updateAccessibilityRole(),e.getCanvasContainer().appendChild(this._element),e.on(`move`,this._update),e.on(`mo
+
+● Custom marker elements keep their own aria-label. Writing the UI modules now: icons, styles, hooks, map and sheet.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ic..., content: /** Inline SVG icons, copied from the approved artboards (24×24 grid, stroked...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\st..., content: /* Design tokens, taken from the approved artboards (plays/001-project-struct...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\icons.tsx (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\styles\tokens.css (file state is current in your context — no need to Read it back)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\st..., content: /* Layout and components. Values follow the Main, Locating, LocationOff and D...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\styles\app.css (file state is current in your context — no need to Read it back)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ho..., content: import { useCallback, useEffect, useState } from 'react';
+import type { LatLn...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ho..., content: import { useCallback, useEffect, useState } from 'react';
+import type { Netwo...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ho..., content: import { useEffect, useState } from 'react';
+
+/** The current time, updated e...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ho..., content: import { useCallback, useSyncExternalStore } from 'react';
+
+export function u...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\hooks\useGeolocation.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\hooks\useNetwork.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\hooks\useNow.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\hooks\useMediaQuery.ts (file state is current in your context — no need to Read it back)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ho..., content: import { useEffect, useMemo, useRef, useState } from 'react';
+import { dayTyp...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\hooks\useTimetable.ts (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; nod..., description: Drop stale timetable results after a network refresh)
+  ⎿   const neededKey = neededDayTypes(now).join(',');
+  ⎿ 
+  ⎿   const current = state.network === network ? state : undefined;
+  ⎿   const nowMs = now.getTime();
+  ⎿ 
+  ⎿   useEffect(() => {
+  ⎿     latestNetwork.current = network;
+  ⎿     if (!network) return;
+  ⎿     let flying = inFlight.current.get(network);
+  ⎿     if (!flying) inFlight.current.set(network, (flying = new Set()));
+  ⎿     const stopIdByName = stopIdsByName(network.stops);
+  ⎿     for (const dayType of neededKey.split(',') as DayType[]) {
+  ⎿       if (current?.trips.has(dayType)) continue;
+  ⎿       const failedAt = current?.failedAt.get(dayType);
+  ⎿       if (failedAt !== undefined && nowMs - failedAt < RETRY_AFTER_MS) continue;
+  ⎿       if (flying.has(dayType)) continue;
+  ⎿       flying.add(dayType);
+  ⎿ 
+  ⎿       const settle = (update: (s: TimetableState) => void) => {
+  ⎿         flying.delete(dayType);
+  ⎿ … +24 more lines
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ho..., old_string:     let flying = inFlight.current.get(network);
+    if (!flying) inFlight.cur..., new_string:     const flying = inFlight.current.get(network) ?? new Set<DayType>();
+    i...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\hooks\useTimetable.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+● The hooks are written. Next: the map layer (style, DOM markers, MapView), then the sheet components and App.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ma..., content: import type { StyleSpecification } from 'maplibre-gl';
+
+export const OSM_TILE...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ma..., content: /** DOM builders for the map's markers. Styles live in `styles/app.css` (`.ma...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\map\mapStyle.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\map\markers.ts (file state is current in your context — no need to Read it back)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\ma..., content: import 'maplibre-gl/dist/maplibre-gl.css';
+import {
+  LngLatBounds,
+  Map as ...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\map\MapView.tsx (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro/src/u..., description: Write chrome and sheet components)
+  ⎿ .:
+  ⎿ chrome
+  ⎿ hooks
+  ⎿ icons.tsx
+  ⎿ map
+  ⎿ sheet
+  ⎿ styles
+  ⎿ 
+  ⎿ ./chrome:
+  ⎿ Attribution.tsx
+  ⎿ LocateButton.tsx
+  ⎿ Wordmark.tsx
+  ⎿ 
+  ⎿ ./hooks:
+  ⎿ useGeolocation.ts
+  ⎿ useMediaQuery.ts
+  ⎿ useNetwork.ts
+  ⎿ useNow.ts
+  ⎿ useTimetable.ts
+  ⎿ 
+  ⎿ … +17 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; sed..., description: Add Lisbon date formatter with a test)
+  ⎿ 16:        <div className="eyebrow">{'// NEAREST STOP'}</div>
+  ⎿ import { describe, expect, it } from 'vitest';
+  ⎿ import {
+  ⎿   formatLisbonDate,
+  ⎿   formatLisbonHM,
+  ⎿   lisbonClock,
+  ⎿   parseServiceTime,
+  ⎿   previousDate,
+  ⎿   weekdayOf,
+  ⎿ } from './lisbonTime';
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\sh..., content: import { formatDistance } from '../../domain/geo';
+import { formatLisbonDate,...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\sheet\NearestStopContent.tsx (file state is current in your context — no need to Read it back)
+
+● Now App.tsx and main.tsx.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\Ap..., content: import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } ...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\main.tsx, content: import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/cli...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\index.html, content: <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <m...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\App.tsx (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\main.tsx (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\index.html (file state is current in your context — no need to Read it back)
+
+● Next: the icon, the PWA assets config and the Playwright config.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; mkd..., description: Write icon and configs, then generate PWA icons, timeout: 300000)
+  ⎿     {
+  ⎿       "src": "pwa-512x512.png",
+  ⎿       "sizes": "512x512",
+  ⎿       "type": "image/png"
+  ⎿     },
+  ⎿     {
+  ⎿       "src": "maskable-icon-512x512.png",
+  ⎿       "sizes": "512x512",
+  ⎿       "type": "image/png",
+  ⎿       "purpose": "maskable"
+  ⎿     }
+  ⎿   ]
+  ⎿ }
+  ⎿ [32m✔[39m PWA web manifest icons entry generated
+  ⎿ [32m✔[39m PWA assets generated
+  ⎿ total 31
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 20:12 .
+  ⎿ drwxr-xr-x 1 Hugo 197121    0 Sep 25 20:12 ..
+  ⎿ -rw-r--r-- 1 Hugo 197121  733 Sep 25 20:12 apple-touch-icon-180x180.png
+  ⎿ -rw-r--r-- 1 Hugo 197121  576 Sep 25 20:12 favicon.ico
+  ⎿ … +5 more lines
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\public\pw...)
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\public\ma...)
+
+● The maskable and Apple icons are padded with white. I'll fill them with the icon's red so they read as full-bleed.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Regenerate icons with red padding, timeout: 300000)
+  ⎿ [32m✔[39m PWA web manifest icons entry generated
+  ⎿ [32m✔[39m PWA assets generated
+  → Read(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\public\ma...)
+
+● The icons look right. Now typecheck and lint.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Run TypeScript 7 typecheck, timeout: 300000)
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ src/ui/map/MapView.tsx(43,43): error TS2503: Cannot find namespace 'GeoJSON'.
+  ⎿ src/ui/map/MapView.tsx(54,42): error TS2503: Cannot find namespace 'GeoJSON'.
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Check the @types/geojson dependency)
+  ⎿   | `-- @types/geojson@7946.0.16 deduped
+  ⎿   `-- @types/geojson@7946.0.16
+  ⎿ 
+  ⎿ 7946.0.16
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npm..., description: Add GeoJSON types, re-run typecheck and ESLint, timeout: 300000)
+  ⎿ found 0 vulnerabilities
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ 
+  ⎿ C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\sources\metrobusTimetable.test.ts
+  ⎿   94:69  error  Unexpected empty arrow function  @typescript-eslint/no-empty-function
+  ⎿ 
+  ⎿ C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\hooks\useGeolocation.ts
+  ⎿   22:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+  ⎿ 
+  ⎿ Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+  ⎿ * Update external systems with the latest state from React.
+  ⎿ * Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+  ⎿ 
+  ⎿ Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+  ⎿ 
+  ⎿ C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\src\ui\hooks\useGeolocation.ts:22:7
+  ⎿   20 |   useEffect(() => {
+  ⎿ … +8 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; nod..., description: Fix the two ESLint errors and re-lint, timeout: 120000)
+  ⎿ import { useCallback, useEffect, useState } from 'react';
+  ⎿ import type { LatLng } from '../../domain/types';
+  ⎿ 
+  ⎿ export type GeolocationStatus = 'locating' | 'located' | 'unavailable';
+  ⎿ 
+  ⎿ export interface GeolocationState {
+  ⎿   status: GeolocationStatus;
+  ⎿   position?: LatLng;
+  ⎿   accuracy?: number;
+  ⎿ }
+  ⎿ 
+  ⎿ const hasGeolocation = () => typeof navigator !== 'undefined' && 'geolocation' in navigator;
+  ⎿ const initialState = (): GeolocationState => ({
+  ⎿   status: hasGeolocation() ? 'locating' : 'unavailable',
+  ⎿ });
+  ⎿ 
+  ⎿ const OPTIONS: PositionOptions = { enableHighAccuracy: true, maximumAge: 10_000, timeout: 15_000 };
+  ⎿ 
+  ⎿ /** Watches the device position. Any error (denied, unavailable, timeout before a fix) means `unavailable`. */
+  ⎿ export function useGeolocation(): GeolocationState & { retry: () => void } {
+  ⎿ … +15 more lines
+
+● ESLint is clean. Next I'll run Prettier; the root `CLAUDE.md` must not be modified.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npx..., description: Check formatting with Prettier, timeout: 120000)
+  ⎿ Checking formatting...
+  ⎿ [[33mwarn[39m] CLAUDE.md
+  ⎿ [[33mwarn[39m] pwa-assets.config.ts
+  ⎿ [[33mwarn[39m] src/domain/geo.test.ts
+  ⎿ [[33mwarn[39m] src/domain/nearestBus.ts
+  ⎿ [[33mwarn[39m] src/domain/shape.test.ts
+  ⎿ [[33mwarn[39m] src/domain/shape.ts
+  ⎿ [[33mwarn[39m] src/sources/metrobusTimetable.test.ts
+  ⎿ [[33mwarn[39m] src/sources/metrobusTimetable.ts
+  ⎿ [[33mwarn[39m] src/ui/chrome/LocateButton.tsx
+  ⎿ [[33mwarn[39m] src/ui/icons.tsx
+  ⎿ [[33mwarn[39m] Code style issues found in 10 files. Run Prettier with --write to fix.
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; pri..., description: Ignore root CLAUDE.md, format, and re-lint, timeout: 120000)
+  ⎿ pwa-assets.config.ts 5ms
+  ⎿ src/domain/geo.test.ts 8ms
+  ⎿ src/domain/nearestBus.ts 8ms
+  ⎿ src/domain/shape.test.ts 11ms
+  ⎿ src/domain/shape.ts 12ms
+  ⎿ src/sources/metrobusTimetable.test.ts 16ms
+  ⎿ src/sources/metrobusTimetable.ts 19ms
+  ⎿ src/ui/chrome/LocateButton.tsx 3ms
+  ⎿ src/ui/icons.tsx 5ms
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ [This command modified 5 files you've previously read: src\ui\icons.tsx, src\sources\metrobusTimetable.test.ts, src\domain\shape.test.ts, src\domain\nearestBus.ts, src\sources\metrobusTimetable.ts. Call Read before editing.]
+
+● Lint and format are clean, and `CLAUDE.md` is untouched. Next I'll write the Playwright end-to-end spec.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\tests\e2e..., content: import { readFileSync } from 'node:fs';
+import { expect, test, type Page } fr...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npx..., description: Install Chromium and run production build, timeout: 600000)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\tests\e2e\map.spec.ts (file state is current in your context — no need to Read it back)
+  ⎿ |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.6 MiB
+  ⎿ |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.6 MiB
+  ⎿ Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) downloaded to C:\Users\Hugo\AppData\Local\ms-playwright\chromium_headless_shell-1243
+  ⎿ 
+  ⎿ [36mvite v8.3.1 [32mbuilding client environment for production...[36m[39m
+  ⎿ transforming...
+  ⎿ ✓ 52 modules transformed.
+  ⎿ rendering chunks...
+  ⎿ computing gzip size...
+  ⎿ dist/manifest.webmanifest                            0.62 kB
+  ⎿ dist/index.html                                      0.87 kB │ gzip:   0.45 kB
+  ⎿ dist/assets/index-B3sZjm2M.css                      91.65 kB │ gzip:  12.74 kB
+  ⎿ dist/assets/workbox-window.prod.es5-Bd17z0YL.js      5.65 kB │ gzip:   2.20 kB
+  ⎿ dist/assets/index-5nxav9ga.js                    1,274.87 kB │ gzip: 356.13 kB
+  ⎿ 
+  ⎿ [32m✓ built in 398ms[39m
+  ⎿ [33m[plugin builtin:vite-reporter] 
+  ⎿ (!) Some chunks are larger than 500 kB after minification. Consider:
+  ⎿ - Using dynamic import() to code-split the application
+  ⎿ - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+  ⎿ … +8 more lines
+
+● The build succeeds. I'll raise the chunk-size warning limit, since MapLibre alone is over 1 MB, then check the built HTML and run the e2e tests.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; nod..., description: Adjust chunk limit, inspect dist, run e2e tests, timeout: 600000)
+  ⎿ <!doctype html>
+  ⎿ <html lang="en">
+  ⎿   <head>
+  ⎿     <meta charset="utf-8" />
+  ⎿     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  ⎿     <meta name="theme-color" content="#ffffff" />
+  ⎿     <meta
+  ⎿       name="description"
+  ⎿       content="Coimbra Metrobus on a map: where you are, your nearest stop and the nearest bus."
+  ⎿     />
+  ⎿     <title>Metro — Coimbra Metrobus</title>
+  ⎿     <link rel="icon" href="./favicon.ico" sizes="48x48" />
+  ⎿     <link rel="icon" href="./icon.svg" sizes="any" type="image/svg+xml" />
+  ⎿     <link rel="apple-touch-icon" href="./apple-touch-icon-180x180.png" />
+  ⎿     <script type="module" crossorigin src="./assets/index-5nxav9ga.js"></script>
+  ⎿     <link rel="stylesheet" crossorigin href="./assets/index-B3sZjm2M.css">
+  ⎿   <link rel="manifest" href="./manifest.webmanifest"></head>
+  ⎿   <body>
+  ⎿     <div id="root"></div>
+  ⎿   </body>
+  ⎿ … +31 more lines
+
+● All 10 e2e tests pass in both projects; WebGL works headless without the SwiftShader flags. Next I'll take screenshots with real OSM tiles and compare them with the artboards.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; S="..., description: Capture screenshots of the built app, timeout: 180000)
+  ⎿ C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro/c35fad65-520f-4d72-a084-08d9a397893e/scratchpad/desktop-main.png
+  ⎿ C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro/c35fad65-520f-4d72-a084-08d9a397893e/scratchpad/phone-main.png
+  ⎿ C:/Users/Hugo/AppData/Local/Temp/claude/C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro/c35fad65-520f-4d72-a084-08d9a397893e/scratchpad/phone-off.png
+  → Read(file_path: C:\Users\Hugo\AppData\Local\Temp\claude\C--Users-Hugo--building-data-projects...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; nod..., description: Stop overriding MapLibre marker positioning)
+  ⎿ 71:.marker-user {
+  ⎿ 72-  width: 68px;
+  ⎿ 73-  height: 68px;
+  ⎿ --
+  ⎿ 93:.marker-stop {
+  ⎿ 94-  width: 36px;
+  ⎿ 95-  height: 36px;
+
+● I'll also add an e2e check that the user and stop markers sit together, since they are 4 m apart. Then rebuild and re-shoot.
+
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\tests\e2e..., old_string:     await expect(page.getByRole('img', { name: 'Nearest stop: Portagem' })).t..., new_string:     const stopMarker = page.getByRole('img', { name: 'Nearest stop: Portagem'...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; S="..., description: Rebuild and recapture screenshots, timeout: 180000)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\tests\e2e\map.spec.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ [32m✓ built in 400ms[39m
+  → Read(file_path: C:\Users\Hugo\AppData\Local\Temp\claude\C--Users-Hugo--building-data-projects...)
+  → Read(file_path: C:\Users\Hugo\AppData\Local\Temp\claude\C--Users-Hugo--building-data-projects...)
+  → Read(file_path: C:\Users\Hugo\AppData\Local\Temp\claude\C--Users-Hugo--building-data-projects...)
+
+● The markers now line up and the layouts match the artboards. But the route lines and stop circles are missing from the map. Checking the browser console.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Capture browser console errors from the app, timeout: 120000)
+  ⎿ console warning Service Worker registration blocked by Playwright
+  ⎿ console warning [.WebGL-0x741c001f9000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+  ⎿ console warning [.WebGL-0x741c001f9000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+  ⎿ console error Error: Worker failed to load. Check that the worker URL is correct.
+  ⎿     at Worker.<anonymous> (http://localhost:4173/assets/index-DPW3ZZXo.js:9:579273)
+  ⎿ console error Error: Worker failed to load. Check that the worker URL is correct.
+  ⎿     at Worker.<anonymous> (http://localhost:4173/assets/index-DPW3ZZXo.js:9:579273)
+  ⎿ console warning [.WebGL-0x741c001f9000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+  ⎿ console warning [.WebGL-0x741c001f9000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+
+● MapLibre 6 runs its worker from a separate module file, and that file isn't loading in the build. Checking how it resolves the worker URL.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro/node_..., description: Inspect MapLibre worker creation code)
+  ⎿ t e=import.meta.url;if(!/^https?:/.test(e))return``;let t=e.endsWith(`-dev.mjs`)?`maplibre-gl-worker-dev.mjs`:`maplibre-gl-worker.mjs`;return new URL(`./${t}`,e).href}function $i(e,t){if(t)try{return new Worker(e,{type:`module`})}catch(e){console.warn(`Module worker not supported, falling back to classic worker`,e)}return new Worker(e)}async function ea(e){let t=await fetch(e);if(!t.ok)throw Error(`Failed t
+  ⎿ dist/maplibre-gl.mjs:n;if(!t)return!1;try{return new URL(e,t.href).origin!==t.origin}catch{return!1}}function Qi(){let e=import.meta.url;if(!/^https?:/.test(e))return``;let t=e.endsWith(`-dev.mjs`)?`maplibre-gl-worker-dev.mjs`:`maplibre
+  ⎿ dist/maplibre-gl.mjs:`});return URL.createObjectURL(r)}function ta(e){let t=new Blob([`import ${JSON.stringify(new URL(e,import.meta.url).href)}`],{type:`text/javascript`});return URL.createObjectURL(t)}async function na(){let e=o.WORKE
+  ⎿ index-CQQIeb42.css
+  ⎿ index-DPW3ZZXo.js
+  ⎿ workbox-window.prod.es5-Bd17z0YL.js
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro/node_..., description: Inspect worker module imports and setWorkerUrl docs)
+  ⎿ /**
+  ⎿ * MapLibre GL JS
+  ⎿ * @license 3-Clause BSD. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v6.11.2/LICENSE.txt
+  ⎿ */
+  ⎿ import{D as e,Dn as t,Dt as n,Et as r,F as i,G as a,H as o,Li as s,Lr as c,Mn as l,N as u,Nr as d,Pn as f,Qn as p,Sn as m,Tn as h,Vt as g,_,bt as v,c as y,cn as b,cr as x,d as S,dt as C,en as w,er as T,g as E,hr as D,i as O,kn as k,l as A,ln as j,mn as M,nn as 
+  ⎿ import{$ as e,$n as t,$r as n,$t as r,A as i,Ai as a,An as o,Ar as s,At as c,B as l,Bn as u,Br as d,Bt as f,C as p,Ci as m,Cn as h,Cr as g,Ct as _,Di as v,Dn as y,Dr as b,Dt as x,E as S,Ei as C,En as w,Er as T,Et as E,F as D,Fi as O,Fn as k,Fr as A,Ft as j,Gn as M,Gr as ee,Gt as te,Hn as ne,Hr as re,Ht as ie,I as ae,Ii as oe,In as se,Ir as ce,It as le,J as ue,Jn as de,Jr as fe,Jt as pe,K as me,Kn as he,Kr as ge,Kt as _e,L as ve,Li as N,Ln as ye,Lr as P,Lt as be,M as xe,Mi as Se,Mn as Ce,Mr as we,Mt as F,Ni as Te,Nn as Ee,Nr as I,Nt as L,O as De,Oi as Oe,On as ke,Or as Ae,Ot as je,P as Me,Pi as Ne,Pr as Pe,Pt as Fe,Q as Ie,Qn as Le,Qr as Re,Qt as ze,R as Be,Rn as Ve,Rr as He,Rt as Ue,S as We,Si as Ge,Sn as Ke,Sr as qe,St as Je,T as Ye,Ti as Xe,Tn as Ze,Tr as Qe,Tt as $e,U as et,Un as tt,Ur as nt,Ut as rt,V as it,Vn as at,Vr as ot,Vt as st,W as ct,Wn as lt,Wr as ut,Wt as dt,X as ft,Xn as pt,Xr as mt,Xt as ht,Y as gt,Yn as _t,Yr as vt,Yt as yt,Z as bt,Zn as xt,Zr as St,Zt as Ct,_ as wt,_i as Tt,_n as Et,_r as Dt,_t as Ot,a as kt,ai as At,an as jt,ar as Mt,at as Nt,b as Pt,bi as Ft,bn as It,br as Lt,ci as Rt,cn as zt,cr as Bt,ct as Vt,d as Ht,di as Ut,dn as Wt,dr as Gt,ei as Kt,en as qt,er as R,et as Jt,f as Yt,fi as Xt,fn as z,fr as Zt,ft as Qt,g as $t,gi as en,gn as B,gr as tn,gt as nn,h as rn,hi as an,hn as on,hr as sn,ht as cn,ii as ln,in as un,ir as dn,it as fn,ji as pn,jn as mn,jr as hn,jt as V,k as gn,ki as _n,kn as vn,kr as yn,kt as bn,li as xn,lr as Sn,lt as H,m as Cn,mi as wn,mn as Tn,mr as En,mt as Dn,n as On,ni as kn,nr as An,nt as U,oi as jn,on as Mn,ot as Nn,p as Pn,pi as Fn,pn as In,pr as Ln,pt as Rn,q as zn,qn as Bn,qr as Vn,qt as Hn,ri as Un,rn as Wn,rr as Gn,rt as Kn,s as qn,si as Jn,sn as Yn,sr as Xn,st as Zn,ti as Qn,tn as $n,tr as er,tt as tr,u as nr,ui as rr,un as ir,ur as ar,ut as or,v as sr,vi as cr,vn as lr,vr as ur,vt as dr,w as fr,wi as pr,wn as mr,wr as hr,wt as gr,x as _r,xi as vr,xn as yr,xr as br,xt as xr,y as Sr,yi as Cr,yn as wr,yr as Tr,yt as Er,zn as Dr,zr as Or,zt as kr}from"./maplibre-gl-shared.mjs";
+  ⎿ setWorkerUrl()` and `setWorkerCount()`, if being
+  ⎿ setWorkerUrl(value: string): void;
+  ⎿ setWorkerUrl };
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; gre..., description: Bundle the MapLibre worker and register its URL)
+  ⎿ 225:declare module '*?worker&url' {
+  ⎿ 244:declare module '*?sharedworker&url' {
+  ⎿ import 'maplibre-gl/dist/maplibre-gl.css';
+  ⎿ import {
+  ⎿   LngLatBounds,
+  ⎿   Map as MapLibreMap,
+  ⎿   Marker,
+  ⎿   setWorkerUrl,
+  ⎿   type GeoJSONSource,
+  ⎿   type MarkerOptions,
+  ⎿   type PaddingOptions,
+  ⎿ } from 'maplibre-gl';
+  ⎿ // MapLibre 6 loads its worker from a separate module next to its own file, which a bundle does not
+  ⎿ // have; let Vite build the worker and point MapLibre at it.
+  ⎿ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+  ⎿ import type { FeatureCollection } from 'geojson';
+  ⎿ import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
+  ⎿ import type { BusPosition, LatLng, LineId, Network, Stop } from '../../domain/types';
+  ⎿ import { prefersReducedMotion } from '../hooks/useMediaQuery';
+  ⎿ import { mapStyle } from './mapStyle';
+  ⎿ … +12 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npx..., description: Rebuild and check for worker errors, timeout: 180000)
+  ⎿ dist/index.html                                      0.87 kB │ gzip:   0.45 kB
+  ⎿ dist/assets/maplibre-gl-worker-DRFeyNJw.js         509.97 kB
+  ⎿ dist/assets/index-CQQIeb42.css                      91.62 kB │ gzip:  12.74 kB
+  ⎿ dist/assets/workbox-window.prod.es5-Bd17z0YL.js      5.65 kB │ gzip:   2.20 kB
+  ⎿ dist/assets/index-CnpEC0Gx.js                    1,274.98 kB │ gzip: 356.20 kB
+  ⎿ [32m✓ built in 442ms[39m
+  ⎿ PWA v1.3.0
+  ⎿ mode      generateSW
+  ⎿ precache  12 entries (1838.98 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  → Read(file_path: C:\Users\Hugo\AppData\Local\Temp\claude\C--Users-Hugo--building-data-projects...)
+
+● The routes and stops render, and there are no console errors. I'll add a console-error check to the e2e suite so a worker failure like this one gets caught.
+
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\tests\e2e..., old_string:   test('the locate button re-frames without errors', async ({ page }) => {
+  ..., new_string:   test('the map loads and the locate button re-frames without errors', async ...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\tests\e2e\map.spec.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+● Next I'll stop my manual preview server so the e2e run builds and serves the app itself, then run the full verification sequence.
+
+  → PowerShell(command: $c = Get-NetTCPConnection -LocalPort 4173 -State Listen -ErrorAction Silently..., description: Stop the preview server on port 4173)
+  ⎿   Id ProcessName Path
+  ⎿   -- ----------- ----
+  ⎿ 8972 node        C:\Program Files\nodejs\node.exe
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; rm ..., description: Run install, lint, typecheck, unit and e2e tests, timeout: 600000)
+  ⎿ == install
+  ⎿ 
+  ⎿ found 0 vulnerabilities
+  ⎿ == lint
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ == typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ == test
+  ⎿  Test Files  9 passed (9)
+  ⎿       Tests  81 passed (81)
+  ⎿    Start at  20:18:45
+  ⎿    Duration  387ms (transform 54%, import 33%, tests 9%, worker 5%)
+  ⎿ 
+  ⎿ == e2e
+  ⎿ > playwright test
+  ⎿ 
+  ⎿ 
+  ⎿ … +18 more lines
+
+● All checks pass: lint, typecheck (TS 7), 81 unit tests, and 10 e2e tests across both projects. Next I'll confirm the MapLibre worker also loads under `npm run dev`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; S="..., description: Smoke-test the dev server for map errors, timeout: 180000)
+  ⎿ heading Portagem
+  ⎿ 
+  ⎿   [32m[1mVITE[22m v8.3.1[39m  [2mready in [0m[1m241[22m[2m[0m ms[22m
+  ⎿ 
+  ⎿   [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5179[22m/[39m
+  ⎿ [2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+  → Read(file_path: C:\Users\Hugo\AppData\Local\Temp\claude\C--Users-Hugo--building-data-projects...)
+
+● Dev mode works too. I'll stop the dev server and write the README.
+
+  → PowerShell(command: Get-NetTCPConnection -LocalPort 5179 -State Listen -ErrorAction SilentlyConti..., description: Stop the dev server on port 5179)
+  ⎿ stopped
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\README.md, content: # Metro
+
+## What Metro is
+
+Metro is a mobile-first web app for Coimbra Metrob...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\README.md (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; npx..., description: Final lint and working-tree status check, timeout: 120000)
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿  M .gitignore
+  ⎿  M plays/001-project-structure/devops.yaml
+  ⎿  M plays/001-project-structure/history.yaml
+  ⎿  M plays/001-project-structure/positions.yaml
+  ⎿  M plays/001-project-structure/sessions/info.yaml
+  ⎿ ?? .editorconfig
+  ⎿ ?? .idea/
+  ⎿ ?? .nvmrc
+  ⎿ ?? .prettierignore
+  ⎿ ?? .prettierrc.json
+  ⎿ ?? README.md
+  ⎿ ?? eslint.config.js
+  ⎿ ?? index.html
+  ⎿ ?? package-lock.json
+  ⎿ ?? package.json
+  ⎿ ?? plays/001-project-structure/sessions/007-dave.pty
+  ⎿ ?? plays/001-project-structure/sessions/007-dave.txt
+  ⎿ ?? playwright.config.ts
+  ⎿ … +11 more lines
+
+● I've built the Metro base app at the root of the `metro` worktree, and all the plan's checks pass. A plain `npm install` works on Node 24. `npm run lint` and `npm run typecheck` (TS 7) are clean, and all 81 unit tests pass. The Playwright tests pass in both the mobile and desktop projects: 10 pass, and 2 layout-specific ones are skipped by design. `npm run build` produces `dist/` with the manifest, `sw.js` and the icons. I did not do step 7's manual check in Chrome DevTools. Instead I compared screenshots of the built app and the dev server against the artboards, at phone and desktop sizes with real OSM tiles.
+
+**What's there:**
+- **Scaffolding:** package.json and configs, the README with all nine sections, generated PWA icons, the PWA setup with runtime caching, and the recorded fixtures in `tests/fixtures/`.
+- **Code:** the timetable source adapter in `src/sources/`, the pure logic in `src/domain/`, and the React UI in `src/ui/`, following the artboards.
+- **Tests:** unit tests next to each module, and the e2e spec with the fixtures served in place of the live data.
+
+**Where I departed from the plan:**
+- **TypeScript setup:** option 1 (npm overrides) fails with `ERESOLVE`, so I used the fallback, option 2. The `@typescript/typescript6` package also installs a TS 6 `tsc` that takes over the `tsc` command. So `typecheck` runs TS 7's compiler by path, and `npx tsc` gives you TS 6. The README's tooling notes explain this.
+- **Icon generator version:** `@vite-pwa/assets-generator` is on 1.0.4, not 2.0, because `vite-plugin-pwa` 1.3 only accepts 1.x.
+- **Line colour text — please check:** the plan's rule (pick whichever of white or near-black contrasts more) contradicts its own expected results. Applied to the real line colours, it gives dark text on S1, S2 and U2, and white only on U1. For example, S2 red scores 4.53 with dark text and 4.00 with white. I kept the rule and wrote the tests to match. I also used the rule for the bus icon in the sheet, because a white icon would be nearly invisible on U3's bright green.
+- **E2E clock:** the tests use 10:44, not 10:40. At 10:40 no U1 bus has yet left towards Portagem; the first two start at 10:41.
+- **Map worker:** MapLibre 6 couldn't load its worker once the app was bundled, so routes and stops weren't drawn. I fixed that in `MapView.tsx`. The e2e tests now fail on any console error, so this can't come back unnoticed.
+- **Smaller changes:**
+  - The stop label sits 22px above the marker, as in the artboard, rather than "about 28px".
+  - The sheet height is read at the moment the map re-frames, instead of through a `ResizeObserver`.
+  - `.prettierignore` also skips the root `CLAUDE.md`, so formatting never touches it.
+
+**Worth knowing:**
+- **Stale-data note:** the "timetable data may be out of date" note will rarely appear. Browsers hide the source's `Date` header, so the fetch time usually falls back to the current time.
+- **Old `tech.md` on this branch:** it is still the backend version, as the plan warned. I followed the plan's no-backend architecture.
+- **Untracked `.idea/` folder:** it appeared in the worktree and isn't mine. Leave it out of the commit.
+
+Nothing under `documentation/`, `.claude/` or the root `CLAUDE.md` changed. The two original `.gitignore` lines are unchanged, with the new entries appended after them.

@@ -1,0 +1,219 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `001-project-structure`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/001-project-structure/intent.md` and `plays/001-project-structure/plan.md`, then read the real changes on the `001-project-structure` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/`, which is yours to write in this session.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Read context, play docs and list modules)
+  ⎿ <persisted-output>
+  ⎿ Output too large (45.7KB). Full output saved to: C:\Users\Hugo\.claude\projects\C--Users-Hugo--building-data-projects-001-metro-worktrees-001-metro\508c91b8-03e7-4448-b4e0-055066bb9f94\tool-results\bw6aedr8h.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿   per-repository section below must make it explicit which technology each repo uses —
+  ⎿   that is the Developer's source of truth for what to build with, where.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Tech Stack
+  ⎿ 
+  ⎿ ## Architecture overview
+  ⎿ - **One repo (`metro`), npm-workspaces monorepo:** `apps/api` (Node backend), `apps/web`
+  ⎿   (React PWA), `packages/shared` (TypeScript types and pure logic shared by both).
+  ⎿ - **Data flow:** data source → `api` (fetch, cache, normalise, compute) → small JSON API → `web`.
+  ⎿   The web app never calls third-party data sources directly.
+  ⎿ - **Data sources, behind source adapters in `api`.** Each source is one adapter that maps into
+  ⎿ … +16 more lines
+  → Read(file_path: C:\Users\Hugo\.claude\projects\C--Users-Hugo--building-data-projects-001-metr...)
+  ⎿ 1	<!--
+  ⎿ 2	  Tech Stack — maintained by the Autopilot Architect.
+  ⎿ 3	  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿ 4	  so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿ 5	  per-repository section below must make it explicit which technology each repo uses —
+  ⎿ 6	  that is the Developer's source of truth for what to build with, where.
+  ⎿ 7	-->
+  ⎿ 8	
+  ⎿ 9	# Tech Stack
+  ⎿ 10	
+  ⎿ 11	## Architecture overview
+  ⎿ 12	- **One repo (`metro`), npm-workspaces monorepo:** `apps/api` (Node backend), `apps/web`
+  ⎿ 13	  (React PWA), `packages/shared` (TypeScript types and pure logic shared by both).
+  ⎿ 14	- **Data flow:** data source → `api` (fetch, cache, normalise, compute) → small JSON API → `web`.
+  ⎿ 15	  The web app never calls third-party data sources directly.
+  ⎿ 16	- **Data sources, behind source adapters in `api`.** Each source is one adapter that maps into
+  ⎿ 17	  our own domain model (stops, line shapes, trips). Nothing outside an adapter knows a source's format.
+  ⎿ 18	  - **Timetable (current):** Horários Metrobus, the Metro Mondego planner app. Undocumented
+  ⎿ 19	    static JSON, no stated licence, and it may change without notice:
+  ⎿ 20	    - `https://planearviagem.metromondego.pt/data/stops.json`: stops with id, code, name,
+  ⎿ … +759 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; ls ..., description: Inspect branch commits and diff stats)
+  ⎿ documentation:
+  ⎿ .
+  ⎿ ..
+  ⎿ context
+  ⎿ design
+  ⎿ modules
+  ⎿ 
+  ⎿ documentation/design:
+  ⎿ .
+  ⎿ ..
+  ⎿ 001-project-structure-prototype.html
+  ⎿ 
+  ⎿ documentation/modules:
+  ⎿ .
+  ⎿ ..
+  ⎿ .gitkeep
+  ⎿ 2307768 chore(play-001): record sessions and history for development
+  ⎿ ca01368 feat: add base PWA with map, nearest stop and scheduled bus
+  ⎿  .editorconfig                                     |   12 +
+  ⎿  .gitignore                                        |   19 +
+  ⎿ … +76 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Read README, config and core source)
+  ⎿ # Metro
+  ⎿ 
+  ⎿ ## What Metro is
+  ⎿ 
+  ⎿ Metro is a mobile-first web app for Coimbra Metrobus riders. It opens straight onto a map showing
+  ⎿ where you are, your nearest Metrobus stop and the bus heading towards it, so you can glance at it
+  ⎿ and decide when to leave. Until a live feed exists, bus positions are estimated from the timetable
+  ⎿ and always labelled "Scheduled"; estimated data is never shown as live. There are no accounts and
+  ⎿ nothing to set up.
+  ⎿ 
+  ⎿ ## Requirements
+  ⎿ 
+  ⎿ - Node.js 24 (see `.nvmrc`) and the npm that comes with it.
+  ⎿ 
+  ⎿ ## Getting started
+  ⎿ 
+  ⎿ ```sh
+  ⎿ npm install
+  ⎿ npm run dev
+  ⎿ ```
+  ⎿ … +651 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Read UI, hooks, map and domain logic)
+  ⎿ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿ import type { PaddingOptions } from 'maplibre-gl';
+  ⎿ import { lisbonClock } from '../domain/lisbonTime';
+  ⎿ import { nearestApproachingBus } from '../domain/nearestBus';
+  ⎿ import { nearestStop } from '../domain/nearestStop';
+  ⎿ import { measureShape } from '../domain/shape';
+  ⎿ import type { LatLng } from '../domain/types';
+  ⎿ import { Attribution } from './chrome/Attribution';
+  ⎿ import { LocateButton } from './chrome/LocateButton';
+  ⎿ import { Wordmark } from './chrome/Wordmark';
+  ⎿ import { useGeolocation } from './hooks/useGeolocation';
+  ⎿ import { useMediaQuery } from './hooks/useMediaQuery';
+  ⎿ import { useNetwork } from './hooks/useNetwork';
+  ⎿ import { useNow } from './hooks/useNow';
+  ⎿ import { useTimetable } from './hooks/useTimetable';
+  ⎿ import { MapView, type MapHandle } from './map/MapView';
+  ⎿ import { DataErrorContent } from './sheet/DataErrorContent';
+  ⎿ import { LocatingContent } from './sheet/LocatingContent';
+  ⎿ import { LocationOffContent } from './sheet/LocationOffContent';
+  ⎿ import { NearestStopContent } from './sheet/NearestStopContent';
+  ⎿ … +856 more lines
+
+● I've read the plan and most of the code; now checking the sheet components, then writing the module doc.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Read sheet, locate button, tests)
+  ⎿ import { formatDistance } from '../../domain/geo';
+  ⎿ import { formatLisbonDate, formatLisbonHM } from '../../domain/lisbonTime';
+  ⎿ import type { BusPosition, LineId, Stop } from '../../domain/types';
+  ⎿ import { LineChip } from './LineChip';
+  ⎿ import { NearestBusRow } from './NearestBusRow';
+  ⎿ 
+  ⎿ const STALE_AFTER_MS = 24 * 60 * 60 * 1000;
+  ⎿ const FALLBACK_LINE_COLOR = '#1f5fa8';
+  ⎿ 
+  ⎿ interface NearestStopContentProps {
+  ⎿   stop: Stop;
+  ⎿   distanceMeters: number;
+  ⎿   lineColors: Record<LineId, string>;
+  ⎿   bus: BusPosition | null;
+  ⎿   /** When the timetable data was fetched, UTC ISO 8601. */
+  ⎿   fetchedAt: string;
+  ⎿   now: Date;
+  ⎿ }
+  ⎿ 
+  ⎿ export function NearestStopContent({
+  ⎿ … +243 more lines
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\documenta..., content: # Map screen
+
+Metro has one screen: a full-viewport map with a content sheet ...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\documentation\modules\map-screen.md (file state is current in your context — no need to Read it back)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\documenta..., content: # Timetable data and bus estimates
+
+There is no backend. The browser fetches ...)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\documentation\modules\timetable-and-estimates.md (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Check line text colours; read Playwright config)
+  ⎿ S1 dark
+  ⎿ S2 dark
+  ⎿ U1 white
+  ⎿ U2 dark
+  ⎿ U3 dark
+  ⎿ import { defineConfig, devices } from '@playwright/test';
+  ⎿ 
+  ⎿ const BASE_URL = 'http://localhost:4173';
+  ⎿ 
+  ⎿ export default defineConfig({
+  ⎿   testDir: 'tests/e2e',
+  ⎿   fullyParallel: true,
+  ⎿   forbidOnly: !!process.env.CI,
+  ⎿   retries: process.env.CI ? 1 : 0,
+  ⎿   reporter: process.env.CI ? 'github' : 'list',
+  ⎿   webServer: {
+  ⎿     command: 'npm run build && npm run preview -- --port 4173 --strictPort',
+  ⎿     url: BASE_URL,
+  ⎿     reuseExistingServer: !process.env.CI,
+  ⎿     timeout: 180_000,
+  ⎿ … +23 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/001/metro"; cat..., description: Read colour tests)
+  ⎿ import { describe, expect, it } from 'vitest';
+  ⎿ import { contrastRatio, readableTextColor } from './color';
+  ⎿ 
+  ⎿ describe('readableTextColor', () => {
+  ⎿   it('gives dark text on the bright U3 green', () => {
+  ⎿     expect(readableTextColor('#00FF40')).toBe('#14161a');
+  ⎿   });
+  ⎿ 
+  ⎿   it('gives white text on the U1 blue', () => {
+  ⎿     expect(readableTextColor('#2B6CC4')).toBe('#ffffff');
+  ⎿   });
+  ⎿ 
+  ⎿   // By WCAG contrast the saturated S1, S2 and U2 colours read better with dark text
+  ⎿   // (S2 #FF0000: 4.53 dark vs 4.00 white), so the higher-contrast rule picks dark for them.
+  ⎿   it.each([
+  ⎿     ['S1', '#0080FF'],
+  ⎿     ['S2', '#FF0000'],
+  ⎿     ['U2', '#FF5349'],
+  ⎿   ])('gives the higher-contrast (dark) text on %s (%s)', (_line, hex) => {
+  ⎿     expect(readableTextColor(hex)).toBe('#14161a');
+  ⎿ … +19 more lines
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\documenta..., old_string: WCAG contrast ratio. U3 is the only line that gets dark text., new_string: WCAG contrast ratio. With the current colours, **only U1 gets white text**. S...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\documenta..., content: # App platform
+
+Metro is one static, client-side React PWA at the root of the...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\documentation\modules\timetable-and-estimates.md has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\001\metro\documentation\modules\app-platform.md (file state is current in your context — no need to Read it back)
+
+● I've written three flat documents in `documentation/modules/`. I kept them flat because Metro is small: one screen, one repository, one data source.
+
+- **`map-screen.md`**: the one screen. It covers the phone and desktop layouts, what the sheet shows in each state, the map layers and markers, when the map zooms to fit the user, stop and bus, and the locate button.
+- **`timetable-and-estimates.md`**: how the Metro Mondego timetable is read, and how the nearest stop and nearest approaching bus are worked out. It also covers Lisbon time and day types, including why 4 July is not treated as a holiday.
+- **`app-platform.md`**: the static PWA build and hosting, the offline caches, the OpenStreetMap tile-policy warning, the TypeScript 7 / typescript-eslint workaround, and how the tests and fixtures are set up.
+
+The documents follow the code where it and the plan disagree. Three things you should know:
+
+- **Line text colours:** the plan said only U3 gets dark text. In the code, only U1 gets white text; S1, S2, U2 and U3 all get dark text, because that has the higher contrast.
+- **"Out of date" note:** the browser usually hides the response header the app reads for the data's fetch time, so it uses the current time instead. As a result, the "may be out of date" note almost never appears.
+- **`tech.md` is out of date:** on this branch it still describes a monorepo with a Node API backend. The code is a single client-side app with no backend. I didn't edit it, since only the Architect updates that file.
