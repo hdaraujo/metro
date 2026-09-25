@@ -12,7 +12,12 @@ server, no database and no accounts. The code is organised as follows:
 ## Build and hosting
 
 - Vite builds the app into `dist/` with `base: './'`, so every path is relative and the build
-  works on any static host or under any sub-path. The host has not been chosen yet, on purpose.
+  works on any static host or under any sub-path.
+- It is hosted on GitHub Pages, at `https://hdaraujo.github.io/metro/`. The
+  `.github/workflows/pages.yml` workflow runs on every push to `main` and on demand: `npm ci`,
+  `npm run lint`, `npm test`, `npm run build`, then it uploads `dist/` and deploys it. The
+  repository's Pages source must be set to "GitHub Actions". The Playwright tests are not part
+  of the workflow.
 - The build is a single bundle. MapLibre alone is about 1 MB, and the chunk-size warning limit is
   raised to allow it.
 - MapLibre GL 6 loads its web worker from a file next to its own module, and a bundle has no such

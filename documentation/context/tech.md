@@ -37,8 +37,9 @@
 - **Updates:** `web` polls `api` every few seconds (the interval is configurable).
 - **No database, no auth, no accounts.** State is an in-memory cache of source data, refreshed
   periodically.
-- **Deployment:** not decided yet, and deliberately deferred. Local development only; nothing
-  should assume a particular host.
+- **Deployment:** static files on GitHub Pages under the `/metro/` sub-path, deployed by a
+  GitHub Actions workflow on every push to `main`. Keep every path relative (`base: './'`), so
+  nothing assumes a particular host or path.
 
 ## Conventions
 - **TypeScript 7** everywhere, in `strict` mode. **Node 24.** Use the latest stable versions of all

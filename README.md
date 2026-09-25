@@ -111,4 +111,10 @@ worker caches the tiles it has shown for a week.
 ## Deployment
 
 `npm run build` produces a static `dist/` folder (the app, a web manifest and a service worker)
-with relative paths, so any static host or sub-path works. The host is deliberately undecided.
+with relative paths, so any static host or sub-path works.
+
+The app is published on **GitHub Pages** at <https://hdaraujo.github.io/metro/>. The
+[`pages.yml`](.github/workflows/pages.yml) workflow runs on every push to `main` (and by hand from
+the Actions tab): it lints, runs the unit tests, builds, and deploys `dist/`. It needs
+**Settings → Pages → Build and deployment → Source: GitHub Actions** to be set once in the GitHub
+repository.
