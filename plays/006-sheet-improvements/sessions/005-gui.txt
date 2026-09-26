@@ -1,0 +1,334 @@
+> You are the Autopilot Developer for this play. Read `plays/006-sheet-improvements/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/006-sheet-improvements/design/` folder exists, this play already has a UI design I approved: read `plays/006-sheet-improvements/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && c...)
+  ⎿ # Play 006 — Sheet improvements: implementation plan
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ On phones the bottom sheet takes too much of the map. The user asked for four changes (`plays/006-sheet-improvements/intent.md`):
+  ⎿ 
+  ⎿ 1. Show only **4** buses in the "Heading to this stop" list.
+  ⎿ 2. Let the user **minimise** the sheet in the phone layout.
+  ⎿ 3. **Remove the label at the bottom** of the sheet: the "Estimated at HH:MM from the published timetable. Live data replaces these estimates…" note.
+  ⎿ 4. Fix a bug: **buses draw in front of the sheet**.
+  ⎿ 
+  ⎿ This play changes an existing screen and adds no new one, so there is no design folder. The decisions below come from the user's answers in the planning session.
+  ⎿ 
+  ⎿ **Repositories touched: `metro` only**, the single repository. All code is in `src/ui/` and `tests/e2e/`. No dependency, build, source-adapter or domain changes. The Developer must not edit anything under `documentation/`. The Planner documents what shipped after approval.
+  ⎿ 
+  ⎿ ## Decisions (made by the user)
+  ⎿ 
+  ⎿ | Topic | Decision |
+  ⎿ | --- | --- |
+  ⎿ | Rows in the list | At most 4, on phone and desktop (it is one component). **The "+N more heading here" line is removed.** The map still shows every bus. |
+  ⎿ … +378 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && f...)
+  ⎿ ==== src/ui/sheet/ApproachingBuses.tsx
+  ⎿      1	import { formatCountdown, spokenCountdown } from '../../domain/countdown';
+  ⎿      2	import type { BusPosition, LineId } from '../../domain/types';
+  ⎿      3	import { LineChip } from './LineChip';
+  ⎿      4	import { ScheduledBadge } from './ScheduledBadge';
+  ⎿      5	
+  ⎿      6	/** At most this many rows, so the phone sheet never pushes the page into scrolling. */
+  ⎿      7	const MAX_ROWS = 5;
+  ⎿      8	
+  ⎿      9	interface ApproachingBusesProps {
+  ⎿     10	  /** The buses heading to the stop, soonest first. */
+  ⎿     11	  buses: readonly BusPosition[];
+  ⎿     12	  colorOf: (line: LineId) => string;
+  ⎿     13	}
+  ⎿     14	
+  ⎿     15	/** The buses heading to the nearest stop, each with a countdown, all under one Scheduled badge. */
+  ⎿     16	export function ApproachingBuses({ buses, colorOf }: ApproachingBusesProps) {
+  ⎿     17	  const shown = buses.slice(0, MAX_ROWS);
+  ⎿     18	  const more = buses.length - shown.length;
+  ⎿     19	  return (
+  ⎿ … +376 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && c...)
+  ⎿      1	/* Layout and components. Values follow the Main, Locating, LocationOff and Desktop artboards. */
+  ⎿      2	
+  ⎿      3	*,
+  ⎿      4	*::before,
+  ⎿      5	*::after {
+  ⎿      6	  box-sizing: border-box;
+  ⎿      7	}
+  ⎿      8	
+  ⎿      9	html,
+  ⎿     10	body,
+  ⎿     11	#root {
+  ⎿     12	  height: 100%;
+  ⎿     13	  height: 100dvh;
+  ⎿     14	  margin: 0;
+  ⎿     15	  overflow: hidden;
+  ⎿     16	}
+  ⎿     17	
+  ⎿     18	body {
+  ⎿     19	  font-family: var(--font-sans);
+  ⎿     20	  color: var(--color-text);
+  ⎿ … +920 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && g...)
+  ⎿ 280:  return <div ref={container} className="map" />;
+  ⎿ 69:  const approaching = secondsToStop !== null;
+  ⎿ 70:  el.classList.toggle('marker-bus--approaching', approaching);
+  ⎿ 74:    approaching
+  ⎿ 90:  if (approaching) {
+
+● Now the CSS edits.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && p...)
+  ⎿ (Bash completed with no output)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && p...)
+  ⎿ (Bash completed with no output)
+
+● Now the components.
+
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sh..., content: import { formatCountdown, spokenCountdown } from '../../domain/countdown';
+im...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sh..., content: import { formatDistance } from '../../domain/geo';
+import { formatLisbonDate ...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sh..., content: import { SpinnerIcon } from '../icons';
+
+interface LocatingContentProps {
+  t...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sh..., content: import { MapPinOffIcon } from '../icons';
+
+interface LocationOffContentProps ...)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sh..., content: import { MapPinOffIcon } from '../icons';
+
+interface DataErrorContentProps {
+...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sheet\ApproachingBuses.tsx has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sheet\NearestStopContent.tsx has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sheet\LocatingContent.tsx has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sheet\LocationOffContent.tsx has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sheet\DataErrorContent.tsx has been updated successfully. (file state is current in your context — no need to Read it back)
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sh..., content: import { useRef, type PointerEvent, type ReactNode, type Ref } from 'react';
+...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\src\ui\sheet\Sheet.tsx has been updated successfully. (file state is current in your context — no need to Read it back)
+
+● Using a window-level `pointerup` listener makes the swipe work even when a mouse is released outside the sheet (touch is implicitly captured but mouse isn't). The plan's intent stays the same.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && p...)
+  ⎿ import { type PointerEvent, type ReactNode, type Ref } from 'react';
+  ⎿ 
+  ⎿ /** How far a vertical swipe must travel, in pixels, to minimise or restore the phone sheet. */
+  ⎿ const SWIPE_MIN_PX = 40;
+  ⎿ 
+  ⎿ interface SheetProps {
+  ⎿   ref?: Ref<HTMLElement>;
+  ⎿   /** `phone`: bottom sheet with a grab handle. `panel`: the desktop floating panel with the title. */
+  ⎿   variant: 'phone' | 'panel';
+  ⎿   label: string;
+  ⎿   busy?: boolean;
+  ⎿   /** Phone only: the sheet is minimised to its essentials. */
+  ⎿   collapsed?: boolean;
+  ⎿   /** Phone only: makes the handle a toggle and lets a swipe minimise (down) or restore (up). */
+  ⎿   onCollapsedChange?: (collapsed: boolean) => void;
+  ⎿   children: ReactNode;
+  ⎿ }
+  ⎿ 
+  ⎿ export function Sheet({
+  ⎿   ref,
+  ⎿ … +40 more lines
+
+● Now App.tsx.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && p...)
+  ⎿ (Bash completed with no output)
+
+● Now the e2e tests.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && s...)
+  ⎿ /** DOM builders for the map's markers. Styles live in `styles/app.css` (`.marker-*`). */
+  ⎿ import { readableTextColor } from '../../domain/color';
+  ⎿ import { formatCountdown, spokenCountdown } from '../../domain/countdown';
+  ⎿ 
+  ⎿ // The same bus glyph as `BusIcon` in `icons.tsx`, as markup for a non-React element.
+  ⎿ const BUS_ICON_SVG =
+  ⎿   '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+  ⎿   '<path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 11h16"/>' +
+  ⎿   '<path d="M8 15h.01"/><path d="M16 15h.01"/><path d="M6 18v2"/><path d="M18 18v2"/></svg>';
+  ⎿ 
+  ⎿ function div(className: string): HTMLDivElement {
+  ⎿   const el = document.createElement('div');
+  ⎿   el.className = className;
+  ⎿   return el;
+  ⎿ }
+  ⎿ 
+  ⎿ /** The user's position: an 18px blue dot inside a 68px halo. */
+  ⎿ export function createUserMarker(): HTMLElement {
+  ⎿   const el = div('marker-user');
+  ⎿   el.setAttribute('role', 'img');
+  ⎿ … +110 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && p...)
+  ⎿ <stdin>:9: SyntaxWarning: "\." is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\."? A raw string is also an option.
+  ⎿ npm warn exec The following package was not found and will be installed: prettier@3.9.9
+  ⎿ 
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ 'eslint' is not recognized as an internal or external command,
+  ⎿ operable program or batch file.
+  ⎿ 
+  ⎿ Error: Cannot find module 'C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\node_modules\typescript7\bin\tsc'
+  ⎿     at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+  ⎿     at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+  ⎿     at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+  ⎿     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+  ⎿     at Module._load (node:internal/modules/cjs/loader:1294:5)
+  ⎿     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+  ⎿     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+  ⎿     at node:internal/main/run_main_module:33:47 {
+  ⎿   code: 'MODULE_NOT_FOUND',
+  ⎿   requireStack: []
+  ⎿ … +10 more lines
+
+● Dependencies aren't installed in this worktree; installing them to verify.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && n..., timeout: 600000)
+  ⎿ 147 packages are looking for funding
+  ⎿   run `npm fund` for details
+  ⎿ 
+  ⎿ found 0 vulnerabilities
+  ⎿  M plays/006-sheet-improvements/devops.yaml
+  ⎿  M plays/006-sheet-improvements/positions.yaml
+  ⎿  M plays/006-sheet-improvements/sessions/info.yaml
+  ⎿  M src/ui/App.tsx
+  ⎿  M src/ui/sheet/ApproachingBuses.tsx
+  ⎿  M src/ui/sheet/DataErrorContent.tsx
+  ⎿  M src/ui/sheet/LocatingContent.tsx
+  ⎿  M src/ui/sheet/LocationOffContent.tsx
+  ⎿  M src/ui/sheet/NearestStopContent.tsx
+  ⎿  M src/ui/sheet/Sheet.tsx
+  ⎿  M src/ui/styles/app.css
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ ?? plays/006-sheet-improvements/sessions/004-dave.pty
+  ⎿ ?? plays/006-sheet-improvements/sessions/004-dave.txt
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && n..., timeout: 300000)
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  10 passed (10)
+  ⎿       Tests  95 passed (95)
+  ⎿    Start at  10:31:25
+  ⎿    Duration  789ms (transform 52%, import 26%, worker 16%, tests 6%)
+  → Bash(command: curl -s -o /dev/null -w "%{http_code}" http://localhost:4173/ ; echo)
+  ⎿ 000
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && n..., timeout: 600000)
+  ⎿   ok 14 [desktop] › tests\e2e\map.spec.ts:109:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (3.6s)
+  ⎿   -  20 [desktop] › tests\e2e\map.spec.ts:229:3 › located near Portagem › phone: swiping the sheet minimises and restores it
+  ⎿   ok 16 [desktop] › tests\e2e\map.spec.ts:155:3 › located near Portagem › countdown ticks every second (3.7s)
+  ⎿   -  19 [desktop] › tests\e2e\map.spec.ts:198:3 › located near Portagem › phone: the sheet minimises and restores
+  ⎿   ok 21 [desktop] › tests\e2e\map.spec.ts:254:3 › located near Portagem › desktop: the panel has no minimise control (612ms)
+  ⎿   ok 24 [desktop] › tests\e2e\map.spec.ts:300:1 › attribution links to the OpenStreetMap copyright page (631ms)
+  ⎿   ok 23 [desktop] › tests\e2e\map.spec.ts:290:3 › location denied › explains that location is off and keeps the map (855ms)
+  ⎿   x   5 [mobile] › tests\e2e\map.spec.ts:229:3 › located near Portagem › phone: swiping the sheet minimises and restores it (8.1s)
+  ⎿   ok 22 [desktop] › tests\e2e\map.spec.ts:262:3 › located near Portagem › buses draw beneath the sheet (1.4s)
+  ⎿ 
+  ⎿ 
+  ⎿   1) [mobile] › tests\e2e\map.spec.ts:229:3 › located near Portagem › phone: swiping the sheet minimises and restores it 
+  ⎿ 
+  ⎿     Error: expect(locator).toBeVisible() failed
+  ⎿ 
+  ⎿     Locator: getByRole('region', { name: 'Nearest stop' }).getByRole('button', { name: 'Minimise' })
+  ⎿     Expected: visible
+  ⎿     Timeout: 5000ms
+  ⎿     Error: element(s) not found
+  ⎿ 
+  ⎿ … +20 more lines
+
+● The downward swipe works; the upward one, which ends over the map, doesn't. Debugging which events arrive.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && p..., timeout: 600000)
+  ⎿ Error: Process from config.webServer was not able to start. Exit code: 1
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && n...)
+  ⎿ tests/e2e/map.spec.ts(256,69): error TS1002: Unterminated string literal.
+  ⎿ tests/e2e/map.spec.ts(257,1): error TS1005: ',' expected.
+  ⎿ tests/e2e/map.spec.ts(257,6): error TS1002: Unterminated string literal.
+  ⎿ tests/e2e/map.spec.ts(258,5): error TS1005: ',' expected.
+  ⎿ tests/e2e/map.spec.ts(258,80): error TS1005: ')' expected.
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && p..., timeout: 600000)
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ BOX {"x":0,"y":723,"width":390,"height":121}
+  ⎿ pointermove mouse stop-heading__row 783.5 | pointerdown mouse stop-heading__row 783.5 | pointermove mouse stop-heading__row 759.5 | pointercancel mouse stop-heading__row 0
+
+● A `pointercancel` fires: the first mouse swipe selected text, and the second drag started a native text drag. Swiping should never select text, so I'm adding `user-select: none` to the phone sheet.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && p..., timeout: 600000)
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿   ok 17 [desktop] › tests\e2e\map.spec.ts:155:3 › located near Portagem › countdown ticks every second (3.6s)
+  ⎿   ok 21 [desktop] › tests\e2e\map.spec.ts:254:3 › located near Portagem › desktop: the panel has no minimise control (1.3s)
+  ⎿   ok 23 [desktop] › tests\e2e\map.spec.ts:290:3 › location denied › explains that location is off and keeps the map (787ms)
+  ⎿   ok 24 [desktop] › tests\e2e\map.spec.ts:300:1 › attribution links to the OpenStreetMap copyright page (747ms)
+  ⎿   ok 22 [desktop] › tests\e2e\map.spec.ts:262:3 › located near Portagem › buses draw beneath the sheet (1.1s)
+  ⎿ 
+  ⎿   5 skipped
+  ⎿   19 passed (14.0s)
+
+● All pass. Now checking that the z-order test actually catches the bug, by temporarily reverting the fix.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && c..., timeout: 600000)
+  ⎿ 0
+  ⎿   x  1 [mobile] › tests\e2e\map.spec.ts:262:3 › located near Portagem › buses draw beneath the sheet (733ms)
+  ⎿   x  2 [desktop] › tests\e2e\map.spec.ts:262:3 › located near Portagem › buses draw beneath the sheet (1.0s)
+  ⎿   2 failed
+  ⎿ 74:  z-index: 0; /* a stacking context, so marker z-indexes never lift a bus above the chrome */
+
+● The test fails without the fix and passes with it. Last, the full verification:
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && n..., timeout: 600000)
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿       Tests  95 passed (95)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  ⎿   5 skipped
+  ⎿   19 passed (15.0s)
+  ⎿  M plays/006-sheet-improvements/devops.yaml
+  ⎿  M plays/006-sheet-improvements/positions.yaml
+  ⎿  M plays/006-sheet-improvements/sessions/info.yaml
+  ⎿  M src/ui/App.tsx
+  ⎿  M src/ui/sheet/ApproachingBuses.tsx
+  ⎿  M src/ui/sheet/DataErrorContent.tsx
+  ⎿  M src/ui/sheet/LocatingContent.tsx
+  ⎿  M src/ui/sheet/LocationOffContent.tsx
+  ⎿  M src/ui/sheet/NearestStopContent.tsx
+  ⎿  M src/ui/sheet/Sheet.tsx
+  ⎿  M src/ui/styles/app.css
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ … +2 more lines
+
+● I've implemented play 006 in the `metro` worktree, following the plan with two small deviations described below. Lint, typecheck, `npm test` (95 tests), `npm run build` and the full Playwright suite (19 passed, 5 skipped because they are for the other layout) all pass. I didn't do the manual phone-viewport check from the plan. Nothing is committed, and nothing under `documentation/` was touched.
+
+**The four changes:**
+- **Buses in front of the sheet:** the map is now its own layer (`z-index: 0` on `.map`), so a bus can't draw over the sheet, the wordmark or the desktop panel. Approaching buses still draw above the other buses. With the fix removed, the new test "buses draw beneath the sheet" fails on both phone and desktop. With it, the test passes.
+- **Four buses:** the list stops at 4 rows and the "+N more heading here" line is gone. I pulled the row out into a reusable `BusRow` component, which can carry its own Scheduled badge.
+- **Bottom label:** the "Estimated at…" note is removed. A short `Timetable data from {date} may be out of date.` line shows only when the timetable is over 24 hours old, in both the full and minimised sheet.
+- **Minimising on phones:**
+  - The grab handle is now a button (Minimise / Expand), and swiping down or up on the sheet does the same.
+  - Minimised, the sheet shows the stop name, its distance and the next bus with its Scheduled badge. The other states (locating, location off, loading error) keep only their title row.
+  - The sheet always opens expanded. The desktop panel never collapses and has no toggle.
+
+**Where I departed from the plan:**
+- **Mouse swipes:** the plan listened for the finger lifting only on the sheet itself. With a mouse, a swipe up that ended over the map was missed, so the sheet now listens on the whole window.
+- **Text selection:** the phone sheet no longer allows selecting text. In testing, one swipe selected the text and the next swipe started dragging it instead of moving the sheet.
+- **Handle spacing:** because the minimised sheet has tighter spacing, I added one CSS rule to keep its content starting at the same place below the handle.
+
+**Tests:** the existing sheet test now checks that the old note and the "+N more" line are gone. New tests cover minimising with the button, swiping on the phone, no toggle on desktop, and buses drawing beneath the sheet.
+
+I ran `npm ci` in the worktree because it had no dependencies installed.

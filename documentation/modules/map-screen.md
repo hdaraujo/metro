@@ -10,11 +10,16 @@ specification. Code lives in `src/ui/`.
 
 - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
-  right) above a bottom sheet. The sheet's height follows its content. Its grab handle is
-  decorative, and the sheet cannot be dragged.
+  right) above a bottom sheet. The sheet's height follows its content, and it can be minimised
+  (see [Minimising the phone sheet](#minimising-the-phone-sheet)).
 - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
-  the same content as the phone sheet. The locate button sits at the bottom right, with the
-  attribution below it.
+  the same content as the phone sheet, always expanded: it has no handle and cannot be minimised.
+  The locate button sits at the bottom right, with the attribution below it.
+- **Stacking.** `.map` has `z-index: 0` so that it forms its own stacking context. Marker
+  z-indexes (for example `.marker-bus--approaching`, which lifts approaching buses above the
+  others) then stay inside the map, and the wordmark, sheet, panel and controls, which come later
+  in the DOM, always paint over every marker. Removing that `z-index` makes buses draw in front
+  of the sheet again.
 - The page never scrolls (`100dvh`). All styling is plain CSS with custom properties
   (`src/ui/styles/tokens.css` and `app.css`). There is no CSS framework, and the Aptos fonts in the
   font stacks are not bundled, so they fall back to Segoe UI or the system font.
@@ -42,19 +47,52 @@ If any bus is heading to the stop, a **"Heading to this stop"** section follows
 - Each bus gets one row, soonest first: its line chip, "to {destination}" (with an ellipsis if it
   is too long), and an `M:SS` countdown in large tabular figures. Minutes are not capped, so a bus
   63 minutes away shows `63:05`.
-- At most **5** rows are shown, so that the phone sheet never grows enough to make the page
-  scroll. Any others appear as "+N more heading here". The map still shows every one of them.
-- A note follows the list: "Estimated at HH:MM from the published timetable. Live data replaces
-  these estimates once a live feed is available." HH:MM is when the estimate was computed (it
-  follows the clock), not when the timetable was fetched. The stale-timetable sentence is added to
-  it when it applies.
+- At most **4** rows are shown (`MAX_ROWS`, on phone and desktop alike), to keep the sheet
+  compact. Nothing says how many more there are; the map still shows every one of them.
+- A row is the exported `BusRow` component, which the minimised sheet reuses. Its optional
+  `badge` prop puts a Scheduled badge inside the row, for use where no header badge covers it.
 
 If no bus is heading to the stop, the section is not shown, even if other buses are on the map.
+
+There is no explanatory note under the list: the Scheduled badge and the dashed markers are the
+only marks of an estimate. Only when the timetable was fetched more than 24 hours ago
+(`STALE_AFTER_MS` in `NearestStopContent.tsx`) does one line close the content: "Timetable data
+from {date} may be out of date." It shows whether or not any bus is approaching, and in the
+minimised sheet too.
 
 The sheet is an `aria-live="polite"` region, and its `aria-label` matches its current state. The
 bus list inside it is `aria-live="off"`: without that, the countdowns, which tick every second,
 would flood screen readers. Each row's visible time is `aria-hidden`, and a visually hidden text
 such as "3 minutes 4 seconds away" takes its place (the `.visually-hidden` utility in `app.css`).
+
+## Minimising the phone sheet
+
+The phone sheet can be minimised to leave more of the map in view. It always starts expanded; the
+state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off on desktop.
+
+- **Controls.** The grab handle is a real button (`.sheet__handle-button`) spanning the sheet's
+  whole top strip. It is named "Minimise" or "Expand" and carries `aria-expanded`. A vertical
+  **swipe** anywhere on the sheet also works: at least 40 px (`SWIPE_MIN_PX` in `Sheet.tsx`),
+  more vertical than horizontal, down to minimise and up to restore. The sheet switches when the
+  pointer is released; it does not follow the finger and does not animate. Shorter or sideways
+  movements do nothing, so taps on the sheet's buttons still work as clicks.
+- **Swipe mechanics.** `pointerdown` on the sheet adds `pointerup` and `pointercancel` listeners
+  on the `window`, so a mouse released outside the sheet still counts. It deliberately does not
+  use `setPointerCapture`, which would retarget the click of a button inside the sheet. The phone
+  sheet has `touch-action: none` and `user-select: none`, so a swipe never scrolls, triggers
+  pull-to-refresh or selects text; the phone sheet never needs to scroll.
+- **Minimised content.** Each state keeps only its essentials:
+
+  | State | Minimised content |
+  | --- | --- |
+  | Nearest stop | The stop name and distance, one `BusRow` for the soonest approaching bus **with its own Scheduled badge** (the header that normally carries the badge is gone, and an estimate must always be labelled), and the stale line if it applies. The eyebrow, the lines row and the "Heading to this stop" header are dropped. |
+  | Locating, finding the nearest stop | The spinner and title row |
+  | Location off, stops failed to load | The icon and title row, with no text and no **Try again** button. On phones, the locate button still retries geolocation. |
+
+- The `Sheet` component is collapsible only for the phone variant **and** when given
+  `onCollapsedChange`; otherwise the handle stays a decorative `div`.
+- Minimising never moves the camera. The locate button's reframe measures the sheet's current
+  height, so its bottom padding follows the smaller sheet.
 
 ## Map
 
@@ -70,7 +108,8 @@ such as "3 minutes 4 seconds away" takes its place (the `.visually-hidden` utili
   trips and removes the markers of trips that have ended.
 - A **bus marker** is a pill in the line colour with a dashed white border. The dashed border is
   how the design marks an estimated position; **no map marker carries the word "Scheduled"**. The
-  only visible "Scheduled" label is the badge in the sheet's "Heading to this stop" header. So
+  only visible "Scheduled" label is the badge in the sheet's "Heading to this stop" header (or,
+  in the minimised phone sheet, the badge in its single bus row). So
   while location is off or still being found (no sheet list), the buses on the map are marked as
   estimated only by their dashed border and their accessible names — an accepted trade-off for a
   less cluttered map. There are three variants:

@@ -91,23 +91,27 @@ export function App() {
   }, [readyToFit, tripsLoading, busWaitOver, fit]);
 
   // ---------- Sheet content ----------
+  // Minimising is phone only; the desktop panel never collapses. The state is not persisted.
+  const [sheetCollapsed, setSheetCollapsed] = useState(false);
+  const collapsed = !desktop && sheetCollapsed;
+
   let label: string;
   let busy = false;
   let content: ReactNode;
   if (geo.status === 'locating') {
     label = 'Finding your location';
     busy = true;
-    content = <LocatingContent />;
+    content = <LocatingContent collapsed={collapsed} />;
   } else if (geo.status === 'unavailable') {
     label = 'Location unavailable';
-    content = <LocationOffContent onRetry={geo.retry} />;
+    content = <LocationOffContent onRetry={geo.retry} collapsed={collapsed} />;
   } else if (!network && networkError) {
     label = 'Stops unavailable';
-    content = <DataErrorContent onRetry={retryNetwork} />;
+    content = <DataErrorContent onRetry={retryNetwork} collapsed={collapsed} />;
   } else if (!network || !nearest) {
     label = 'Finding your nearest stop';
     busy = true;
-    content = <LocatingContent title="Finding your nearest stop…" />;
+    content = <LocatingContent title="Finding your nearest stop…" collapsed={collapsed} />;
   } else {
     label = 'Nearest stop';
     content = (
@@ -118,6 +122,7 @@ export function App() {
         approaching={approaching}
         fetchedAt={network.fetchedAt}
         now={now}
+        collapsed={collapsed}
       />
     );
   }
@@ -158,7 +163,14 @@ export function App() {
               <Attribution />
               {locate}
             </div>
-            <Sheet ref={sheetRef} variant="phone" label={label} busy={busy}>
+            <Sheet
+              ref={sheetRef}
+              variant="phone"
+              label={label}
+              busy={busy}
+              collapsed={collapsed}
+              onCollapsedChange={setSheetCollapsed}
+            >
               {content}
             </Sheet>
           </div>

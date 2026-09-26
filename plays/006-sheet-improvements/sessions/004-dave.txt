@@ -1,0 +1,54 @@
+> You are the Autopilot DevOps engineer for this play, preparing repositories for development. Read `plays/006-sheet-improvements/plan.md` — it states which of the attached repositories are part of this play; only touch those.
+
+Each play is developed on its own branch, `006-sheet-improvements`, in an isolated git worktree per repository, so several plays can be in progress at once without interfering. The specs repository (`metro`) is already on that branch — you are working inside its worktree right now, which is why this play's folder is here. Your job is to do the same for each TARGET CODE repository, under the directory `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006`.
+
+For each target repository (its main clone is one of the attached directories — call its path <clone> and its folder name <name>):
+1. Run `git -C <clone> fetch` so the clone is current.
+2. Create the play worktree at exactly `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006/<name>`:
+   `git -C <clone> worktree add "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006/<name>" -b 006-sheet-improvements`
+
+Handle these cases without asking me:
+- If a worktree already exists at `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006/<name>`, this is a resumed iteration of the same play — leave it as-is and continue; do not recreate it.
+- If the branch `006-sheet-improvements` already exists but has no worktree, add the worktree from that existing branch instead (omit `-b`): `git -C <clone> worktree add "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006/<name>" 006-sheet-improvements`.
+- If a target repository IS the specs repository you are already in, it already has its worktree — skip it.
+
+Only stop and ask me how to proceed if something genuinely conflicts — the worktree path is occupied by an unrelated directory, or the repository is in a broken state — do not guess and do not act destructively. Wait for my answer.
+
+Once every target repository has its `006-sheet-improvements` worktree under `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006`, end your turn with a short factual summary of what you did. That summary must NOT end with a question — only end with a question mark when you are genuinely asking me how to proceed with a real conflict per the rule above.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && c..., description: Read plan and context docs)
+  ⎿ # Play 006 — Sheet improvements: implementation plan
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ On phones the bottom sheet takes too much of the map. The user asked for four changes (`plays/006-sheet-improvements/intent.md`):
+  ⎿ 
+  ⎿ 1. Show only **4** buses in the "Heading to this stop" list.
+  ⎿ 2. Let the user **minimise** the sheet in the phone layout.
+  ⎿ 3. **Remove the label at the bottom** of the sheet: the "Estimated at HH:MM from the published timetable. Live data replaces these estimates…" note.
+  ⎿ 4. Fix a bug: **buses draw in front of the sheet**.
+  ⎿ 
+  ⎿ This play changes an existing screen and adds no new one, so there is no design folder. The decisions below come from the user's answers in the planning session.
+  ⎿ 
+  ⎿ **Repositories touched: `metro` only**, the single repository. All code is in `src/ui/` and `tests/e2e/`. No dependency, build, source-adapter or domain changes. The Developer must not edit anything under `documentation/`. The Planner documents what shipped after approval.
+  ⎿ 
+  ⎿ ## Decisions (made by the user)
+  ⎿ 
+  ⎿ | Topic | Decision |
+  ⎿ | --- | --- |
+  ⎿ | Rows in the list | At most 4, on phone and desktop (it is one component). **The "+N more heading here" line is removed.** The map still shows every bus. |
+  ⎿ … +234 more lines
+  → Bash(command: git -C "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" worktree..., description: Confirm metro worktree and branch)
+  ⎿ C:/Users/Hugo/.building/data/projects/001-metro/repos/metro         1b2ca41 [main]
+  ⎿ C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro 1b2ca41 [006-sheet-improvements]
+  ⎿ 006-sheet-improvements
+
+● There was nothing to set up: this play has no code repository that needs a new worktree.
+
+- **Plan:** `plays/006-sheet-improvements/plan.md` says the only repository touched is `metro`, the single repository.
+- **`metro`:** this is the specs repository I'm already working in. `git worktree list` on the main clone (`repos/metro`) shows the play worktree at `worktrees/006/metro`, checked out on the `006-sheet-improvements` branch. So I skipped it, as instructed.
+- **Other repositories:** there are none to set up, so I made no `fetch` and no `worktree add` calls.
+
+I read `documentation/context/vision.md` and `tech.md`. I changed no files and created no branches.

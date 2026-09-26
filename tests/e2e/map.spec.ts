@@ -67,9 +67,8 @@ test.describe('located near Portagem', () => {
     await expect(rows.nth(0)).toContainText('to Vale das Flores');
     await expect(rows.nth(1)).toContainText('to Coimbra B');
     await expect(sheet.getByText('Scheduled', { exact: true })).toHaveCount(1);
-    await expect(
-      sheet.getByText(/Estimated at 10:44 from the published timetable\./),
-    ).toBeVisible();
+    await expect(sheet.getByText(/more heading here/)).toHaveCount(0);
+    await expect(sheet.getByText(/Estimated at/)).toHaveCount(0);
 
     await expect(
       page.getByRole('button', { name: 'Centre on my location', exact: true }),
@@ -194,6 +193,94 @@ test.describe('located near Portagem', () => {
     expect(box?.width).toBe(viewport.width);
     expect(Math.round((box?.y ?? 0) + (box?.height ?? 0))).toBe(viewport.height);
     await expect(page.getByText('Metro', { exact: true })).toBeVisible();
+  });
+
+  test('phone: the sheet minimises and restores', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'mobile', 'phone layout only');
+    await page.goto('/');
+    const sheet = page.getByRole('region', { name: 'Nearest stop' });
+    await expect(sheet.getByRole('listitem')).toHaveCount(2);
+    const expandedHeight = (await sheet.boundingBox())!.height;
+
+    const minimise = sheet.getByRole('button', { name: 'Minimise' });
+    await expect(minimise).toHaveAttribute('aria-expanded', 'true');
+    await minimise.click();
+
+    const expand = sheet.getByRole('button', { name: 'Expand' });
+    await expect(expand).toHaveAttribute('aria-expanded', 'false');
+    await expect(sheet.getByRole('heading', { level: 1, name: 'Portagem' })).toBeVisible();
+    const rows = sheet.getByRole('listitem');
+    await expect(rows).toHaveCount(1);
+    await expect(rows).toContainText('to Vale das Flores');
+    await expect(sheet.getByText('Scheduled', { exact: true })).toHaveCount(1);
+    await expect(sheet.getByText('// NEAREST STOP')).toHaveCount(0);
+    await expect(
+      sheet.getByRole('heading', { level: 2, name: 'Heading to this stop' }),
+    ).toHaveCount(0);
+    expect((await sheet.boundingBox())!.height).toBeLessThan(expandedHeight);
+
+    await expand.click();
+    await expect(sheet.getByRole('listitem')).toHaveCount(2);
+    await expect(
+      sheet.getByRole('heading', { level: 2, name: 'Heading to this stop' }),
+    ).toBeVisible();
+  });
+
+  test('phone: swiping the sheet minimises and restores it', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'mobile', 'phone layout only');
+    await page.goto('/');
+    const sheet = page.getByRole('region', { name: 'Nearest stop' });
+    await expect(sheet.getByRole('listitem')).toHaveCount(2);
+
+    const swipe = async (fromY: (box: { y: number; height: number }) => number, dy: number) => {
+      const box = (await sheet.boundingBox())!;
+      const x = box.x + box.width / 2;
+      const y = fromY(box);
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      await page.mouse.move(x, y + dy, { steps: 5 });
+      await page.mouse.up();
+    };
+
+    await swipe((box) => box.y + 60, 120);
+    await expect(sheet.getByRole('button', { name: 'Expand' })).toBeVisible();
+    await expect(sheet.getByRole('listitem')).toHaveCount(1);
+
+    await swipe((box) => box.y + box.height / 2, -120);
+    await expect(sheet.getByRole('button', { name: 'Minimise' })).toBeVisible();
+    await expect(sheet.getByRole('listitem')).toHaveCount(2);
+  });
+
+  test('desktop: the panel has no minimise control', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'desktop layout only');
+    await page.goto('/');
+    const panel = page.getByRole('region', { name: 'Nearest stop' });
+    await expect(panel.getByRole('heading', { level: 1, name: 'Portagem' })).toBeVisible();
+    await expect(panel.getByRole('button', { name: /Minimise|Expand/ })).toHaveCount(0);
+  });
+
+  test('buses draw beneath the sheet', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('region', { name: 'Nearest stop' })).toBeVisible();
+    await expect(page.getByRole('img', { name: U1_TO_VALE_DAS_FLORES })).toBeVisible();
+    // No tick may move the markers while one is placed over the sheet.
+    await page.clock.pauseAt(new Date('2026-09-23T09:45:00Z'));
+
+    const sheetOnTop = await page.evaluate(() => {
+      const marker = document.querySelector<HTMLElement>('.marker-bus--approaching')!;
+      const sheet = document.querySelector<HTMLElement>('.sheet')!;
+      // Markers ignore the pointer, which `elementFromPoint` would skip over.
+      marker.style.pointerEvents = 'auto';
+      const m = marker.getBoundingClientRect();
+      const s = sheet.getBoundingClientRect();
+      const cx = s.left + s.width / 2;
+      const cy = s.top + s.height / 2;
+      const dx = cx - (m.left + m.width / 2);
+      const dy = cy - (m.top + m.height / 2);
+      marker.style.transform = `translate(${dx}px, ${dy}px) ${marker.style.transform}`;
+      return document.elementFromPoint(cx, cy)?.closest('.sheet') !== null;
+    });
+    expect(sheetOnTop).toBe(true);
   });
 });
 

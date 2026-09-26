@@ -1,0 +1,112 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `006-sheet-improvements`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/006-sheet-improvements/intent.md` and `plays/006-sheet-improvements/plan.md`, then read the real changes on the `006-sheet-improvements` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/`, which is yours to write in this session.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro"; cat..., description: Read context, play files, and module listing)
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿   per-repository section below must make it explicit which technology each repo uses —
+  ⎿   that is the Developer's source of truth for what to build with, where.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Tech Stack
+  ⎿ 
+  ⎿ ## Architecture overview
+  ⎿ - **One repo (`metro`), npm-workspaces monorepo:** `apps/api` (Node backend), `apps/web`
+  ⎿   (React PWA), `packages/shared` (TypeScript types and pure logic shared by both).
+  ⎿ - **Data flow:** data source → `api` (fetch, cache, normalise, compute) → small JSON API → `web`.
+  ⎿   The web app never calls third-party data sources directly.
+  ⎿ - **Data sources, behind source adapters in `api`.** Each source is one adapter that maps into
+  ⎿   our own domain model (stops, line shapes, trips). Nothing outside an adapter knows a source's format.
+  ⎿   - **Timetable (current):** Horários Metrobus, the Metro Mondego planner app. Undocumented
+  ⎿     static JSON, no stated licence, and it may change without notice:
+  ⎿     - `https://planearviagem.metromondego.pt/data/stops.json`: stops with id, code, name,
+  ⎿ … +291 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro"; cat..., description: Read module docs and branch changes)
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop, every Metrobus bus in service, and a countdown for each bus
+  ⎿ heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content. Its grab handle is
+  ⎿   decorative, and the sheet cannot be dragged.
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet. The locate button sits at the bottom right, with the
+  ⎿   attribution below it.
+  ⎿ - The page never scrolls (`100dvh`). All styling is plain CSS with custom properties
+  ⎿   (`src/ui/styles/tokens.css` and `app.css`). There is no CSS framework, and the Aptos fonts in the
+  ⎿   font stacks are not bundled, so they fall back to Segoe UI or the system font.
+  ⎿ … +196 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro"; git..., description: Show source code diff)
+  ⎿ diff --git a/src/ui/App.tsx b/src/ui/App.tsx
+  ⎿ index 3a71c61..3c9a446 100644
+  ⎿ --- a/src/ui/App.tsx
+  ⎿ +++ b/src/ui/App.tsx
+  ⎿ @@ -91,23 +91,27 @@ export function App() {
+  ⎿    }, [readyToFit, tripsLoading, busWaitOver, fit]);
+  ⎿  
+  ⎿    // ---------- Sheet content ----------
+  ⎿ +  // Minimising is phone only; the desktop panel never collapses. The state is not persisted.
+  ⎿ +  const [sheetCollapsed, setSheetCollapsed] = useState(false);
+  ⎿ +  const collapsed = !desktop && sheetCollapsed;
+  ⎿ +
+  ⎿    let label: string;
+  ⎿    let busy = false;
+  ⎿    let content: ReactNode;
+  ⎿    if (geo.status === 'locating') {
+  ⎿      label = 'Finding your location';
+  ⎿      busy = true;
+  ⎿ -    content = <LocatingContent />;
+  ⎿ +    content = <LocatingContent collapsed={collapsed} />;
+  ⎿ … +493 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro"; gre..., description: Find references affected by this play)
+  ⎿ documentation/modules/app-platform.md:35:| `metrobus-timetable` | `planearviagem.metromondego.pt/data/*` | StaleWhileRevalidate | 10 entries, 30 days |
+  ⎿ documentation/modules/app-platform.md:63:  date library and no CSS framework. Time zones are handled with `Intl`.
+  ⎿ documentation/modules/map-screen.md:13:  right) above a bottom sheet. The sheet's height follows its content. Its grab handle is
+  ⎿ documentation/modules/map-screen.md:46:  scroll. Any others appear as "+N more heading here". The map still shows every one of them.
+  ⎿ documentation/modules/map-screen.md:47:- A note follows the list: "Estimated at HH:MM from the published timetable. Live data replaces
+  ⎿ documentation/modules/map-screen.md:49:  follows the clock), not when the timetable was fetched. The stale-timetable sentence is added to
+
+● Now I'll update `map-screen.md`: the layout bullet, the list section, and add a section on minimising and on stacking.
+
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\documenta..., old_string:   right) above a bottom sheet. The sheet's height follows its content. Its gr..., new_string:   right) above a bottom sheet. The sheet's height follows its content, and it...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\documenta..., old_string: - At most **5** rows are shown, so that the phone sheet never grows enough to..., new_string: - At most **4** rows are shown (`MAX_ROWS`, on phone and desktop alike), to k...)
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\documenta..., old_string: such as "3 minutes 4 seconds away" takes its place (the `.visually-hidden` ut..., new_string: such as "3 minutes 4 seconds away" takes its place (the `.visually-hidden` ut...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\documentation\modules\map-screen.md has been updated successfully.
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\documentation\modules\map-screen.md has been updated successfully.
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\documentation\modules\map-screen.md has been updated successfully.
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\documenta..., old_string:   only visible "Scheduled" label is the badge in the sheet's "Heading to this..., new_string:   only visible "Scheduled" label is the badge in the sheet's "Heading to this...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\documentation\modules\map-screen.md has been updated successfully.
+
+● I updated `documentation/modules/map-screen.md`, the existing document for this screen, so there's still one document for it rather than a new one alongside. Nothing is committed.
+
+- **Layout:** the phone sheet can now be minimised, and the desktop panel always stays expanded. A new note on stacking explains that `.map` has `z-index: 0` so buses can never draw over the sheet, panel or wordmark, and that removing it brings the bug back.
+- **"Heading to this stop":** the list shows at most 4 rows, on phone and desktop, with nothing saying how many more there are. Rows come from the reusable `BusRow` component, which can show its own Scheduled badge.
+- **The note under the list:** the "Estimated at…" note is gone. The only line left is "Timetable data from {date} may be out of date.", shown only when the timetable is more than 24 hours old, and in the minimised sheet too.
+- **New section, "Minimising the phone sheet":**
+  - You can tap the handle, which is now a real "Minimise"/"Expand" button, or swipe at least 40 px down or up.
+  - Why the swipe doesn't use pointer capture, and why the phone sheet has `touch-action: none`.
+  - A table of what each sheet state keeps when minimised. In the nearest-stop state the one bus row carries its own Scheduled badge, so an estimate is always labelled.
+  - The minimised state isn't saved, and minimising never moves the map.
+- **Map section:** the line saying the header badge is the only visible "Scheduled" label now also mentions the badge in the minimised row.
+
+Where the plan and the code differed, I followed the code. The main difference is the swipe: the plan put the release handler on the sheet itself, but the code listens on the window, so a mouse released outside the sheet still counts.

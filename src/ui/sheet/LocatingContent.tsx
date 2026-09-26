@@ -1,13 +1,26 @@
 import { SpinnerIcon } from '../icons';
 
-export function LocatingContent({ title = 'Finding your location…' }: { title?: string }) {
+interface LocatingContentProps {
+  title?: string;
+  /** The minimised phone sheet: the title row only. */
+  collapsed?: boolean;
+}
+
+export function LocatingContent({
+  title = 'Finding your location…',
+  collapsed,
+}: LocatingContentProps) {
+  const row = (
+    <div className="locating__row">
+      <SpinnerIcon size={20} className="spinner" />
+      <h1 className="locating__title">{title}</h1>
+    </div>
+  );
+  if (collapsed) return row;
   return (
     <>
       <div className="locating">
-        <div className="locating__row">
-          <SpinnerIcon size={20} className="spinner" />
-          <h1 className="locating__title">{title}</h1>
-        </div>
+        {row}
         <p className="body-text">
           When your browser asks, allow location access so Metro can find the stop nearest to you.
         </p>

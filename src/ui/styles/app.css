@@ -71,6 +71,7 @@ button {
 .map {
   position: absolute;
   inset: 0;
+  z-index: 0; /* a stacking context, so marker z-indexes never lift a bus above the chrome */
   background: var(--color-map-land);
 }
 
@@ -303,7 +304,39 @@ button {
 .sheet--phone {
   border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
   box-shadow: var(--shadow-sheet);
-  padding: 10px 20px calc(24px + env(safe-area-inset-bottom));
+  padding: 0 20px calc(24px + env(safe-area-inset-bottom));
+  /* A vertical swipe minimises or restores the sheet: it never scrolls or selects text. */
+  touch-action: none;
+  user-select: none;
+}
+
+.sheet--collapsed {
+  gap: 10px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+
+/* The whole top strip is the tap target; the bar sits 10px from the top, content starts at 30px. */
+.sheet__handle-button {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+  height: 30px;
+  margin: 0 -20px -16px;
+  padding: 10px 0 0;
+  flex-shrink: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sheet__handle-button:focus-visible {
+  outline-offset: -2px;
+}
+
+/* Cancels the smaller collapsed gap, so the content still starts 30px from the top. */
+.sheet--collapsed .sheet__handle-button {
+  margin-bottom: -10px;
 }
 
 .sheet__handle {
@@ -469,12 +502,6 @@ button {
   color: var(--color-text);
 }
 
-.bus-list__more {
-  margin: 0;
-  font-size: 12px;
-  color: var(--color-text-muted);
-}
-
 .scheduled-badge {
   display: inline-flex;
   align-items: center;
@@ -497,7 +524,7 @@ button {
   background: var(--color-warning-dot);
 }
 
-.estimate-note {
+.stale-note {
   font-size: 12px;
   line-height: 1.4;
   color: var(--color-text-muted);

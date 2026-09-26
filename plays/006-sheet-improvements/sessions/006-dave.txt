@@ -1,0 +1,289 @@
+> You are the Autopilot DevOps engineer for this play, wrapping up development. Read `plays/006-sheet-improvements/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`plays/006-sheet-improvements`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006/<repo-folder-name>`, checked out on branch `006-sheet-improvements`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `006-sheet-improvements`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-devops)
+  ⎿ Launching skill: autopilot-devops
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro\.claude\skills\autopilot-devops
+
+You are the Autopilot DevOps engineer for this play, opened as an interactive session that the user drives directly. You are in the project's specs repository, on this play's branch; read `$play/plan.md` for context. The play's code changes live in isolated git worktrees under `$worktrees`. Do NOT start working on your own: wait for the user's first message and follow their direction.
+
+## 1. Prepare the repositories
+
+You are the Autopilot DevOps engineer for this play, preparing repositories for development. Read `$play/plan.md` — it states which of the attached repositories are part of this play; only touch those.
+
+Each play is developed on its own branch, `$branch`, in an isolated git worktree per repository, so several plays can be in progress at once without interfering. The specs repository (`this repository`) is already on that branch — you are working inside its worktree right now, which is why this play's folder is here. Your job is to do the same for each TARGET CODE repository, under the directory `$worktrees`.
+
+For each target repository (its main clone is one of the attached directories — call its path <clone> and its folder name <name>):
+1. Run `git -C <clone> fetch` so the clone is current.
+2. Create the play worktree at exactly `$worktrees/<name>`:
+   `git -C <clone> worktree add "$worktrees/<name>" -b $branch`
+
+Handle these cases without asking me:
+- If a worktree already exists at `$worktrees/<name>`, this is a resumed iteration of the same play — leave it as-is and continue; do not recreate it.
+- If the branch `$branch` already exists but has no worktree, add the worktree from that existing branch instead (omit `-b`): `git -C <clone> worktree add "$worktrees/<name>" $branch`.
+- If a target repository IS the specs repository you are already in, it already has its worktree — skip it.
+
+Only stop and ask me how to proceed if something genuinely conflicts — the worktree path is occupied by an unrelated directory, or the repository is in a broken state — do not guess and do not act destructively. Wait for my answer.
+
+Once every target repository has its `$branch` worktree under `$worktrees`, end your turn with a short factual summary of what you did. That summary must NOT end with a question — only end with a question mark when you are genuinely asking me how to proceed with a real conflict per the rule above.
+
+## 2. Finalize — commit and hand over for testing
+
+You are the Autopilot DevOps engineer for this play, wrapping up development. Read `$play/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`$play`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `$worktrees/<repo-folder-name>`, checked out on branch `$branch`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "$worktrees/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `$branch`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+## 3. Close, once the play is approved
+
+The play was just approved. Do NOT merge the play's branch `$branch` into the default branch in any repository yourself. In the target code repositories it stays unmerged, so I can review and merge it myself; in the specs repository — the directory you are in — Building commits whatever is left, squash-merges the branch into the default branch as a single commit and deletes it, once the play has been documented.
+
+Your only job now is to make sure nothing is left uncommitted in the target code repositories. For each worktree under `$worktrees`, check `git -C "$worktrees/<name>" status`; if anything changed since you finalized (for example while I was validating), stage all of it (`add -A`) and commit it on `$branch` with a clear conventional commit message. Skip any worktree with no changes. You do not need to commit in the specs repository.
+
+Do NOT merge, rebase, squash or push, and do NOT delete the worktrees or the `$branch` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`, `$branch`, `$worktrees`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && c..., description: Read plan, context docs, and repo status)
+  ⎿ # Play 006 — Sheet improvements: implementation plan
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ On phones the bottom sheet takes too much of the map. The user asked for four changes (`plays/006-sheet-improvements/intent.md`):
+  ⎿ 
+  ⎿ 1. Show only **4** buses in the "Heading to this stop" list.
+  ⎿ 2. Let the user **minimise** the sheet in the phone layout.
+  ⎿ 3. **Remove the label at the bottom** of the sheet: the "Estimated at HH:MM from the published timetable. Live data replaces these estimates…" note.
+  ⎿ 4. Fix a bug: **buses draw in front of the sheet**.
+  ⎿ 
+  ⎿ This play changes an existing screen and adds no new one, so there is no design folder. The decisions below come from the user's answers in the planning session.
+  ⎿ 
+  ⎿ **Repositories touched: `metro` only**, the single repository. All code is in `src/ui/` and `tests/e2e/`. No dependency, build, source-adapter or domain changes. The Developer must not edit anything under `documentation/`. The Planner documents what shipped after approval.
+  ⎿ 
+  ⎿ ## Decisions (made by the user)
+  ⎿ 
+  ⎿ | Topic | Decision |
+  ⎿ | --- | --- |
+  ⎿ | Rows in the list | At most 4, on phone and desktop (it is one component). **The "+N more heading here" line is removed.** The map still shows every bus. |
+  ⎿ … +263 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && g..., description: Review code diff and project scripts)
+  ⎿ diff --git a/src/ui/App.tsx b/src/ui/App.tsx
+  ⎿ index 3a71c61..3c9a446 100644
+  ⎿ --- a/src/ui/App.tsx
+  ⎿ +++ b/src/ui/App.tsx
+  ⎿ @@ -91,23 +91,27 @@ export function App() {
+  ⎿    }, [readyToFit, tripsLoading, busWaitOver, fit]);
+  ⎿  
+  ⎿    // ---------- Sheet content ----------
+  ⎿ +  // Minimising is phone only; the desktop panel never collapses. The state is not persisted.
+  ⎿ +  const [sheetCollapsed, setSheetCollapsed] = useState(false);
+  ⎿ +  const collapsed = !desktop && sheetCollapsed;
+  ⎿ +
+  ⎿    let label: string;
+  ⎿    let busy = false;
+  ⎿    let content: ReactNode;
+  ⎿    if (geo.status === 'locating') {
+  ⎿      label = 'Finding your location';
+  ⎿      busy = true;
+  ⎿ -    content = <LocatingContent />;
+  ⎿ +    content = <LocatingContent collapsed={collapsed} />;
+  ⎿ … +711 more lines
+
+● The code diff matches the plan. Before committing, I'll run the repo's checks (tech.md requires lint-clean code) and read the README's run instructions.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && c..., description: Read README and run lint, typecheck, unit tests, timeout: 300000)
+  ⎿ # Metro
+  ⎿ 
+  ⎿ ## What Metro is
+  ⎿ 
+  ⎿ Metro is a mobile-first web app for Coimbra Metrobus riders. It opens straight onto a map showing
+  ⎿ where you are, your nearest Metrobus stop and the bus heading towards it, so you can glance at it
+  ⎿ and decide when to leave. Until a live feed exists, bus positions are estimated from the timetable
+  ⎿ and always labelled "Scheduled"; estimated data is never shown as live. There are no accounts and
+  ⎿ nothing to set up.
+  ⎿ 
+  ⎿ ## Requirements
+  ⎿ 
+  ⎿ - Node.js 24 (see `.nvmrc`) and the npm that comes with it.
+  ⎿ 
+  ⎿ ## Getting started
+  ⎿ 
+  ⎿ ```sh
+  ⎿ npm install
+  ⎿ npm run dev
+  ⎿ ```
+  ⎿ … +117 more lines
+
+● Lint, typecheck and unit tests pass. Now the Playwright end-to-end suite:
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && n..., description: Run Playwright end-to-end tests, timeout: 600000)
+  ⎿   ok  6 [mobile] › tests\e2e\map.spec.ts:186:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark (1.6s)
+  ⎿   ok  1 [mobile] › tests\e2e\map.spec.ts:109:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (1.8s)
+  ⎿   ok  5 [mobile] › tests\e2e\map.spec.ts:140:3 › located near Portagem › the map loads and the locate button re-frames without errors (1.9s)
+  ⎿   ok  8 [mobile] › tests\e2e\map.spec.ts:198:3 › located near Portagem › phone: the sheet minimises and restores (2.1s)
+  ⎿   ok  7 [mobile] › tests\e2e\map.spec.ts:229:3 › located near Portagem › phone: swiping the sheet minimises and restores it (2.2s)
+  ⎿   ok  4 [mobile] › tests\e2e\map.spec.ts:155:3 › located near Portagem › countdown ticks every second (2.3s)
+  ⎿   ok  2 [mobile] › tests\e2e\map.spec.ts:52:3 › located near Portagem › shows the nearest stop and every scheduled bus (2.6s)
+  ⎿   ok 10 [mobile] › tests\e2e\map.spec.ts:262:3 › located near Portagem › buses draw beneath the sheet (2.1s)
+  ⎿   ok 11 [mobile] › tests\e2e\map.spec.ts:290:3 › location denied › explains that location is off and keeps the map (1.1s)
+  ⎿   ok 12 [mobile] › tests\e2e\map.spec.ts:300:1 › attribution links to the OpenStreetMap copyright page (1.1s)
+  ⎿   -  18 [desktop] › tests\e2e\map.spec.ts:186:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark
+  ⎿   -  19 [desktop] › tests\e2e\map.spec.ts:229:3 › located near Portagem › phone: swiping the sheet minimises and restores it
+  ⎿   -  20 [desktop] › tests\e2e\map.spec.ts:198:3 › located near Portagem › phone: the sheet minimises and restores
+  ⎿   ok 15 [desktop] › tests\e2e\map.spec.ts:109:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (3.4s)
+  ⎿   ok 14 [desktop] › tests\e2e\map.spec.ts:155:3 › located near Portagem › countdown ticks every second (3.6s)
+  ⎿   ok 16 [desktop] › tests\e2e\map.spec.ts:140:3 › located near Portagem › the map loads and the locate button re-frames without errors (3.5s)
+  ⎿   ok 17 [desktop] › tests\e2e\map.spec.ts:174:3 › located near Portagem › desktop: renders inside the 380px panel (3.7s)
+  ⎿   ok 13 [desktop] › tests\e2e\map.spec.ts:52:3 › located near Portagem › shows the nearest stop and every scheduled bus (4.0s)
+  ⎿   ok 24 [desktop] › tests\e2e\map.spec.ts:300:1 › attribution links to the OpenStreetMap copyright page (576ms)
+  ⎿   ok 21 [desktop] › tests\e2e\map.spec.ts:254:3 › located near Portagem › desktop: the panel has no minimise control (3.8s)
+  ⎿ … +5 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/metro" && g..., description: Commit code changes and play records)
+  ⎿  M plays/006-sheet-improvements/devops.yaml
+  ⎿  M plays/006-sheet-improvements/positions.yaml
+  ⎿  M plays/006-sheet-improvements/sessions/info.yaml
+  ⎿  M src/ui/App.tsx
+  ⎿  M src/ui/sheet/ApproachingBuses.tsx
+  ⎿  M src/ui/sheet/DataErrorContent.tsx
+  ⎿  M src/ui/sheet/LocatingContent.tsx
+  ⎿  M src/ui/sheet/LocationOffContent.tsx
+  ⎿  M src/ui/sheet/NearestStopContent.tsx
+  ⎿  M src/ui/sheet/Sheet.tsx
+  ⎿  M src/ui/styles/app.css
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ ?? plays/006-sheet-improvements/sessions/004-dave.pty
+  ⎿ ?? plays/006-sheet-improvements/sessions/004-dave.txt
+  ⎿ ?? plays/006-sheet-improvements/sessions/005-gui.pty
+  ⎿ ?? plays/006-sheet-improvements/sessions/005-gui.txt
+  ⎿  src/ui/App.tsx                      | 22 +++++++--
+  ⎿  src/ui/sheet/ApproachingBuses.tsx   | 45 +++++++++++-------
+  ⎿  src/ui/sheet/DataErrorContent.tsx   | 24 +++++++---
+  ⎿  src/ui/sheet/LocatingContent.tsx    | 23 +++++++--
+  ⎿ … +18 more lines
+
+● Play 006 is committed on `006-sheet-improvements`, and nothing is merged or pushed. All checks passed before I committed:
+
+| Check | Result |
+| --- | --- |
+| `npm run lint` (ESLint and Prettier) | clean |
+| `npm run typecheck` (TypeScript 7) | clean |
+| `npm test` (Vitest) | 95/95 passed |
+| `npm run test:e2e` (Playwright) | 19 passed, 5 skipped |
+
+The 5 skipped e2e tests are expected: phone-only tests are skipped in the desktop run and the desktop-only test in the phone run.
+
+This play touches only one repository, `metro`. It holds both the specs and the code, so there were no separate code worktrees to commit. I made two commits in `C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro`:
+- `fc1f2bb` **feat(sheet): minimisable phone sheet, 4-row bus list, buses beneath sheet**: the 9 files under `src/ui/` and `tests/e2e/`.
+- `0b08c6c` **Play 006: record sessions and history**: the play folder (session transcripts, `info.yaml`, `devops.yaml`, `positions.yaml`).
+
+The working tree is clean. The README already has complete run and test instructions, so I didn't write new ones; the steps below follow it.
+
+**Something to pass to the Architect:** `documentation/context/tech.md` describes a monorepo (`apps/api`, `apps/web`, `packages/shared`) with a Node API. The repository is actually one Vite app with no backend: the browser fetches the timetable directly, and the code lives in `src/sources`, `src/domain` and `src/ui`. That drift predates this play. I didn't touch it, because only the Architect edits that file.
+
+---
+
+## How to test play 006
+
+All commands run in the play's worktree:
+
+```powershell
+cd C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro
+```
+
+### 1. Automated checks
+```powershell
+npm install                       # dependencies are already installed; only needed on a fresh checkout
+npm run lint
+npm run typecheck
+npm test
+npx playwright install chromium   # once, only if Playwright's browser is missing
+npm run test:e2e                  # builds, serves and runs the mobile and desktop projects
+```
+Expect everything to pass. `test:e2e` should report 19 passed and 5 skipped. These tests cover this play:
+- **"phone: the sheet minimises and restores"**
+- **"phone: swiping the sheet minimises and restores it"**
+- **"desktop: the panel has no minimise control"**
+- **"buses draw beneath the sheet"**
+- **"shows the nearest stop and every scheduled bus"**: now also checks that there is no "Estimated at…" note and no "+N more" line.
+
+### 2. Run the app
+```powershell
+npm run dev
+```
+Open **http://localhost:5173** (or the URL Vite prints) in Chrome.
+
+To pretend you're in Coimbra, open DevTools, then **⋮ → More tools → Sensors → Location → Other…** and enter latitude `40.2075`, longitude `-8.4307` (near Portagem). Allow location access when the browser asks.
+
+For the phone layout, turn on DevTools **device mode** (Ctrl+Shift+M) and pick a phone such as a Pixel 7 or iPhone 14. Device mode also simulates touch, so you can swipe with the mouse.
+
+### 3. What to check on a phone-sized screen
+1. **At most 4 buses:** under "Heading to this stop" there are never more than 4 rows, and no "+N more heading here" line.
+2. **The bottom note is gone:** the "Estimated at HH:MM from the published timetable. Live data replaces…" text no longer appears. The "Scheduled" badge in the list header is still there.
+3. **Minimise by tapping:** tap the grab handle at the top of the sheet. The sheet shrinks to:
+   - the stop name and its distance
+   - one row for the soonest bus, with its line chip, destination, **Scheduled** badge and countdown
+
+   The "// NEAREST STOP" label, the Lines row and the list header disappear. Tap the handle again to restore the full sheet.
+4. **Minimise by swiping:** swipe down on the sheet (press, drag at least about 40px down, release) and it minimises. Swipe up and it restores. The sheet switches when you release, with no animation, and the map doesn't move.
+5. **Other states:** in DevTools Sensors, set Location to **"Location unavailable"** and reload. The "Location is off" sheet appears, and **Try again** still works as a button. Swiping down or tapping the handle shrinks it to just its icon and title.
+6. **Buses behind the sheet (the bug fix):** pan the map so an approaching bus (a highlighted marker) slides under the bottom sheet or the "Metro" wordmark. The bus must be hidden beneath them, not drawn on top.
+7. **Locate button:** with the sheet minimised, tap "Centre on my location". The map frames the stop and buses using the smaller sheet's height.
+
+### 4. What to check on desktop
+Turn off device mode and use a wide window:
+- The left panel has **no** grab handle and no minimise or expand control.
+- It shows at most 4 buses, with no "+N more" line and no "Estimated at…" note.
+- Pan an approaching bus under the panel: the bus is hidden beneath it.
+
+### 5. The stale-timetable line (optional)
+The line `Timetable data from {date} may be out of date.` appears only when the timetable data is more than 24 hours old. When it does, it shows in both the full and the minimised sheet. `npm run dev` fetches fresh data, so you won't normally see it.
+
+### 6. Reviewing the code
+The change is the `fc1f2bb` commit on branch `006-sheet-improvements`. To see the full diff against `main`:
+```powershell
+git -C C:\Users\Hugo\.building\data\projects\001-metro\worktrees\006\metro diff main...006-sheet-improvements -- src tests
+```
+The code branch is left unmerged for you. Building squash-merges the specs side into `main` when the play closes.
+
+> sh, and do NOT delete the worktrees or the `006-sheet-improvements` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+  → Bash(command: ls "C:/Users/Hugo/.building/data/projects/001-metro/worktrees/006/"; git -C "..., description: Check worktrees for uncommitted changes)
+  ⎿ metro
+  ⎿  M plays/006-sheet-improvements/config.yaml
+  ⎿  M plays/006-sheet-improvements/devops.yaml
+  ⎿  M plays/006-sheet-improvements/history.yaml
+  ⎿  M plays/006-sheet-improvements/sessions/info.yaml
+  ⎿ 0b08c6c Play 006: record sessions and history
+  ⎿ fc1f2bb feat(sheet): minimisable phone sheet, 4-row bus list, buses beneath sheet
+  ⎿ 1b2ca41 Start play 006
+
+● There was nothing to commit for the close. The only worktree is `metro`, which holds both the specs and the code, and no code changed after I finalized: `src/` and `tests/` are clean, and the code is still in `fc1f2bb` on `006-sheet-improvements`.
+
+Four files in the play folder are modified but uncommitted: `config.yaml`, `devops.yaml`, `history.yaml` and `sessions/info.yaml`. These are Building's records of the approval. I left them because Building commits whatever is left in the specs repository before it squash-merges.
+
+I didn't merge, rebase, squash or push anything, and I didn't delete the worktree or the branch.
