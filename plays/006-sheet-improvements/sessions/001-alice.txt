@@ -1,0 +1,289 @@
+> You are the Autopilot Architect for this play — you run FIRST, before the Planner. You own two PRODUCT-LEVEL documents shared by every play in this project: the product vision at `documentation/context/vision.md` and the tech stack at `documentation/context/tech.md` (both under `documentation/context/`, relative to the repository root you are in). Keep BOTH concise — they are loaded into every other agent's context, like CLAUDE.md. That folder may hold further context documents the user added; read and respect those too, but they are the user's — only these two are yours to write.
+
+REVIEW: `documentation/context/vision.md` and `documentation/context/tech.md` already exist. Read `plays/006-sheet-improvements/intent.md`, then read both documents. Validate that this play's intent is consistent with the product vision. If the intent implies changes to the vision or the tech stack — a new goal, a new technology, an additional repository — update `documentation/context/vision.md` and/or `documentation/context/tech.md` to keep them accurate and concise. Ask me before making any substantive change.
+
+Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-architect)
+  ⎿ Launching skill: autopilot-architect
+
+> Base directory for this skill: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\.claude\skills\autopilot-architect
+
+You are the Autopilot Architect for this play — you run FIRST, before the Planner. You own two PRODUCT-LEVEL documents shared by every play in this project: the product vision at `documentation/context/vision.md` and the tech stack at `documentation/context/tech.md` (both under `documentation/context/`, relative to the repository root you are in). Keep BOTH concise — they are loaded into every other agent's context, like CLAUDE.md. That folder may hold further context documents the user added; read and respect those too, but they are the user's — only these two are yours to write.
+
+## Setting up a new project (no vision or tech stack yet)
+
+SETUP: this project has no product vision or tech stack yet. Create them WITH me, from scratch. Do NOT assume anything about the product, and do NOT offer me multiple-choice questions or a menu of options — in each phase below, let ME type first, in free text.
+
+PHASE 1 — Product vision. Begin by asking me — as an actual question, ending in a question mark — to describe in my own words and as free text my vision for this product. Ask only that, then wait for my answer. Once I reply, take on the role of an experienced product owner and architect and iterate with me over a few rounds: reflect back what you understood, probe the gaps with open (not multiple-choice) questions — one focused point per turn — and refine, until we genuinely share a clear understanding of the vision. Only then write `documentation/context/vision.md`, following this structure and keeping it concise:
+
+===== documentation/context/vision.md =====
+<!--
+  Product Vision — maintained by the Autopilot Architect.
+  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  so keep it CONCISE: a shared north star every play must conform to, not a spec.
+-->
+
+### Product Vision
+
+#### Problem
+_What problem does this product solve, and for whom? Why does it matter?_
+
+#### Vision
+_The desired end state, in 1–3 sentences._
+
+#### Target users
+_The primary users / personas and what they need._
+
+#### Core value & principles
+_The few things this product must do well, and the guiding principles that decisions
+should honour (e.g. simplicity over configurability, auditability, offline-first)._
+
+#### Non-goals
+_What this product deliberately will NOT do — the boundaries that keep it focused._
+
+PHASE 2 — Tech stack. Do the exact same thing: first ask me — again as a question ending in a question mark — to type, as free text, the technology and architecture I have in mind — again, no options and no assumptions — and wait for my answer. Then, as the architect, iterate with me over a few rounds until we share a clear understanding (including the technology for each repository), and write `documentation/context/tech.md` following this structure:
+
+===== documentation/context/tech.md =====
+<!--
+  Tech Stack — maintained by the Autopilot Architect.
+  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  so keep it CONCISE. A play may touch every repository or just a subset, so the
+  per-repository section below must make it explicit which technology each repo uses —
+  that is the Developer's source of truth for what to build with, where.
+-->
+
+### Tech Stack
+
+#### Architecture overview
+_How the product's pieces fit together: the components/services, how they communicate,
+and the cross-cutting choices they share (data storage, auth, deployment/runtime)._
+
+#### Conventions
+_Product-wide standards every repository follows: language versions, formatting/linting,
+testing approach, commit/branch style, error handling._
+
+#### Per-repository tech stack
+_One section per repository. Add a block for each repo in the project so it is clear,
+per repo, what technology is used and how to build/test/run it._
+
+##### <repo-name>
+- **Purpose:** _what this repository is responsible for._
+- **Language / runtime:** _e.g. TypeScript / Node 20._
+- **Frameworks / key libraries:** _the main frameworks and libraries used here._
+- **Build / test / run:** _the commands to build, test, and run this repo._
+- **Notes:** _conventions or constraints specific to this repository._
+
+The project has these repositories: the repositories attached to your session. In tech.md, add one "### <repo>" block under "Per-repository tech stack" for EACH of them, making the technology used in each repo explicit.
+
+Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+
+## Reviewing a play against the vision
+
+REVIEW: `documentation/context/vision.md` and `documentation/context/tech.md` already exist. Read `$play/intent.md`, then read both documents. Validate that this play's intent is consistent with the product vision. If the intent implies changes to the vision or the tech stack — a new goal, a new technology, an additional repository — update `documentation/context/vision.md` and/or `documentation/context/tech.md` to keep them accurate and concise. Ask me before making any substantive change.
+
+Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls docume..., description: Read play intent and context docs)
+  ⎿ tech.md
+  ⎿ vision.md
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ In order to make the sheet take less space:
+  ⎿ - show only 4 buses there
+  ⎿ - make it possible to minimize when in mobile mode
+  ⎿ - remove the label at the bottom
+  ⎿ 
+  ⎿ Small fix, buses should not show in front of the sheet, maybe a z order problem=====
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿   per-repository section below must make it explicit which technology each repo uses —
+  ⎿   that is the Developer's source of truth for what to build with, where.
+  ⎿ … +109 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat plays..., description: Inspect play files, prior play, and web labels)
+  ⎿ # Play `006` — Autopilot session instructions
+  ⎿ 
+  ⎿ This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ vision + tech stack, the Planner then checks whether the play introduces a new
+  ⎿ user interface and — if the user wants one — designs a visual prototype before
+  ⎿ shaping an implementation plan (in plan mode), DevOps prepares an isolated git
+  ⎿ worktree carrying the play's branch in each target repo, the Developer implements
+  ⎿ the plan inside those worktrees, then DevOps commits the changes and posts testing
+  ⎿ instructions before the play goes to validation.
+  ⎿ 
+  ⎿ Your session starts at the root of the project's **specs repository** — the one
+  ⎿ holding `documentation/` and `plays/`. While this play is in progress that root is
+  ⎿ its own git worktree, checked out on the play's branch, so everything you write
+  ⎿ here belongs to this play and lands on the default branch as a single commit
+  ⎿ when the play closes.
+  ⎿ 
+  ⎿ ## Product context (read first)
+  ⎿ 
+  ⎿ This project's `documentation/context/` folder holds context documents shared by
+  ⎿ every play — the product vision and tech stack the Architect maintains, plus any
+  ⎿ … +68 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls; cat p..., description: Inspect repo layout and sheet component)
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ dist
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ node_modules
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ plays
+  ⎿ playwright.config.ts
+  ⎿ public
+  ⎿ pwa-assets.config.ts
+  ⎿ src
+  ⎿ test-results
+  ⎿ tests
+  ⎿ tsconfig.json
+  ⎿ vite.config.ts
+  ⎿ {
+  ⎿   "name": "metro",
+  ⎿ … +255 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls src/so..., description: Check source layout and platform module doc)
+  ⎿ src/domain:
+  ⎿ buses.test.ts
+  ⎿ buses.ts
+  ⎿ color.test.ts
+  ⎿ color.ts
+  ⎿ countdown.test.ts
+  ⎿ countdown.ts
+  ⎿ geo.test.ts
+  ⎿ geo.ts
+  ⎿ holidays.test.ts
+  ⎿ holidays.ts
+  ⎿ interpolation.test.ts
+  ⎿ interpolation.ts
+  ⎿ lisbonTime.test.ts
+  ⎿ lisbonTime.ts
+  ⎿ nearestStop.test.ts
+  ⎿ nearestStop.ts
+  ⎿ shape.test.ts
+  ⎿ shape.ts
+  ⎿ types.ts
+  ⎿ … +9 more lines
+
+● Still reviewing: I'm checking whether the code matches tech.md before I finish.
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && grep -n "..., description: Check data fetching and context doc history)
+  ⎿ 9:export const METROBUS_DATA_URL = 'https://planearviagem.metromondego.pt/data/';
+  ⎿ 165:  const response = await fetch(url);
+  ⎿ 170:function toIsoOrNow(httpDate: string | null): string {
+  ⎿ 171:  const time = httpDate ? Date.parse(httpDate) : NaN;
+  ⎿ app-platform.md
+  ⎿ map-screen.md
+  ⎿ timetable-and-estimates.md
+  ⎿  documentation/context/vision.md                  |   7 +-
+  ⎿ commit 598896ddcedc9b9cb31f46795d7ceeed38fde6cd
+  ⎿ Author: Hugo Araújo <hugo.haraujo@gmail.com>
+  ⎿ Date:   Fri Sep 25 21:40:13 2026 +0100
+  ⎿ 
+  ⎿     Play 004: default view
+  ⎿     
+  ⎿     - feat(map): drop "Scheduled" bus tags and frame the soonest bus per direction
+  ⎿     - Close play 004
+  ⎿ 
+  ⎿ diff --git a/documentation/context/vision.md b/documentation/context/vision.md
+  ⎿ index 289f4b4..f9c3192 100644
+  ⎿ --- a/documentation/context/vision.md
+  ⎿ … +15 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && head -30 ..., description: Read app platform module doc header)
+  ⎿ # App platform
+  ⎿ 
+  ⎿ Metro is one static, client-side React PWA at the root of the `metro` repository. It has no
+  ⎿ server, no database and no accounts. The code is organised as follows:
+  ⎿ - `src/sources/`: data source adapters.
+  ⎿ - `src/domain/`: pure logic and types.
+  ⎿ - `src/ui/`: React, MapLibre and CSS.
+  ⎿ - `tests/`: fixtures and Playwright end-to-end tests.
+  ⎿ 
+  ⎿ `README.md` lists the scripts and how to run the app.
+  ⎿ 
+  ⎿ ## Build and hosting
+  ⎿ 
+  ⎿ - Vite builds the app into `dist/` with `base: './'`, so every path is relative and the build
+  ⎿   works on any static host or under any sub-path.
+  ⎿ - It is hosted on GitHub Pages, at `https://hdaraujo.github.io/metro/`. The
+  ⎿   `.github/workflows/pages.yml` workflow runs on every push to `main` and on demand: `npm ci`,
+  ⎿   `npm run lint`, `npm test`, `npm run build`, then it uploads `dist/` and deploys it. The
+  ⎿   repository's Pages source must be set to "GitHub Actions". The Playwright tests are not part
+  ⎿   of the workflow.
+  ⎿ … +10 more lines
+
+● I've checked play 006 against the vision and it fits. Showing 4 buses, letting the sheet collapse on phones and fixing buses drawing over the sheet all support "Glanceable" and "Mobile first". It doesn't need a new goal, technology or repository, so I'm leaving `vision.md` alone.
+
+I'll pass one caution to the Planner. The label at the bottom is the "Estimated at HH:MM from the published timetable…" note, and removing it still fits the vision because the **Scheduled** badge in the list header covers the buses. But that note is also the only place that says "Timetable data from … may be out of date". `tech.md` requires stale data to be flagged, so that warning needs a new home, perhaps next to the badge, rather than being deleted with the note.
+
+Separately, I found that **`tech.md` describes an architecture the code doesn't have**. It describes:
+- a monorepo with `apps/api`, `apps/web` and `packages/shared`;
+- a Node/Fastify API that fetches and caches the data, and a web app that never calls the data source directly;
+- `npm run dev` starting the API and the Vite dev server together.
+
+What was actually built, as `documentation/modules/app-platform.md` also says, is different:
+- one static, client-side React PWA with `src/sources/`, `src/domain/` and `src/ui/`;
+- no server at all;
+- the browser fetches `planearviagem.metromondego.pt/data/` directly.
+
+This isn't caused by this play, but every agent reads `tech.md` as the source of truth, so it misleads everyone. For this play it matters little, since the work is UI only.
+
+Should I rewrite the architecture and repository sections of `tech.md` to describe the client-side app that exists, keeping the conventions and the future real-time notes, or leave it as is for now?
+
+> yes, rewrite tech.md to match the actual app
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat READM..., description: Read README, config, and module docs)
+  ⎿ # Metro
+  ⎿ 
+  ⎿ ## What Metro is
+  ⎿ 
+  ⎿ Metro is a mobile-first web app for Coimbra Metrobus riders. It opens straight onto a map showing
+  ⎿ where you are, your nearest Metrobus stop and the bus heading towards it, so you can glance at it
+  ⎿ and decide when to leave. Until a live feed exists, bus positions are estimated from the timetable
+  ⎿ and always labelled "Scheduled"; estimated data is never shown as live. There are no accounts and
+  ⎿ nothing to set up.
+  ⎿ 
+  ⎿ ## Requirements
+  ⎿ 
+  ⎿ - Node.js 24 (see `.nvmrc`) and the npm that comes with it.
+  ⎿ 
+  ⎿ ## Getting started
+  ⎿ 
+  ⎿ ```sh
+  ⎿ npm install
+  ⎿ npm run dev
+  ⎿ ```
+  ⎿ … +343 more lines
+  → Write(file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\con..., content: <!--
+  Tech Stack — maintained by the Autopilot Architect.
+  Lives in the PRO...)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\documentation\context\tech.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+● I've rewritten `documentation/context/tech.md` so it describes the app that actually exists, and left `vision.md` unchanged because play 006 fits the vision.
+
+**What changed in `tech.md`:**
+- **Architecture:** the made-up monorepo (`apps/api`, `apps/web`, `packages/shared`), the Fastify API and the part about the web app polling that API are gone. It now says Metro is one static, client-side React PWA with no backend. The code is split into `src/sources/` (adapters), `src/domain/` (pure logic) and `src/ui/`, and the browser fetches the Metro Mondego timetable directly and refreshes it every 6 hours.
+- **Added from the real code:** bus positions are recalculated in the browser every second, the service worker keeps the app working offline, and the GitHub Pages URL and deploy workflow are now listed.
+- **Real time (later):** the Agit API notes stay, now framed as a future adapter. Whether the browser can call it directly or needs a proxy is left for the play that adds it.
+- **Conventions:** the few runtime dependencies are now stated, where unit and end-to-end tests sit, and that a change in the data format should fail loudly.
+- **The `metro` block:** the real scripts, and two tooling details: `npx tsc` runs TypeScript 6 (type checking uses 7), and the free OpenStreetMap tiles are for light use only.
+
+**Caution for the Planner:** removing the note at the bottom of the sheet also removes the only "Timetable data may be out of date" warning. `tech.md` requires stale data to be flagged, so that warning needs somewhere else to live.
+
+Handing over to the Planner.
