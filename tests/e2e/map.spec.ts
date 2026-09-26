@@ -195,6 +195,15 @@ test.describe('located near Portagem', () => {
     await expect(page.getByText('Metro', { exact: true })).toBeVisible();
   });
 
+  test('phone: the page stays clear of the system bars', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'mobile', 'phone layout only');
+    await page.goto('/');
+    // With `viewport-fit=cover`, some Android phones hid the sheet's last rows under the
+    // navigation bar while reporting no safe-area inset.
+    const viewport = await page.locator('meta[name="viewport"]').getAttribute('content');
+    expect(viewport).not.toContain('viewport-fit=cover');
+  });
+
   test('phone: the sheet minimises and restores', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'mobile', 'phone layout only');
     await page.goto('/');

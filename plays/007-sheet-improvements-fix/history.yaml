@@ -1,0 +1,18 @@
+events:
+  - kind: transition
+    at: '2026-09-26T10:20:28.196Z'
+    from: ideation
+    to: working
+  - kind: transition
+    at: '2026-09-26T10:20:28.833Z'
+    from: working
+    to: validation
+  - kind: decision
+    at: '2026-09-26T10:20:29.398Z'
+    question: 'Ready for review: sheet improvements fix'
+    agent: Joana
+    resolution: approved
+  - kind: transition
+    at: '2026-09-26T10:20:29.399Z'
+    from: validation
+    to: completed
