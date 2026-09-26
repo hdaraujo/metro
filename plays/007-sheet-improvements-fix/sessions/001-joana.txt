@@ -1,0 +1,312 @@
+> I noticed that in a xiaomi red mi 13 phone, the sheet only show 3 buses and not 4, make it adapt to any phone so it always shows 4
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && ls -R pla..., description: Inspect play 007 folder and repo layout)
+  ⎿ plays/007-sheet-improvements-fix:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ intent.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ 
+  ⎿ plays/007-sheet-improvements-fix/sessions:
+  ⎿ info.yaml
+  ⎿ # Play `007` — session instructions
+  ⎿ 
+  ⎿ Your session starts at the root of the project's **specs repository** — the one
+  ⎿ holding `documentation/` and `plays/`. This play is `plays/007-sheet-improvements-fix/`.
+  ⎿ 
+  ⎿ Your primary instructions for this work are in the intent document. Read it
+  ⎿ first and treat it as the source of truth for what to build:
+  ⎿ 
+  ⎿ - [Intent](intent.md)
+  ⎿ 
+  ⎿ Read `documentation/context/` before starting: those documents are shared by every
+  ⎿ … +37 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat plays..., description: Read intent, context, and previous play)
+  ⎿ ---
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿   per-repository section below must make it explicit which technology each repo uses —
+  ⎿   that is the Developer's source of truth for what to build with, where.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Tech Stack
+  ⎿ 
+  ⎿ ## Architecture overview
+  ⎿ - **One static, client-side React PWA** at the root of the `metro` repository. There is no
+  ⎿   backend, database, auth or accounts. The browser does everything: it fetches, parses, estimates
+  ⎿   and renders.
+  ⎿ - **Code layers (in `src/`):**
+  ⎿   - `sources/`: source adapters. Each one fetches a third-party source and maps it into our own
+  ⎿     domain model (stops, shapes, trips). Only an adapter knows its source's format.
+  ⎿   - `domain/`: pure logic and types (geo, Lisbon time, holidays, nearest stop, interpolation,
+  ⎿     countdowns). No DOM or React code.
+  ⎿ … +285 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat src/u..., description: Read sheet components and CSS)
+  ⎿ import { type PointerEvent, type ReactNode, type Ref } from 'react';
+  ⎿ 
+  ⎿ /** How far a vertical swipe must travel, in pixels, to minimise or restore the phone sheet. */
+  ⎿ const SWIPE_MIN_PX = 40;
+  ⎿ 
+  ⎿ interface SheetProps {
+  ⎿   ref?: Ref<HTMLElement>;
+  ⎿   /** `phone`: bottom sheet with a grab handle. `panel`: the desktop floating panel with the title. */
+  ⎿   variant: 'phone' | 'panel';
+  ⎿   label: string;
+  ⎿   busy?: boolean;
+  ⎿   /** Phone only: the sheet is minimised to its essentials. */
+  ⎿   collapsed?: boolean;
+  ⎿   /** Phone only: makes the handle a toggle and lets a swipe minimise (down) or restore (up). */
+  ⎿   onCollapsedChange?: (collapsed: boolean) => void;
+  ⎿   children: ReactNode;
+  ⎿ }
+  ⎿ 
+  ⎿ export function Sheet({
+  ⎿   ref,
+  ⎿ … +893 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat src/u..., description: Read App, index.html, tokens, module doc)
+  ⎿ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿ import type { PaddingOptions } from 'maplibre-gl';
+  ⎿ import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+  ⎿ import { lisbonClock } from '../domain/lisbonTime';
+  ⎿ import { nearestStop } from '../domain/nearestStop';
+  ⎿ import { measureShape } from '../domain/shape';
+  ⎿ import type { LatLng } from '../domain/types';
+  ⎿ import { Attribution } from './chrome/Attribution';
+  ⎿ import { LocateButton } from './chrome/LocateButton';
+  ⎿ import { Wordmark } from './chrome/Wordmark';
+  ⎿ import { useGeolocation } from './hooks/useGeolocation';
+  ⎿ import { useMediaQuery } from './hooks/useMediaQuery';
+  ⎿ import { useNetwork } from './hooks/useNetwork';
+  ⎿ import { useNow } from './hooks/useNow';
+  ⎿ import { useTimetable } from './hooks/useTimetable';
+  ⎿ import { MapView, type MapHandle } from './map/MapView';
+  ⎿ import { DataErrorContent } from './sheet/DataErrorContent';
+  ⎿ import { LocatingContent } from './sheet/LocatingContent';
+  ⎿ import { LocationOffContent } from './sheet/LocationOffContent';
+  ⎿ import { NearestStopContent } from './sheet/NearestStopContent';
+  ⎿ … +445 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && grep -n "..., description: Check approaching logic, manifest, tokens, e2e setup)
+  ⎿ 130:export function approachingBuses(buses: readonly BusPosition[]): BusPosition[] {
+  ⎿ 131-  return buses.filter((bus) => bus.arrivalAtStopSeconds !== null);
+  ⎿ 132-}
+  ⎿ 133-
+  ⎿ 134-/**
+  ⎿ 135- * The soonest approaching bus in each direction of travel, so that the default framing shows the
+  ⎿ 136- * next bus arriving from each side of the stop. At most one bus per direction, soonest first.
+  ⎿ 137- */
+  ⎿ 138-export function soonestPerDirection(approaching: readonly BusPosition[]): BusPosition[] {
+  ⎿ 139-  const seen = new Set<Direction>();
+  ⎿ 140-  const soonest: BusPosition[] = [];
+  ⎿ 141-  for (const bus of approaching) {
+  ⎿ 142-    if (bus.arrivalAtStopSeconds === null || seen.has(bus.direction)) continue;
+  ⎿ 143-    seen.add(bus.direction);
+  ⎿ 144-    soonest.push(bus);
+  ⎿ 145-  }
+  ⎿ 146-  return soonest;
+  ⎿ 147-}
+  ⎿ 22:        display: 'standalone',
+  ⎿ /* Design tokens, taken from the approved artboards (plays/001-project-structure/design/). */
+  ⎿ … +107 more lines
+  → AskUserQuestion(questions: [{"question":"On the Redmi 13, how were you running Metro when you saw only 3...)
+  ⎿ Your questions have been answered: "On the Redmi 13, how were you running Metro when you saw only 3 buses?"="Installed app (PWA)", "What did the bottom of the sheet look like?"="Clean end after 3 rows". You can now continue with these answers in mind.
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && sed -n 1,..., description: Read bus estimation logic)
+  ⎿ import { dayTypeFor } from './holidays';
+  ⎿ import { positionAt } from './interpolation';
+  ⎿ import { previousDate, type LisbonClock } from './lisbonTime';
+  ⎿ import { stopDistancesForTrip, type MeasuredShape } from './shape';
+  ⎿ import type { BusPosition, DayType, Direction, LatLng, LineId, Stop, Trip } from './types';
+  ⎿ 
+  ⎿ const DAY_SECONDS = 86_400;
+  ⎿ /** Before this Lisbon time, trips from yesterday's service day (times past 24:00) may still run. */
+  ⎿ const PREVIOUS_SERVICE_DAY_UNTIL = 4 * 3600;
+  ⎿ 
+  ⎿ export interface BusesInput {
+  ⎿   /** The selected (nearest) stop, or null when none is known yet. */
+  ⎿   stop: Stop | null;
+  ⎿   clock: LisbonClock;
+  ⎿   tripsByDayType: ReadonlyMap<DayType, readonly Trip[]>;
+  ⎿   shapesById: ReadonlyMap<string, MeasuredShape>;
+  ⎿   stopsById: ReadonlyMap<string, Stop>;
+  ⎿   now: Date;
+  ⎿ }
+  ⎿ 
+  ⎿ … +110 more lines
+  → AskUserQuestion(questions: [{"question":"When fewer than 4 buses are on the road heading to the stop, ho...)
+  ⎿ The user answered: "When fewer than 4 buses are on the road heading to the stop, how should the list be filled?"="I tested on another phone and there were more than 4 buses coming. Also it was xiaomi redmi 15 c, not 13". Read the answers carefully — they may request clarification, changes, or that you not proceed — and follow what they actually say.
+
+● Understood: it's device-specific, then. I'll look up how Chrome handles installed PWAs on Android 15 (Redmi 15C, HyperOS 2), since the bottom of the page being hidden there is the likely cause.
+
+  → ToolSearch(query: select:WebSearch,WebFetch, max_results: 2)
+  → WebFetch(url: https://developer.chrome.com/docs/css-ui/edge-to-edge, prompt: Explain how Chrome on Android 15+ handles edge-to-edge: when does content dra...)
+  ⎿ # Chrome on Android Edge-to-Edge: Key Behaviors
+  ⎿ 
+  ⎿ ## Content Drawing Under Navigation Bar
+  ⎿ 
+  ⎿ From Chrome 135 onward, the viewport extends into Android's gesture navigation bar. By default, a dynamic "chin" appears over this area that retracts during scrolling. The document states: *"From Chrome 135, the viewport is allowed to extend into Android's gesture navigation bar."*
+  ⎿ 
+  ⎿ When the chin retracts, content can become obscured. The guide notes: *"When the chin is present, the content will initially be reachable by users but will get obstructed by Android's navigation bar as the chin goes away."*
+  ⎿ 
+  ⎿ ## Safe Area Inset Reporting
+  ⎿ 
+  ⎿ The `safe-area-inset-bottom` environment variable dynamically updates as the chin moves. It represents *"a rectangle by its top, right, bottom, and left insets from the edge of the viewport."* The value changes in real-time to keep content above the navigation bar.
+  ⎿ 
+  ⎿ Additionally, Chrome 135 introduces `safe-area-max-inset-bottom`, which represents *"the maximum value of the safe-area-inset-bottom"* and remains static.
+  ⎿ 
+  ⎿ ## Viewport-Fit=Cover Behavior
+  ⎿ 
+  ⎿ Websites can opt into edge-to-edge by default using `viewport-fit=cover` in the viewport meta tag. The guide explains: *"When enabled, the viewport will extend up to the bottom edge by default without the chin ever being visible."*
+  ⎿ 
+  ⎿ Without this setting, the chin appears by default.
+  ⎿ 
+  ⎿ … +11 more lines
+  → WebSearch(query: Android PWA standalone content hidden behind navigation bar safe-area-inset-b...)
+  ⎿ Web search results for query: "Android PWA standalone content hidden behind navigation bar safe-area-inset-bottom 0 Chrome edge-to-edge Xiaomi HyperOS"
+  ⎿ 
+  ⎿ Links: [{"title":"App design | web.dev","url":"https://web.dev/learn/pwa/app-design"},{"title":"fix(ui): respect Android system bar insets in installed PWA (viewport-fit=cover + safe-area padding) by rowan-m · Pull Request #88 · rowan-m/fractious","url":"https://github.com/rowan-m/fractious/pull/88"},{"title":"Chrome on Android edge-to-edge migration guide | CSS and UI | Chrome for Developers","url":"https://developer.chrome.com/docs/css-ui/edge-to-edge"},{"title":"Display your PWA / website fullscreen - DEV Community","url":"https://dev.to/oncode/display-your-pwa-website-fullscreen-4776"},{"title":"Understanding env() Safe Area Insets in CSS: From Basics to React and Tailwind | by Ayush Shah | Medium","url":"https://medium.com/@developerr.ayush/understanding-env-safe-area-insets-in-css-from-basics-to-react-and-tailwind-a0b65811a8ab"},{"title":"PWA Display Modes and Screen Orientation on Android","url":"https://pwatoapp.com/blog/pwa-screen-orientation-display-modes-android"},{"title":"Adjusting padding bottom for navigation in iOS and Android","url":"https://blog.oxyconit.com/adjusting-padding-bottom-for-navigation-in-ios-and-android/"},{"title":"DEV Community","url":"https://dev.to/karmasakshi/make-your-pwas-look-handsome-on-ios-1o08"},{"title":"pwa display test","url":"https://github.com/tecdrop/pwa-display-test"}]
+  ⎿ 
+  ⎿ Based on the search results, I found relevant information about your query regarding Android PWAs, safe-area-inset-bottom, and edge-to-edge content issues:
+  ⎿ 
+  ⎿ ## Key Findings:
+  ⎿ 
+  ⎿ **Edge-to-Edge PWAs and Hidden Content:**
+  ⎿ Installed PWAs on recent Android/Chrome draw edge-to-edge, so 100dvh extends behind the gesture navigation bar and the bottom control row was hidden.
+  ⎿ 
+  ⎿ **Safe Area Insets Solution:**
+  ⎿ The safe area insets are four environment variables that define a rectangle by its top, right, bottom, and left insets from the edge of the viewport. Combined these four values form the safe area rectangle in which it is safe to place content so that it does not get obstructed by things such as the Android gesture navigation bar.
+  ⎿ 
+  ⎿ **Recommended Implementation:**
+  ⎿ Opt in with viewport-fit=cover and pad body by env(safe-area-inset-*) so header/footer stay clear of the system bars while the canvas still fills the whole screen.
+  ⎿ 
+  ⎿ **Viewport Configuration:**
+  ⎿ If you want full access to the screen, even the invisible area, to render your color or image, include viewport-fit=cover in the content of your <meta name="viewport"> tag. Then use the safe-area-inset-* environment variables to extend your content safely into those areas.
+  ⎿ 
+  ⎿ … +4 more lines
+  → WebFetch(url: https://github.com/rowan-m/fractious/pull/88, prompt: What was the exact problem and fix? Did they find env(safe-area-inset-bottom)...)
+  ⎿ # Summary
+  ⎿ 
+  ⎿ Based on the GitHub PR content, the exact problem and solution were:
+  ⎿ 
+  ⎿ **Problem:** "Installed PWAs on recent Android/Chrome draw edge-to-edge, so `100dvh` extends behind the gesture navigation bar and the bottom control row was hidden."
+  ⎿ 
+  ⎿ **Fix:** The developer opted in with `viewport-fit=cover` and padded the body element using `env(safe-area-inset-*)` to keep header/footer clear of system bars while allowing the canvas to fill the screen.
+  ⎿ 
+  ⎿ However, the content provided **does not specify**:
+  ⎿ - Whether `env(safe-area-inset-bottom)` reported 0 in standalone mode
+  ⎿ - Any JavaScript fallback implementation
+  ⎿ - Specific device models tested
+  ⎿ 
+  ⎿ The PR was subsequently reverted in PR #89 due to issues with the Android install sheet, then addressed differently in PR #90 with an alternative approach for edge-to-edge rendering.
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git switc..., description: Create play branch and find safe-area usages)
+  ⎿ Switched to a new branch '007-sheet-improvements-fix'
+  ⎿ src/ui/styles/app.css:307:  padding: 0 20px calc(24px + env(safe-area-inset-bottom));
+  ⎿ src/ui/styles/app.css:315:  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  ⎿ index.html:5:    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  ⎿ vite.config.ts:20:        theme_color: '#ffffff',
+  ⎿ vite.config.ts:21:        background_color: '#f1f0eb',
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && sed -i 's..., description: Drop viewport-fit=cover and set white body background)
+  ⎿  index.html            |    2 +-
+  ⎿  src/ui/styles/app.css | 1325 +++++++++++++++++++++++++------------------------
+  ⎿  2 files changed, 665 insertions(+), 662 deletions(-)
+
+● The fix is in, but Python rewrote the CSS file's line endings, so the diff looks huge. Restoring them now:
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && git show ..., description: Restore CRLF line endings and show diff)
+  ⎿ 0000000   /   *       L   a   y   o   u   t       a   n   d       c   o
+  ⎿ 0000020   m   p   o   n   e   n   t   s   .       V   a   l   u   e   s
+  ⎿ 0000040       f   o   l   l   o   w       t   h   e       M   a   i   n
+  ⎿  index.html            |    2 +-
+  ⎿  src/ui/styles/app.css | 1325 +++++++++++++++++++++++++------------------------
+  ⎿  2 files changed, 665 insertions(+), 662 deletions(-)
+  ⎿ diff --git a/index.html b/index.html
+  ⎿ index 531e837..bdc519d 100644
+  ⎿ --- a/index.html
+  ⎿ +++ b/index.html
+  ⎿ @@ -2,7 +2,7 @@
+  ⎿  <html lang="en">
+  ⎿    <head>
+  ⎿      <meta charset="utf-8" />
+  ⎿ -    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  ⎿ +    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  ⎿      <meta name="theme-color" content="#ffffff" />
+  ⎿      <meta
+  ⎿        name="description"
+  ⎿ diff --git a/src/ui/styles/app.css b/src/ui/styles/app.css
+  ⎿ … +1329 more lines
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && python -c..., description: Convert CSS back to LF and re-check diff)
+  ⎿  index.html            | 2 +-
+  ⎿  src/ui/styles/app.css | 5 ++++-
+  ⎿  2 files changed, 5 insertions(+), 2 deletions(-)
+  ⎿ diff --git a/src/ui/styles/app.css b/src/ui/styles/app.css
+  ⎿ index ac55b05..2414e1c 100644
+  ⎿ --- a/src/ui/styles/app.css
+  ⎿ +++ b/src/ui/styles/app.css
+  ⎿ @@ -15,10 +15,13 @@ body,
+  ⎿    overflow: hidden;
+  ⎿  }
+  ⎿  
+  ⎿ +/* The page stays inside the safe area (no `viewport-fit=cover`): some Android phones cover the
+  ⎿ +   bottom of an edge-to-edge page with the navigation bar while reporting no safe-area inset, which
+  ⎿ +   hid the sheet's last rows. White, so a strip the browser leaves below the sheet matches it. */
+  ⎿  body {
+  ⎿    font-family: var(--font-sans);
+  ⎿    color: var(--color-text);
+  ⎿ -  background: var(--color-map-land);
+  ⎿ +  background: var(--color-surface);
+  ⎿    -webkit-font-smoothing: antialiased;
+  ⎿ … +2 more lines
+
+● Diff is clean now. I'll add a small e2e guard so `viewport-fit=cover` can't quietly come back, then run the checks.
+
+  → Edit(replace_all: false, file_path: C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\tests\e2e\map.spe..., old_string:   test('phone: the sheet minimises and restores', async ({ page }, testInfo) ..., new_string:   test('phone: the page stays clear of the system bars', async ({ page }, tes...)
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && npm run l..., description: Run lint, typecheck, unit and e2e tests, timeout: 600000)
+  ⎿ The file C:\Users\Hugo\.building\data\projects\001-metro\repos\metro\tests\e2e\map.spec.ts has been updated successfully.
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿       Tests  95 passed (95)
+  ⎿    Start at  11:19:15
+  ⎿    Duration  402ms (transform 52%, import 36%, tests 8%, worker 4%)
+  ⎿ 
+  ⎿   -  21 [desktop] › tests\e2e\map.spec.ts:207:3 › located near Portagem › phone: the sheet minimises and restores
+  ⎿   ok 23 [desktop] › tests\e2e\map.spec.ts:263:3 › located near Portagem › desktop: the panel has no minimise control (990ms)
+  ⎿   ok 26 [desktop] › tests\e2e\map.spec.ts:309:1 › attribution links to the OpenStreetMap copyright page (980ms)
+  ⎿   ok 25 [desktop] › tests\e2e\map.spec.ts:299:3 › location denied › explains that location is off and keeps the map (1.2s)
+  ⎿   ok 24 [desktop] › tests\e2e\map.spec.ts:271:3 › located near Portagem › buses draw beneath the sheet (1.6s)
+  ⎿ 
+  ⎿   6 skipped
+  ⎿   20 passed (16.4s)
+
+● All checks pass. Now I'll record your request in the play's `intent.md`, which was empty:
+
+  → Bash(command: cd "C:/Users/Hugo/.building/data/projects/001-metro/repos/metro" && cat > pla..., description: Write play intent and show status)
+  ⎿  M index.html
+  ⎿  M src/ui/styles/app.css
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ ?? plays/007-sheet-improvements-fix/
+
+● I've made a fix on a new branch, `007-sheet-improvements-fix`, but I couldn't test it on a Redmi 15C, so please check it on the phone. Nothing is committed yet.
+
+**Cause:** the sheet always has room for 4 rows, on every screen size. The problem is that the app told the browser it could draw behind the phone's system bars (`viewport-fit=cover`). It then relied on the phone reporting how tall the navigation bar is (`env(safe-area-inset-bottom)`) so it could keep the sheet above it. If a phone reports 0 but still covers the bottom of the page, the 4th row ends up under the navigation bar. The sheet and the bar are both white, so it looks like the list just ends after 3 rows. The installed app on newer Android versions draws edge to edge, which fits that. This is my best explanation, not something I confirmed on the device.
+
+**Fix:**
+- **`index.html`:** removed `viewport-fit=cover`. Android now keeps the page above its system bars itself, so it doesn't matter what an individual phone reports. That's what makes it work on any phone.
+- **`src/ui/styles/app.css`:** the page background is now white instead of the map colour. Any strip the browser leaves below the sheet (for example the iPhone home-bar area) now matches the sheet instead of showing a beige band.
+- **`tests/e2e/map.spec.ts`:** added a phone test that fails if `viewport-fit=cover` is added back.
+
+Lint, typecheck, the unit tests and the end-to-end tests all pass. The tests can't simulate a navigation bar covering the page, though.
+
+**To check on the Redmi:** once it's deployed, the installed app picks up the new version in the background, so close and reopen it once or twice. You should see 4 rows, and the sheet should end just above the navigation bar. If it still shows only 3, send me a screenshot and I'll look for another cause.
+
+I haven't updated `documentation/modules/map-screen.md`; under the play workflow that happens after approval. Should I commit this on the play branch?
+
+Sources:
+- [Chrome on Android edge-to-edge migration guide](https://developer.chrome.com/docs/css-ui/edge-to-edge)
+- [rowan-m/fractious PR #88 (installed PWA content hidden behind the Android nav bar)](https://github.com/rowan-m/fractious/pull/88)

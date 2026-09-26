@@ -15,10 +15,13 @@ body,
   overflow: hidden;
 }
 
+/* The page stays inside the safe area (no `viewport-fit=cover`): some Android phones cover the
+   bottom of an edge-to-edge page with the navigation bar while reporting no safe-area inset, which
+   hid the sheet's last rows. White, so a strip the browser leaves below the sheet matches it. */
 body {
   font-family: var(--font-sans);
   color: var(--color-text);
-  background: var(--color-map-land);
+  background: var(--color-surface);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
