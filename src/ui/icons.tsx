@@ -90,3 +90,14 @@ export function MapPinOffIcon(props: IconProps) {
     </Icon>
   );
 }
+
+export function SwapIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M7 4 3 8l4 4" />
+      <path d="M3 8h14" />
+      <path d="m17 12 4 4-4 4" />
+      <path d="M21 16H7" />
+    </Icon>
+  );
+}

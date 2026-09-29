@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { PaddingOptions } from 'maplibre-gl';
 import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+import { directionsAtStop, nextDirectionFilter, type DirectionFilter } from '../domain/directions';
 import { lisbonClock } from '../domain/lisbonTime';
 import { nearestStop } from '../domain/nearestStop';
 import { measureShape } from '../domain/shape';
@@ -59,6 +60,25 @@ export function App() {
   );
   const approaching = useMemo(() => approachingBuses(buses), [buses]);
   const framedBuses = useMemo(() => soonestPerDirection(approaching), [approaching]);
+
+  // ---------- Direction filter (the sheet's list only; the map always shows every bus) ----------
+  // Keyed on the stop's id, since `nearest` is a new object on every position update.
+  const stopId = nearest?.stop.id ?? null;
+  const directions = useMemo(
+    () => (stopId ? directionsAtStop(stopId, [...tripsByDayType.values()].flat()) : []),
+    [stopId, tripsByDayType],
+  );
+  // Tied to the stop it was chosen at, so it falls back to both directions when the stop changes.
+  // Not persisted, like `sheetCollapsed`.
+  const [directionChoice, setDirectionChoice] = useState<{
+    stopId: string;
+    filter: DirectionFilter;
+  } | null>(null);
+  const directionFilter: DirectionFilter =
+    directions.length === 2 && directionChoice?.stopId === stopId ? directionChoice.filter : 'both';
+  const cycleDirection = useCallback(() => {
+    if (stopId) setDirectionChoice({ stopId, filter: nextDirectionFilter(directionFilter) });
+  }, [stopId, directionFilter]);
 
   // ---------- Smart zoom ----------
   const mapRef = useRef<MapHandle>(null);
@@ -120,6 +140,9 @@ export function App() {
         distanceMeters={nearest.distanceMeters}
         lineColors={network.lineColors}
         approaching={approaching}
+        directions={directions}
+        directionFilter={directionFilter}
+        onCycleDirection={cycleDirection}
         fetchedAt={network.fetchedAt}
         now={now}
         collapsed={collapsed}

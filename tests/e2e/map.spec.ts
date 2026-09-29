@@ -260,6 +260,59 @@ test.describe('located near Portagem', () => {
     await expect(sheet.getByRole('listitem')).toHaveCount(2);
   });
 
+  test('cycles the direction filter', async ({ page }) => {
+    await page.goto('/');
+    const sheet = page.getByRole('region', { name: 'Nearest stop' });
+    const button = sheet.getByRole('button', { name: /^Direction: / });
+    const rows = sheet.getByRole('listitem');
+    await expect(button).toHaveAccessibleName('Direction: Both directions');
+    await expect(rows).toHaveCount(2);
+
+    await button.click();
+    await expect(button).toHaveAccessibleName(/^Direction: To Vale das Flores/);
+    await expect(rows).toHaveCount(1);
+    await expect(rows).toContainText('to Vale das Flores');
+
+    await button.click();
+    await expect(button).toHaveAccessibleName('Direction: To Coimbra B');
+    await expect(rows).toHaveCount(1);
+    await expect(rows).toContainText('to Coimbra B');
+    // The map is not filtered: every bus stays, and the other direction keeps its countdown.
+    await expect(page.getByRole('img', { name: /^Scheduled position of line/ })).toHaveCount(3);
+    await expect(
+      page.getByRole('img', { name: U1_TO_VALE_DAS_FLORES }).locator('.marker-bus__tag'),
+    ).toHaveText(/^\d+:\d{2}$/);
+    await expect(
+      page.getByRole('img', { name: U1_TO_COIMBRA_B }).locator('.marker-bus__tag'),
+    ).toHaveText(/^\d+:\d{2}$/);
+
+    await button.click();
+    await expect(button).toHaveAccessibleName('Direction: Both directions');
+    await expect(rows).toHaveCount(2);
+  });
+
+  test('phone: the minimised sheet follows the direction filter', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'mobile', 'phone layout only');
+    await page.goto('/');
+    const sheet = page.getByRole('region', { name: 'Nearest stop' });
+    const button = sheet.getByRole('button', { name: /^Direction: / });
+    await expect(button).toHaveAccessibleName('Direction: Both directions');
+    await button.click();
+    await button.click();
+    await expect(button).toHaveAccessibleName('Direction: To Coimbra B');
+
+    await sheet.getByRole('button', { name: 'Minimise' }).click();
+    await expect(sheet.getByRole('button', { name: 'Expand' })).toBeVisible();
+    const rows = sheet.getByRole('listitem');
+    await expect(rows).toHaveCount(1);
+    await expect(rows).toContainText('to Coimbra B');
+    await expect(rows.getByText('Scheduled', { exact: true })).toHaveCount(1);
+    await expect(button).toHaveCount(0);
+
+    await sheet.getByRole('button', { name: 'Expand' }).click();
+    await expect(button).toHaveAccessibleName('Direction: To Coimbra B');
+  });
+
   test('desktop: the panel has no minimise control', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'desktop layout only');
     await page.goto('/');

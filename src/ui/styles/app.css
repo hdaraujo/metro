@@ -472,6 +472,50 @@ button {
   font-weight: 600;
 }
 
+.direction-button {
+  align-self: flex-start;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.direction-button:hover {
+  border-color: var(--color-grab-handle);
+  color: var(--color-text);
+}
+
+.direction-button:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+.direction-button svg {
+  flex-shrink: 0;
+}
+
+.direction-button__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.approaching__empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
 .bus-list {
   display: flex;
   flex-direction: column;
