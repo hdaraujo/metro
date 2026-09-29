@@ -54,6 +54,36 @@ If any bus is heading to the stop, a **"Heading to this stop"** section follows
 
 If no bus is heading to the stop, the section is not shown, even if other buses are on the map.
 
+### Direction filter
+
+At a stop served both ways (for example Portagem), a **direction button** sits on its own row
+under the section header, above the list (`sheet/DirectionButton.tsx`). Each press cycles the list
+**both → outbound → inbound → both**. The logic is pure and lives in `src/domain/directions.ts`.
+
+- **Served directions.** `directionsAtStop` scans every loaded trip, across all day types in
+  `tripsByDayType` and not only today's. A stop is served in a direction when at least one trip of
+  that direction calls there **at any stop but its first**. A bus is only in service once it has
+  left its first stop, so it never approaches that stop. A terminus therefore counts as served in
+  one direction only. The button shows only when the stop is served in exactly both directions, and
+  only in the expanded "Heading to this stop" section. Otherwise the filter is `both`.
+- **Label.** `Both directions`, or `To ` followed by that direction's distinct trip destinations,
+  most frequent first, with ties in alphabetical order (for example
+  `To Vale das Flores, Serpins, Corvo`). If a direction has no destinations, the label falls back
+  to `Outbound` or `Inbound`. A long label is cut with an ellipsis, and the full label is the
+  button's `title`. The accessible name is `Direction: <label>`, where "Direction: " is visually
+  hidden text.
+- **Filtering.** Only the list is filtered. It stays soonest first, and the 4-row cap applies
+  after filtering. The section still shows as long as a bus is approaching in *either* direction.
+  If the filter leaves no bus, the list is replaced by "No buses in this direction right now."
+  (`NO_BUSES_IN_DIRECTION`). The header, its Scheduled badge and the button stay, so the user can
+  always cycle back.
+- **State.** In `App.tsx` the choice is stored with the stop id it was made at. When the nearest
+  stop changes, it falls back to `both`, and no effect is needed for that. The choice is not
+  persisted, just like `sheetCollapsed`. `directions` is memoised on the stop **id**, because
+  `nearest` is a new object on every position update.
+- **Not affected:** the map markers, their countdown tags and dimming, smart zoom and the locate
+  reframe all keep using the unfiltered approaching list.
+
 There is no explanatory note under the list: the Scheduled badge and the dashed markers are the
 only marks of an estimate. Only when the timetable was fetched more than 24 hours ago
 (`STALE_AFTER_MS` in `NearestStopContent.tsx`) does one line close the content: "Timetable data
@@ -85,7 +115,7 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
 
   | State | Minimised content |
   | --- | --- |
-  | Nearest stop | The stop name and distance, one `BusRow` for the soonest approaching bus **with its own Scheduled badge** (the header that normally carries the badge is gone, and an estimate must always be labelled), and the stale line if it applies. The eyebrow, the lines row and the "Heading to this stop" header are dropped. |
+  | Nearest stop | The stop name and distance, one `BusRow` for the soonest approaching bus **in the chosen direction** **with its own Scheduled badge** (the header that normally carries the badge is gone, and an estimate must always be labelled), and the stale line if it applies. If the direction filter leaves no bus while one approaches the other way, the row becomes "No buses in this direction right now." The eyebrow, the lines row, the "Heading to this stop" header and the direction button are dropped, but the chosen direction is kept when the sheet is expanded again. |
   | Locating, finding the nearest stop | The spinner and title row |
   | Location off, stops failed to load | The icon and title row, with no text and no **Try again** button. On phones, the locate button still retries geolocation. |
 
@@ -141,7 +171,7 @@ bus in each direction of travel** (`soonestPerDirection` in `src/domain/buses.ts
 `outbound` bus and the next `inbound` bus heading to the stop, so up to two buses. A stop served in
 one direction only (for example `República (desc)`), or with buses approaching from one side only,
 frames one bus; with none approaching, only the user and the stop are framed. It never frames every
-bus in service. The maximum zoom is 17. The animation takes 800 ms, or is instant under
+bus in service, and it ignores the sheet's direction filter. The maximum zoom is 17. The animation takes 800 ms, or is instant under
 `prefers-reduced-motion`. The padding keeps the points clear of the sheet or panel: on phones, the
 bottom padding is the sheet's measured height.
 

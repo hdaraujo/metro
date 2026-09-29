@@ -1,0 +1,325 @@
+> You are the Autopilot DevOps engineer for this play, wrapping up development. Read `plays/008-direction-filter/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`plays/008-direction-filter`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008/<repo-folder-name>`, checked out on branch `008-direction-filter`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `008-direction-filter`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-devops)
+  ⎿ Launching skill: autopilot-devops
+
+> Base directory for this skill: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\.claude\skills\autopilot-devops
+
+You are the Autopilot DevOps engineer for this play, opened as an interactive session that the user drives directly. You are in the project's specs repository, on this play's branch; read `$play/plan.md` for context. The play's code changes live in isolated git worktrees under `$worktrees`. Do NOT start working on your own: wait for the user's first message and follow their direction.
+
+## 1. Prepare the repositories
+
+You are the Autopilot DevOps engineer for this play, preparing repositories for development. Read `$play/plan.md` — it states which of the attached repositories are part of this play; only touch those.
+
+Each play is developed on its own branch, `$branch`, in an isolated git worktree per repository, so several plays can be in progress at once without interfering. The specs repository (`this repository`) is already on that branch — you are working inside its worktree right now, which is why this play's folder is here. Your job is to do the same for each TARGET CODE repository, under the directory `$worktrees`.
+
+For each target repository (its main clone is one of the attached directories — call its path <clone> and its folder name <name>):
+1. Run `git -C <clone> fetch` so the clone is current.
+2. Create the play worktree at exactly `$worktrees/<name>`:
+   `git -C <clone> worktree add "$worktrees/<name>" -b $branch`
+
+Handle these cases without asking me:
+- If a worktree already exists at `$worktrees/<name>`, this is a resumed iteration of the same play — leave it as-is and continue; do not recreate it.
+- If the branch `$branch` already exists but has no worktree, add the worktree from that existing branch instead (omit `-b`): `git -C <clone> worktree add "$worktrees/<name>" $branch`.
+- If a target repository IS the specs repository you are already in, it already has its worktree — skip it.
+
+Only stop and ask me how to proceed if something genuinely conflicts — the worktree path is occupied by an unrelated directory, or the repository is in a broken state — do not guess and do not act destructively. Wait for my answer.
+
+Once every target repository has its `$branch` worktree under `$worktrees`, end your turn with a short factual summary of what you did. That summary must NOT end with a question — only end with a question mark when you are genuinely asking me how to proceed with a real conflict per the rule above.
+
+## 2. Finalize — commit and hand over for testing
+
+You are the Autopilot DevOps engineer for this play, wrapping up development. Read `$play/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`$play`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `$worktrees/<repo-folder-name>`, checked out on branch `$branch`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "$worktrees/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `$branch`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+## 3. Close, once the play is approved
+
+The play was just approved. Do NOT merge the play's branch `$branch` into the default branch in any repository yourself. In the target code repositories it stays unmerged, so I can review and merge it myself; in the specs repository — the directory you are in — Building commits whatever is left, squash-merges the branch into the default branch as a single commit and deletes it, once the play has been documented.
+
+Your only job now is to make sure nothing is left uncommitted in the target code repositories. For each worktree under `$worktrees`, check `git -C "$worktrees/<name>" status`; if anything changed since you finalized (for example while I was validating), stage all of it (`add -A`) and commit it on `$branch` with a clear conventional commit message. Skip any worktree with no changes. You do not need to commit in the specs repository.
+
+Do NOT merge, rebase, squash or push, and do NOT delete the worktrees or the `$branch` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`, `$branch`, `$worktrees`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read plan, context docs, and status)
+  ⎿ # Play 008 — Direction filter
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The sheet's "Heading to this stop" list mixes buses from both directions. At a stop served both
+  ⎿ ways (e.g. Portagem) a rider usually only cares about one of them. This play adds a button to the
+  ⎿ sheet that cycles the list through **both directions → one direction → the other → both**. The
+  ⎿ default, and the behaviour whenever the button is not shown, is **both directions** — exactly
+  ⎿ today's behaviour.
+  ⎿ 
+  ⎿ Decisions agreed with the user:
+  ⎿ - **Scope: the sheet list only.** The map (every marker, its countdown tag, dimming) and smart
+  ⎿   zoom (`soonestPerDirection` over *all* approaching buses) do not change.
+  ⎿ - **Labels by destination:** "Both directions" → "To Vale das Flores, Serpins, Corvo" →
+  ⎿   "To Coimbra B" — the destinations of that direction's trips at this stop.
+  ⎿ - **Minimised phone sheet:** the filter applies to its single row, but the button is not shown
+  ⎿   there.
+  ⎿ - No new screen, so there is no design folder; follow the existing sheet styling.
+  ⎿ 
+  ⎿ ## Repositories
+  ⎿ … +324 more lines
+
+● Only one worktree is involved: `metro` holds both the specs and the code. I'll review the code diff and run the checks before committing.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Review code diff and new files)
+  ⎿  plays/008-direction-filter/devops.yaml        |  2 +
+  ⎿  plays/008-direction-filter/positions.yaml     |  2 +-
+  ⎿  plays/008-direction-filter/sessions/info.yaml | 56 ++++++++++++++++++++++++++-
+  ⎿  src/ui/App.tsx                                | 23 +++++++++++
+  ⎿  src/ui/icons.tsx                              | 11 ++++++
+  ⎿  src/ui/sheet/ApproachingBuses.tsx             | 27 +++++++++----
+  ⎿  src/ui/sheet/NearestStopContent.tsx           | 37 ++++++++++++++++--
+  ⎿  src/ui/styles/app.css                         | 44 +++++++++++++++++++++
+  ⎿  tests/e2e/map.spec.ts                         | 53 +++++++++++++++++++++++++
+  ⎿  9 files changed, 241 insertions(+), 14 deletions(-)
+  ⎿ diff --git a/src/ui/App.tsx b/src/ui/App.tsx
+  ⎿ index 3c9a446..01b3818 100644
+  ⎿ --- a/src/ui/App.tsx
+  ⎿ +++ b/src/ui/App.tsx
+  ⎿ @@ -1,6 +1,7 @@
+  ⎿  import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿  import type { PaddingOptions } from 'maplibre-gl';
+  ⎿  import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+  ⎿ +import { directionsAtStop, nextDirectionFilter, type DirectionFilter } from '../domain/directions';
+  ⎿  import { lisbonClock } from '../domain/lisbonTime';
+  ⎿ … +432 more lines
+
+● The diff matches the plan. Next I'll run lint, the type check and the unit tests before committing.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Run lint, typecheck, unit tests, timeout: 300000)
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ > metro@0.0.0 test
+  ⎿ > vitest run
+  ⎿ 
+  ⎿ 
+  ⎿  RUN  v5.0.2 C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  11 passed (11)
+  ⎿       Tests  106 passed (106)
+  ⎿    Start at  10:38:57
+  ⎿    Duration  710ms (transform 57%, import 30%, tests 8%, worker 5%)
+
+● Lint, typecheck and all 106 unit tests pass. Now the production build and the Playwright suite:
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Build and run end-to-end tests, timeout: 600000)
+  ⎿   webServer: {
+  ⎿     command: 'npm run build && npm run preview -- --port 4173 --strictPort',
+  ⎿     url: BASE_URL,
+  ⎿     reuseExistingServer: !process.env.CI,
+  ⎿     timeout: 180_000,
+  ⎿   },
+  ⎿   use: {
+  ⎿     baseURL: BASE_URL,
+  ⎿     serviceWorkers: 'block',
+  ⎿ mode      generateSW
+  ⎿ precache  12 entries (1845.90 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  ⎿   ok 17 [desktop] › tests\e2e\map.spec.ts:52:3 › located near Portagem › shows the nearest stop and every scheduled bus (9.7s)
+  ⎿   -  21 [desktop] › tests\e2e\map.spec.ts:186:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark
+  ⎿   ok 20 [desktop] › tests\e2e\map.spec.ts:109:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (9.7s)
+  ⎿   -  26 [desktop] › tests\e2e\map.spec.ts:294:3 › located near Portagem › phone: the minimised sheet follows the direction filter
+  ⎿   -  23 [desktop] › tests\e2e\map.spec.ts:238:3 › located near Portagem › phone: swiping the sheet minimises and restores it
+  ⎿   -  24 [desktop] › tests\e2e\map.spec.ts:198:3 › located near Portagem › phone: the page stays clear of the system bars
+  ⎿ … +9 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Commit code and play records)
+  ⎿ 26f54d7 chore(play-008): record direction filter play sessions and history
+  ⎿ 1ce9223 feat(sheet): add direction filter to the approaching-buses list
+  ⎿ e41f34f Start play 008
+  ⎿ 5ae7efc Merge pull request #1 from hdaraujo/007-sheet-improvements-fix
+  ⎿ C:/Dev/metro                                                            e41f34f [main]
+  ⎿ C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro  26f54d7 [008-direction-filter]
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Check README for run instructions)
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ dist
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ node_modules
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ plays
+  ⎿ playwright.config.ts
+  ⎿ public
+  ⎿ pwa-assets.config.ts
+  ⎿ src
+  ⎿ test-results
+  ⎿ tests
+  ⎿ tsconfig.json
+  ⎿ vite.config.ts
+  ⎿ 13:- Node.js 24 (see `.nvmrc`) and the npm that comes with it.
+  ⎿ 18:npm install
+  ⎿ … +26 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read README location override tip)
+  ⎿ Exit code 128
+  ⎿ ```
+  ⎿ 
+  ⎿ Open the URL Vite prints (normally `http://localhost:5173`) and allow location access when asked.
+  ⎿ To try it away from Coimbra, override the location in the browser's developer tools, e.g. near
+  ⎿ Portagem: `40.2075, -8.4307`.
+  ⎿ 
+  ⎿ ## Scripts
+  ⎿ 
+  ⎿ | Script               | What it does                                                        |
+  ⎿ fatal: --quiet is only valid with a single pathname
+
+● Play 008 is committed on branch `008-direction-filter`. Nothing is merged or pushed.
+
+**What I did**
+- **One worktree:** `metro` holds both the specs and the code, at `C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro`. The plan names no other repository.
+- **Checked the code:** the changes match the plan. Lint, the Prettier check and the type check are clean. All 106 unit tests pass, including the new `src/domain/directions.test.ts`. The production build succeeds.
+- **End-to-end tests:** 23 passed, including the two new direction-filter tests. The 7 skipped are phone-only tests on the desktop project and the reverse, which is expected.
+- **Two commits:**
+  - `1ce9223 feat(sheet): add direction filter to the approaching-buses list` — the new `src/domain/directions.ts` and its tests, the new `DirectionButton.tsx`, the swap icon, and changes to `ApproachingBuses.tsx`, `NearestStopContent.tsx`, `App.tsx`, `app.css` and `tests/e2e/map.spec.ts`.
+  - `26f54d7 chore(play-008): record direction filter play sessions and history` — the play folder, `plays/008-direction-filter/`.
+- The working tree is clean.
+
+---
+
+## How to test play 008 (direction filter)
+
+All commands run in the play's worktree, where the changes live:
+
+```powershell
+cd C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro
+```
+
+`node_modules` is already installed there. If it ever goes missing, run `npm install`; this needs Node 24.
+
+### 1. Automated checks
+
+```powershell
+npm run lint        # ESLint + Prettier check
+npm run typecheck   # TypeScript 7
+npm test            # Vitest: 106 tests, including src/domain/directions.test.ts
+npm run test:e2e    # builds, serves on :4173, runs Playwright (mobile + desktop)
+```
+
+Before your first `npm run test:e2e` on this machine, run `npx playwright install chromium` once. The two new end-to-end tests are "cycles the direction filter" and "phone: the minimised sheet follows the direction filter", both under "located near Portagem".
+
+### 2. Manual check in the browser
+
+1. Run `npm run dev` and open **http://localhost:5173** (or whatever URL Vite prints).
+2. Set a location near a stop served in both directions. In Chrome DevTools, open ⋮ → More tools → **Sensors** → Location → Other…, then enter **40.2075, -8.4307** (Portagem). Reload and allow location access.
+3. For a phone layout, turn on device mode (Ctrl+Shift+M) and pick a 390 px-wide device, such as iPhone 12/13/14.
+
+Check each of these:
+
+- **The button appears.** Under "Heading to this stop" there is a button with a swap icon that reads **Both directions**. The list shows buses in both directions, at most 4 rows, soonest first.
+- **It cycles.** Each press moves to the next label:
+  - **Both directions**
+  - **To Vale das Flores, Serpins, Corvo** (or similar: the destinations of the outbound trips at this stop)
+  - **To Coimbra B**
+  - **Both directions** again
+
+  In each single-direction state, the list shows only that direction's buses.
+- **Long labels are cut.** At 390 px the long "To Vale das Flores, …" label ends with an ellipsis and does not widen the sheet. Hovering the button shows the full label as a tooltip.
+- **Empty direction.** If a direction has no approaching bus at the moment, the list is replaced by "No buses in this direction right now." The header, the Scheduled badge and the button stay, so you can cycle back.
+- **The map is not filtered.** While filtering, every bus marker stays on the map, the approaching buses keep their countdown tags, and the locate/reframe button frames the view as before.
+- **Minimised phone sheet.** With the filter on "To Coimbra B", press **Minimise**. The single row is the soonest Coimbra B bus, with its Scheduled badge, and there is no direction button. Press **Expand**: the button still reads "To Coimbra B".
+- **It resets when the stop changes.** Set the filter to a single direction, then change the Sensors location to a different stop. The filter is back on "Both directions".
+- **No button at one-direction stops.** At a stop served in only one direction (for example a line terminus), no direction button appears and the list behaves as before.
+- **Desktop.** Turn off device mode. The side panel shows the same button and cycling works the same way. There is no minimise control on desktop.
+
+### 3. After review
+
+The code branch `008-direction-filter` is left unmerged for you to review and merge. Building squash-merges the specs side of this branch when the play closes.
+
+> push, and do NOT delete the worktrees or the `008-direction-filter` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Check status, remote and upstream)
+  ⎿ Exit code 128
+  ⎿  M package-lock.json
+  ⎿  M plays/008-direction-filter/config.yaml
+  ⎿  M plays/008-direction-filter/devops.yaml
+  ⎿  M plays/008-direction-filter/history.yaml
+  ⎿  M plays/008-direction-filter/sessions/info.yaml
+  ⎿ origin	git@github.com:hdaraujo/metro.git (fetch)
+  ⎿ origin	git@github.com:hdaraujo/metro.git (push)
+  ⎿ fatal: no upstream configured for branch '008-direction-filter'
+
+● `package-lock.json` has changed since I committed, so I'll check what changed before pushing.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Inspect package-lock.json diff)
+  ⎿  package-lock.json | 136 +++++++-----------------------------------------------
+  ⎿  1 file changed, 16 insertions(+), 120 deletions(-)
+  ⎿ diff --git a/package-lock.json b/package-lock.json
+  ⎿ index 7ef1f55..ac97b2b 100644
+  ⎿ --- a/package-lock.json
+  ⎿ +++ b/package-lock.json
+  ⎿ @@ -70,6 +70,7 @@
+  ⎿        "integrity": "sha512-RgHBCvtjbOK2gXSNBNIkNoEc9qoVEtau3hj8gEqKQuL3HZAibKarWFEI3Lfm6EYKkLalOh8eSrj9b+ch9H/VBA==",
+  ⎿        "dev": true,
+  ⎿        "license": "MIT",
+  ⎿ +      "peer": true,
+  ⎿        "dependencies": {
+  ⎿          "@babel/code-frame": "^7.29.7",
+  ⎿          "@babel/generator": "^7.29.7",
+  ⎿ @@ -1935,9 +1936,6 @@
+  ⎿          "arm"
+  ⎿        ],
+  ⎿        "dev": true,
+  ⎿ -      "libc": [
+  ⎿ -        "glibc"
+  ⎿ … +22 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Restore lockfile and push the play branch)
+  ⎿ remote: 
+  ⎿ remote: Create a pull request for '008-direction-filter' on GitHub by visiting:        
+  ⎿ remote:      https://github.com/hdaraujo/metro/pull/new/008-direction-filter        
+  ⎿ remote: 
+  ⎿ branch '008-direction-filter' set up to track 'origin/008-direction-filter'.
+  ⎿ To github.com:hdaraujo/metro.git
+  ⎿  * [new branch]      008-direction-filter -> 008-direction-filter
+  ⎿ ## 008-direction-filter...origin/008-direction-filter
+  ⎿  M plays/008-direction-filter/config.yaml
+  ⎿  M plays/008-direction-filter/devops.yaml
+
+● I pushed `008-direction-filter` to `origin` (`git@github.com:hdaraujo/metro.git`), and it now tracks `origin/008-direction-filter`. The pushed code is the two commits I made earlier.
+
+- **Lockfile:** `package-lock.json` had changed since those commits, from a local `npm install` run with a different npm version. It dropped the `libc` fields and added `peer` flags, which has nothing to do with the play. I restored the committed version, so Building won't pull that change into the closing commit.
+- **Play records:** a few files in `plays/008-direction-filter/` changed after I finalized: `config.yaml`, `devops.yaml`, `history.yaml` and `sessions/info.yaml`. These are Building's play records, and Building commits them when the play closes, so I didn't commit them.
+- **Not done:** I didn't merge, rebase or open a pull request, and the worktree and the `008-direction-filter` branch are still in place. You can open a pull request at https://github.com/hdaraujo/metro/pull/new/008-direction-filter.

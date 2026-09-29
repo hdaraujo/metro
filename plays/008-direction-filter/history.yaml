@@ -17,3 +17,23 @@ events:
     agent: Paula
     resolution: answered
     session_id: ac16e908e43d431e9eb34a06170383d3
+  - kind: transition
+    at: '2026-09-29T09:42:35.202Z'
+    from: working
+    to: validation
+  - kind: decision
+    at: '2026-09-29T09:46:24.196Z'
+    question: 'Ready for review: direction filter'
+    agent: Dave
+    resolution: approved
+    session_id: 246673d90bff4283a0036e64c200632b
+  - kind: transition
+    at: '2026-09-29T09:46:24.199Z'
+    from: validation
+    to: completed
+  - kind: document
+    at: '2026-09-29T09:57:25.198Z'
+    folder: modules
+    name: map-screen.md
+    agent: Paula
+    action: updated

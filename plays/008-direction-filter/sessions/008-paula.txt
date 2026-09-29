@@ -1,0 +1,132 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `008-direction-filter`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/008-direction-filter/intent.md` and `plays/008-direction-filter/plan.md`, then read the real changes on the `008-direction-filter` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/`, which is yours to write in this session.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read intent, plan, context, modules, and branch changes)
+  ⎿ Add a button to the sheet to cycle through the buses coming from one direction, the other direction, and both directions. Default is both directions, the current behaviour# Play 008 — Direction filter
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The sheet's "Heading to this stop" list mixes buses from both directions. At a stop served both
+  ⎿ ways (e.g. Portagem) a rider usually only cares about one of them. This play adds a button to the
+  ⎿ sheet that cycles the list through **both directions → one direction → the other → both**. The
+  ⎿ default, and the behaviour whenever the button is not shown, is **both directions** — exactly
+  ⎿ today's behaviour.
+  ⎿ 
+  ⎿ Decisions agreed with the user:
+  ⎿ - **Scope: the sheet list only.** The map (every marker, its countdown tag, dimming) and smart
+  ⎿   zoom (`soonestPerDirection` over *all* approaching buses) do not change.
+  ⎿ - **Labels by destination:** "Both directions" → "To Vale das Flores, Serpins, Corvo" →
+  ⎿   "To Coimbra B" — the destinations of that direction's trips at this stop.
+  ⎿ - **Minimised phone sheet:** the filter applies to its single row, but the button is not shown
+  ⎿   there.
+  ⎿ - No new screen, so there is no design folder; follow the existing sheet styling.
+  ⎿ 
+  ⎿ ## Repositories
+  ⎿ … +330 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read map-screen doc and code diff)
+  ⎿ <persisted-output>
+  ⎿ Output too large (32.4KB). Full output saved to: C:\Users\haraujo\.claude\projects\C--Users-haraujo--building-data-projects-003-metro-worktrees-008-metro\77d915ea-f04c-47b2-a28f-d207b209a874\tool-results\byrhxyxmf.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop, every Metrobus bus in service, and a countdown for each bus
+  ⎿ heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content, and it can be minimised
+  ⎿   (see [Minimising the phone sheet](#minimising-the-phone-sheet)).
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet, always expanded: it has no handle and cannot be minimised.
+  ⎿ … +19 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read full map-screen doc)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Show source code diff)
+  ⎿      1	# Map screen
+  ⎿      2	
+  ⎿      3	Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿      4	is, their nearest Metrobus stop, every Metrobus bus in service, and a countdown for each bus
+  ⎿      5	heading towards that stop. The approved
+  ⎿      6	prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿      7	specification. Code lives in `src/ui/`.
+  ⎿      8	
+  ⎿      9	## Layout
+  ⎿     10	
+  ⎿     11	- **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿     12	  there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿     13	  right) above a bottom sheet. The sheet's height follows its content, and it can be minimised
+  ⎿     14	  (see [Minimising the phone sheet](#minimising-the-phone-sheet)).
+  ⎿     15	- **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿     16	  the same content as the phone sheet, always expanded: it has no handle and cannot be minimised.
+  ⎿     17	  The locate button sits at the bottom right, with the attribution below it.
+  ⎿     18	- **Stacking.** `.map` has `z-index: 0` so that it forms its own stacking context. Marker
+  ⎿     19	  z-indexes (for example `.marker-bus--approaching`, which lifts approaching buses above the
+  ⎿     20	  others) then stay inside the map, and the wordmark, sheet, panel and controls, which come later
+  ⎿ … +151 more lines
+  ⎿ diff --git a/src/domain/directions.test.ts b/src/domain/directions.test.ts
+  ⎿ new file mode 100644
+  ⎿ index 0000000..cb79a31
+  ⎿ --- /dev/null
+  ⎿ +++ b/src/domain/directions.test.ts
+  ⎿ @@ -0,0 +1,137 @@
+  ⎿ +import { describe, expect, it } from 'vitest';
+  ⎿ +import {
+  ⎿ +  busesInDirection,
+  ⎿ +  directionLabel,
+  ⎿ +  directionsAtStop,
+  ⎿ +  nextDirectionFilter,
+  ⎿ +  type DirectionAtStop,
+  ⎿ +} from './directions';
+  ⎿ +import type { BusPosition, Direction, Trip } from './types';
+  ⎿ +
+  ⎿ +let nextId = 0;
+  ⎿ +function trip(direction: Direction, destination: string, stopIds: string[]): Trip {
+  ⎿ +  return {
+  ⎿ +    id: `t${nextId++}`,
+  ⎿ … +496 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Check timetable doc for direction terms)
+  ⎿ 20:| `stops.json` | `Stop[]` | 39 stops. Names are unique. Câmara, Mercado and República each exist twice, as `(asc)` and `(desc)` stops, one per direction. |
+  ⎿ 21:| `route-shapes.json` | `Shape[]`, and the colour of each line | One shape per line and direction. Points are `[lat, lng]` in the source and `{lat, lng}` in the domain. |
+  ⎿ 25:- **Direction codes.** In the domain, `outbound` comes from `Ida` in the shapes and `P-S` in the
+  ⎿ 26:  trips, and `inbound` comes from `Volta` and `S-P`. A shape is looked up by `(line, direction)`,
+  ⎿ 30:  with an unknown stop name or an unknown direction: that trip is skipped, with one
+  ⎿ 76:   distances are memoised for each shape and stop sequence. The `(line, direction)` → shape
+  ⎿ 88:   buses, in the same order. `soonestPerDirection()` takes that list and keeps the first bus of
+  ⎿ 89:   each `direction` (so at most two, soonest first); those are the buses smart zoom frames.
+  ⎿ 91:Each bus also carries the trip's `destination` as it appears in the data, `source: 'scheduled'`,
+
+● The direction filter is part of the sheet, which `map-screen.md` already covers, so I'll update that document.
+
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\docume..., old_string: If no bus is heading to the stop, the section is not shown, even if other bus..., new_string: If no bus is heading to the stop, the section is not shown, even if other bus...)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\docume..., old_string:   | Nearest stop | The stop name and distance, one `BusRow` for the soonest a..., new_string:   | Nearest stop | The stop name and distance, one `BusRow` for the soonest a...)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\documentation\modules\map-screen.md has been updated successfully.
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\documentation\modules\map-screen.md has been updated successfully.
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\docume..., old_string: frames one bus; with none approaching, only the user and the stop are framed...., new_string: frames one bus; with none approaching, only the user and the stop are framed....)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\documentation\modules\map-screen.md has been updated successfully.
+
+● I updated `documentation/modules/map-screen.md`; the sheet's "Heading to this stop" list was already documented there, so I didn't add a new document. The code matched the approved plan. Nothing is committed.
+
+- **New "Direction filter" subsection** (under "What the sheet shows"):
+  - **When the button appears:** only in the expanded sheet, and only at a stop that trips reach from both directions. This is worked out from every loaded day type, not just today's. A trip's first stop doesn't count, because a bus is never heading to the stop it starts from, so a terminus counts as one-way.
+  - **Cycle and labels:** each press goes both → outbound → inbound → both. A single direction is labelled by its destinations, most frequent first (for example "To Vale das Flores, Serpins, Corvo"). A long label is cut with an ellipsis and the full text is the button's tooltip. The screen-reader name is "Direction: <label>".
+  - **Filtering:** only the list is filtered. It still shows at most 4 rows, counted after filtering. If no bus is left, the list is replaced by "No buses in this direction right now." and the header and button stay, so the user can cycle back.
+  - **State:** the choice resets to both directions when the nearest stop changes, and it isn't saved.
+  - **What doesn't change:** the map markers, their countdowns and dimming, and the automatic zoom all still use every approaching bus.
+- **Minimised phone sheet:** its single row now shows the soonest bus in the chosen direction, or the "No buses in this direction right now." line. The button is hidden there, and the chosen direction is still set when the sheet is expanded again.
+- **Smart zoom:** one added clause saying it ignores the direction filter.
