@@ -141,4 +141,11 @@ sessions:
         cache_read: 1976753
         cache_write_5m: 0
         cache_write_1h: 112114
+  - id: 9217b2c9599e49c298a03478757e070d
+    state: finished
+    generic:
+      waiting: false
+      question: null
+    cols: 180
+    rows: 50
 next_seq: 8

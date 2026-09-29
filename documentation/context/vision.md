@@ -12,8 +12,8 @@ will reach their stop, so deciding when to leave home or work is guesswork.
 
 ## Vision
 A mobile-first web app that opens straight onto a map showing where you are, your nearest
-Metrobus stop, the live position of every Metrobus bus, and how many minutes each
-approaching bus is from that stop. You look at it and decide when to leave.
+Metrobus stop (or any stop you tap), the live position of every Metrobus bus, and how many
+minutes each approaching bus is from that stop. You look at it and decide when to leave.
 
 ## Target users
 - **Primary: the owner.** A regular Metrobus rider checking a phone before heading out.
@@ -28,7 +28,8 @@ approaching bus is from that stop. You look at it and decide when to leave.
   visible label covers them, and a scheduled bus always looks different from a live one, though
   it need not carry its own label. Live data replaces the estimates when it becomes available.
   Estimated or stale data is never shown as live.
-- **Location-aware.** Use the device's location to find the nearest stop automatically.
+- **Location-aware.** Use the device's location to find the nearest stop automatically. The
+  user can tap any other stop to look at it instead; tapping away goes back to the nearest one.
 - **Mobile first.** Designed for a phone screen and one-handed use. Desktop is secondary.
 - **Simple over featureful.** Show information and let the user decide. No planning logic.
 

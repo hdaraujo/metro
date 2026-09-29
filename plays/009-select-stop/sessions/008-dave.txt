@@ -1,0 +1,115 @@
+> i deleted the branch, restore it
+
+  → Bash(command: git branch -a && git worktree list && cat plays/009-select-stop/config.yaml p..., description: Inspect branches, worktrees, play config and reflog)
+  ⎿ * main
+  ⎿   remotes/origin/HEAD -> origin/main
+  ⎿   remotes/origin/main
+  ⎿ C:/Dev/metro  8b4410e [main]
+  ⎿ id: '009'
+  ⎿ name: select stop
+  ⎿ team: Autopilot
+  ⎿ status: ideation
+  ⎿ created_at: '2026-09-29T09:29:22.441Z'
+  ⎿ branch: 009-select-stop
+  ⎿ phase: done
+  ⎿ session_id: 9217b2c9599e49c298a03478757e070d
+  ⎿  plays/009-select-stop/config.yaml        |  2 +-
+  ⎿  plays/009-select-stop/devops.yaml        |  2 +-
+  ⎿  plays/009-select-stop/history.yaml       |  4 ++++
+  ⎿  plays/009-select-stop/positions.yaml     |  2 +-
+  ⎿  plays/009-select-stop/sessions/info.yaml | 14 +++++++++++++-
+  ⎿  5 files changed, 20 insertions(+), 4 deletions(-)
+  ⎿ 8b4410e HEAD@{0}: commit (amend): Close play 009
+  ⎿ 0dd596b HEAD@{1}: commit (amend): Close play 009
+  ⎿ … +8 more lines
+  → Bash(command: git diff && cat plays/009-select-stop/history.yaml && git show --stat HEAD HE..., description: Show diff, history, recent commits and dangling objects)
+  ⎿ diff --git a/plays/009-select-stop/config.yaml b/plays/009-select-stop/config.yaml
+  ⎿ index 51f7b18..345e4f7 100644
+  ⎿ --- a/plays/009-select-stop/config.yaml
+  ⎿ +++ b/plays/009-select-stop/config.yaml
+  ⎿ @@ -1,5 +1,5 @@
+  ⎿  id: '009'
+  ⎿  name: select stop
+  ⎿  team: Autopilot
+  ⎿ -status: completed
+  ⎿ +status: ideation
+  ⎿  created_at: '2026-09-29T09:29:22.441Z'
+  ⎿ diff --git a/plays/009-select-stop/devops.yaml b/plays/009-select-stop/devops.yaml
+  ⎿ index 2d62f0a..250af84 100644
+  ⎿ --- a/plays/009-select-stop/devops.yaml
+  ⎿ +++ b/plays/009-select-stop/devops.yaml
+  ⎿ @@ -1,3 +1,3 @@
+  ⎿  branch: 009-select-stop
+  ⎿  phase: done
+  ⎿ -session_id: 5068c53780e04014950668239fd7bde4
+  ⎿ +session_id: 9217b2c9599e49c298a03478757e070d
+  ⎿ … +146 more lines
+  → Bash(command: ls /c/Users/haraujo/.building/data/projects/003-metro/worktrees/008 /c/Users/..., description: Find code repos and inspect dangling commits)
+  ⎿ /c/Users/haraujo/.building/data/projects/003-metro/:
+  ⎿ captures
+  ⎿ config.yaml
+  ⎿ worktrees
+  ⎿ 
+  ⎿ /c/Users/haraujo/.building/data/projects/003-metro/worktrees/008:
+  ⎿ branch: 008-direction-filter
+  ⎿ phase: done
+  ⎿ session_id: 246673d90bff4283a0036e64c200632b
+  ⎿ 4:  so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿ 5:  per-repository section below must make it explicit which technology each repo uses —
+  ⎿ 12:- **One static, client-side React PWA** at the root of the `metro` repository. There is no
+  ⎿ 48:- **Deployment:** static files on GitHub Pages at `https://hdaraujo.github.io/metro/`, deployed by
+  ⎿ 49:  `.github/workflows/pages.yml` on every push to `main` (lint, unit tests, build, deploy). Every
+  ⎿ 68:## Per-repository tech stack
+  ⎿ 1c54b20 Tue Sep 29 15:06:34 2026 +0100 Close play 009
+  ⎿ d958d20 Tue Sep 29 14:54:37 2026 +0100 chore(deps): refresh package-lock.json metadata from local npm install
+  ⎿ 040d650 Tue Sep 29 12:09:51 2026 +0100 chore(play-009): record select-stop play sessions and history
+  ⎿ a106c77 Tue Sep 29 10:57:31 2026 +0100 Close play 008
+  ⎿ 26f54d7 Tue Sep 29 10:41:26 2026 +0100 chore(play-008): record direction filter play sessions and history
+  ⎿ … +1 more lines
+  → Bash(command: git log --oneline --graph 1c54b20 -12 && echo --- && git log --oneline main....., description: Show dangling branch history versus main and remote refs)
+  ⎿ * 1c54b20 Close play 009
+  ⎿ * d958d20 chore(deps): refresh package-lock.json metadata from local npm install
+  ⎿ * 040d650 chore(play-009): record select-stop play sessions and history
+  ⎿ * b99025a feat(map): tap any stop on the map to show it
+  ⎿ * 86c3d61 Start play 009
+  ⎿ * 3bf2f1a Play 008: direction filter
+  ⎿ *   99493c0 Merge pull request #2 from hdaraujo/008-direction-filter
+  ⎿ |\  
+  ⎿ | * 26f54d7 chore(play-008): record direction filter play sessions and history
+  ⎿ | * 1ce9223 feat(sheet): add direction filter to the approaching-buses list
+  ⎿ | * e41f34f Start play 008
+  ⎿ |/  
+  ⎿ *   5ae7efc Merge pull request #1 from hdaraujo/007-sheet-improvements-fix
+  ⎿ |\  
+  ⎿ | * 70bc818 Improve sheet compatibility
+  ⎿ |/  
+  ⎿ ---
+  ⎿ 1c54b20 Close play 009
+  ⎿ d958d20 chore(deps): refresh package-lock.json metadata from local npm install
+  ⎿ 040d650 chore(play-009): record select-stop play sessions and history
+  ⎿ … +7 more lines
+  → Bash(command: git branch 009-select-stop 1c54b20 && git log --oneline -1 009-select-stop &&..., description: Recreate the play branch at its last commit)
+  ⎿ 1c54b20 Close play 009
+  ⎿  M plays/009-select-stop/config.yaml
+  ⎿  M plays/009-select-stop/devops.yaml
+  ⎿  M plays/009-select-stop/history.yaml
+  ⎿  M plays/009-select-stop/positions.yaml
+  ⎿  M plays/009-select-stop/sessions/info.yaml
+
+● I've restored the branch. `009-select-stop` exists again locally and points at `1c54b20` ("Close play 009"), its last commit.
+
+The branch was gone from both the local repo and origin, but its commits were still in git's database, so no work was lost. It holds 4 commits that aren't on `main`:
+
+- `b99025a` feat(map): tap any stop on the map to show it (the play's code change)
+- `040d650` chore(play-009): record select-stop play sessions and history
+- `d958d20` chore(deps): refresh package-lock.json metadata from local npm install
+- `1c54b20` Close play 009
+
+`main` already has its own squashed "Close play 009" commit (`8b4410e`), which is on origin. That commit covers the play's docs and session records but not the map code in `b99025a`. That code only exists on the restored branch.
+
+I left some things as they were:
+- **Not pushed:** the branch is only local. Say if you want it pushed to origin, for example to open a PR as with play 008.
+- **No worktree:** the play's worktree folder `worktrees/009` is empty, and I didn't recreate a worktree for it.
+- **Your uncommitted changes on `main`:** the play's YAML files are still modified, including status set back to `ideation` and a new session entry. I haven't committed or moved them.
+
+Do you want me to push the branch, set up the worktree again, or both?
