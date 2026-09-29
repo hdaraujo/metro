@@ -1,0 +1,600 @@
+> You are the Autopilot Planner for this play, running in plan mode. Read `plays/009-select-stop/CLAUDE.md` and `plays/009-select-stop/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `plays/009-select-stop/design/` folder exists, this play already has a UI design I approved: read `plays/009-select-stop/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-planner)
+  ⎿ Launching skill: autopilot-planner
+
+> Base directory for this skill: C:\Dev\metro\.claude\skills\autopilot-planner
+
+You are the Autopilot Planner for this play, opened as an interactive session that the user drives directly. Your job is to shape a complete, unambiguous implementation plan from `$play/CLAUDE.md` and `$play/intent.md` — that plan becomes the Developer's sole specification. Do NOT start planning on your own: wait for the user's first message and follow their direction.
+
+## 1. Design triage (before any planning)
+
+You are the Autopilot Planner for this play, but you are NOT writing the implementation plan yet — that happens in a separate session straight after this one. This session exists to answer ONE question and, depending on the answer, to produce a visual design.
+
+STEP 1 — Read `$play/CLAUDE.md` and `$play/intent.md`, plus the project context documents named below. Then decide: does this play introduce a NEW user-facing screen, page, view or surface? Be strict about this. Changing, extending or restyling a screen that already exists does NOT count, and neither does work with no user interface at all (an API, a job, a migration, a refactor).
+
+STEP 2 — If the answer is NO: do nothing else. End your turn with a single line saying this play introduces no new user interface, so planning can start. That must be a statement, NOT a question — the statement is what hands off to planning.
+
+STEP 3 — If the answer is YES: end your turn with a clear question — ending in a question mark, which is what tells the app you are waiting on me — asking whether I want you to design a visual prototype of the new screens before you write the implementation plan. Name the screens you mean, in one line each, so I know what I would be getting. Then wait for my answer.
+- If I decline, end your turn with a single line saying we are going straight to planning — again a statement, not a question.
+- If I accept, do STEP 4.
+
+STEP 4 — Write the design brief, and STOP. Do NOT try to run the `design` skill yourself: it is reserved for explicit user invocation and the Skill tool will refuse it. I will run it for you the moment your brief is on disk.
+
+Write the brief to `$play/design/brief.md` — one short paragraph on what the product is, who it is for and the look and feel it should have, then one line per new screen naming it and saying what it does. Brief it from intent.md, the product vision and the tech stack, and look at the attached repositories first: if this product already has a frontend, say so and name its real colours, type and spacing so the design matches rather than inventing a new look. End the brief by saying the canvas payload must be saved as `$play/design/canvas.html`.
+
+Keep it compact — it is passed to the design skill as a single line, so write it as flowing prose with no headings, no bullet characters and no code blocks. Then end your turn with one short statement saying the brief is ready. NOT a question: that statement is what starts the design run.
+
+STEP 5 — Once the design skill has produced the canvas, leave the design in two places, both of which matter:
+1. `$play/design/design.md` — the published canvas URL, then one line per screen saying what it is and what it does. The Planner and the Developer read this file; keep it short and factual.
+2. `documentation/design/<play-id>-<play-name>-prototype.html` — how I actually LOOK at the prototype, from the Documentation tab of the project screen. Create the folder if it is not there. This file is rendered inside a sandboxed iframe with NO scripting, NO navigation and NO network, so it must be ONE self-contained page: every artboard's markup stacked one under another with a heading naming the screen, every style inline or in a `<style>` block in that same file, no script tags, and no references to any external file, font or image (inline any image as a data URI). Put the canvas URL at the top as plain visible text as well as a link — a link alone cannot be opened from that sandbox. Do NOT copy the canvas payload itself here; it needs JavaScript and would render as a blank page.
+
+If the canvas cannot be PUBLISHED, that is fine: keep the artboards the skill produced, still write both documents from them, and say plainly that the canvas was not published. That is the only fallback. If the design skill did not run at all, do NOT hand-write a canvas file or a prototype in its place — say plainly that the skill did not run and stop, so the problem is visible instead of being papered over with something that only looks like a design.
+
+STEP 6 — Hand the prototype to me for review, and STOP. Once both documents are written, end your turn by telling me in a few lines what you designed and where I can look at it, and then ASKING me to review the prototype and confirm it is what I want before you plan the implementation. End that turn on that question and wait — planning does not start until I have approved the design.
+- If I ask for changes, revise the design and both documents, then ask me again. Keep ending those turns on a question.
+- Only once I have actually approved it, end your turn with a single short statement saying the design is approved. That statement — and nothing else — is what starts the planning session. Never write it while I still owe you an answer.
+
+You are designing only. Do not modify anything in the repositories, do not implement anything, and do not write `$play/plan.md`.
+
+## 2. The implementation plan
+
+You are the Autopilot Planner for this play, running in plan mode. Read `$play/CLAUDE.md` and `$play/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+## 3. Documenting what shipped (once the play is approved)
+
+You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `$branch`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `$play/intent.md` and `$play/plan.md`, then read the real changes on the `$branch` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → PowerShell(command: Get-ChildItem -Recurse plays/009-select-stop | Select-Object FullName; Get-Co..., description: Read play files and list documentation)
+  ⎿ FullName
+  ⎿ --------
+  ⎿ C:\Dev\metro\plays\009-select-stop\sessions
+  ⎿ C:\Dev\metro\plays\009-select-stop\CLAUDE.md
+  ⎿ C:\Dev\metro\plays\009-select-stop\config.yaml
+  ⎿ C:\Dev\metro\plays\009-select-stop\design.yaml
+  ⎿ C:\Dev\metro\plays\009-select-stop\history.yaml
+  ⎿ C:\Dev\metro\plays\009-select-stop\intent.md
+  ⎿ C:\Dev\metro\plays\009-select-stop\positions.yaml
+  ⎿ C:\Dev\metro\plays\009-select-stop\sessions\001-alice.pty
+  ⎿ C:\Dev\metro\plays\009-select-stop\sessions\001-alice.txt
+  ⎿ C:\Dev\metro\plays\009-select-stop\sessions\002-paula.pty
+  ⎿ C:\Dev\metro\plays\009-select-stop\sessions\002-paula.txt
+  ⎿ C:\Dev\metro\plays\009-select-stop\sessions\info.yaml
+  ⎿ # Play `009` — Autopilot session instructions
+  ⎿ 
+  ⎿ This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ vision + tech stack, the Planner then checks whether the play introduces a new
+  ⎿ user interface and — if the user wants one — designs a visual prototype before
+  ⎿ shaping an implementation plan (in plan mode), DevOps prepares an isolated git
+  ⎿ … +65 more lines
+  → PowerShell(command: Get-Content documentation/context/vision.md; "-----TECH"; Get-Content documen..., description: Read context and module docs)
+  ⎿ <persisted-output>
+  ⎿ Output too large (33.4KB). Full output saved to: C:\Users\haraujo\.claude\projects\C--Dev-metro\a89dbc66-fca5-4195-acc2-977272048d71\tool-results\bkd26e3va.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ <!--
+  ⎿   Product Vision — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE: a shared north star every play must conform to, not a spec.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Product Vision
+  ⎿ 
+  ⎿ ## Problem
+  ⎿ Coimbra Metrobus riders can't easily see where the buses are right now or how soon one
+  ⎿ will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿ 
+  ⎿ ## Vision
+  ⎿ A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ Metrobus stop (or any stop you tap), the live position of every Metrobus bus, and how many
+  ⎿ minutes each approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ … +22 more lines
+  → Read(file_path: C:\Users\haraujo\.claude\projects\C--Dev-metro\a89dbc66-fca5-4195-acc2-977272...)
+  ⎿ 1	<!--
+  ⎿ 2	  Product Vision — maintained by the Autopilot Architect.
+  ⎿ 3	  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿ 4	  so keep it CONCISE: a shared north star every play must conform to, not a spec.
+  ⎿ 5	-->
+  ⎿ 6	
+  ⎿ 7	# Product Vision
+  ⎿ 8	
+  ⎿ 9	## Problem
+  ⎿ 10	Coimbra Metrobus riders can't easily see where the buses are right now or how soon one
+  ⎿ 11	will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿ 12	
+  ⎿ 13	## Vision
+  ⎿ 14	A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ 15	Metrobus stop (or any stop you tap), the live position of every Metrobus bus, and how many
+  ⎿ 16	minutes each approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ 17	
+  ⎿ 18	## Target users
+  ⎿ 19	- **Primary: the owner.** A regular Metrobus rider checking a phone before heading out.
+  ⎿ 20	  They need to see at a glance how far away the next buses are.
+  ⎿ … +515 more lines
+  → PowerShell(command: git diff documentation/context/vision.md; Get-Content plays/009-select-stop/s..., description: Check vision diff and session info)
+  ⎿ diff --git a/documentation/context/vision.md b/documentation/context/vision.md
+  ⎿ index f9c3192..a5fbb8f 100644
+  ⎿ --- a/documentation/context/vision.md
+  ⎿ +++ b/documentation/context/vision.md
+  ⎿ @@ -12,8 +12,8 @@ will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿  
+  ⎿  ## Vision
+  ⎿  A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ -Metrobus stop, the live position of every Metrobus bus, and how many minutes each
+  ⎿ -approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ +Metrobus stop (or any stop you tap), the live position of every Metrobus bus, and how many
+  ⎿ +minutes each approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿  
+  ⎿  ## Target users
+  ⎿  - **Primary: the owner.** A regular Metrobus rider checking a phone before heading out.
+  ⎿ @@ -28,7 +28,8 @@ approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿    visible label covers them, and a scheduled bus always looks different from a live one, though
+  ⎿    it need not carry its own label. Live data replaces the estimates when it becomes available.
+  ⎿    Estimated or stale data is never shown as live.
+  ⎿ -- **Location-aware.** Use the device's location to find the nearest stop automatically.
+  ⎿ … +64 more lines
+
+● Reading the earlier session transcripts for play 009, then I'll look at the code to plan the stop selection.
+
+  → PowerShell(command: Get-Content plays/009-select-stop/sessions/001-alice.txt -Tail 120; "=====PAU..., description: Read earlier session transcripts)
+  ⎿ PHASE 2 — Tech stack. Do the exact same thing: first ask me — again as a question ending in a question mark — to type, as free text, the technology and architecture I have in mind — again, no options and no assumptions — and wait for my answer. Then, as the architect, iterate with me over a few rounds until we share a clear understanding (including the technology for each repository), and write `documentation/context/tech.md` following this structure:
+  ⎿ 
+  ⎿ ===== documentation/context/tech.md =====
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿   per-repository section below must make it explicit which technology each repo uses —
+  ⎿   that is the Developer's source of truth for what to build with, where.
+  ⎿ -->
+  ⎿ 
+  ⎿ ### Tech Stack
+  ⎿ 
+  ⎿ #### Architecture overview
+  ⎿ _How the product's pieces fit together: the components/services, how they communicate,
+  ⎿ and the cross-cutting choices they share (data storage, auth, deployment/runtime)._
+  ⎿ 
+  ⎿ #### Conventions
+  ⎿ _Product-wide standards every repository follows: language versions, formatting/linting,
+  ⎿ testing approach, commit/branch style, error handling._
+  ⎿ … +151 more lines
+
+● Now the code. The repo is small, so I'll read the key files directly.
+
+  → PowerShell(command: git ls-files src tests | Out-String; git branch -a, description: List source and test files)
+  ⎿ src/domain/buses.test.ts
+  ⎿ src/domain/buses.ts
+  ⎿ src/domain/color.test.ts
+  ⎿ src/domain/color.ts
+  ⎿ src/domain/countdown.test.ts
+  ⎿ src/domain/countdown.ts
+  ⎿ src/domain/directions.test.ts
+  ⎿ src/domain/directions.ts
+  ⎿ src/domain/geo.test.ts
+  ⎿ src/domain/geo.ts
+  ⎿ src/domain/holidays.test.ts
+  ⎿ src/domain/holidays.ts
+  ⎿ src/domain/interpolation.test.ts
+  ⎿ src/domain/interpolation.ts
+  ⎿ src/domain/lisbonTime.test.ts
+  ⎿ src/domain/lisbonTime.ts
+  ⎿ src/domain/nearestStop.test.ts
+  ⎿ src/domain/nearestStop.ts
+  ⎿ src/domain/shape.test.ts
+  ⎿ src/domain/shape.ts
+  ⎿ … +38 more lines
+  → Read(file_path: C:\Dev\metro\src\ui\App.tsx)
+  → Read(file_path: C:\Dev\metro\src\ui\map\MapView.tsx)
+  → Read(file_path: C:\Dev\metro\src\ui\map\markers.ts)
+  → Read(file_path: C:\Dev\metro\src\ui\sheet\NearestStopContent.tsx)
+  → Read(file_path: C:\Dev\metro\src\ui\map\mapStyle.ts)
+  → Read(file_path: C:\Dev\metro\src\domain\nearestStop.ts)
+  ⎿ 1	/** DOM builders for the map's markers. Styles live in `styles/app.css` (`.marker-*`). */
+  ⎿ 2	import { readableTextColor } from '../../domain/color';
+  ⎿ 3	import { formatCountdown, spokenCountdown } from '../../domain/countdown';
+  ⎿ 4	
+  ⎿ 5	// The same bus glyph as `BusIcon` in `icons.tsx`, as markup for a non-React element.
+  ⎿ 6	const BUS_ICON_SVG =
+  ⎿ 7	  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+  ⎿ 8	  '<path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 11h16"/>' +
+  ⎿ 9	  '<path d="M8 15h.01"/><path d="M16 15h.01"/><path d="M6 18v2"/><path d="M18 18v2"/></svg>';
+  ⎿ 10	
+  ⎿ 11	function div(className: string): HTMLDivElement {
+  ⎿ 12	  const el = document.createElement('div');
+  ⎿ 13	  el.className = className;
+  ⎿ 14	  return el;
+  ⎿ 15	}
+  ⎿ 16	
+  ⎿ 17	/** The user's position: an 18px blue dot inside a 68px halo. */
+  ⎿ 18	export function createUserMarker(): HTMLElement {
+  ⎿ 19	  const el = div('marker-user');
+  ⎿ 20	  el.setAttribute('role', 'img');
+  ⎿ … +86 more lines
+  ⎿ 1	import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿ 2	import type { PaddingOptions } from 'maplibre-gl';
+  ⎿ 3	import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+  ⎿ 4	import { directionsAtStop, nextDirectionFilter, type DirectionFilter } from '../domain/directions';
+  ⎿ 5	import { lisbonClock } from '../domain/lisbonTime';
+  ⎿ 6	import { nearestStop } from '../domain/nearestStop';
+  ⎿ 7	import { measureShape } from '../domain/shape';
+  ⎿ 8	import type { LatLng } from '../domain/types';
+  ⎿ 9	import { Attribution } from './chrome/Attribution';
+  ⎿ 10	import { LocateButton } from './chrome/LocateButton';
+  ⎿ 11	import { Wordmark } from './chrome/Wordmark';
+  ⎿ 12	import { useGeolocation } from './hooks/useGeolocation';
+  ⎿ 13	import { useMediaQuery } from './hooks/useMediaQuery';
+  ⎿ 14	import { useNetwork } from './hooks/useNetwork';
+  ⎿ 15	import { useNow } from './hooks/useNow';
+  ⎿ 16	import { useTimetable } from './hooks/useTimetable';
+  ⎿ 17	import { MapView, type MapHandle } from './map/MapView';
+  ⎿ 18	import { DataErrorContent } from './sheet/DataErrorContent';
+  ⎿ 19	import { LocatingContent } from './sheet/LocatingContent';
+  ⎿ 20	import { LocationOffContent } from './sheet/LocationOffContent';
+  ⎿ … +185 more lines
+  ⎿ 1	import {
+  ⎿ 2	  busesInDirection,
+  ⎿ 3	  directionLabel,
+  ⎿ 4	  type DirectionAtStop,
+  ⎿ 5	  type DirectionFilter,
+  ⎿ 6	} from '../../domain/directions';
+  ⎿ 7	import { formatDistance } from '../../domain/geo';
+  ⎿ 8	import { formatLisbonDate } from '../../domain/lisbonTime';
+  ⎿ 9	import type { BusPosition, LineId, Stop } from '../../domain/types';
+  ⎿ 10	import { ApproachingBuses, BusRow, NO_BUSES_IN_DIRECTION } from './ApproachingBuses';
+  ⎿ 11	import { LineChip } from './LineChip';
+  ⎿ 12	
+  ⎿ 13	const STALE_AFTER_MS = 24 * 60 * 60 * 1000;
+  ⎿ 14	const FALLBACK_LINE_COLOR = '#1f5fa8';
+  ⎿ 15	
+  ⎿ 16	interface NearestStopContentProps {
+  ⎿ 17	  stop: Stop;
+  ⎿ 18	  distanceMeters: number;
+  ⎿ 19	  lineColors: Record<LineId, string>;
+  ⎿ 20	  /** The buses heading to this stop, soonest first. */
+  ⎿ … +95 more lines
+  ⎿ 1	import 'maplibre-gl/dist/maplibre-gl.css';
+  ⎿ 2	import {
+  ⎿ 3	  LngLatBounds,
+  ⎿ 4	  Map as MapLibreMap,
+  ⎿ 5	  Marker,
+  ⎿ 6	  setWorkerUrl,
+  ⎿ 7	  type GeoJSONSource,
+  ⎿ 8	  type MarkerOptions,
+  ⎿ 9	  type PaddingOptions,
+  ⎿ 10	} from 'maplibre-gl';
+  ⎿ 11	// MapLibre 6 loads its worker from a separate module next to its own file, which a bundle does not
+  ⎿ 12	// have; let Vite build the worker and point MapLibre at it.
+  ⎿ 13	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+  ⎿ 14	import type { FeatureCollection } from 'geojson';
+  ⎿ 15	import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
+  ⎿ 16	import type { BusPosition, LatLng, LineId, Network, Stop } from '../../domain/types';
+  ⎿ 17	import { prefersReducedMotion } from '../hooks/useMediaQuery';
+  ⎿ 18	import { mapStyle } from './mapStyle';
+  ⎿ 19	import {
+  ⎿ 20	  createBusMarker,
+  ⎿ … +262 more lines
+  ⎿ 1	import type { StyleSpecification } from 'maplibre-gl';
+  ⎿ 2	
+  ⎿ 3	export const OSM_TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+  ⎿ 4	
+  ⎿ 5	/**
+  ⎿ 6	 * OpenStreetMap raster tiles, muted towards the design's calm base (#f1f0eb land, white roads,
+  ⎿ 7	 * #cad9e5 water) so that route colours and markers stand out. No glyphs or sprites: every label is
+  ⎿ 8	 * a DOM marker.
+  ⎿ 9	 */
+  ⎿ 10	export const mapStyle: StyleSpecification = {
+  ⎿ 11	  version: 8,
+  ⎿ 12	  sources: {
+  ⎿ 13	    osm: {
+  ⎿ 14	      type: 'raster',
+  ⎿ 15	      tiles: [OSM_TILE_URL],
+  ⎿ 16	      tileSize: 256,
+  ⎿ 17	      maxzoom: 19,
+  ⎿ 18	    },
+  ⎿ 19	  },
+  ⎿ 20	  layers: [
+  ⎿ … +15 more lines
+  ⎿ 1	import { haversineMeters } from './geo';
+  ⎿ 2	import type { LatLng, Stop } from './types';
+  ⎿ 3	
+  ⎿ 4	/** The stop closest to `point` in straight-line distance. Ties go to the lower `id` (string order). */
+  ⎿ 5	export function nearestStop(
+  ⎿ 6	  stops: readonly Stop[],
+  ⎿ 7	  point: LatLng,
+  ⎿ 8	): { stop: Stop; distanceMeters: number } | null {
+  ⎿ 9	  let best: { stop: Stop; distanceMeters: number } | null = null;
+  ⎿ 10	  for (const stop of stops) {
+  ⎿ 11	    const distanceMeters = haversineMeters(point, stop.coords);
+  ⎿ 12	    if (
+  ⎿ 13	      best === null ||
+  ⎿ 14	      distanceMeters < best.distanceMeters ||
+  ⎿ 15	      (distanceMeters === best.distanceMeters && stop.id < best.stop.id)
+  ⎿ 16	    ) {
+  ⎿ 17	      best = { stop, distanceMeters };
+  ⎿ 18	    }
+  ⎿ 19	  }
+  ⎿ 20	  return best;
+  ⎿ … +2 more lines
+  → Read(file_path: C:\Dev\metro\tests\e2e\map.spec.ts)
+  → Grep(pattern: marker-stop|marker-bus\b|\.map\b|cursor, path: C:\Dev\metro\src\ui\styles\app.css, output_mode: content, -A: 3)
+  → Read(file_path: C:\Dev\metro\src\domain\types.ts)
+  → Read(file_path: C:\Dev\metro\src\ui\chrome\LocateButton.tsx)
+  ⎿ 74:.map {
+  ⎿ 75-  position: absolute;
+  ⎿ 76-  inset: 0;
+  ⎿ 77-  z-index: 0; /* a stacking context, so marker z-indexes never lift a bus above the chrome */
+  ⎿ --
+  ⎿ 81:.map .maplibregl-canvas:focus-visible {
+  ⎿ 82-  outline-offset: -2px;
+  ⎿ 83-}
+  ⎿ 84-
+  ⎿ --
+  ⎿ 111:.marker-stop {
+  ⎿ 112-  width: 36px;
+  ⎿ 113-  height: 36px;
+  ⎿ 114-  border-radius: 50%;
+  ⎿ --
+  ⎿ 119:.marker-stop__dot {
+  ⎿ 120-  position: absolute;
+  ⎿ 121-  left: 50%;
+  ⎿ 122-  top: 50%;
+  ⎿ --
+  ⎿ … +48 more lines
+  ⎿ 1	import { readFileSync } from 'node:fs';
+  ⎿ 2	import { expect, test, type Page } from '@playwright/test';
+  ⎿ 3	
+  ⎿ 4	const fixture = (name: string) =>
+  ⎿ 5	  readFileSync(new URL(`../fixtures/${name}`, import.meta.url), 'utf8');
+  ⎿ 6	
+  ⎿ 7	const FIXTURES: Record<string, string> = {
+  ⎿ 8	  'stops.json': fixture('stops.json'),
+  ⎿ 9	  'route-shapes.json': fixture('route-shapes.json'),
+  ⎿ 10	  // Every day type gets the weekday sample; the clock below is a weekday anyway.
+  ⎿ 11	  trips: fixture('trips-DU.sample.json'),
+  ⎿ 12	};
+  ⎿ 13	
+  ⎿ 14	const TRANSPARENT_PNG = Buffer.from(
+  ⎿ 15	  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+  ⎿ 16	  'base64',
+  ⎿ 17	);
+  ⎿ 18	
+  ⎿ 19	/** Portagem stop, Coimbra. */
+  ⎿ 20	const NEAR_PORTAGEM = { latitude: 40.2075, longitude: -8.4307 };
+  ⎿ … +349 more lines
+  ⎿ 1	import type { GeolocationStatus } from '../hooks/useGeolocation';
+  ⎿ 2	import { CrosshairIcon, CrosshairOffIcon } from '../icons';
+  ⎿ 3	
+  ⎿ 4	interface LocateButtonProps {
+  ⎿ 5	  status: GeolocationStatus;
+  ⎿ 6	  /** Located: re-frame the map. */
+  ⎿ 7	  onRecentre: () => void;
+  ⎿ 8	  /** Unavailable: ask for the location again. */
+  ⎿ 9	  onRetry: () => void;
+  ⎿ 10	  className?: string;
+  ⎿ 11	}
+  ⎿ 12	
+  ⎿ 13	export function LocateButton({ status, onRecentre, onRetry, className = '' }: LocateButtonProps) {
+  ⎿ 14	  const classes = `locate-button ${status === 'unavailable' ? 'locate-button--off' : ''} ${className}`;
+  ⎿ 15	  if (status === 'unavailable') {
+  ⎿ 16	    return (
+  ⎿ 17	      <button
+  ⎿ 18	        type="button"
+  ⎿ 19	        className={classes.trim()}
+  ⎿ 20	        aria-label="Try to find my location"
+  ⎿ … +22 more lines
+  ⎿ 1	/** Geographic coordinates. Inside the domain always `{ lat, lng }`; MapLibre's `[lng, lat]` lives in `src/ui/map/`. */
+  ⎿ 2	export interface LatLng {
+  ⎿ 3	  lat: number;
+  ⎿ 4	  lng: number;
+  ⎿ 5	}
+  ⎿ 6	
+  ⎿ 7	/** A Metrobus line, e.g. 'S1' | 'S2' | 'U1' | 'U2' | 'U3' in the current data. */
+  ⎿ 8	export type LineId = string;
+  ⎿ 9	
+  ⎿ 10	export type Direction = 'outbound' | 'inbound';
+  ⎿ 11	
+  ⎿ 12	/** Timetable day type: weekday (`DU`), Saturday (`Sab`), Sunday and public holidays (`Dom`). */
+  ⎿ 13	export type DayType = 'DU' | 'Sab' | 'Dom';
+  ⎿ 14	
+  ⎿ 15	export interface Stop {
+  ⎿ 16	  id: string;
+  ⎿ 17	  code: string;
+  ⎿ 18	  name: string;
+  ⎿ 19	  lines: LineId[];
+  ⎿ 20	  coords: LatLng;
+  ⎿ … +52 more lines
+  → Grep(pattern: pointer-events, path: C:\Dev\metro\src\ui\styles\app.css, output_mode: content, -B: 6)
+  → Read(file_path: C:\Dev\metro\src\ui\sheet\LocationOffContent.tsx)
+  ⎿ 1	import { MapPinOffIcon } from '../icons';
+  ⎿ 2	
+  ⎿ 3	interface LocationOffContentProps {
+  ⎿ 4	  onRetry: () => void;
+  ⎿ 5	  /** The minimised phone sheet: the title row only. */
+  ⎿ 6	  collapsed?: boolean;
+  ⎿ 7	}
+  ⎿ 8	
+  ⎿ 9	export function LocationOffContent({ onRetry, collapsed }: LocationOffContentProps) {
+  ⎿ 10	  const row = (
+  ⎿ 11	    <div className="notice__row">
+  ⎿ 12	      <div className="notice__icon">
+  ⎿ 13	        <MapPinOffIcon size={20} />
+  ⎿ 14	      </div>
+  ⎿ 15	      <h1 className="notice__title">Location is off</h1>
+  ⎿ 16	    </div>
+  ⎿ 17	  );
+  ⎿ 18	  if (collapsed) return row;
+  ⎿ 19	  return (
+  ⎿ 20	    <>
+  ⎿ … +12 more lines
+  ⎿ 89-.marker-user {
+  ⎿ 90-  width: 68px;
+  ⎿ 91-  height: 68px;
+  ⎿ 92-  border-radius: 50%;
+  ⎿ 93-  background: rgba(31, 95, 168, 0.12);
+  ⎿ 94-  border: 1px solid rgba(31, 95, 168, 0.35);
+  ⎿ 95:  pointer-events: none;
+  ⎿ --
+  ⎿ 110-
+  ⎿ 111-.marker-stop {
+  ⎿ 112-  width: 36px;
+  ⎿ 113-  height: 36px;
+  ⎿ 114-  border-radius: 50%;
+  ⎿ 115-  background: rgba(220, 26, 50, 0.16);
+  ⎿ 116:  pointer-events: none;
+  ⎿ --
+  ⎿ 158-.marker-bus {
+  ⎿ 159-  display: flex;
+  ⎿ 160-  flex-direction: column;
+  ⎿ 161-  align-items: center;
+  ⎿ … +35 more lines
+
+● I have what I need from the code. A few behaviour decisions are yours to make before I write the plan:
+
+  → AskUserQuestion(questions: [{"question":"Should you be able to tap a stop while your location is off or ...)
+  ⎿ Your questions have been answered: "Should you be able to tap a stop while your location is off or still being found?"="Yes, always (Recommended)", "When you tap away from a selected stop and it goes back to the nearest stop, should the map move?"="Reframe default view (Recommended)", "What should the locate button do while a stop is selected?"="Back to nearest (Recommended)". You can now continue with these answers in mind.
+
+● Answers noted. Now I'll check the fixture stops so I can pick coordinates for the end-to-end tests.
+
+  → PowerShell(command: $j = Get-Content tests/fixtures/stops.json -Raw | ConvertFrom-Json; $j | Sele..., description: Inspect fixture stops format)
+  ⎿ {
+  ⎿   "id": "271",
+  ⎿   "code": "cbr_mm029",
+  ⎿   "name": "Açude",
+  ⎿   "lines": [
+  ⎿     "S1",
+  ⎿     "U1",
+  ⎿     "U3"
+  ⎿   ],
+  ⎿   "isSuburbanOnly": false,
+  ⎿   "coords": {
+  ⎿     "lat": 40.21697,
+  ⎿     "lng": -8.438565
+  ⎿   }
+  ⎿ }
+  ⎿ ---
+  ⎿ System.Object[]
+  ⎿ 39
+  → PowerShell(command: $j = Get-Content tests/fixtures/stops.json -Raw | ConvertFrom-Json; $p = @{la..., description: List stops nearest Portagem)
+  ⎿ id  name            lines         lat   lng      m
+  ⎿ --  ----            -----         ---   ---      -
+  ⎿ 233 Portagem        S1,S2,U1,U2 40.21 -8.43   5.00
+  ⎿ 232 Loja do Cidadão S2,U2,U3    40.21 -8.43 351.00
+  ⎿ 269 Aeminium        S1,U1       40.21 -8.43 367.00
+  ⎿ 274 Câmara (asc)    S2,U2,U3    40.21 -8.43 425.00
+  ⎿ 231 Câmara (desc)   S2,U2,U3    40.21 -8.43 425.00
+  ⎿ 234 Parque          S1,S2,U1,U2 40.20 -8.43 632.00
+  ⎿ 275 Mercado (asc)   S2,U2,U3    40.21 -8.42 674.00
+  ⎿ 230 Mercado (desc)  S2,U2,U3    40.21 -8.42 679.00
+  → PowerShell(command: $j = Get-Content tests/fixtures/stops.json -Raw | ConvertFrom-Json; $j | Wher..., description: Read stop coords and trips sample format)
+  ⎿ 269 Aeminium 40.209955 -8.433587
+  ⎿ 232 Loja do Cidadão 40.21035 -8.432479
+  ⎿ 234 Parque 40.203753 -8.425116
+  ⎿ 233 Portagem 40.207526 -8.430654
+  ⎿ [
+  ⎿   {
+  ⎿     "id": "s1-DU-0-633",
+  ⎿     "line": "S1",
+  ⎿     "lineType": "suburbana",
+  ⎿     "dayType": "DU",
+  ⎿     "direction": "P-S",
+  ⎿     "finalDestination": "Corvo",
+  ⎿     "stops": [
+  ⎿       {
+  ⎿         "name": "Coimbra B",
+  ⎿         "time": "07:40:00"
+  ⎿       },
+  ⎿       {
+  ⎿         "name": "Casa do Sal",
+  ⎿         "time": "07:41:18"
+  ⎿ … +96 more lines
+  → PowerShell(command: $t = Get-Content tests/fixtures/trips-DU.sample.json -Raw | ConvertFrom-Json;..., description: Show stop times of the three running buses)
+  ⎿ == s2-DU-0-701 P-S -> Serpins
+  ⎿   10:20:00 República (desc)
+  ⎿   10:21:39 Mercado (desc)
+  ⎿   10:23:01 Câmara (desc)
+  ⎿   10:24:07 Loja do Cidadão
+  ⎿   10:25:35 Portagem
+  ⎿   10:26:59 Parque
+  ⎿   10:28:32 Colégios
+  ⎿   10:29:35 Arregaça
+  ⎿   10:30:56 Norton de Matos
+  ⎿   10:32:00 São José
+  ⎿   10:33:44 Solum
+  ⎿   10:34:55 Fernando Namora
+  ⎿   10:36:08 Casa Branca
+  ⎿   10:37:44 Vale das Flores
+  ⎿   10:40:15 Portela
+  ⎿   10:41:43 Quinta da Ponte
+  ⎿   10:43:26 Ceira
+  ⎿   10:45:24 Sobral de Ceira
+  ⎿   10:47:47 Vale de Açor
+  ⎿ … +44 more lines
+  → PowerShell(command: $j = Get-Content tests/fixtures/stops.json -Raw | ConvertFrom-Json; foreach (..., description: Check nearest stops for candidate test positions)
+  ⎿ == 40.2057,-8.4307
+  ⎿ 
+  ⎿ Portagem 203.00
+  ⎿ Parque   522.00
+  ⎿ Aeminium 533.00
+  ⎿ 
+  ⎿ 
+  ⎿ == 40.206,-8.4325
+  ⎿ 
+  ⎿ Portagem        231.00
+  ⎿ Aeminium        450.00
+  ⎿ Loja do Cidadão 484.00
+  ⎿ 
+  ⎿ 
+  ⎿ == 40.2075,-8.433
+  ⎿ 
+  ⎿ Portagem        199.00
+  ⎿ Aeminium        278.00
+  ⎿ Loja do Cidadão 320.00
+  → PowerShell(command: $j = Get-Content tests/fixtures/stops.json -Raw | ConvertFrom-Json; foreach (..., description: Check neighbour distances for candidate stops)
+  ⎿ == Aeminium
+  ⎿ 
+  ⎿ Loja do Cidadão 104.00
+  ⎿ Câmara (desc)   350.00
+  ⎿ 
+  ⎿ 
+  ⎿ == Parque
+  ⎿ 
+  ⎿ Portagem 631.00
+  ⎿ Colégios 693.00
+  ⎿ 
+  ⎿ 
+  ⎿ == Loja do Cidadão
+  ⎿ 
+  ⎿ Aeminium      104.00
+  ⎿ Câmara (desc) 246.00
+
+● Parque is isolated enough to click reliably in tests, and both U1 buses approach it at the test clock. Writing the plan now.
+
+  → Write(file_path: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-peaceful-oasis.md, content: # Play 009 — Select a stop on the map
+
+## Context
+
+Today the map screen alway...)
+  ⎿ File created successfully at: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-peaceful-oasis.md (file state is current in your context — no need to Read it back)
+  → ToolSearch(query: select:ExitPlanMode, max_results: 1)
