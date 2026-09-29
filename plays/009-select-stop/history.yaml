@@ -15,3 +15,23 @@ events:
     agent: Paula
     resolution: answered
     session_id: a89dbc66fca54195acc2977272048d71
+  - kind: transition
+    at: '2026-09-29T11:10:15.454Z'
+    from: working
+    to: validation
+  - kind: decision
+    at: '2026-09-29T13:52:22.649Z'
+    question: 'Ready for review: select stop'
+    agent: Dave
+    resolution: approved
+    session_id: 5068c53780e04014950668239fd7bde4
+  - kind: transition
+    at: '2026-09-29T13:52:22.669Z'
+    from: validation
+    to: completed
+  - kind: document
+    at: '2026-09-29T14:06:27.891Z'
+    folder: modules
+    name: map-screen.md
+    agent: Paula
+    action: updated

@@ -100,7 +100,7 @@ sessions:
         cache_write_5m: 0
         cache_write_1h: 244280
   - id: 5068c53780e04014950668239fd7bde4
-    state: running
+    state: finished
     seq: 6
     datetime: '2026-09-29T11:07:46.701Z'
     team: Autopilot
@@ -110,5 +110,35 @@ sessions:
       txt: 006-dave.txt
     cols: 180
     rows: 50
-    generic: {}
-next_seq: 7
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 56
+        output: 13354
+        cache_read: 1771505
+        cache_write_5m: 0
+        cache_write_1h: 193055
+  - id: 68de8513c0bf4b7d8b9495d0dfe2fe13
+    state: finished
+    seq: 7
+    datetime: '2026-09-29T13:55:39.241Z'
+    team: Autopilot
+    agent: Paula
+    logs:
+      pty: 007-paula.pty
+      txt: 007-paula.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 54
+        output: 29401
+        cache_read: 1976753
+        cache_write_5m: 0
+        cache_write_1h: 112114
+next_seq: 8

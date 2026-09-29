@@ -1,8 +1,8 @@
 # Map screen
 
 Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
-is, their nearest Metrobus stop, every Metrobus bus in service, and a countdown for each bus
-heading towards that stop. The approved
+is, their nearest Metrobus stop (or any stop they tap), every Metrobus bus in service, and a
+countdown for each bus heading towards that stop. The approved
 prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
 specification. Code lives in `src/ui/`.
 
@@ -24,22 +24,73 @@ specification. Code lives in `src/ui/`.
   (`src/ui/styles/tokens.css` and `app.css`). There is no CSS framework, and the Aptos fonts in the
   font stacks are not bundled, so they fall back to Segoe UI or the system font.
 
+## The shown stop
+
+At any moment the screen follows **one stop**, the *shown stop*. The sheet, the red stop marker,
+the bus countdowns and dimming, the direction filter and smart zoom all follow it. It is the stop
+the user tapped (the **selected stop**) if there is one, and otherwise the **nearest stop**
+(`nearestStop(network.stops, position)`, which exists only while located). In `App.tsx`:
+
+- `selectedStopId` holds the tapped stop by **id**, so a network refresh cannot leave a stale
+  object behind. It is not persisted, just like `sheetCollapsed`.
+- `selected` is that stop looked up in `stopsById`. It is `null` when the id is the nearest
+  stop's id, so a selected stop that is (or becomes) the nearest one is shown as the nearest
+  stop, with its "Nearest stop" labels. It is also `null` when a refresh drops the stop, and the
+  app falls back to the nearest stop.
+- `stop = selected ?? nearest?.stop ?? null`. With no location and nothing selected, no stop is
+  shown.
+
+### Selecting a stop
+
+- **Hit test** (`stopIdAt` in `MapView.tsx`). A click or tap on the map canvas picks a stop whose
+  white circle (the `stops` layer) is within **16 px** of the pointer (`STOP_HIT_RADIUS_PX`, a
+  32 px target around a circle about 13 px across). The rendered-features query box is square, so
+  candidates are also filtered by their projected pixel distance to keep the target round. When
+  several stops are in range (for example an asc/desc pair), the one closest to the tapped point
+  wins, through the domain `nearestStop` and its lower-id tie rule. Before the network has loaded,
+  the `stops` layer does not exist and every tap counts as empty map.
+- The DOM markers (user, stop, buses) have `pointer-events: none`, so taps on them fall through
+  to the canvas. Tapping the red marker taps its own stop, and tapping a bus that sits on a stop
+  selects that stop.
+- MapLibre fires no `click` after a drag, so panning never selects or deselects anything.
+- **Tapping a stop** selects it and frames the selected view. Tapping it again re-frames it,
+  which helps after panning. Tapping the *nearest* stop clears the selection and frames the
+  default view.
+- **Tapping empty map** clears the selection and frames the default view. If nothing was
+  selected, it does nothing at all. With no location there is no default view, so the camera
+  stays where it is.
+- The phone sheet's minimised state is left as it is.
+- **Desktop cursor.** On `mousemove` the same hit test sets the canvas cursor to `pointer` over a
+  stop.
+- Selection works at any time, including while the location is off or still being found.
+- **Accepted limitations.** Double-tapping or double-clicking empty map to zoom also counts as a
+  tap-away while a stop is selected. Stops are canvas features, so they cannot be selected with
+  the keyboard.
+
 ## What the sheet shows
 
-The first matching rule decides the content:
+The first matching rule decides the content. For the two stop states, the sheet region's
+`aria-label` is given in brackets:
 
 | Condition | Content |
 | --- | --- |
+| The stops are loaded and a stop is selected | The selected stop ("Selected stop") |
 | Geolocation still locating | "Finding your location…", with a skeleton |
 | Geolocation unavailable (denied, not supported, or timed out before a first fix) | "Location is off", with a **Try again** button that restarts the watch |
 | Located, but the stops failed to load and no earlier data exists | "Couldn't load Metrobus stops", with **Try again** (not in the prototype) |
 | Located, and the stops are still loading | "Finding your nearest stop…" |
-| Located, and the stops are loaded | The nearest stop |
+| Located, and the stops are loaded | The nearest stop ("Nearest stop") |
 
-The **nearest stop** content shows `// NEAREST STOP`, the stop name exactly as in the data (for
-example `República (desc)`), the distance ("180 m away" or "1.2 km away"), and a chip for each
-line that serves the stop. Each chip uses the line's colour from the data, with white or dark text
-chosen for contrast.
+Because a selection comes first, a selected stop replaces "Finding your location…" and "Location
+is off", and clearing it brings those states back.
+
+The **stop content** (`sheet/NearestStopContent.tsx`, used for both kinds, with `kind` set to
+`nearest` or `selected`) shows the eyebrow `// NEAREST STOP` or `// SELECTED STOP`, the stop name
+exactly as in the data (for example `República (desc)`), the distance ("180 m away" or "1.2 km
+away"), and a chip for each line that serves the stop. Each chip uses the line's colour from the
+data, with white or dark text chosen for contrast. The distance of a selected stop is measured
+from the user's position; with no position, the distance is not rendered at all, in the expanded
+and the minimised sheet alike. Everything else below is the same for both kinds.
 
 If any bus is heading to the stop, a **"Heading to this stop"** section follows
 (`sheet/ApproachingBuses.tsx`):
@@ -77,8 +128,9 @@ under the section header, above the list (`sheet/DirectionButton.tsx`). Each pre
   If the filter leaves no bus, the list is replaced by "No buses in this direction right now."
   (`NO_BUSES_IN_DIRECTION`). The header, its Scheduled badge and the button stay, so the user can
   always cycle back.
-- **State.** In `App.tsx` the choice is stored with the stop id it was made at. When the nearest
-  stop changes, it falls back to `both`, and no effect is needed for that. The choice is not
+- **State.** In `App.tsx` the choice is stored with the stop id it was made at. When the shown
+  stop changes (a new nearest stop, a selection, or clearing one), it falls back to `both`, and
+  no effect is needed for that. The choice is not
   persisted, just like `sheetCollapsed`. `directions` is memoised on the stop **id**, because
   `nearest` is a new object on every position update.
 - **Not affected:** the map markers, their countdown tags and dimming, smart zoom and the locate
@@ -115,7 +167,7 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
 
   | State | Minimised content |
   | --- | --- |
-  | Nearest stop | The stop name and distance, one `BusRow` for the soonest approaching bus **in the chosen direction** **with its own Scheduled badge** (the header that normally carries the badge is gone, and an estimate must always be labelled), and the stale line if it applies. If the direction filter leaves no bus while one approaches the other way, the row becomes "No buses in this direction right now." The eyebrow, the lines row, the "Heading to this stop" header and the direction button are dropped, but the chosen direction is kept when the sheet is expanded again. |
+  | Nearest or selected stop | The stop name and distance (if the location is known), one `BusRow` for the soonest approaching bus **in the chosen direction** **with its own Scheduled badge** (the header that normally carries the badge is gone, and an estimate must always be labelled), and the stale line if it applies. If the direction filter leaves no bus while one approaches the other way, the row becomes "No buses in this direction right now." The eyebrow, the lines row, the "Heading to this stop" header and the direction button are dropped, but the chosen direction is kept when the sheet is expanded again. |
   | Locating, finding the nearest stop | The spinner and title row |
   | Location off, stops failed to load | The icon and title row, with no text and no **Try again** button. On phones, the locate button still retries geolocation. |
 
@@ -130,8 +182,13 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
   so that route colours stand out. Rotation and pitch are disabled. Before a location is known,
   the map opens on Coimbra at zoom 13.
 - Layers: every line shape in its line colour, and every stop as a small white circle. There are
-  no map glyphs or sprites. The user dot, the nearest-stop marker (a red dot with a name pill) and
-  the bus markers are DOM markers (`src/ui/map/markers.ts`).
+  no map glyphs or sprites. The user dot, the stop marker (a red dot with a name pill) and the bus
+  markers are DOM markers (`src/ui/map/markers.ts`).
+- There is a single **stop marker**, on the shown stop. It looks the same for both kinds; its
+  `aria-label` is `Nearest stop: {name}` or `Selected stop: {name}` (`StopKind`). While another
+  stop is selected, the nearest stop has no marker of its own. `MapView` memoises the stop
+  together with its kind, so a change of kind alone (the selected stop becoming the nearest one)
+  still updates the label.
 - **Every bus in service has a marker**: every line, both directions, whether or not the bus is
   heading to the user's stop. `useBusMarkers` in `MapView.tsx` keeps one MapLibre marker per
   `tripId`. On each tick it moves and updates the existing markers in place, adds markers for new
@@ -146,9 +203,9 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
 
   | The bus is… | Tag under the pill | Class |
   | --- | --- | --- |
-  | heading to the nearest stop | the countdown only, e.g. `3:04` | `marker-bus--approaching`, drawn above the others |
+  | heading to the shown stop | the countdown only, e.g. `3:04` | `marker-bus--approaching`, drawn above the others |
   | not heading there (going elsewhere, or already past it) | none | `marker-bus--dimmed` (55% opacity) |
-  | on the map with no known location, so no stop | none | none. Nothing is dimmed. |
+  | on the map with no stop shown (no location and nothing selected) | none | none. Nothing is dimmed. |
 
   The `.marker-bus__tag` element always exists in the marker. With no countdown it is emptied and
   given the `hidden` attribute; `app.css` needs `.marker-bus__tag[hidden] { display: none; }`
@@ -166,28 +223,46 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
 
 ## Smart zoom
 
-The map is framed with `fitBounds` over the user, the nearest stop and the **soonest approaching
-bus in each direction of travel** (`soonestPerDirection` in `src/domain/buses.ts`): the next
-`outbound` bus and the next `inbound` bus heading to the stop, so up to two buses. A stop served in
-one direction only (for example `República (desc)`), or with buses approaching from one side only,
-frames one bus; with none approaching, only the user and the stop are framed. It never frames every
-bus in service, and it ignores the sheet's direction filter. The maximum zoom is 17. The animation takes 800 ms, or is instant under
-`prefers-reduced-motion`. The padding keeps the points clear of the sheet or panel: on phones, the
+The map is framed with `fitBounds` over one of two point sets:
+
+- **Default view** (nothing selected): the user, the nearest stop and the soonest approaching buses
+  described below. It needs a location.
+- **Selected view**: the selected stop and its soonest approaching buses, **without the user**,
+  even when their position is known. It is the framing the user would get standing at that stop,
+  and it works with no location.
+
+The buses framed are the **soonest approaching bus in each direction of travel** to the shown
+stop (`soonestPerDirection` in `src/domain/buses.ts`): the next `outbound` bus and the next
+`inbound` bus heading to the stop, so up to two buses. A stop served in one direction only (for
+example `República (desc)`), or with buses approaching from one side only, frames one bus; with
+none approaching, only the stop (and, in the default view, the user) is framed. It never frames
+every bus in service, and it ignores the sheet's direction filter. The maximum zoom is 17. The
+animation takes 800 ms, or is instant under `prefers-reduced-motion`. The padding keeps the points clear of the sheet or panel: on phones, the
 bottom padding is the sheet's measured height.
 
 - Framing happens **automatically once**, when both the location and the nearest stop are known.
   If the trips have not loaded within 3 seconds, the map is framed without the buses, and it is
-  not reframed when they appear later.
-- After that, the map is reframed only when the user presses the locate button. Position updates
-  move the markers but never move the camera, so the user's panning is respected.
+  not reframed when they appear later. It does not run while a stop is selected, and any framing
+  the user asks for (a selection or the locate button) counts as that first one, so a user who
+  selects a stop while still being located keeps their camera when the location arrives.
+- After that, the map is reframed only when the user selects or clears a stop, or presses the
+  locate button. Position updates move the markers but never move the camera, so the user's
+  panning is respected.
+- **Framing is requested, not called.** A selection changes state, and the new stop's buses only
+  exist in the next render. So the handlers bump a `fitRequest` counter and an effect runs `fit`
+  once per request, in the render that already has the new buses. Calling `fit` directly from a
+  handler would frame the previous stop's buses. If the trips are not loaded yet, whatever is
+  known is framed (possibly the stop alone, at zoom 17), with no reframe later.
 
 ## Locate button
 
 | Geolocation state | Button |
 | --- | --- |
 | Locating | Disabled and grey |
-| Located | Blue crosshair. Pressing it reframes the map. |
-| Unavailable | Crossed-out crosshair. Pressing it retries geolocation. |
+| Located | Blue crosshair. Pressing it clears any selection and frames the default view. |
+| Unavailable | Crossed-out crosshair. Pressing it retries geolocation and keeps any selection. |
+
+Its name stays "Centre on my location" in every state.
 
 ## Live behaviour
 
@@ -198,4 +273,15 @@ bottom padding is the sheet's measured height.
   request, so the markers move along their routes and the sheet and map countdowns tick down
   together.
 - Buses are shown even while the location is still being found, or when it is off. The sheet then
-  shows its locating or "Location is off" state, and the map shows the buses with no countdowns.
+  shows its locating or "Location is off" state, and the map shows the buses with no countdowns,
+  until the user selects a stop.
+
+## Testing notes
+
+Stops are canvas features, so the end-to-end tests (`tests/e2e/map.spec.ts`) cannot click them
+by locator. They work out a stop's screen position instead: a Web Mercator projection (tile size
+512) anchored on two DOM markers whose coordinates are known (`projectorFromAnchors`), or on the
+map's initial camera when there is no location (`initialProjector`), with stop coordinates read
+from `tests/fixtures/stops.json`. `emptyMapPoint` finds a point at least 48 px from every stop.
+Parque is the usual click target, since no other stop is within 630 m of it. If a click misses,
+fix the projection; never widen `STOP_HIT_RADIUS_PX` to make a test pass.

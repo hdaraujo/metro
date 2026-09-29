@@ -1,0 +1,231 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `009-select-stop`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/009-select-stop/intent.md` and `plays/009-select-stop/plan.md`, then read the real changes on the `009-select-stop` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/`, which is yours to write in this session.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ Allow selection of a bus stop on the map.
+  ⎿ 
+  ⎿ Clicking/touching outside of any stop selects the default based on user proximity.
+  ⎿ 
+  ⎿ When select, zoom to the stop and the first bus from each direction, exactly as the default if the user is close to the stop# Play 009 — Select a stop on the map
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ Today the map screen always shows the stop **nearest the user**: the sheet, the bus countdowns,
+  ⎿ the dimming of the bus markers and the smart zoom all follow it. Riders cannot check any other stop,
+  ⎿ for example the one near work, or any stop at all while their location is off.
+  ⎿ 
+  ⎿ This play lets the user **tap any stop on the map** to look at it instead. **Tapping empty map goes
+  ⎿ back to the nearest stop.** Selecting a stop frames the map on that stop and the soonest
+  ⎿ approaching bus in each direction. That is the same framing the default view gives when the user
+  ⎿ is standing at the stop, so the user's own position is not framed.
+  ⎿ 
+  ⎿ The Architect has already updated `documentation/context/vision.md` for this play ("your nearest
+  ⎿ Metrobus stop (or any stop you tap)"; "The user can tap any other stop to look at it instead;
+  ⎿ tapping away goes back to the nearest one."). `tech.md` needs no change. The Planner checked the UI:
+  ⎿ … +457 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ d958d20 chore(deps): refresh package-lock.json metadata from local npm install
+  ⎿ 040d650 chore(play-009): record select-stop play sessions and history
+  ⎿ b99025a feat(map): tap any stop on the map to show it
+  ⎿  package-lock.json                           |  136 +--
+  ⎿  plays/009-select-stop/devops.yaml           |    2 +
+  ⎿  plays/009-select-stop/positions.yaml        |    2 +-
+  ⎿  plays/009-select-stop/sessions/004-dave.pty |   78 ++
+  ⎿  plays/009-select-stop/sessions/004-dave.txt |   50 ++
+  ⎿  plays/009-select-stop/sessions/005-gui.pty  | 1271 +++++++++++++++++++++++++++
+  ⎿  plays/009-select-stop/sessions/005-gui.txt  |  450 ++++++++++
+  ⎿  plays/009-select-stop/sessions/info.yaml    |   56 +-
+  ⎿  src/ui/App.tsx                              |  138 ++-
+  ⎿  src/ui/map/MapView.tsx                      |   76 +-
+  ⎿  src/ui/map/markers.ts                       |   16 +-
+  ⎿  src/ui/sheet/NearestStopContent.tsx         |   19 +-
+  ⎿  tests/e2e/map.spec.ts                       |  296 ++++++-
+  ⎿  13 files changed, 2421 insertions(+), 169 deletions(-)
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ … +198 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ diff --git a/src/ui/App.tsx b/src/ui/App.tsx
+  ⎿ index 01b3818..9881cae 100644
+  ⎿ --- a/src/ui/App.tsx
+  ⎿ +++ b/src/ui/App.tsx
+  ⎿ @@ -2,10 +2,11 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
+  ⎿  import type { PaddingOptions } from 'maplibre-gl';
+  ⎿  import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+  ⎿  import { directionsAtStop, nextDirectionFilter, type DirectionFilter } from '../domain/directions';
+  ⎿ +import { haversineMeters } from '../domain/geo';
+  ⎿  import { lisbonClock } from '../domain/lisbonTime';
+  ⎿  import { nearestStop } from '../domain/nearestStop';
+  ⎿  import { measureShape } from '../domain/shape';
+  ⎿ -import type { LatLng } from '../domain/types';
+  ⎿ +import type { LatLng, Stop } from '../domain/types';
+  ⎿  import { Attribution } from './chrome/Attribution';
+  ⎿  import { LocateButton } from './chrome/LocateButton';
+  ⎿  import { Wordmark } from './chrome/Wordmark';
+  ⎿ @@ -15,6 +16,7 @@ import { useNetwork } from './hooks/useNetwork';
+  ⎿  import { useNow } from './hooks/useNow';
+  ⎿  import { useTimetable } from './hooks/useTimetable';
+  ⎿ … +459 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ 95:  pointer-events: none;
+  ⎿ 116:  pointer-events: none;
+  ⎿ 164:  pointer-events: none;
+  ⎿ 243:  pointer-events: auto;
+  ⎿ 262:  pointer-events: auto;
+  ⎿ 279:  pointer-events: none;
+  ⎿ 304:  pointer-events: auto;
+  ⎿ 242:  cursor: pointer;
+  ⎿ 248:  cursor: default;
+  ⎿ 333:  cursor: pointer;
+  ⎿ 489:  cursor: pointer;
+  ⎿ 698:  cursor: pointer;
+  ⎿ # App platform
+  ⎿ 
+  ⎿ Metro is one static, client-side React PWA at the root of the `metro` repository. It has no
+  ⎿ server, no database and no accounts. The code is organised as follows:
+  ⎿ - `src/sources/`: data source adapters.
+  ⎿ - `src/domain/`: pure logic and types.
+  ⎿ - `src/ui/`: React, MapLibre and CSS.
+  ⎿ - `tests/`: fixtures and Playwright end-to-end tests.
+  ⎿ … +12 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ 4:const fixture = (name: string) =>
+  ⎿ 7:const FIXTURES: Record<string, string> = {
+  ⎿ 14:const TRANSPARENT_PNG = Buffer.from(
+  ⎿ 20:const NEAR_PORTAGEM = { latitude: 40.2075, longitude: -8.4307 };
+  ⎿ 26:const WEEKDAY_10_44_LISBON = new Date('2026-09-23T09:44:00Z');
+  ⎿ 28:const U1_TO_VALE_DAS_FLORES = /^Scheduled position of line U1 bus to Vale das Flores, /;
+  ⎿ 29:const U1_TO_COIMBRA_B = /^Scheduled position of line U1 bus to Coimbra B, /;
+  ⎿ 30:const S2_TO_SERPINS = 'Scheduled position of line S2 bus to Serpins';
+  ⎿ 50:const STOPS: { name: string; coords: Coords }[] = JSON.parse(fixture('stops.json'));
+  ⎿ 51:function stopCoords(name: string): Coords {
+  ⎿ 58:function worldPx({ lat, lng }: Coords, worldSize: number): Pixel {
+  ⎿ 67:function projectorFrom(origin: Anchor, worldSize: number): Projector {
+  ⎿ 76:function projectorFromAnchors(a: Anchor, b: Anchor): Projector {
+  ⎿ 85:function initialProjector(viewport: { width: number; height: number }): Projector {
+  ⎿ 95:async function centreOf(locator: Locator): Promise<Pixel> {
+  ⎿ 101:async function anchor(locator: Locator, coords: Coords): Promise<Anchor> {
+  ⎿ 106:async function visibleMapArea(page: Page, testInfo: TestInfo) {
+  ⎿ 118:async function expectFramed(page: Page, testInfo: TestInfo, markers: Locator[]) {
+  ⎿ 136:async function emptyMapPoint(page: Page, testInfo: TestInfo, project: Projector): Promise<Pixel> {
+  ⎿ 160:async function selectParque(page: Page, project: Projector): Promise<Locator> {
+  ⎿ … +29 more lines
+
+● The plan and the code agree. Now I'm updating `documentation/modules/map-screen.md` so it covers stop selection.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ Exit code 2
+  ⎿ /usr/bin/bash: -c: line 84: unexpected EOF while looking for matching `''
+  → Write(file_path: C:\Users\haraujo\AppData\Local\Temp\claude\C--Users-haraujo--building-data-pr..., content: p = 'documentation/modules/map-screen.md'
+s = open(p, encoding='utf-8').read(...)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro" &...)
+  ⎿ File created successfully at: C:\Users\haraujo\AppData\Local\Temp\claude\C--Users-haraujo--building-data-projects-003-metro-worktrees-009-metro\68de8513-c0bf-4b7d-8b94-95d0dfe2fe13\scratchpad\edit.py (file state is current in your context — no need to Read it back)
+  ⎿ Exit code 1
+  ⎿ Traceback (most recent call last):
+  ⎿   File "C:\Users\haraujo\AppData\Local\Temp\claude\C--Users-haraujo--building-data-projects-003-metro-worktrees-009-metro\68de8513-c0bf-4b7d-8b94-95d0dfe2fe13\scratchpad\edit.py", line 96, in <module>
+  ⎿     rep("""no map glyphs or sprites. The user dot, the nearest-stop marker (a red dot with a name pill) and
+  ⎿     ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ⎿     the bus markers are DOM markers (`src/ui/map/markers.ts`).""", """no map glyphs or sprites. The user dot, the stop marker (a red dot with a name pill) and the bus
+  ⎿     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ⎿     ...<4 lines>...
+  ⎿       together with its kind, so a change of kind alone (the selected stop becoming the nearest one)
+  ⎿       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ⎿       still updates the label.""")
+  ⎿       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ⎿   File "C:\Users\haraujo\AppData\Local\Temp\claude\C--Users-haraujo--building-data-projects-003-metro-worktrees-009-metro\68de8513-c0bf-4b7d-8b94-95d0dfe2fe13\scratchpad\edit.py", line 7, in rep
+  ⎿     assert s.count(a) == 1, a
+  ⎿            ^^^^^^^^^^^^^^^
+  ⎿ AssertionError: no map glyphs or sprites. The user dot, the nearest-stop marker (a red dot with a name pill) and
+  ⎿ the bus markers are DOM markers (`src/ui/map/markers.ts`).
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro" &...)
+  ⎿ 133:  no map glyphs or sprites. The user dot, the nearest-stop marker (a red dot with a name pill) and$
+  ⎿ 134-  the bus markers are DOM markers (`src/ui/map/markers.ts`).$
+  ⎿ 135-- **Every bus in service has a marker**: every line, both directions, whether or not the bus is$
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\AppData\Local\Temp\claude\C--Users-haraujo--building-data-pr..., old_string: rep("""no map glyphs or sprites. The user dot, the nearest-stop marker (a red..., new_string: rep("""  no map glyphs or sprites. The user dot, the nearest-stop marker (a r...)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro" &...)
+  ⎿ The file C:\Users\haraujo\AppData\Local\Temp\claude\C--Users-haraujo--building-data-projects-003-metro-worktrees-009-metro\68de8513-c0bf-4b7d-8b94-95d0dfe2fe13\scratchpad\edit.py has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿  documentation/modules/map-screen.md | 128 +++++++++++++++++++++++++++++-------
+  ⎿  1 file changed, 106 insertions(+), 22 deletions(-)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro" &...)
+  ⎿ 72:The first matching rule decides the content. The sheet region's `aria-label` is given in brackets where it matters to tests:
+  ⎿ ## Smart zoom
+  ⎿ 
+  ⎿ The map is framed with `fitBounds` over one of two point sets:
+  ⎿ 
+  ⎿ - **Default view** (nothing selected): the user, the nearest stop and the soonest approaching buses
+  ⎿   described below. It needs a location.
+  ⎿ - **Selected view**: the selected stop and its soonest approaching buses, **without the user**,
+  ⎿   even when their position is known. It is the framing the user would get standing at that stop,
+  ⎿   and it works with no location.
+  ⎿ 
+  ⎿ The buses framed are the **soonest approaching bus in each direction of travel** to the shown stop (`soonestPerDirection` in `src/domain/buses.ts`): the next
+  ⎿ `outbound` bus and the next `inbound` bus heading to the stop, so up to two buses. A stop served in
+  ⎿ one direction only (for example `República (desc)`), or with buses approaching from one side only,
+  ⎿ frames one bus; with none approaching, only the user and the stop are framed. It never frames every
+  ⎿ bus in service, and it ignores the sheet's direction filter. The maximum zoom is 17. The animation takes 800 ms, or is instant under
+  ⎿ `prefers-reduced-motion`. The padding keeps the points clear of the sheet or panel: on phones, the
+  ⎿ bottom padding is the sheet's measured height.
+  ⎿ 
+  ⎿ - Framing happens **automatically once**, when both the location and the nearest stop are known.
+  ⎿ … +14 more lines
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\docume..., old_string: The buses framed are the **soonest approaching bus in each direction of trave..., new_string: The buses framed are the **soonest approaching bus in each direction of trave...)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\docume..., old_string: The first matching rule decides the content. The sheet region's `aria-label` ..., new_string: The first matching rule decides the content. For the two stop states, the she...)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\documentation\modules\map-screen.md has been updated successfully.
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\documentation\modules\map-screen.md has been updated successfully.
+
+● Final read-through of the updated sections.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro" &...)
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop (or any stop they tap), every Metrobus bus in service, and a
+  ⎿ countdown for each bus heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿ the bus countdowns and dimming, the direction filter and smart zoom all follow it. It is the stop
+  ⎿ the user tapped (the **selected stop**) if there is one, and otherwise the **nearest stop**
+  ⎿ (`nearestStop(network.stops, position)`, which exists only while located). In `App.tsx`:
+  ⎿ 
+  ⎿ - `selectedStopId` holds the tapped stop by **id**, so a network refresh cannot leave a stale
+  ⎿   object behind. It is not persisted, just like `sheetCollapsed`.
+  ⎿ - `selected` is that stop looked up in `stopsById`. It is `null` when the id is the nearest
+  ⎿   stop's id, so a selected stop that is (or becomes) the nearest one is shown as the nearest
+  ⎿ … +63 more lines
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\docume..., old_string: away"), and a chip for each line that serves the stop. The distance of a sele..., new_string: away"), and a chip for each line that serves the stop. Each chip uses the lin...)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\documentation\modules\map-screen.md has been updated successfully.
+
+● I updated `documentation/modules/map-screen.md` to cover stop selection. That document already describes the map screen, so I didn't add a new one. The code matched the plan, so nothing had to be reconciled. Nothing is committed yet.
+
+What the document now covers:
+- **The shown stop (new section):** the whole screen follows one stop — the one the user tapped if there is one, otherwise the nearest. It explains how the tapped stop is held by id, why tapping the nearest stop shows it as "Nearest stop", and what happens when a refresh drops the tapped stop.
+- **Selecting a stop (new section):**
+  - how a tap picks a stop, within 16 px of the pointer;
+  - taps on markers go through to the map, and panning never counts as a tap;
+  - what tapping a stop or empty map does, and the pointer cursor on desktop;
+  - two accepted limitations: double-tap zoom also counts as tapping away, and stops can't be selected with the keyboard.
+- **Sheet:** a new first rule shows a selected stop even while the location is off or still being found. It has the `// SELECTED STOP` label, and the distance is left out when the location is unknown. The minimised sheet follows the same rule.
+- **Map markers:** there is one stop marker, on the shown stop, labelled "Nearest stop" or "Selected stop". Bus countdowns and dimming follow the shown stop.
+- **Smart zoom:** the default view frames the user, the nearest stop and its next buses. The selected view frames only the tapped stop and its next buses, without the user. The section also says:
+  - the automatic first framing doesn't run while a stop is selected;
+  - why framing is requested and run on the next render rather than called straight from the tap. Called straight away, it would frame the previous stop's buses.
+- **Locate button:** clears any selection, and keeps it when retrying the location.
+- **Direction filter:** resets whenever the shown stop changes.
+- **Testing notes (new section):** how the end-to-end tests work out where a stop is on screen, and the rule to fix that calculation rather than widen the 16 px tap radius when a click misses.
