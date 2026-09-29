@@ -1,7 +1,13 @@
+import {
+  busesInDirection,
+  directionLabel,
+  type DirectionAtStop,
+  type DirectionFilter,
+} from '../../domain/directions';
 import { formatDistance } from '../../domain/geo';
 import { formatLisbonDate } from '../../domain/lisbonTime';
 import type { BusPosition, LineId, Stop } from '../../domain/types';
-import { ApproachingBuses, BusRow } from './ApproachingBuses';
+import { ApproachingBuses, BusRow, NO_BUSES_IN_DIRECTION } from './ApproachingBuses';
 import { LineChip } from './LineChip';
 
 const STALE_AFTER_MS = 24 * 60 * 60 * 1000;
@@ -13,6 +19,11 @@ interface NearestStopContentProps {
   lineColors: Record<LineId, string>;
   /** The buses heading to this stop, soonest first. */
   approaching: readonly BusPosition[];
+  /** Directions this stop is served in (see directionsAtStop). */
+  directions: readonly DirectionAtStop[];
+  /** The effective filter; always 'both' when the stop is not served in both directions. */
+  directionFilter: DirectionFilter;
+  onCycleDirection: () => void;
   /** When the timetable data was fetched, UTC ISO 8601. */
   fetchedAt: string;
   now: Date;
@@ -25,6 +36,9 @@ export function NearestStopContent({
   distanceMeters,
   lineColors,
   approaching,
+  directions,
+  directionFilter,
+  onCycleDirection,
   fetchedAt,
   now,
   collapsed,
@@ -32,6 +46,8 @@ export function NearestStopContent({
   const colorOf = (line: LineId) => lineColors[line] ?? FALLBACK_LINE_COLOR;
   const fetched = new Date(fetchedAt);
   const stale = now.getTime() - fetched.getTime() > STALE_AFTER_MS;
+  // The list follows the direction filter; whether the section shows at all does not.
+  const shown = busesInDirection(approaching, directionFilter);
 
   const heading = (
     <div className="stop-heading__row">
@@ -46,15 +62,17 @@ export function NearestStopContent({
   );
 
   if (collapsed) {
-    const soonest = approaching[0];
+    const soonest = shown[0];
     return (
       <>
         {heading}
-        {soonest && (
+        {soonest ? (
           // Off: the countdown ticks every second and must not flood the sheet's live region.
           <ul className="bus-list" aria-live="off">
             <BusRow bus={soonest} color={colorOf(soonest.line)} badge />
           </ul>
+        ) : (
+          approaching[0] && <p className="approaching__empty">{NO_BUSES_IN_DIRECTION}</p>
         )}
         {staleNote}
       </>
@@ -76,7 +94,18 @@ export function NearestStopContent({
       {approaching[0] && (
         <>
           <div className="rule" />
-          <ApproachingBuses buses={approaching} colorOf={colorOf} />
+          <ApproachingBuses
+            buses={shown}
+            colorOf={colorOf}
+            direction={
+              directions.length === 2
+                ? {
+                    label: directionLabel(directionFilter, directions),
+                    onCycle: onCycleDirection,
+                  }
+                : undefined
+            }
+          />
         </>
       )}
       {staleNote}

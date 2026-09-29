@@ -1,0 +1,1 @@
+Add a button to the sheet to cycle through the buses coming from one direction, the other direction, and both directions. Default is both directions, the current behaviour
