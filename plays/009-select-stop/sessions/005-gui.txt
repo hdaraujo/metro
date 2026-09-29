@@ -1,0 +1,450 @@
+> You are the Autopilot Developer for this play. Read `plays/009-select-stop/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/009-select-stop/design/` folder exists, this play already has a UI design I approved: read `plays/009-select-stop/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-developer)
+  ⎿ Launching skill: autopilot-developer
+
+> Base directory for this skill: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\.claude\skills\autopilot-developer
+
+You are the Autopilot Developer for this play. Read `$play/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ # Play 009 — Select a stop on the map
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ Today the map screen always shows the stop **nearest the user**: the sheet, the bus countdowns,
+  ⎿ the dimming of the bus markers and the smart zoom all follow it. Riders cannot check any other stop,
+  ⎿ for example the one near work, or any stop at all while their location is off.
+  ⎿ 
+  ⎿ This play lets the user **tap any stop on the map** to look at it instead. **Tapping empty map goes
+  ⎿ back to the nearest stop.** Selecting a stop frames the map on that stop and the soonest
+  ⎿ approaching bus in each direction. That is the same framing the default view gives when the user
+  ⎿ is standing at the stop, so the user's own position is not framed.
+  ⎿ 
+  ⎿ The Architect has already updated `documentation/context/vision.md` for this play ("your nearest
+  ⎿ Metrobus stop (or any stop you tap)"; "The user can tap any other stop to look at it instead;
+  ⎿ tapping away goes back to the nearest one."). `tech.md` needs no change. The Planner checked the UI:
+  ⎿ this play adds no new screen, so there is no design folder. It changes the existing map screen
+  ⎿ only, and all visuals reuse what is already there.
+  ⎿ 
+  ⎿ **Decisions the user made:**
+  ⎿ … +408 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ # Play `009` — Autopilot session instructions
+  ⎿ 
+  ⎿ This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ vision + tech stack, the Planner then checks whether the play introduces a new
+  ⎿ user interface and — if the user wants one — designs a visual prototype before
+  ⎿ shaping an implementation plan (in plan mode), DevOps prepares an isolated git
+  ⎿ worktree carrying the play's branch in each target repo, the Developer implements
+  ⎿ the plan inside those worktrees, then DevOps commits the changes and posts testing
+  ⎿ instructions before the play goes to validation.
+  ⎿ 
+  ⎿ Your session starts at the root of the project's **specs repository** — the one
+  ⎿ holding `documentation/` and `plays/`. While this play is in progress that root is
+  ⎿ its own git worktree, checked out on the play's branch, so everything you write
+  ⎿ here belongs to this play and lands on the default branch as a single commit
+  ⎿ when the play closes.
+  ⎿ 
+  ⎿ ## Product context (read first)
+  ⎿ 
+  ⎿ This project's `documentation/context/` folder holds context documents shared by
+  ⎿ every play — the product vision and tech stack the Architect maintains, plus any
+  ⎿ … +297 more lines
+  ⎿ import 'maplibre-gl/dist/maplibre-gl.css';
+  ⎿ import {
+  ⎿   LngLatBounds,
+  ⎿   Map as MapLibreMap,
+  ⎿   Marker,
+  ⎿   setWorkerUrl,
+  ⎿   type GeoJSONSource,
+  ⎿   type MarkerOptions,
+  ⎿   type PaddingOptions,
+  ⎿ } from 'maplibre-gl';
+  ⎿ // MapLibre 6 loads its worker from a separate module next to its own file, which a bundle does not
+  ⎿ // have; let Vite build the worker and point MapLibre at it.
+  ⎿ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+  ⎿ import type { FeatureCollection } from 'geojson';
+  ⎿ import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
+  ⎿ import type { BusPosition, LatLng, LineId, Network, Stop } from '../../domain/types';
+  ⎿ import { prefersReducedMotion } from '../hooks/useMediaQuery';
+  ⎿ import { mapStyle } from './mapStyle';
+  ⎿ import {
+  ⎿   createBusMarker,
+  ⎿ … +515 more lines
+
+● Now the e2e test file.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ import { readFileSync } from 'node:fs';
+  ⎿ import { expect, test, type Page } from '@playwright/test';
+  ⎿ 
+  ⎿ const fixture = (name: string) =>
+  ⎿   readFileSync(new URL(`../fixtures/${name}`, import.meta.url), 'utf8');
+  ⎿ 
+  ⎿ const FIXTURES: Record<string, string> = {
+  ⎿   'stops.json': fixture('stops.json'),
+  ⎿   'route-shapes.json': fixture('route-shapes.json'),
+  ⎿   // Every day type gets the weekday sample; the clock below is a weekday anyway.
+  ⎿   trips: fixture('trips-DU.sample.json'),
+  ⎿ };
+  ⎿ 
+  ⎿ const TRANSPARENT_PNG = Buffer.from(
+  ⎿   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+  ⎿   'base64',
+  ⎿ );
+  ⎿ 
+  ⎿ /** Portagem stop, Coimbra. */
+  ⎿ const NEAR_PORTAGEM = { latitude: 40.2075, longitude: -8.4307 };
+  ⎿ … +439 more lines
+
+● Starting with `markers.ts`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ (Bash completed with no output)
+
+● Now `MapView.tsx`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ (Bash completed with no output)
+
+● Simplify the point parameter to `{ x, y }` rather than `PointLike`:
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ (Bash completed with no output)
+
+● Now `NearestStopContent.tsx`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ (Bash completed with no output)
+
+● Now `App.tsx`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ Exit code 2
+  ⎿ /usr/bin/bash: -c: line 185: unexpected EOF while looking for matching `''
+
+● The heredoc didn't parse in this shell, so I'll write the script to a file and run it from there.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ (Bash completed with no output)
+  → Read(file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\src\ui..., limit: 5)
+  ⎿ 1	import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿ 2	import type { PaddingOptions } from 'maplibre-gl';
+  ⎿ 3	import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+  ⎿ 4	import { directionsAtStop, nextDirectionFilter, type DirectionFilter } from '../domain/directions';
+  ⎿ 5	import { lisbonClock } from '../domain/lisbonTime';
+
+● I'll write the whole of `App.tsx` in one go.
+
+  → Write(file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\src\ui..., content: import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } ...)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\src\ui\App.tsx has been updated successfully. (file state is current in your context — no need to Read it back)
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ node:internal/modules/cjs/loader:1520
+  ⎿   throw err;
+  ⎿   ^
+  ⎿ 
+  ⎿ Error: Cannot find module 'C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\node_modules\typescript7\bin\tsc'
+  ⎿     at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+  ⎿     at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+  ⎿     at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+  ⎿     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+  ⎿     at Module._load (node:internal/modules/cjs/loader:1294:5)
+  ⎿     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+  ⎿     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+  ⎿     at node:internal/main/run_main_module:33:47 {
+  ⎿   code: 'MODULE_NOT_FOUND',
+  ⎿   requireStack: []
+  ⎿ }
+  ⎿ 
+  ⎿ Node.js v24.18.0
+  ⎿ … +6 more lines
+
+● Dependencies aren't installed in the worktree; installing them.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 600000)
+  ⎿ 147 packages are looking for funding
+  ⎿   run `npm fund` for details
+  ⎿ 
+  ⎿ found 0 vulnerabilities
+  ⎿  M plays/009-select-stop/devops.yaml
+  ⎿  M plays/009-select-stop/positions.yaml
+  ⎿  M plays/009-select-stop/sessions/info.yaml
+  ⎿  M src/ui/App.tsx
+  ⎿  M src/ui/map/MapView.tsx
+  ⎿  M src/ui/map/markers.ts
+  ⎿  M src/ui/sheet/NearestStopContent.tsx
+  ⎿ ?? plays/009-select-stop/sessions/004-dave.pty
+  ⎿ ?? plays/009-select-stop/sessions/004-dave.txt
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 300000)
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ [[33mwarn[39m] src/ui/map/markers.ts
+  ⎿ [[33mwarn[39m] Code style issues found in the above file. Run Prettier with --write to fix.
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ src/ui/map/markers.ts 87ms
+  ⎿ diff --git a/src/ui/map/markers.ts b/src/ui/map/markers.ts
+  ⎿ index 1f38bfb..8ba78d7 100644
+  ⎿ --- a/src/ui/map/markers.ts
+  ⎿ +++ b/src/ui/map/markers.ts
+  ⎿ @@ -22,17 +22,23 @@ export function createUserMarker(): HTMLElement {
+  ⎿    return el;
+  ⎿  }
+  ⎿  
+  ⎿ -/** The nearest stop: a red dot in a halo, with the stop's name in a pill above it. */
+  ⎿ -export function createStopMarker(name: string): HTMLElement {
+  ⎿ +/** Whether the stop shown in the sheet is the nearest one or one the user tapped. */
+  ⎿ +export type StopKind = 'nearest' | 'selected';
+  ⎿ +
+  ⎿ +/** The stop shown in the sheet: a red dot in a halo, with the stop's name in a pill above it. */
+  ⎿ +export function createStopMarker(name: string, kind: StopKind): HTMLElement {
+  ⎿    const el = div('marker-stop');
+  ⎿    el.setAttribute('role', 'img');
+  ⎿    el.append(div('marker-stop__dot'), div('marker-stop__label'));
+  ⎿ -  updateStopMarker(el, name);
+  ⎿ … +164 more lines
+
+● Now the e2e tests. First I'll check the fixture data and marker pointer-events.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ 95:  pointer-events: none;
+  ⎿ 116:  pointer-events: none;
+  ⎿ 164:  pointer-events: none;
+  ⎿ 243:  pointer-events: auto;
+  ⎿ 262:  pointer-events: auto;
+  ⎿ 279:  pointer-events: none;
+  ⎿ 304:  pointer-events: auto;
+  ⎿ [
+  ⎿   {
+  ⎿     "id": "271",
+  ⎿     "code": "cbr_mm029",
+  ⎿     "name": "Açude",
+  ⎿     "lines": [
+  ⎿       "S1",
+  ⎿       "U1",
+  ⎿       "U3"
+  ⎿     ],
+  ⎿     "isSuburbanOnly": false,
+  ⎿     "coords": {
+  ⎿       "lat": 40.21697,
+  ⎿ … +30 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿ 269 Aeminium 40.209955 -8.433587
+  ⎿ 270 Arnado 40.212903 -8.436042
+  ⎿ 236 Arregaça 40.199566 -8.416973
+  ⎿ 271 Açude 40.21697 -8.438565
+  ⎿ 241 Casa Branca 40.200719 -8.399915
+  ⎿ 272 Casa do Sal 40.220424 -8.43981
+  ⎿ 259 Casal de Santo António 40.155245 -8.216339
+  ⎿ 258 Casal do Espírito Santo 40.126566 -8.239361
+  ⎿ 246 Ceira 40.172865 -8.393365
+  ⎿ 273 Coimbra B 40.224741 -8.439876
+  ⎿ 235 Colégios 40.19847 -8.420803
+  ⎿ 253 Corvo 40.093477 -8.32191
+  ⎿ 274 Câmara (asc) 40.211255 -8.42977
+  ⎿ 231 Câmara (desc) 40.211257 -8.429836
+  ⎿ 240 Fernando Namora 40.203989 -8.4009
+  ⎿ 251 Lobazes 40.104426 -8.352192
+  ⎿ 232 Loja do Cidadão 40.21035 -8.432479
+  ⎿ 257 Lousã - Estação 40.118518 -8.247687
+  ⎿ 256 Lousã - Parque de Exposições 40.110834 -8.249016
+  ⎿ 255 Meiral 40.106236 -8.267951
+  ⎿ … +71 more lines
+
+● Quick checks: `formatDistance`, the Sheet's labelling, the wordmark position, and Parque's lines.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ...)
+  ⎿   };
+  ⎿ }
+  ⎿ 
+  ⎿ /** `"180 m"` below 1 km (to the nearest 10 m), `"1.2 km"` from 1 km. */
+  ⎿ export function formatDistance(meters: number): string {
+  ⎿   const rounded = Math.round(meters / 10) * 10;
+  ⎿   if (rounded < 1000) return `${rounded} m`;
+  ⎿   return `${(meters / 1000).toFixed(1)} km`;
+  ⎿ }
+  ⎿ 70:        aria-label={collapsed ? 'Expand' : 'Minimise'}
+  ⎿ 85:      aria-label={label}
+  ⎿ 272:    "name": "Lousã - Parque de Exposições",
+  ⎿ 273-    "lines": [
+  ⎿ 274-      "S1",
+  ⎿ 275-      "S2"
+  ⎿ --
+  ⎿ 388:    "name": "Parque",
+  ⎿ 389-    "lines": [
+  ⎿ 390-      "S1",
+  ⎿ 391-      "S2",
+  ⎿ … +26 more lines
+
+● Now the e2e helpers and tests.
+
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\tests\..., old_string: const S2_TO_SERPINS = 'Scheduled position of line S2 bus to Serpins';
+, new_string: const S2_TO_SERPINS = 'Scheduled position of line S2 bus to Serpins';
+
+// ---...)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\tests\..., old_string: import { expect, test, type Page } from '@playwright/test';, new_string: import { expect, test, type Locator, type Page, type TestInfo } from '@playwr...)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\tests\e2e\map.spec.ts has been updated successfully.
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\tests\e2e\map.spec.ts has been updated successfully.
+
+● Now the new tests themselves.
+
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\tests\..., old_string: test.describe('location denied', () => {
+  test.use({ permissions: [] });
+
+  ..., new_string: /** About 200 m south of Portagem, which is still the nearest stop; the next ...)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\tests\e2e\map.spec.ts has been updated successfully.
+
+● Now I'll run lint, typecheck and the unit tests, then the build and the e2e suite.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 300000)
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ tests/e2e/map.spec.ts(50,62): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  ⎿   Type 'undefined' is not assignable to type 'string'.
+  ⎿    Duration  3.07s (transform 76%, import 15%, worker 7%, tests 3%)
+  ⎿ 
+  ⎿   Transform  transforming modules took 5.45s · 76% of tracked time, re-done on every run
+  ⎿              persist transforms across runs with fsModuleCache: true
+  ⎿              learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 300000)
+  ⎿ const STOPS: { name: string; coords: Coords }[] = JSON.parse(fixture('stops.json'));
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿  Test Files  11 passed (11)
+  ⎿       Tests  106 passed (106)
+
+● Lint, typecheck and unit tests pass. Before the e2e run, I'll check nothing else is serving port 4173, since Playwright would reuse another worktree's server.
+
+  → PowerShell(command: Get-NetTCPConnection -LocalPort 4173 -State Listen -ErrorAction SilentlyConti...)
+  ⎿ done
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 600000)
+  ⎿     Call log:
+  ⎿       - Expect "toHaveCount" getByRole('region', { name: 'Selected stop' }).getByText(/away/) with timeout 5000ms
+  ⎿       - waiting for getByRole('region', { name: 'Selected stop' }).getByText(/away/)
+  ⎿         13 × locator resolved to 2 elements
+  ⎿            - unexpected value "2"
+  ⎿ 
+  ⎿ 
+  ⎿       638 |       const sheet = await selectParque(page, initialProjector(page.viewportSize()!));
+  ⎿       639 |       await expect(sheet.getByRole('heading', { level: 1, name: 'Parque' })).toBeVisible();
+  ⎿     > 640 |       await expect(sheet.getByText(/away/)).toHaveCount(0);
+  ⎿           |                                             ^
+  ⎿       641 |       await expect(sheet.getByRole('listitem')).toHaveCount(2);
+  ⎿       642 |       const stopMarker = page.getByRole('img', { name: 'Selected stop: Parque' });
+  ⎿       643 |       await expect(stopMarker).toBeVisible();
+  ⎿         at C:\Users\haraujo\.building\data\projects\003-metro\worktrees\009\metro\tests\e2e\map.spec.ts:640:45
+  ⎿ 
+  ⎿     Error Context: test-results\map-location-denied-select-4a4e8-s-a-stop-without-a-location-mobile\error-context.md
+  ⎿ 
+  ⎿   12) [desktop] › tests\e2e\map.spec.ts:632:5 › location denied › selecting › selects a stop without a location 
+  ⎿ 
+  ⎿ … +40 more lines
+
+● 12 tests failed. The `/away/` match is my mistake: the bus rows contain "away" too, so that test should check `.stop-distance` instead. Now the other failures:
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 600000)
+  ⎿ [1/13] [mobile] › tests\e2e\map.spec.ts:190:3 › located near Portagem › shows the nearest stop and every scheduled bus
+  ⎿ [2/13] [mobile] › tests\e2e\map.spec.ts:278:3 › located near Portagem › the map loads and the locate button re-frames without errors
+  ⎿ [3/13] [mobile] › tests\e2e\map.spec.ts:312:3 › located near Portagem › desktop: renders inside the 380px panel
+  ⎿ [4/13] [mobile] › tests\e2e\map.spec.ts:247:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction
+  ⎿ [5/13] [mobile] › tests\e2e\map.spec.ts:293:3 › located near Portagem › countdown ticks every second
+  ⎿ [6/13] [mobile] › tests\e2e\map.spec.ts:336:3 › located near Portagem › phone: the page stays clear of the system bars
+  ⎿ [7/13] [mobile] › tests\e2e\map.spec.ts:324:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark
+  ⎿ [8/13] [mobile] › tests\e2e\map.spec.ts:345:3 › located near Portagem › phone: the sheet minimises and restores
+  ⎿ [9/13] [mobile] › tests\e2e\map.spec.ts:401:3 › located near Portagem › cycles the direction filter
+  ⎿ [10/13] [mobile] › tests\e2e\map.spec.ts:376:3 › located near Portagem › phone: swiping the sheet minimises and restores it
+  ⎿ [11/13] [mobile] › tests\e2e\map.spec.ts:432:3 › located near Portagem › phone: the minimised sheet follows the direction filter
+  ⎿ [12/13] [mobile] › tests\e2e\map.spec.ts:454:3 › located near Portagem › desktop: the panel has no minimise control
+  ⎿ [13/13] [mobile] › tests\e2e\map.spec.ts:462:3 › located near Portagem › buses draw beneath the sheet
+  ⎿   11 passed (51.1s)
+
+● They pass when run alone, so the earlier failures look like load from parallel workers. I'll fix the distance check and rerun the whole suite.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 600000)
+  ⎿ 640:      await expect(sheet.locator('.stop-distance')).toHaveCount(0);
+  ⎿ 
+  ⎿ Running 44 tests using 10 workers
+  ⎿ 
+  ⎿   8 skipped
+  ⎿   36 passed (45.2s)
+
+● All 36 pass. I'll repeat the new tests to check for flakiness.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 600000)
+  ⎿ Running 56 tests using 10 workers
+  ⎿ 
+  ⎿   4 skipped
+  ⎿   52 passed (1.5m)
+
+● Stable across 4 repeats. Final lint and a look at the working tree:
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/009/metro"; ..., timeout: 300000)
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿  M plays/009-select-stop/devops.yaml
+  ⎿  M plays/009-select-stop/positions.yaml
+  ⎿  M plays/009-select-stop/sessions/info.yaml
+  ⎿  M src/ui/App.tsx
+  ⎿  M src/ui/map/MapView.tsx
+  ⎿  M src/ui/map/markers.ts
+  ⎿  M src/ui/sheet/NearestStopContent.tsx
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ ?? plays/009-select-stop/sessions/004-dave.pty
+  ⎿ ?? plays/009-select-stop/sessions/004-dave.txt
+  ⎿  plays/009-select-stop/devops.yaml        |   2 +
+  ⎿  plays/009-select-stop/positions.yaml     |   2 +-
+  ⎿  plays/009-select-stop/sessions/info.yaml |  35 +++-
+  ⎿  src/ui/App.tsx                           | 138 ++++++++++----
+  ⎿  src/ui/map/MapView.tsx                   |  76 +++++++-
+  ⎿  src/ui/map/markers.ts                    |  16 +-
+  ⎿  src/ui/sheet/NearestStopContent.tsx      |  19 +-
+  ⎿ … +2 more lines
+
+● Play 009 is implemented in the `metro` worktree: tapping a stop on the map now shows that stop, and tapping empty map goes back to the nearest one. Lint, typecheck, the 106 unit tests and the 36 e2e tests (mobile and desktop) all pass. I did not do the by-hand check with `npm run dev` from the plan's verification list.
+
+The first full e2e run failed 12 tests, 8 of them existing mobile tests; that run took 5.9 minutes. Those 8 passed when run alone. Of the other four, three were my new tests. The fourth was the new no-location test failing in both projects, which was a real bug in my test (its "no distance" check also matched the bus rows) and is fixed. After that fix the full suite passed in 45 s. The selection tests also passed 4 times in a row (52 runs). So the earlier failures look like machine load, but CI could show the same flakiness.
+
+**What changed:**
+- **`src/ui/App.tsx`:**
+  - Holds the tapped stop's id and works out which stop is shown: the selected one, otherwise the nearest. The buses, countdowns, direction filter, sheet, stop marker and map framing all follow that stop.
+  - Map framing is now requested and runs after the render that has the new stop's buses. The selected view frames the stop and the soonest bus each way, without the user's position.
+  - Selecting a stop or pressing the locate button also stops the automatic first framing from moving the camera later.
+  - The locate button clears the selection.
+  - The sheet has a new first case, "Selected stop", which shows the distance only when the location is known.
+- **`src/ui/map/MapView.tsx`:**
+  - The `nearestStop` prop is replaced by `stop`, `stopKind` and `onSelectStop`, and the marker label updates when only the kind changes.
+  - A click selects the closest stop within 16 px of the pointer, or nothing over empty map. On desktop the cursor becomes a pointer over a stop.
+- **`src/ui/map/markers.ts`:** the stop marker's label reads "Nearest stop: …" or "Selected stop: …".
+- **`src/ui/sheet/NearestStopContent.tsx`:** the heading reads `// NEAREST STOP` or `// SELECTED STOP`, and the distance is left out when there is no location.
+- **`tests/e2e/map.spec.ts`:** helpers that work out where a stop is on screen, plus the new tests from the plan (selecting and framing, tapping away, tapping empty map with nothing selected, the locate button, tapping the nearest stop, selecting with no location, and the desktop cursor).
+
+**One change from the plan:** in the no-location test there is only one marker on screen after selecting, so I can't work out the camera as the other tests do. For the tap-away, the test clicks 48 px west of Parque instead. The closest stop in that direction is Portagem, over 420 m away, so that point is always empty map.
+
+I ran `npm ci` in the worktree to install dependencies. I did not commit anything or touch `documentation/`.

@@ -57,4 +57,58 @@ sessions:
       waiting: false
       question: null
       waiting_since: '2026-09-29T10:25:00.284Z'
-next_seq: 4
+  - id: 32a0d58129c749d499760300f3d0af2f
+    state: finished
+    seq: 4
+    datetime: '2026-09-29T10:32:19.229Z'
+    team: Autopilot
+    agent: Dave
+    logs:
+      pty: 004-dave.pty
+      txt: 004-dave.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 6
+        output: 898
+        cache_read: 120006
+        cache_write_5m: 0
+        cache_write_1h: 39723
+  - id: 7f8bb7e0916642b2a5eb05d65679fca9
+    state: finished
+    seq: 5
+    datetime: '2026-09-29T10:33:16.496Z'
+    team: Autopilot
+    agent: Gui
+    logs:
+      pty: 005-gui.pty
+      txt: 005-gui.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+    usage:
+      claude-opus-5-5:
+        input: 146
+        output: 118421
+        cache_read: 6917698
+        cache_write_5m: 0
+        cache_write_1h: 244280
+  - id: 5068c53780e04014950668239fd7bde4
+    state: running
+    seq: 6
+    datetime: '2026-09-29T11:07:46.701Z'
+    team: Autopilot
+    agent: Dave
+    logs:
+      pty: 006-dave.pty
+      txt: 006-dave.txt
+    cols: 180
+    rows: 50
+    generic: {}
+next_seq: 7
