@@ -1,0 +1,231 @@
+> You are the Autopilot Planner for this play, running in plan mode. Read `plays/008-direction-filter/CLAUDE.md` and `plays/008-direction-filter/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `plays/008-direction-filter/design/` folder exists, this play already has a UI design I approved: read `plays/008-direction-filter/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-planner)
+  ⎿ Launching skill: autopilot-planner
+
+> Base directory for this skill: C:\Dev\metro\.claude\skills\autopilot-planner
+
+You are the Autopilot Planner for this play, opened as an interactive session that the user drives directly. Your job is to shape a complete, unambiguous implementation plan from `$play/CLAUDE.md` and `$play/intent.md` — that plan becomes the Developer's sole specification. Do NOT start planning on your own: wait for the user's first message and follow their direction.
+
+## 1. Design triage (before any planning)
+
+You are the Autopilot Planner for this play, but you are NOT writing the implementation plan yet — that happens in a separate session straight after this one. This session exists to answer ONE question and, depending on the answer, to produce a visual design.
+
+STEP 1 — Read `$play/CLAUDE.md` and `$play/intent.md`, plus the project context documents named below. Then decide: does this play introduce a NEW user-facing screen, page, view or surface? Be strict about this. Changing, extending or restyling a screen that already exists does NOT count, and neither does work with no user interface at all (an API, a job, a migration, a refactor).
+
+STEP 2 — If the answer is NO: do nothing else. End your turn with a single line saying this play introduces no new user interface, so planning can start. That must be a statement, NOT a question — the statement is what hands off to planning.
+
+STEP 3 — If the answer is YES: end your turn with a clear question — ending in a question mark, which is what tells the app you are waiting on me — asking whether I want you to design a visual prototype of the new screens before you write the implementation plan. Name the screens you mean, in one line each, so I know what I would be getting. Then wait for my answer.
+- If I decline, end your turn with a single line saying we are going straight to planning — again a statement, not a question.
+- If I accept, do STEP 4.
+
+STEP 4 — Write the design brief, and STOP. Do NOT try to run the `design` skill yourself: it is reserved for explicit user invocation and the Skill tool will refuse it. I will run it for you the moment your brief is on disk.
+
+Write the brief to `$play/design/brief.md` — one short paragraph on what the product is, who it is for and the look and feel it should have, then one line per new screen naming it and saying what it does. Brief it from intent.md, the product vision and the tech stack, and look at the attached repositories first: if this product already has a frontend, say so and name its real colours, type and spacing so the design matches rather than inventing a new look. End the brief by saying the canvas payload must be saved as `$play/design/canvas.html`.
+
+Keep it compact — it is passed to the design skill as a single line, so write it as flowing prose with no headings, no bullet characters and no code blocks. Then end your turn with one short statement saying the brief is ready. NOT a question: that statement is what starts the design run.
+
+STEP 5 — Once the design skill has produced the canvas, leave the design in two places, both of which matter:
+1. `$play/design/design.md` — the published canvas URL, then one line per screen saying what it is and what it does. The Planner and the Developer read this file; keep it short and factual.
+2. `documentation/design/<play-id>-<play-name>-prototype.html` — how I actually LOOK at the prototype, from the Documentation tab of the project screen. Create the folder if it is not there. This file is rendered inside a sandboxed iframe with NO scripting, NO navigation and NO network, so it must be ONE self-contained page: every artboard's markup stacked one under another with a heading naming the screen, every style inline or in a `<style>` block in that same file, no script tags, and no references to any external file, font or image (inline any image as a data URI). Put the canvas URL at the top as plain visible text as well as a link — a link alone cannot be opened from that sandbox. Do NOT copy the canvas payload itself here; it needs JavaScript and would render as a blank page.
+
+If the canvas cannot be PUBLISHED, that is fine: keep the artboards the skill produced, still write both documents from them, and say plainly that the canvas was not published. That is the only fallback. If the design skill did not run at all, do NOT hand-write a canvas file or a prototype in its place — say plainly that the skill did not run and stop, so the problem is visible instead of being papered over with something that only looks like a design.
+
+STEP 6 — Hand the prototype to me for review, and STOP. Once both documents are written, end your turn by telling me in a few lines what you designed and where I can look at it, and then ASKING me to review the prototype and confirm it is what I want before you plan the implementation. End that turn on that question and wait — planning does not start until I have approved the design.
+- If I ask for changes, revise the design and both documents, then ask me again. Keep ending those turns on a question.
+- Only once I have actually approved it, end your turn with a single short statement saying the design is approved. That statement — and nothing else — is what starts the planning session. Never write it while I still owe you an answer.
+
+You are designing only. Do not modify anything in the repositories, do not implement anything, and do not write `$play/plan.md`.
+
+## 2. The implementation plan
+
+You are the Autopilot Planner for this play, running in plan mode. Read `$play/CLAUDE.md` and `$play/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+## 3. Documenting what shipped (once the play is approved)
+
+You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `$branch`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `$play/intent.md` and `$play/plan.md`, then read the real changes on the `$branch` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: ls -R plays/008-direction-filter && cat plays/008-direction-filter/CLAUDE.md ..., description: Read play files and context docs)
+  ⎿ plays/008-direction-filter:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ 
+  ⎿ plays/008-direction-filter/sessions:
+  ⎿ 001-alice.pty
+  ⎿ 001-alice.txt
+  ⎿ 002-alice.pty
+  ⎿ 002-alice.txt
+  ⎿ 003-paula.pty
+  ⎿ 003-paula.txt
+  ⎿ info.yaml
+  ⎿ # Play `008` — Autopilot session instructions
+  ⎿ 
+  ⎿ This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ … +184 more lines
+  → Bash(command: cat plays/008-direction-filter/design.yaml plays/008-direction-filter/positio..., description: Read play metadata, modules docs, file list)
+  ⎿ phase: plan
+  ⎿ session_id: 7b5a5dfa7ee0430e9b1fd93943653461
+  ⎿ rooms:
+  ⎿   Alice: whiteboards
+  ⎿   Paula: spec
+  ⎿   Gui: whiteboards
+  ⎿   Dave: whiteboards
+  ⎿ events:
+  ⎿   - kind: transition
+  ⎿     at: '2026-09-29T09:23:15.863Z'
+  ⎿     from: ideation
+  ⎿     to: working
+  ⎿   - kind: transition
+  ⎿     at: '2026-09-29T09:24:00.493Z'
+  ⎿     from: working
+  ⎿     to: ideation
+  ⎿   - kind: transition
+  ⎿     at: '2026-09-29T09:24:02.848Z'
+  ⎿     from: ideation
+  ⎿     to: working
+  ⎿ … +510 more lines
+  → Bash(command: cat src/ui/App.tsx src/ui/sheet/NearestStopContent.tsx src/ui/sheet/Approachi..., description: Read App and sheet components)
+  ⎿ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿ import type { PaddingOptions } from 'maplibre-gl';
+  ⎿ import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+  ⎿ import { lisbonClock } from '../domain/lisbonTime';
+  ⎿ import { nearestStop } from '../domain/nearestStop';
+  ⎿ import { measureShape } from '../domain/shape';
+  ⎿ import type { LatLng } from '../domain/types';
+  ⎿ import { Attribution } from './chrome/Attribution';
+  ⎿ import { LocateButton } from './chrome/LocateButton';
+  ⎿ import { Wordmark } from './chrome/Wordmark';
+  ⎿ import { useGeolocation } from './hooks/useGeolocation';
+  ⎿ import { useMediaQuery } from './hooks/useMediaQuery';
+  ⎿ import { useNetwork } from './hooks/useNetwork';
+  ⎿ import { useNow } from './hooks/useNow';
+  ⎿ import { useTimetable } from './hooks/useTimetable';
+  ⎿ import { MapView, type MapHandle } from './map/MapView';
+  ⎿ import { DataErrorContent } from './sheet/DataErrorContent';
+  ⎿ import { LocatingContent } from './sheet/LocatingContent';
+  ⎿ import { LocationOffContent } from './sheet/LocationOffContent';
+  ⎿ import { NearestStopContent } from './sheet/NearestStopContent';
+  ⎿ … +387 more lines
+  → Bash(command: node -e "
+const t=require('./tests/fixtures/trips-DU.sample.json');
+console.l..., description: Inspect fixture structure)
+  ⎿ [
+  ⎿   'id',
+  ⎿   'line',
+  ⎿   'lineType',
+  ⎿   'dayType',
+  ⎿   'direction',
+  ⎿   'finalDestination',
+  ⎿   'stops'
+  ⎿ ]
+  ⎿ {"id":"s1-DU-0-633","line":"S1","lineType":"suburbana","dayType":"DU","direction":"P-S","finalDestination":"Corvo","stops":[{"name":"Coimbra B","time":"07:40:00"},{"name":"Casa do Sal","time":"07:41:18"},{"name":"Açude","time":"07:42:25"},{"name":"Arnado","time":"07:43:38"},{"name":"Aeminium","time":"07:44:47"},{"name":"Portagem","time":"07:46:04"},{"name":"Parque","time":"07:47:28"},{"name":"Colégios","time":"07:49:01"},{"name":"Arregaça","time":"07:50:04"},{"name":"Norton de Matos","time":"07:51:25"},{"name":"São José","time":"07:52:29"},{"name":"Solum","time":"07:54:13"},{"name":"Fernando N
+  ⎿ [{"id":"S1-0","line":"S1","direction":"Ida","color":"#0080FF","points":[[40.224741,-8.439876],[40.220424,-8.43981],[40.21697,-8.438565],[40.212903,-8.436042],[40.209955,-8.433587],[40.207526,-8.430654],[40.203753,-8.425116],[40.19847,-8.420803],[40.199566,-8.416973],[40.201298,-8.410959],[40.201566,-8.407223],[40.204888,-8.40502],[40.203989,-8.4009],[40.200719,-8.399915],[40.195444,-8.398046],[40.
+
+● Reading the fixtures to see how the two directions differ from line to line, so the button labels make sense.
+
+  → Bash(command: node -e "
+const t=require('./tests/fixtures/trips-DU.sample.json');
+const m={..., description: Summarise line directions and destinations)
+  ⎿ {
+  ⎿  "S1 P-S": {
+  ⎿   "Coimbra B -> Corvo [Corvo]": 1,
+  ⎿   "Coimbra B -> Serpins [Serpins]": 1
+  ⎿  },
+  ⎿  "S2 P-S": {
+  ⎿   "República (desc) -> Serpins [Serpins]": 1
+  ⎿  },
+  ⎿  "U1 P-S": {
+  ⎿   "Coimbra B -> Vale das Flores [Vale das Flores]": 49
+  ⎿  },
+  ⎿  "U1 S-P": {
+  ⎿   "Vale das Flores -> Coimbra B [Coimbra B]": 44
+  ⎿  }
+  ⎿ }
+  → Bash(command: grep -n "approaching\|scheduled-badge\|bus-list\|retry\|button" src/ui/styles..., description: Inspect CSS and bus helpers)
+  ⎿ 42:button {
+  ⎿ 180:.marker-bus--approaching {
+  ⎿ 181:  z-index: 1; /* approaching buses draw above the others */
+  ⎿ 211:/* ---------- Chrome: wordmark, locate button, attribution ---------- */
+  ⎿ 230:.locate-button {
+  ⎿ 240:  box-shadow: var(--shadow-button);
+  ⎿ 246:.locate-button:disabled {
+  ⎿ 251:.locate-button--off {
+  ⎿ 293:.controls-row .locate-button {
+  ⎿ 322:.sheet__handle-button {
+  ⎿ 336:.sheet__handle-button:focus-visible {
+  ⎿ 341:.sheet--collapsed .sheet__handle-button {
+  ⎿ 456:.approaching {
+  ⎿ 462:.approaching__header {
+  ⎿ 469:.approaching__title {
+  ⎿ 475:.bus-list {
+  ⎿ 484:.bus-list__row {
+  ⎿ 491:.bus-list__destination {
+  ⎿ 501:.bus-list__time {
+  ⎿ 508:.scheduled-badge {
+  ⎿ … +71 more lines
+  → AskUserQuestion(questions: [{"question":"Which parts of the screen should the direction filter affect?",...)
+  ⎿ Your questions have been answered: "Which parts of the screen should the direction filter affect?"="Sheet list only (Recommended)", "How should the button name each direction?"="By destination (Recommended)", "When the phone sheet is minimised, what should happen?"="Filter applies, no button (Recommended)". You can now continue with these answers in mind.
+  → Bash(command: sed -n 440,540p src/ui/styles/app.css; sed -n 630,680p src/ui/styles/app.css;..., description: Read CSS sections, icons, timetable hook, e2e test outline)
+  ⎿   font-size: 13px;
+  ⎿   color: var(--color-text-muted);
+  ⎿ }
+  ⎿ 
+  ⎿ .line-chip {
+  ⎿   min-width: 36px;
+  ⎿   height: 24px;
+  ⎿   padding: 0 8px;
+  ⎿   display: inline-flex;
+  ⎿   align-items: center;
+  ⎿   justify-content: center;
+  ⎿   border-radius: var(--radius-control);
+  ⎿   font-size: 13px;
+  ⎿   font-weight: 700;
+  ⎿ }
+  ⎿ 
+  ⎿ .approaching {
+  ⎿   display: flex;
+  ⎿   flex-direction: column;
+  ⎿   gap: 10px;
+  ⎿ … +276 more lines
+  → Write(file_path: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-stateless-pumpkin.md, content: # Play 008 — Direction filter
+
+## Context
+
+The sheet's "Heading to this stop"...)
+  ⎿ File created successfully at: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-stateless-pumpkin.md (file state is current in your context — no need to Read it back)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-stateless-pumpkin.md, old_string: /** "Both directions", or "To A, B" from that direction's destinations (just ..., new_string: /**
+ * "Both directions", or "To A, B" from that direction's destinations. If...)
+  → ToolSearch(query: select:ExitPlanMode, max_results: 1)
+  ⎿ The file C:\Users\haraujo\.claude\plans\you-are-the-autopilot-stateless-pumpkin.md has been updated successfully. (file state is current in your context — no need to Read it back)
+  → ExitPlanMode(plan: # Play 008 — Direction filter
+
+## Context
+
+The sheet's "Heading to this stop"..., planFilePath: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-stateless-pumpkin.md)

@@ -1,0 +1,148 @@
+[?9001h[?1004h[?25l[2J[m[H]0;claude[?25h[?25l[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[H[?25h[?2004h[?2031h[?1004h]0;✳ Claude Code[?1049h[2J[?1000h[?1002h[?1003h[?1006h[?25l[K[38;2;215;119;87m
+ ▐[48;2;0;0;0m▛███▛█[m   [1mClaude Code[22m [38;2;153;153;153mv2.1.284[K[38;2;215;119;87m
+▝▜[48;2;0;0;0m█████[49m█▀  [38;2;153;153;153mOpus 5.5 with low effort · Claude Team[K[38;2;215;119;87m
+ ▝▝   ▝▝   [38;2;153;153;153mC:\Dev\metro[K[m
+[K
+  Sonnet 5.5 is here, and it's faster and excels at well-scoped tasks. Opus 5.5 is still your default. Switch with [38;2;177;185;249m/model[m.[K
+[K[38;2;80;80;80m[48;2;55;55;55m
+❯ [38;2;153;153;153mYou are the Autopilot Architect for this play — you run FIRST, before the Planner. You own two PRODUCT-LEVEL documents shared by every play in this project: the product vision   [39m  [38;2;153;153;153mat documentation/context/vision.md and the tech stack at documentation/context/tech.md (both under documentation/context/, relative to the repository root you are in). Keep BOTH [39m  [38;2;153;153;153mconcise — they are loaded into every other agent's context, like CLAUDE.md. That folder may hold further context documents the user added; read and respect those too, but they   [39m  [38;2;153;153;153mare the user's — only these two are yours to write.                                                                                                                               [39m                                                                                                                                                                                      [38;2;153;153;153mREVIEW: documentation/context/vision.md and documentation/context/tech.md already exist. Read plays/008-direction-filter/intent.md, then read both documents. Validate that this  [39m  [38;2;153;153;153mplay's intent is consistent with the product vision. If the intent implies changes to the vision or the tech stack — a new goal, a new technology, an additional repository —     [39m  [38;2;153;153;153mupdate documentation/context/vision.md and/or documentation/context/tech.md to keep them accurate and concise. Ask me before making any substantive change.                       [39m                                                                                                                                                                                      [38;2;153;153;153mWhenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style      [39m  [38;2;153;153;153mpreference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray.    [39m  [38;2;153;153;153mPhrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct  [39m  [38;2;153;153;153mfor this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the         [39m  [38;2;153;153;153mPlanner.                                                                                                                                                                          [39m                                                                                                                                                                                      [38;2;153;153;153mPROJECT CONTEXT FILES: this project keeps its documentation under documentation/; the documents in documentation/context/ are shared by every play and apply to all work. Read    [39m  [38;2;153;153;153mALL of them before doing anything and make your work conform to them: documentation/context/vision.md (the problem, users, and product direction), documentation/context/tech.md  [39m  [38;2;153;153;153m(overall architecture plus the technology used in each repository). Only the Architect writes documentation/context/vision.md and documentation/context/tech.md; treat every      [39m  [38;2;153;153;153mother document as read-only reference the user maintains, and do not create, move or edit anything else under documentation/.                                                     [m
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[38;2;215;119;87m
+✢ Inferring…[K[m
+[163X[38;2;153;153;153m[163C○ low · /effort  [38;2;136;136;136m
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[m❯ [K[38;2;136;136;136m
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[m
+[K
+  [38;2;255;193;7m⏵⏵ auto mode on [38;2;153;153;153m(shift+tab to cycle) · ← for agents[K[47;3H[?25h[m]0;◐ Claude Code[>0q[?u[?25l[38;2;153;153;153m[44;14H(running UserPromptSubmit hook · 1s)[47;1H❯ [?25h[?25l[m[38;2;235;159;127m[44;11Hg…[47;3H[?25h[m[?25l[38;2;215;119;87m[48;2;0;0;0m[2;3H▟[3C▟[49m[44;1H*[38;2;235;159;127m[8Cn[m[3C[K[47;3H[?25h[?25l[38;2;215;119;87m[44;1H✶[47;3H[?25h[m[?25l[38;2;215;119;87m[48;2;0;0;0m[2;3H█▟[2C█▟[47;3H[?25h[m[?25l[38;2;215;119;87m[44;1H✻[38;2;235;159;127m[7Ci[38;2;215;119;87m[2C…[47;3H[?25h[m[?25l[38;2;215;119;87m[48;2;0;0;0m[2;3H▟█[2C▟█[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✽[38;2;235;159;127m[6Cr[38;2;215;119;87m[2Cg[47;3H[?25h[?25l[m[38;2;215;119;87m[2;1H▗▟[48;2;0;0;0m▛[3C▛[49m[1C▄
+ [7C▘[47;3H[?25h[?25l[m[38;2;235;159;127m[44;7Hr[38;2;215;119;87m[2Cn[47;3H[?25h[?25l[m[38;2;215;119;87m[2;1H ▐[m[6C [38;2;215;119;87m
+▝[7C▀[47;3H[?25h[m]0;◑ Claude Code[?25l[38;2;215;119;87m[44;1H✻[38;2;235;159;127m[4Ce[38;2;215;119;87m[2Ci[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✶[38;2;235;159;127m[3Cf[38;2;215;119;87m[2Cr[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H*[47;3H[?25h[m]0;◑ Autopilot Architect for direction filter play[?25l[38;2;215;119;87m[44;1H✢[38;2;235;159;127m[2Cn[38;2;215;119;87m[2Cr[47;3H[?25h[m[?25l[38;2;215;119;87m[44;1H·[38;2;235;159;127m[1CI[38;2;215;119;87m[2Ce[47;3H[?25h[?25l[m[38;2;215;119;87m[44;5Hf[47;3H[?25h[m]0;◐ Autopilot Architect for direction filter play[?25l[38;2;215;119;87m[44;1H✢[2Cn[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H*[1CI[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✶[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✻[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✽[47;3H[?25h[m]0;◑ Autopilot Architect for direction filter play[?25l[38;2;215;119;87m[44;1H✻[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✶[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H*[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✢[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H·[47;3H[?25h[m]0;◐ Autopilot Architect for direction filter play[?25l[38;2;215;119;87m[44;1H✢[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H*[47;3H[?25h[m[?25l[38;2;215;119;87m[44;1H✶[47;3H[?25h[?25l[m[38;2;153;153;153m[49;3HOpus 5.5  C:/Dev/metro  ? main[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✻[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✽[47;3H[?25h[m]0;◑ Autopilot Architect for direction filter play[?25l[38;2;215;119;87m[44;1H✻[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✶[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H*[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✢[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H·[47;3H[?25h[m]0;◐ Autopilot Architect for direction filter play[?25l[38;2;235;159;127m[44;12H…[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✢[38;2;235;159;127m[9Cg[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H*[38;2;235;159;127m[8Cn[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✶[47;3H[?25h[?25l[m[38;2;235;159;127m[44;9Hi[38;2;215;119;87m[2C…[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✻[47;3H[?25h[m[?25l[38;2;215;119;87m[44;1H✽[38;2;235;159;127m[6Cr[38;2;215;119;87m[2Cg[47;3H[?25h[m]0;◑ Autopilot Architect for direction filter play[?25l[38;2;235;159;127m[44;7Hr[38;2;215;119;87m[2Cn[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H✻[38;2;235;159;127m[4Ce[38;2;215;119;87m[2Ci[47;3H[?25h[m[?25l[38;2;215;119;87m[44;1H✶[38;2;235;159;127m[3Cf[38;2;215;119;87m[2Cr[47;3H[?25h[?25l[m[38;2;215;119;87m[44;1H*[47;3H[?25h[m]0;✳ Autopilot Architect for direction filter play[?25l[8;1H                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            [38;2;153;153;153m[27;154Hctrl+g to edit in Notepad[38;2;136;136;136m
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[m❯ You[1Care[1Cthe[1CAutopilot[1CArchitect[1Cfor[1Cthis[1Cplay[1C—[1Cyou[1Crun[1CFIRST,[1Cbefore[1Cthe[1CPlanner.[1CYou[1Cown[1Ctwo[1CPRODUCT-LEVEL[1Cdocuments[1Cshared[1Cby[1Cevery[1Cplay[1Cin[1Cthis[1Cproject:[1Cthe[1Cproduct[1Cvision[30;3Hat[1C`documentation/context/vision.md`[1Cand[1Cthe[1Ctech[1Cstack[1Cat[1C`documentation/context/tech.md`[1C(both[1Cunder[1C`documentation/context/`,[1Crelative[1Cto[1Cthe[1Crepository[1Croot[1Cyou[1Care[1Cin).[31;3HKeep[1CBOTH[1Cconcise[1C—[1Cthey[1Care[1Cloaded[1Cinto[1Cevery[1Cother[1Cagent's[1Ccontext,[1Clike[1CCLAUDE.md.[1CThat[1Cfolder[1Cmay[1Chold[1Cfurther[1Ccontext[1Cdocuments[1Cthe[1Cuser[1Cadded;[1Cread[1Cand[1Crespect[1Cthose[1Ctoo,[32;3Hbut[1Cthey[1Care[1Cthe[1Cuser's[1C—[1Conly[1Cthese[1Ctwo[1Care[1Cyours[1Cto[1Cwrite.[34;3HREVIEW:[1C`documentation/context/vision.md`[1Cand[1C`documentation/context/tech.md`[1Calready[1Cexist.[1CRead[1C`plays/008-direction-filter/intent.md`,[1Cthen[1Cread[1Cboth[1Cdocuments.[1CValidate[35;3Hthat[1Cthis[1Cplay's[1Cintent[1Cis[1Cconsistent[1Cwith[1Cthe[1Cproduct[1Cvision.[1CIf[1Cthe[1Cintent[1Cimplies[1Cchanges[1Cto[1Cthe[1Cvision[1Cor[1Cthe[1Ctech[1Cstack[1C—[1Ca[1Cnew[1Cgoal,[1Ca[1Cnew[1Ctechnology,[1Can[1Cadditional[36;3Hrepository[1C—[1Cupdate[1C`documentation/context/vision.md`[1Cand/or[1C`documentation/context/tech.md`[1Cto[1Ckeep[1Cthem[1Caccurate[1Cand[1Cconcise.[1CAsk[1Cme[1Cbefore[1Cmaking[1Cany[1Csubstantive[1Cchange.[38;3HWhenever[1Cyou[1Cneed[1Csomething[1Cfrom[1Cme,[1Cend[1Cyour[1Cturn[1Cwith[1Ca[1Cclear[1Cquestion[1C—[1Cphrased[1Cas[1Ca[1Cquestion[1Cand[1Cending[1Cin[1Ca[1Cquestion[1Cmark[1C—[1Cand[1Cwait[1Cfor[1Cmy[1Canswer.[1CThat[1Cis[1Cnot[1Ca[1Cstyle[39;3Hpreference:[1Ca[1Cturn[1Cending[1Cin[1Ca[1Cquestion[1Cmark[1Cis[1Cwhat[1Ctells[1Cthe[1Capp[1Cyou[1Care[1Cwaiting[1Con[1Cme,[1Cmoves[1Cyou[1Cto[1Cthe[1CClarification[1CDesk[1Cand[1Cputs[1Cthe[1Cquestion[1Cin[1Cmy[1Cclarifications[1Ctray.[40;3HPhrase[1Cit[1Cas[1Can[1Cinstruction[1C("describe[1Cyour[1Cvision")[1Cand[1Cthe[1Capp[1Cwill[1Cread[1Cthe[1Cturn[1Cas[1Cfinished[1Cand[1Chand[1Coff[1Cwithout[1Cme.[1CWhen[1Cthe[1Cvision[1Cand[1Ctech[1Cstack[1Care[1Ccomplete[1Cand[1Ccorrect[41;3Hfor[1Cthis[1Cplay[1Cand[1Cyou[1Chave[1Cnothing[1Cleft[1Cto[1Cask,[1Cend[1Cyour[1Cturn[1Cwith[1Ca[1Cshort[1Cstatement[1Cof[1Cwhat[1Cyou[1Cdid[1C—[1CNOT[1Ca[1Cquestion.[1CThat[1Ccompletion[1Cstatement[1Cis[1Cwhat[1Chands[1Coff[1Cto[1Cthe[42;3HPlanner.[44;1H [1CPROJECT CONTEXT[1CFILES:[1Cthis[1Cproject[1Ckeeps[1Cits[1Cdocumentation[1Cunder[1C`documentation/`;[1Cthe[1Cdocuments[1Cin[1C`documentation/context/`[1Care[1Cshared[1Cby[1Cevery[1Cplay[1Cand[1Capply[1Cto[1Call[1Cwork.[45;3HRead[1CALL[1Cof[1Cthem[1Cbefore[1Cdoing[1Canything[1Cand[1Cmake[1Cyour[1Cwork[1Cconform[1Cto[1Cthem:[1C`documentation/context/vision.md`[1C(the[1Cproblem,[1Cusers,[1Cand[1Cproduct[1Cdirection),[8C[K
+  `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and                 `documentation/context/tech.md`;[1Ctreat[1Cevery[1Cother[1Cdocument[1Cas[1Cread-only[1Creference[1Cthe[1Cuser[1Cmaintains,[1Cand[1Cdo[1Cnot[1Ccreate,[1Cmove[1Cor[1Cedit[1Canything[1Celse[1Cunder[1C`documentation/`.[50;39H[K[47;175H[?25h[?25l[27;154H[K
+                                                                                                                                                                                    
+[K[30;3H[K
+[K
+[K[34;3H[K
+[K
+[K[38;3H[K
+[K
+[K
+[K
+[K[44;3H[K
+[K
+[31X[32C        [1C[12X[13C    [1C   [1C[10X[11C    [1C  [1C    [1C[12X[13C    [1C   [1C[9X[10C      [1C[33X[34C [38;2;153;153;153m○ low · /effort[38;2;136;136;136m
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[m❯                                                                                                                                                                                   [38;2;136;136;136m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[38;2;153;153;153m[50;3HPress Ctrl-C again to exit[K[48;3H[?25h[m[?25l[38;2;153;153;153m[45;164H○ low · /effort[38;2;136;136;136m
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[m❯                                                                                                                                                                                   [38;2;136;136;136m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[m  [38;2;153;153;153mOpus 5.5  C:/Dev/metro  ? main                                                                                                                                                    [38;2;255;193;7m[50;3H⏵⏵ auto mode on [38;2;153;153;153m(shift+tab to cycle) · ← for agents[47;3H[?25h[?25l[m[45;164H[K
+                                                                                                                                                                   [K[38;2;153;153;153m○ low · /effort  [38;2;136;136;136m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[m❯                                                                                                                                                                                   [38;2;136;136;136m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[38;2;153;153;153m[50;3HPress Ctrl-C again to exit[K[48;3H[?25h[?1006l[?1003l[?1002l[?1000l[m[?1049l[>4m[>4m[?2031l[?2004l[?1016l[?1006l[?1003l[?1002l[?1000l[?1016l[>4m[?2031l[?2004l[?25l[H[K[2m
+Resume this session with:[22m[K[2m
+claude --resume 7ce01987-51a4-4227-851c-a0296b258344[22m[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[4;1H]0;[?25h
