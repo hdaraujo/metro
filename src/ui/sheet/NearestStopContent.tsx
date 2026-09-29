@@ -8,14 +8,18 @@ import { formatDistance } from '../../domain/geo';
 import { formatLisbonDate } from '../../domain/lisbonTime';
 import type { BusPosition, LineId, Stop } from '../../domain/types';
 import { ApproachingBuses, BusRow, NO_BUSES_IN_DIRECTION } from './ApproachingBuses';
+import type { StopKind } from '../map/markers';
 import { LineChip } from './LineChip';
 
 const STALE_AFTER_MS = 24 * 60 * 60 * 1000;
 const FALLBACK_LINE_COLOR = '#1f5fa8';
 
 interface NearestStopContentProps {
+  /** The stop shown in the sheet: the nearest one, or one the user tapped on the map. */
   stop: Stop;
-  distanceMeters: number;
+  kind: StopKind;
+  /** How far the user is from the stop; null when their location is not known. */
+  distanceMeters: number | null;
   lineColors: Record<LineId, string>;
   /** The buses heading to this stop, soonest first. */
   approaching: readonly BusPosition[];
@@ -31,8 +35,13 @@ interface NearestStopContentProps {
   collapsed?: boolean;
 }
 
+/**
+ * The sheet's stop content, for the nearest stop or a stop the user selected on the map: its name,
+ * distance, lines and the buses heading to it.
+ */
 export function NearestStopContent({
   stop,
+  kind,
   distanceMeters,
   lineColors,
   approaching,
@@ -52,7 +61,9 @@ export function NearestStopContent({
   const heading = (
     <div className="stop-heading__row">
       <h1 className="stop-name">{stop.name}</h1>
-      <span className="stop-distance">{formatDistance(distanceMeters)} away</span>
+      {distanceMeters !== null && (
+        <span className="stop-distance">{formatDistance(distanceMeters)} away</span>
+      )}
     </div>
   );
   const staleNote = stale && (
@@ -82,7 +93,9 @@ export function NearestStopContent({
   return (
     <>
       <div className="stop-heading">
-        <div className="eyebrow">{'// NEAREST STOP'}</div>
+        <div className="eyebrow">
+          {kind === 'selected' ? '// SELECTED STOP' : '// NEAREST STOP'}
+        </div>
         {heading}
       </div>
       <div className="lines-row">

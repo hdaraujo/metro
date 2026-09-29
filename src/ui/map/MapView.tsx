@@ -5,6 +5,7 @@ import {
   Marker,
   setWorkerUrl,
   type GeoJSONSource,
+  type MapMouseEvent,
   type MarkerOptions,
   type PaddingOptions,
 } from 'maplibre-gl';
@@ -12,7 +13,8 @@ import {
 // have; let Vite build the worker and point MapLibre at it.
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import type { FeatureCollection } from 'geojson';
-import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
+import { useEffect, useImperativeHandle, useMemo, useRef, useState, type Ref } from 'react';
+import { nearestStop } from '../../domain/nearestStop';
 import type { BusPosition, LatLng, LineId, Network, Stop } from '../../domain/types';
 import { prefersReducedMotion } from '../hooks/useMediaQuery';
 import { mapStyle } from './mapStyle';
@@ -21,6 +23,7 @@ import {
   createStopMarker,
   type BusMarkerView,
   createUserMarker,
+  type StopKind,
   updateBusMarker,
   updateStopMarker,
 } from './markers';
@@ -31,6 +34,8 @@ setWorkerUrl(workerUrl);
 const INITIAL_CENTER: [number, number] = [-8.4196, 40.2056];
 const INITIAL_ZOOM = 13;
 const FALLBACK_LINE_COLOR = '#1f5fa8';
+/** How far from a stop's circle, in pixels, a tap still selects it: a 32px target. */
+const STOP_HIT_RADIUS_PX = 16;
 
 export interface MapHandle {
   /** Frames `points` inside the map, leaving `padding` (in pixels) clear for the UI chrome. */
@@ -41,12 +46,16 @@ interface MapViewProps {
   ref?: Ref<MapHandle>;
   network?: Network;
   user: LatLng | null;
-  nearestStop: Stop | null;
+  /** The stop shown in the sheet, which gets the red stop marker. */
+  stop: Stop | null;
+  stopKind: StopKind;
   /** Every bus in service; each gets its own marker. */
   buses: readonly BusPosition[];
-  /** The selected stop's name, which the approaching buses count down to. */
+  /** The shown stop's name, which the approaching buses count down to. */
   stopName: string | null;
   lineColors: Record<LineId, string>;
+  /** A tap on the map: the tapped stop's id, or null for empty map. */
+  onSelectStop: (stopId: string | null) => void;
 }
 
 const toLngLat = (p: LatLng): [number, number] => [p.lng, p.lat];
@@ -101,6 +110,38 @@ function showNetwork(map: MapLibreMap, network: Network) {
       'circle-stroke-width': 2,
     },
   });
+}
+
+/**
+ * The stop whose circle is within `STOP_HIT_RADIUS_PX` of `point`; the closest one wins when
+ * several are. Null over empty map.
+ */
+function stopIdAt(
+  map: MapLibreMap,
+  network: Network | undefined,
+  { x, y }: { x: number; y: number },
+): string | null {
+  if (!network || !map.getLayer('stops')) return null;
+  const r = STOP_HIT_RADIUS_PX;
+  const ids = new Set(
+    map
+      .queryRenderedFeatures(
+        [
+          [x - r, y - r],
+          [x + r, y + r],
+        ],
+        { layers: ['stops'] },
+      )
+      .map((feature) => feature.properties.id as unknown),
+  );
+  // The query box is a square; keep a round target.
+  const candidates = network.stops.filter((stop) => {
+    if (!ids.has(stop.id)) return false;
+    const p = map.project(toLngLat(stop.coords));
+    return Math.hypot(p.x - x, p.y - y) <= r;
+  });
+  const { lat, lng } = map.unproject([x, y]);
+  return nearestStop(candidates, { lat, lng })?.stop.id ?? null;
 }
 
 /** Keeps one DOM marker in sync with `value`: created, moved/updated, or removed. */
@@ -204,10 +245,12 @@ export function MapView({
   ref,
   network,
   user,
-  nearestStop,
+  stop,
+  stopKind,
   buses,
   stopName,
   lineColors,
+  onSelectStop,
 }: MapViewProps) {
   const container = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -248,6 +291,21 @@ export function MapView({
     if (map && network) showNetwork(map, network);
   }, [map, network]);
 
+  // Tapping a stop selects it; tapping empty map goes back. MapLibre fires no click after a drag.
+  useEffect(() => {
+    if (!map) return;
+    const onClick = (e: MapMouseEvent) => onSelectStop(stopIdAt(map, network, e.point));
+    const onMove = (e: MapMouseEvent) => {
+      map.getCanvas().style.cursor = stopIdAt(map, network, e.point) ? 'pointer' : '';
+    };
+    map.on('click', onClick);
+    map.on('mousemove', onMove);
+    return () => {
+      map.off('click', onClick);
+      map.off('mousemove', onMove);
+    };
+  }, [map, network, onSelectStop]);
+
   useImperativeHandle(
     ref,
     () => ({
@@ -267,12 +325,14 @@ export function MapView({
   );
 
   useMarker(map, user, user, createUserMarker, null, USER_MARKER);
+  // A new value when only the kind changes, so the marker's label follows it.
+  const shownStop = useMemo(() => (stop ? { stop, kind: stopKind } : null), [stop, stopKind]);
   useMarker(
     map,
-    nearestStop,
-    nearestStop?.coords ?? null,
-    (stop) => createStopMarker(stop.name),
-    (el, stop) => updateStopMarker(el, stop.name),
+    shownStop,
+    stop?.coords ?? null,
+    (shown) => createStopMarker(shown.stop.name, shown.kind),
+    (el, shown) => updateStopMarker(el, shown.stop.name, shown.kind),
     STOP_MARKER,
   );
   useBusMarkers(map, buses, lineColors, stopName);

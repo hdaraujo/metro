@@ -22,17 +22,23 @@ export function createUserMarker(): HTMLElement {
   return el;
 }
 
-/** The nearest stop: a red dot in a halo, with the stop's name in a pill above it. */
-export function createStopMarker(name: string): HTMLElement {
+/** Whether the stop shown in the sheet is the nearest one or one the user tapped. */
+export type StopKind = 'nearest' | 'selected';
+
+/** The stop shown in the sheet: a red dot in a halo, with the stop's name in a pill above it. */
+export function createStopMarker(name: string, kind: StopKind): HTMLElement {
   const el = div('marker-stop');
   el.setAttribute('role', 'img');
   el.append(div('marker-stop__dot'), div('marker-stop__label'));
-  updateStopMarker(el, name);
+  updateStopMarker(el, name, kind);
   return el;
 }
 
-export function updateStopMarker(el: HTMLElement, name: string): void {
-  el.setAttribute('aria-label', `Nearest stop: ${name}`);
+export function updateStopMarker(el: HTMLElement, name: string, kind: StopKind): void {
+  el.setAttribute(
+    'aria-label',
+    `${kind === 'selected' ? 'Selected stop' : 'Nearest stop'}: ${name}`,
+  );
   const label = el.querySelector<HTMLElement>('.marker-stop__label');
   if (label) label.textContent = name;
 }
