@@ -1,0 +1,302 @@
+> You are the Autopilot Developer for this play. Read `plays/008-direction-filter/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/008-direction-filter/design/` folder exists, this play already has a UI design I approved: read `plays/008-direction-filter/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-developer)
+  ⎿ Launching skill: autopilot-developer
+
+> Base directory for this skill: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\.claude\skills\autopilot-developer
+
+You are the Autopilot Developer for this play. Read `$play/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read plan, intent, and context docs)
+  ⎿ ls: cannot access 'plays/008-direction-filter/design': No such file or directory
+  ⎿ plays/008-direction-filter:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design.yaml
+  ⎿ devops.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ plan.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ # Play 008 — Direction filter
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The sheet's "Heading to this stop" list mixes buses from both directions. At a stop served both
+  ⎿ ways (e.g. Portagem) a rider usually only cares about one of them. This play adds a button to the
+  ⎿ sheet that cycles the list through **both directions → one direction → the other → both**. The
+  ⎿ default, and the behaviour whenever the button is not shown, is **both directions** — exactly
+  ⎿ today's behaviour.
+  ⎿ … +363 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read relevant source files)
+  ⎿ import { dayTypeFor } from './holidays';
+  ⎿ import { positionAt } from './interpolation';
+  ⎿ import { previousDate, type LisbonClock } from './lisbonTime';
+  ⎿ import { stopDistancesForTrip, type MeasuredShape } from './shape';
+  ⎿ import type { BusPosition, DayType, Direction, LatLng, LineId, Stop, Trip } from './types';
+  ⎿ 
+  ⎿ const DAY_SECONDS = 86_400;
+  ⎿ /** Before this Lisbon time, trips from yesterday's service day (times past 24:00) may still run. */
+  ⎿ const PREVIOUS_SERVICE_DAY_UNTIL = 4 * 3600;
+  ⎿ 
+  ⎿ export interface BusesInput {
+  ⎿   /** The selected (nearest) stop, or null when none is known yet. */
+  ⎿   stop: Stop | null;
+  ⎿   clock: LisbonClock;
+  ⎿   tripsByDayType: ReadonlyMap<DayType, readonly Trip[]>;
+  ⎿   shapesById: ReadonlyMap<string, MeasuredShape>;
+  ⎿   stopsById: ReadonlyMap<string, Stop>;
+  ⎿   now: Date;
+  ⎿ }
+  ⎿ 
+  ⎿ … +520 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read App, CSS rules, e2e spec)
+  ⎿ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿ import type { PaddingOptions } from 'maplibre-gl';
+  ⎿ import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+  ⎿ import { lisbonClock } from '../domain/lisbonTime';
+  ⎿ import { nearestStop } from '../domain/nearestStop';
+  ⎿ import { measureShape } from '../domain/shape';
+  ⎿ import type { LatLng } from '../domain/types';
+  ⎿ import { Attribution } from './chrome/Attribution';
+  ⎿ import { LocateButton } from './chrome/LocateButton';
+  ⎿ import { Wordmark } from './chrome/Wordmark';
+  ⎿ import { useGeolocation } from './hooks/useGeolocation';
+  ⎿ import { useMediaQuery } from './hooks/useMediaQuery';
+  ⎿ import { useNetwork } from './hooks/useNetwork';
+  ⎿ import { useNow } from './hooks/useNow';
+  ⎿ import { useTimetable } from './hooks/useTimetable';
+  ⎿ import { MapView, type MapHandle } from './map/MapView';
+  ⎿ import { DataErrorContent } from './sheet/DataErrorContent';
+  ⎿ import { LocatingContent } from './sheet/LocatingContent';
+  ⎿ import { LocationOffContent } from './sheet/LocationOffContent';
+  ⎿ import { NearestStopContent } from './sheet/NearestStopContent';
+  ⎿ … +485 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Read CSS approaching section and tokens)
+  ⎿   font-size: 13px;
+  ⎿   color: var(--color-text-muted);
+  ⎿ }
+  ⎿ 
+  ⎿ .line-chip {
+  ⎿   min-width: 36px;
+  ⎿   height: 24px;
+  ⎿   padding: 0 8px;
+  ⎿   display: inline-flex;
+  ⎿   align-items: center;
+  ⎿   justify-content: center;
+  ⎿   border-radius: var(--radius-control);
+  ⎿   font-size: 13px;
+  ⎿   font-weight: 700;
+  ⎿ }
+  ⎿ 
+  ⎿ .approaching {
+  ⎿   display: flex;
+  ⎿   flex-direction: column;
+  ⎿   gap: 10px;
+  ⎿ … +79 more lines
+
+● I've read the plan, context docs and the relevant source; now writing the domain module and tests.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Check blue and surface tokens exist)
+  ⎿ 18:  --color-surface: #ffffff;
+  ⎿ 24:  --color-blue: #1f5fa8;
+  → Write(file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\src\do..., content: import type { BusPosition, Direction, Trip } from './types';
+
+/** Which buses...)
+  → Write(file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\src\do..., content: import { describe, expect, it } from 'vitest';
+import {
+  busesInDirection,
+ ...)
+  ⎿ File created successfully at: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\src\domain\directions.ts (file state is current in your context — no need to Read it back)
+  ⎿ File created successfully at: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\src\domain\directions.test.ts (file state is current in your context — no need to Read it back)
+
+● Now the UI pieces.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Add SwapIcon and DirectionButton)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\src\ui..., old_string: interface ApproachingBusesProps {
+  /** The buses heading to the stop, soones..., new_string: interface ApproachingBusesProps {
+  /** The buses heading to the stop in the ...)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\src\ui..., old_string: import { LineChip } from './LineChip';
+import { ScheduledBadge } from './Sche..., new_string: import { DirectionButton } from './DirectionButton';
+import { LineChip } from...)
+  ⎿ (Bash completed with no output)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\src\ui\sheet\ApproachingBuses.tsx has been updated successfully.
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\src\ui\sheet\ApproachingBuses.tsx has been updated successfully.
+
+● Now `NearestStopContent`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Apply edits to NearestStopContent, App and CSS)
+  ⎿  plays/008-direction-filter/devops.yaml        |  2 ++
+  ⎿  plays/008-direction-filter/positions.yaml     |  2 +-
+  ⎿  plays/008-direction-filter/sessions/info.yaml | 35 ++++++++++++++++++++-
+  ⎿  src/ui/App.tsx                                | 27 ++++++++++++++++
+  ⎿  src/ui/icons.tsx                              | 11 +++++++
+  ⎿  src/ui/sheet/ApproachingBuses.tsx             | 27 +++++++++++-----
+  ⎿  src/ui/sheet/NearestStopContent.tsx           | 37 +++++++++++++++++++---
+  ⎿  src/ui/styles/app.css                         | 44 +++++++++++++++++++++++++++
+  ⎿  8 files changed, 171 insertions(+), 14 deletions(-)
+
+● Now the end-to-end tests.
+
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\tests\..., old_string:   test('desktop: the panel has no minimise control', async ({ page }, testInf..., new_string:   test('cycles the direction filter', async ({ page }) => {
+    await page.go...)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\008\metro\tests\e2e\map.spec.ts has been updated successfully.
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Format, lint, typecheck and unit test, timeout: 300000)
+  ⎿ npm warn exec The following package was not found and will be installed: prettier@3.9.9
+  ⎿ [90msrc/domain/directions.ts[39m 86ms (unchanged)
+  ⎿ src/domain/directions.test.ts 25ms
+  ⎿ src/ui/App.tsx 24ms
+  ⎿ [90msrc/ui/icons.tsx[39m 6ms (unchanged)
+  ⎿ [90msrc/ui/sheet/ApproachingBuses.tsx[39m 9ms (unchanged)
+  ⎿ [90msrc/ui/sheet/DataErrorContent.tsx[39m 3ms (unchanged)
+  ⎿ [90msrc/ui/sheet/DirectionButton.tsx[39m 2ms (unchanged)
+  ⎿ [90msrc/ui/sheet/LineChip.tsx[39m 1ms (unchanged)
+  ⎿ [90msrc/ui/sheet/LocatingContent.tsx[39m 3ms (unchanged)
+  ⎿ [90msrc/ui/sheet/LocationOffContent.tsx[39m 2ms (unchanged)
+  ⎿ [90msrc/ui/sheet/NearestStopContent.tsx[39m 6ms (unchanged)
+  ⎿ [90msrc/ui/sheet/ScheduledBadge.tsx[39m 1ms (unchanged)
+  ⎿ [90msrc/ui/sheet/Sheet.tsx[39m 6ms (unchanged)
+  ⎿ [90msrc/ui/styles/app.css[39m 60ms (unchanged)
+  ⎿ [90mtests/e2e/map.spec.ts[39m 55ms (unchanged)
+  ⎿ 
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ … +24 more lines
+
+● The worktree has no `node_modules`; installing dependencies (gitignored) so I can verify.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Install dependencies from lockfile, timeout: 600000)
+  ⎿ Exit code 1
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Check gitignore and status)
+  ⎿ # Building (machine-local — do not commit)
+  ⎿ .claude/settings.local.json
+  ⎿ 
+  ⎿ # Dependencies and build output
+  ⎿ node_modules/
+  ⎿ dist/
+  ⎿ dev-dist/
+  ⎿ coverage/
+  ⎿ 
+  ⎿ # Playwright
+  ⎿ playwright-report/
+  ⎿ test-results/
+  ⎿ blob-report/
+  ⎿ playwright/.cache/
+  ⎿ 
+  ⎿ # Misc
+  ⎿ *.log
+  ⎿ .DS_Store
+  ⎿ .env*.local
+  ⎿ .vite/
+  ⎿ … +15 more lines
+
+● It is ignored (`node_modules/` — the check just needed the trailing slash). Installing.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Install dependencies from lockfile, timeout: 600000)
+  ⎿ 147 packages are looking for funding
+  ⎿   run `npm fund` for details
+  ⎿ 
+  ⎿ found 0 vulnerabilities
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Format with project prettier, lint, typecheck, test, timeout: 300000)
+  ⎿ [90msrc/domain/directions.ts[39m 81ms (unchanged)
+  ⎿ [90msrc/domain/directions.test.ts[39m 25ms (unchanged)
+  ⎿ [90msrc/ui/App.tsx[39m 30ms (unchanged)
+  ⎿ [90msrc/ui/icons.tsx[39m 8ms (unchanged)
+  ⎿ [90msrc/ui/sheet/ApproachingBuses.tsx[39m 9ms (unchanged)
+  ⎿ [90msrc/ui/sheet/DirectionButton.tsx[39m 2ms (unchanged)
+  ⎿ [90msrc/ui/sheet/NearestStopContent.tsx[39m 8ms (unchanged)
+  ⎿ [90msrc/ui/styles/app.css[39m 65ms (unchanged)
+  ⎿ [90mtests/e2e/map.spec.ts[39m 49ms (unchanged)
+  ⎿ 
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ 
+  ⎿ … +11 more lines
+
+● Lint, typecheck and unit tests pass. Building and running the e2e suite.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Build and run Playwright e2e tests, timeout: 600000)
+  ⎿ PWA v1.3.0
+  ⎿ mode      generateSW
+  ⎿ precache  12 entries (1845.90 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  ⎿ |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.6 MiB
+  ⎿ Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) downloaded to C:\Users\haraujo\AppData\Local\ms-playwright\chromium_headless_shell-1243
+  ⎿ 
+  ⎿ > metro@0.0.0 test:e2e
+  ⎿ > playwright test
+  ⎿ 
+  ⎿ 
+  ⎿ Running 30 tests using 10 workers
+  ⎿ 
+  ⎿   -   4 [mobile] › tests\e2e\map.spec.ts:174:3 › located near Portagem › desktop: renders inside the 380px panel
+  ⎿   ok  2 [mobile] › tests\e2e\map.spec.ts:140:3 › located near Portagem › the map loads and the locate button re-frames without errors (9.1s)
+  ⎿   ok  6 [mobile] › tests\e2e\map.spec.ts:186:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark (9.0s)
+  ⎿   ok  3 [mobile] › tests\e2e\map.spec.ts:109:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (10.3s)
+  ⎿   ok  9 [mobile] › tests\e2e\map.spec.ts:238:3 › located near Portagem › phone: swiping the sheet minimises and restores it (10.4s)
+  ⎿ … +28 more lines
+
+● All checks pass. A final look at the main diff:
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/008/metro"; ..., description: Review App and NearestStopContent diff)
+  ⎿ diff --git a/src/ui/App.tsx b/src/ui/App.tsx
+  ⎿ index 3c9a446..01b3818 100644
+  ⎿ --- a/src/ui/App.tsx
+  ⎿ +++ b/src/ui/App.tsx
+  ⎿ @@ -1,6 +1,7 @@
+  ⎿  import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+  ⎿  import type { PaddingOptions } from 'maplibre-gl';
+  ⎿  import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+  ⎿ +import { directionsAtStop, nextDirectionFilter, type DirectionFilter } from '../domain/directions';
+  ⎿  import { lisbonClock } from '../domain/lisbonTime';
+  ⎿  import { nearestStop } from '../domain/nearestStop';
+  ⎿  import { measureShape } from '../domain/shape';
+  ⎿ @@ -60,6 +61,25 @@ export function App() {
+  ⎿    const approaching = useMemo(() => approachingBuses(buses), [buses]);
+  ⎿    const framedBuses = useMemo(() => soonestPerDirection(approaching), [approaching]);
+  ⎿  
+  ⎿ +  // ---------- Direction filter (the sheet's list only; the map always shows every bus) ----------
+  ⎿ +  // Keyed on the stop's id, since `nearest` is a new object on every position update.
+  ⎿ +  const stopId = nearest?.stop.id ?? null;
+  ⎿ +  const directions = useMemo(
+  ⎿ … +118 more lines
+
+● I've implemented the direction filter from the plan in the `metro` worktree, uncommitted as instructed. Lint, typecheck, unit tests (106), the build and the Playwright run are all green: 23 end-to-end tests passed on mobile and desktop, including the two new ones, and 7 layout-specific tests were skipped by design. I didn't do the plan's manual check with `npm run dev`, so the long label cutting off with an ellipsis at 390 px hasn't been checked by eye.
+
+**What riders get:** at a stop served both ways, a button now sits under "Heading to this stop". Each press moves the list from "Both directions" to one direction to the other and back. Directions are labelled by where they go, like "To Coimbra B", and the full label shows on hover.
+- The list is filtered before the 4-row limit is applied.
+- If a direction has no buses right now, the list is replaced by "No buses in this direction right now." The heading and button stay so you can press again.
+- The filter goes back to both directions when the nearest stop changes, and isn't saved between visits.
+- On the minimised phone sheet the single row follows the filter, but the button is hidden.
+- The map, smart zoom and the recentre button are unchanged.
+
+**Files changed:**
+- **Direction logic and tests:** new `src/domain/directions.ts` and `src/domain/directions.test.ts`.
+- **Button:** new `src/ui/sheet/DirectionButton.tsx` and a `SwapIcon` in `src/ui/icons.tsx`.
+- **Sheet:** `ApproachingBuses.tsx`, `NearestStopContent.tsx` and `App.tsx`, plus the new styles in `app.css`.
+- **End-to-end:** two tests added to `tests/e2e/map.spec.ts`: "cycles the direction filter" and "phone: the minimised sheet follows the direction filter".
+
+To run the checks I installed `node_modules` with `npm ci` in the worktree, which git ignores, and downloaded Playwright's Chromium.
