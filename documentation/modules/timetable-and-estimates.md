@@ -66,8 +66,9 @@ network. It takes the nearest stop, or `null` when none is known yet, and return
 
 1. **In service.** A trip is in service, on today's service day (or on yesterday's before 04:00),
    when it **has left its first stop** and **has not reached its last**. A trip that has not left
-   its first stop is not shown, even if it would reach the stop sooner than any bus already
-   running. If the same `tripId` turns up on both service days, today's is kept.
+   its first stop has no position, so it is not on the map; the sheet's list still has it (see
+   [Upcoming arrivals](#upcoming-arrivals)). If the same `tripId` turns up on both service days,
+   today's is kept.
 2. **Position.** The bus is placed along its line's shape. Each of the trip's stops is projected
    onto the shape in order, and each projection only searches the shape from the previous stop's
    segment onwards, so the distances never decrease. This keeps stops that sit beside the line,
@@ -78,11 +79,13 @@ network. It takes the nearest stop, or `null` when none is known yet, and return
    runs every second over about 450 weekday trips.
 3. **Robustness.** A trip is silently skipped if it has no shape, if no position can be
    estimated, or if it references a stop that is not known. One bad trip must never blank the map.
-4. **Countdown.** When a stop is given, a bus is *approaching* if its trip has a call at that stop
-   **later than now**. The countdown uses the first such call. That bus gets `towardsStopId` and
-   `arrivalAtStopSeconds`, the whole seconds until the scheduled call, always at least 1. Every
-   other bus has `null` in both fields. That covers buses that have passed the stop, buses that
-   never call there, and every bus when there is no stop.
+4. **Countdown.** When a stop is given, a bus is *approaching* if its trip has a **boarding call**
+   at that stop later than now: any call except the one at the trip's last stop, where the bus
+   ends its run and no one can board. The countdown uses the first such call. That bus gets
+   `towardsStopId` and `arrivalAtStopSeconds`, the whole seconds until the scheduled call, always
+   at least 1. Every other bus has `null` in both fields. That covers buses that have passed the
+   stop, buses that never call there, buses ending their trip there, and every bus when there is
+   no stop.
 5. **Order (deterministic).** Approaching buses come first, soonest first. The rest follow,
    ordered by line. Ties are broken by `tripId`. `approachingBuses()` keeps only the approaching
    buses, in the same order. `soonestPerDirection()` takes that list and keeps the first bus of
@@ -90,6 +93,26 @@ network. It takes the nearest stop, or `null` when none is known yet, and return
 
 Each bus also carries the trip's `destination` as it appears in the data, `source: 'scheduled'`,
 and `at`, the time of the estimate.
+
+## Upcoming arrivals
+
+`upcomingArrivals` in `buses.ts` builds the sheet's list for a stop straight from the timetable,
+separately from the buses on the map. It returns one `StopArrival` per trip: the trip's next
+boarding call at the stop (the same rule as the countdown above) later than now and at most
+`UPCOMING_HORIZON_SECONDS` (90 minutes) away, soonest first, ties broken by `tripId`. Each one has
+`arrivalAtStopSeconds` (always at least 1), the trip's `destination`, `source: 'scheduled'` and
+`at`. Today's and, before 04:00, yesterday's service days are both searched, as for the buses.
+
+- **Trips that have not started count.** A bus still waiting at its terminus is listed as soon as
+  it is among the next to call at the stop, not only once it departs. Before this, the list was
+  built from the buses in service, so a bus due sooner than those already listed appeared only
+  when its trip started, and the list's first bus was missing or wrong at about 12% of stop and
+  time combinations on a weekday.
+- **At a terminus,** the list has the buses departing from it and never those ending their run
+  there.
+- **The horizon** is longer than any trip (about 70 minutes), so every bus in service that is
+  heading to the stop is within it. It keeps the first bus of the morning from being listed hours
+  ahead in the middle of the night.
 
 `countdown.ts` formats the countdowns:
 - `formatCountdown` gives `M:SS` with uncapped minutes: `184` → `3:04`, `3785` → `63:05`. Negative

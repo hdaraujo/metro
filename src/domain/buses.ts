@@ -2,11 +2,27 @@ import { dayTypeFor } from './holidays';
 import { positionAt } from './interpolation';
 import { previousDate, type LisbonClock } from './lisbonTime';
 import { stopDistancesForTrip, type MeasuredShape } from './shape';
-import type { BusPosition, DayType, Direction, LatLng, LineId, Stop, Trip } from './types';
+import type {
+  BusPosition,
+  DayType,
+  Direction,
+  LatLng,
+  LineId,
+  Stop,
+  StopArrival,
+  StopTime,
+  Trip,
+} from './types';
 
 const DAY_SECONDS = 86_400;
 /** Before this Lisbon time, trips from yesterday's service day (times past 24:00) may still run. */
 const PREVIOUS_SERVICE_DAY_UNTIL = 4 * 3600;
+/**
+ * How far ahead `upcomingArrivals` looks. Longer than any trip (about 70 minutes), so every bus in
+ * service that is heading to the stop is within it; short enough that the first bus of the morning
+ * is not listed hours ahead in the middle of the night.
+ */
+export const UPCOMING_HORIZON_SECONDS = 90 * 60;
 
 export interface BusesInput {
   /** The selected (nearest) stop, or null when none is known yet. */
@@ -28,6 +44,18 @@ function serviceDays(clock: LisbonClock): { dayType: DayType; offset: number }[]
     });
   }
   return days;
+}
+
+/**
+ * The trip's first call at `stopId` later than `offset`, where a rider can board it: a call at the
+ * trip's first stop counts (the bus departs from there), a call at its last stop does not (the bus
+ * ends its trip there).
+ */
+function nextBoardingCall(trip: Trip, stopId: string, offset: number): StopTime | undefined {
+  const lastIndex = trip.stopTimes.length - 1;
+  return trip.stopTimes.find(
+    (st, i) => i < lastIndex && st.stopId === stopId && st.seconds > offset,
+  );
 }
 
 const shapeKey = (line: LineId, direction: Direction) => `${line}|${direction}`;
@@ -68,7 +96,8 @@ function compareBuses(a: BusPosition, b: BusPosition): number {
  * Every bus in service at `now`, estimated from the timetable: each trip that has left its first
  * stop and not yet reached its last. Buses approaching `stop` come first, soonest first, each with
  * a countdown to the stop; the rest follow by line. Positions are estimates, so every result is
- * `source: 'scheduled'`.
+ * `source: 'scheduled'`. This is what the map draws; the sheet's list is `upcomingArrivals`, which
+ * also has the trips that have not started yet.
  */
 export function busesInService({
   stop,
@@ -106,9 +135,7 @@ export function busesInService({
       }
       if (!coords) continue;
 
-      const call = stop
-        ? trip.stopTimes.find((st) => st.stopId === stop.id && st.seconds > offset)
-        : undefined;
+      const call = stop ? nextBoardingCall(trip, stop.id, offset) : undefined;
       seen.add(trip.id);
       buses.push({
         tripId: trip.id,
@@ -124,6 +151,52 @@ export function busesInService({
     }
   }
   return buses.sort(compareBuses);
+}
+
+export interface ArrivalsInput {
+  stop: Stop;
+  clock: LisbonClock;
+  tripsByDayType: ReadonlyMap<DayType, readonly Trip[]>;
+  now: Date;
+}
+
+/**
+ * The next scheduled calls at `stop` within `UPCOMING_HORIZON_SECONDS`, soonest first (ties by
+ * `tripId`), one per trip. Unlike `busesInService`, a trip counts whether or not it has left its
+ * first stop yet, so a bus still waiting at its terminus is listed as soon as it is among the next
+ * to call here, not only once it departs. A trip that ends its run at the stop is not listed.
+ */
+export function upcomingArrivals({
+  stop,
+  clock,
+  tripsByDayType,
+  now,
+}: ArrivalsInput): StopArrival[] {
+  const at = now.toISOString();
+  const seen = new Set<string>();
+  const arrivals: StopArrival[] = [];
+
+  for (const { dayType, offset } of serviceDays(clock)) {
+    for (const trip of tripsByDayType.get(dayType) ?? []) {
+      if (seen.has(trip.id)) continue;
+      const call = nextBoardingCall(trip, stop.id, offset);
+      if (!call || call.seconds - offset > UPCOMING_HORIZON_SECONDS) continue;
+      seen.add(trip.id);
+      arrivals.push({
+        tripId: trip.id,
+        line: trip.line,
+        direction: trip.direction,
+        destination: trip.destination,
+        stopId: call.stopId,
+        arrivalAtStopSeconds: call.seconds - offset,
+        source: 'scheduled',
+        at,
+      });
+    }
+  }
+  return arrivals.sort(
+    (a, b) => a.arrivalAtStopSeconds - b.arrivalAtStopSeconds || compareIds(a.tripId, b.tripId),
+  );
 }
 
 /** The buses with a countdown to the selected stop, in the order `busesInService` gave them. */

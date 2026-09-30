@@ -93,13 +93,16 @@ from the user's position; with no position, the distance is not rendered at all,
 and the minimised sheet alike. Everything else below is the same for both kinds.
 
 If any bus is heading to the stop, a **"Heading to this stop"** section follows
-(`sheet/ApproachingBuses.tsx`):
+(`sheet/ApproachingBuses.tsx`). Its buses are the stop's upcoming arrivals from the timetable
+(`upcomingArrivals`, see `timetable-and-estimates.md`), not the buses on the map: a bus that has
+not left its terminus yet is listed, though it has no marker until it departs, and a bus ending
+its trip at the stop is not.
 - A single **Scheduled** badge in the section header covers the whole list.
 - Each bus gets one row, soonest first: its line chip, "to {destination}" (with an ellipsis if it
   is too long), and an `M:SS` countdown in large tabular figures. Minutes are not capped, so a bus
   63 minutes away shows `63:05`.
 - At most **4** rows are shown (`MAX_ROWS`, on phone and desktop alike), to keep the sheet
-  compact. Nothing says how many more there are; the map still shows every one of them.
+  compact. Nothing says how many more there are.
 - A row is the exported `BusRow` component, which the minimised sheet reuses. Its optional
   `badge` prop puts a Scheduled badge inside the row, for use where no header badge covers it.
 
@@ -113,9 +116,9 @@ under the section header, above the list (`sheet/DirectionButton.tsx`). Each pre
 
 - **Served directions.** `directionsAtStop` scans every loaded trip, across all day types in
   `tripsByDayType` and not only today's. A stop is served in a direction when at least one trip of
-  that direction calls there **at any stop but its first**. A bus is only in service once it has
-  left its first stop, so it never approaches that stop. A terminus therefore counts as served in
-  one direction only. The button shows only when the stop is served in exactly both directions, and
+  that direction calls there **at any stop but its last**, the same rule as the list: a bus
+  departs from its first stop, so it can be boarded there, but it ends its run at its last. A
+  terminus therefore counts as served in one direction only, the one departing from it. The button shows only when the stop is served in exactly both directions, and
   only in the expanded "Heading to this stop" section. Otherwise the filter is `both`.
 - **Label.** `Both directions`, or `To ` followed by that direction's distinct trip destinations,
   most frequent first, with ties in alphabetical order (for example
@@ -134,7 +137,7 @@ under the section header, above the list (`sheet/DirectionButton.tsx`). Each pre
   persisted, just like `sheetCollapsed`. `directions` is memoised on the stop **id**, because
   `nearest` is a new object on every position update.
 - **Not affected:** the map markers, their countdown tags and dimming, smart zoom and the locate
-  reframe all keep using the unfiltered approaching list.
+  reframe all keep using the unfiltered approaching buses in service.
 
 There is no explanatory note under the list: the Scheduled badge and the dashed markers are the
 only marks of an estimate. Only when the timetable was fetched more than 24 hours ago
@@ -236,7 +239,9 @@ stop (`soonestPerDirection` in `src/domain/buses.ts`): the next `outbound` bus a
 `inbound` bus heading to the stop, so up to two buses. A stop served in one direction only (for
 example `República (desc)`), or with buses approaching from one side only, frames one bus; with
 none approaching, only the stop (and, in the default view, the user) is framed. It never frames
-every bus in service, and it ignores the sheet's direction filter. The maximum zoom is 17. The
+every bus in service, and it ignores the sheet's direction filter. Only buses in service are
+framed, since only they are on the map, so the sheet's first row can be a bus that is not framed
+yet because it has not left its terminus. The maximum zoom is 17. The
 animation takes 800 ms, or is instant under `prefers-reduced-motion`. The padding keeps the points clear of the sheet or panel: on phones, the
 bottom padding is the sheet's measured height.
 

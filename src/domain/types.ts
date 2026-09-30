@@ -56,10 +56,31 @@ export interface BusPosition {
   source: DataSource;
   /** When the position was estimated or observed, UTC ISO 8601. */
   at: string;
-  /** The stop `arrivalAtStopSeconds` counts down to; null when the bus is not heading to the selected stop. */
+  /**
+   * The stop `arrivalAtStopSeconds` counts down to; null when the bus is not heading to the
+   * selected stop, or only to end its trip there.
+   */
   towardsStopId: string | null;
   /** Seconds until the bus is scheduled to reach `towardsStopId` (≥ 1); null alongside it. */
   arrivalAtStopSeconds: number | null;
+}
+
+/**
+ * A trip's next scheduled call at a stop, where a rider can board it: one row of the sheet's list.
+ * The trip need not have left its first stop yet, so it may have no bus on the map.
+ */
+export interface StopArrival {
+  tripId: string;
+  line: LineId;
+  direction: Direction;
+  /** The trip's final destination, as in the data (e.g. 'Vale das Flores'). */
+  destination: string;
+  stopId: string;
+  /** Seconds until the scheduled call (≥ 1). */
+  arrivalAtStopSeconds: number;
+  source: DataSource;
+  /** When the arrival was estimated or observed, UTC ISO 8601. */
+  at: string;
 }
 
 export interface Network {

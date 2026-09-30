@@ -1,5 +1,5 @@
 import { formatCountdown, spokenCountdown } from '../../domain/countdown';
-import type { BusPosition, LineId } from '../../domain/types';
+import type { LineId, StopArrival } from '../../domain/types';
 import { DirectionButton } from './DirectionButton';
 import { LineChip } from './LineChip';
 import { ScheduledBadge } from './ScheduledBadge';
@@ -11,7 +11,7 @@ const MAX_ROWS = 4;
 export const NO_BUSES_IN_DIRECTION = 'No buses in this direction right now.';
 
 interface BusRowProps {
-  bus: BusPosition;
+  bus: StopArrival;
   color: string;
   /** Show the Scheduled badge in the row, for when no header badge covers it. */
   badge?: boolean;
@@ -19,7 +19,7 @@ interface BusRowProps {
 
 /** One approaching bus: its line, destination and countdown. */
 export function BusRow({ bus, color, badge }: BusRowProps) {
-  const seconds = bus.arrivalAtStopSeconds ?? 0;
+  const seconds = bus.arrivalAtStopSeconds;
   return (
     <li className="bus-list__row">
       <LineChip line={bus.line} color={color} />
@@ -35,7 +35,7 @@ export function BusRow({ bus, color, badge }: BusRowProps) {
 
 interface ApproachingBusesProps {
   /** The buses heading to the stop in the chosen direction, soonest first. */
-  buses: readonly BusPosition[];
+  buses: readonly StopArrival[];
   colorOf: (line: LineId) => string;
   /** The direction filter's button, shown when the stop is served in both directions. */
   direction?: { label: string; onCycle: () => void };

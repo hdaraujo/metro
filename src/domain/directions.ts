@@ -1,4 +1,4 @@
-import type { BusPosition, Direction, Trip } from './types';
+import type { Direction, Trip } from './types';
 
 /** Which buses the sheet lists: every approaching bus, or only one direction's. */
 export type DirectionFilter = 'both' | Direction;
@@ -13,13 +13,15 @@ const DIRECTIONS: readonly Direction[] = ['outbound', 'inbound'];
 const FALLBACK_LABELS: Record<Direction, string> = { outbound: 'Outbound', inbound: 'Inbound' };
 
 /**
- * The directions trips arrive at `stopId` from, outbound first. A call at a trip's first stop does
- * not count: a bus is only in service once it has left its first stop, so it never approaches it.
+ * The directions a rider can board a trip at `stopId` in, outbound first. A call at a trip's last
+ * stop does not count, since the bus ends its run there; a call at its first stop does, since the
+ * bus departs from there. This is the same rule the sheet's list (`upcomingArrivals`) follows.
  */
 export function directionsAtStop(stopId: string, trips: Iterable<Trip>): DirectionAtStop[] {
   const counts = new Map<Direction, Map<string, number>>();
   for (const trip of trips) {
-    if (!trip.stopTimes.some((st, i) => i >= 1 && st.stopId === stopId)) continue;
+    const lastIndex = trip.stopTimes.length - 1;
+    if (!trip.stopTimes.some((st, i) => i < lastIndex && st.stopId === stopId)) continue;
     let byDestination = counts.get(trip.direction);
     if (!byDestination) {
       byDestination = new Map();
@@ -48,10 +50,10 @@ export function nextDirectionFilter(filter: DirectionFilter): DirectionFilter {
 }
 
 /** Keeps the buses of the filtered direction, in their original order. */
-export function busesInDirection(
-  buses: readonly BusPosition[],
+export function busesInDirection<T extends { direction: Direction }>(
+  buses: readonly T[],
   filter: DirectionFilter,
-): BusPosition[] {
+): T[] {
   return filter === 'both' ? [...buses] : buses.filter((bus) => bus.direction === filter);
 }
 

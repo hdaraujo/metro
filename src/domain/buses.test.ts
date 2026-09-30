@@ -3,7 +3,13 @@ import stopsJson from '../../tests/fixtures/stops.json';
 import shapesJson from '../../tests/fixtures/route-shapes.json';
 import tripsJson from '../../tests/fixtures/trips-DU.sample.json';
 import { parseShapes, parseStops, parseTrips, stopIdsByName } from '../sources/metrobusTimetable';
-import { approachingBuses, busesInService, soonestPerDirection } from './buses';
+import {
+  approachingBuses,
+  busesInService,
+  soonestPerDirection,
+  UPCOMING_HORIZON_SECONDS,
+  upcomingArrivals,
+} from './buses';
 import { haversineMeters } from './geo';
 import { lisbonClock } from './lisbonTime';
 import { measureShape } from './shape';
@@ -133,12 +139,20 @@ describe('busesInService', () => {
     expect(ids).not.toContain('u1-DU-1-823');
   });
 
+  it('gives no countdown to a bus that ends its trip at the stop', () => {
+    // u1-DU-1-823 is running to Coimbra B, its last stop, at 10:44.
+    const bus = busesAt('Coimbra B', weekdayMorning).find((b) => b.tripId === 'u1-DU-1-823');
+    expect(bus).toBeDefined();
+    expect(bus?.towardsStopId).toBeNull();
+    expect(bus?.arrivalAtStopSeconds).toBeNull();
+  });
+
   it("uses yesterday's timetable with times past 24:00 after midnight", () => {
     // Thursday 24 September 2026, 00:30 in Lisbon: s1-DU-0-726 from Wednesday is still running
-    // and reaches Serpins at 25:29:28.
-    const bus = soonestAt('Serpins', '2026-09-23T23:30:00Z');
+    // and reaches Lousã - Estação at 25:21:42.
+    const bus = soonestAt('Lousã - Estação', '2026-09-23T23:30:00Z');
     expect(bus?.tripId).toBe('s1-DU-0-726');
-    expect(bus?.arrivalAtStopSeconds).toBe(25 * 3600 + 29 * 60 + 28 - (24 * 3600 + 30 * 60));
+    expect(bus?.arrivalAtStopSeconds).toBe(25 * 3600 + 21 * 60 + 42 - (24 * 3600 + 30 * 60));
   });
 
   it("ignores yesterday's timetable from 04:00", () => {
@@ -151,6 +165,7 @@ describe('busesInService', () => {
       stopTimes: [
         { stopId: stopNamed('Coimbra B').id, seconds: 27 * 3600 },
         { stopId: stopNamed('Portagem').id, seconds: 29 * 3600 },
+        { stopId: stopNamed('Parque').id, seconds: 29 * 3600 + 120 },
       ],
     };
     const trips = new Map<DayType, Trip[]>([['DU', [late]]]);
@@ -180,6 +195,82 @@ describe('busesInService', () => {
     const trips = new Map<DayType, Trip[]>([['DU', [noShape, unknownStop, running]]]);
     expect(busesAt('Portagem', weekdayMorning, trips).map((b) => b.tripId)).toEqual([
       'u1-DU-0-852',
+    ]);
+  });
+});
+
+describe('upcomingArrivals', () => {
+  const arrivalsAt = (stopName: string, iso: string, trips = tripsByDayType) => {
+    const now = new Date(iso);
+    return upcomingArrivals({
+      stop: stopNamed(stopName),
+      clock: lisbonClock(now),
+      tripsByDayType: trips,
+      now,
+    });
+  };
+  const summary = (list: ReturnType<typeof arrivalsAt>) =>
+    list.map(({ tripId, arrivalAtStopSeconds }) => ({ tripId, arrivalAtStopSeconds }));
+
+  it('lists trips that have not left their first stop yet, soonest first', () => {
+    // 10:40:30: both U1 trips leave their terminus at 10:41, so neither is on the map yet, but
+    // they are still the next two buses to reach Portagem.
+    const iso = '2026-09-23T09:40:30Z';
+    expect(approachingBuses(busesAt('Portagem', iso))).toEqual([]);
+    expect(summary(arrivalsAt('Portagem', iso).slice(0, 3))).toEqual([
+      { tripId: 'u1-DU-0-852', arrivalAtStopSeconds: 6 * 60 + 34 }, // 10:47:04
+      { tripId: 'u1-DU-1-823', arrivalAtStopSeconds: 12 * 60 + 48 }, // 10:53:18
+      { tripId: 'u1-DU-0-585', arrivalAtStopSeconds: 23 * 60 + 34 }, // 11:04:04
+    ]);
+  });
+
+  it('does not change which buses come first when an earlier bus departs', () => {
+    // A bus is listed from well before its trip starts, so the list at 10:40:30 is the list at
+    // 10:44 with the countdowns 210 s longer: no bus appears ahead of those already listed.
+    const before = summary(arrivalsAt('Portagem', '2026-09-23T09:40:30Z'));
+    const after = summary(arrivalsAt('Portagem', '2026-09-23T09:44:00Z'));
+    const shared = after.filter((a) => before.some((b) => b.tripId === a.tripId));
+    expect(shared.map((a) => a.tripId)).toEqual(
+      before.slice(0, shared.length).map((b) => b.tripId),
+    );
+    for (const a of shared) {
+      const b = before.find((x) => x.tripId === a.tripId)!;
+      expect(b.arrivalAtStopSeconds - a.arrivalAtStopSeconds).toBe(210);
+    }
+  });
+
+  it('lists buses departing from a terminus, not buses ending their trip there', () => {
+    const arrivals = arrivalsAt('Coimbra B', '2026-09-23T09:44:00Z');
+    // u1-DU-1-823 is running to Coimbra B, where it ends; u1-DU-0-585 leaves from there at 10:58.
+    expect(arrivals.map((a) => a.tripId)).not.toContain('u1-DU-1-823');
+    expect(summary(arrivals)[0]).toEqual({ tripId: 'u1-DU-0-585', arrivalAtStopSeconds: 14 * 60 });
+    expect(arrivals.every((a) => a.destination !== 'Coimbra B')).toBe(true);
+  });
+
+  it(`looks ${UPCOMING_HORIZON_SECONDS / 60} minutes ahead`, () => {
+    const arrivals = arrivalsAt('Portagem', '2026-09-23T09:44:00Z');
+    expect(arrivals.length).toBeGreaterThan(0);
+    for (const a of arrivals) expect(a.arrivalAtStopSeconds).toBeLessThanOrEqual(90 * 60);
+    // 03:00 in Lisbon: the first bus of the day is more than 90 minutes away. By 03:30 it is not.
+    expect(arrivalsAt('Portagem', '2026-09-23T02:00:00Z')).toEqual([]);
+    expect(arrivalsAt('Portagem', '2026-09-23T02:30:00Z')[0]?.tripId).toBe('u1-DU-1-978');
+  });
+
+  it('labels every arrival as scheduled, at `now`, with the stop and destination', () => {
+    const portagem = stopNamed('Portagem').id;
+    for (const a of arrivalsAt('Portagem', '2026-09-23T09:44:00Z')) {
+      expect(a.source).toBe('scheduled');
+      expect(a.at).toBe('2026-09-23T09:44:00.000Z');
+      expect(a.stopId).toBe(portagem);
+      expect(a.arrivalAtStopSeconds).toBeGreaterThanOrEqual(1);
+      expect(a.destination).not.toBe('');
+    }
+  });
+
+  it("uses yesterday's timetable with times past 24:00 after midnight", () => {
+    const arrivals = arrivalsAt('Lousã - Estação', '2026-09-23T23:30:00Z');
+    expect(summary(arrivals)).toEqual([
+      { tripId: 's1-DU-0-726', arrivalAtStopSeconds: 51 * 60 + 42 }, // 25:21:42
     ]);
   });
 });

@@ -1,0 +1,695 @@
+> when running the app multiple times, the list of buses changes and buses that were not there appear in later executions. Being a timetable that doesn't change often I find this odd. Check this mechanism and find if there is something wrong with it
+
+  → Bash(command: ls && cat documentation/context/tech.md | head -80 && ls documentation/module..., description: Survey repo layout and tech context)
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ node_modules
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ plays
+  ⎿ playwright.config.ts
+  ⎿ public
+  ⎿ pwa-assets.config.ts
+  ⎿ src
+  ⎿ tests
+  ⎿ tsconfig.json
+  ⎿ vite.config.ts
+  ⎿ <!--
+  ⎿   Tech Stack — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE. A play may touch every repository or just a subset, so the
+  ⎿ … +183 more lines
+  → Bash(command: ls -R plays/010-data-validation && cat plays/010-data-validation/*.md plays/0..., description: Read play 010 and timetable adapter/hook)
+  ⎿ plays/010-data-validation:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ intent.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ 
+  ⎿ plays/010-data-validation/sessions:
+  ⎿ info.yaml
+  ⎿ # Play `010` — session instructions
+  ⎿ 
+  ⎿ Your session starts at the root of the project's **specs repository** — the one
+  ⎿ holding `documentation/` and `plays/`. This play is `plays/010-data-validation/`.
+  ⎿ 
+  ⎿ Your primary instructions for this work are in the intent document. Read it
+  ⎿ first and treat it as the source of truth for what to build:
+  ⎿ 
+  ⎿ - [Intent](intent.md)
+  ⎿ 
+  ⎿ Read `documentation/context/` before starting: those documents are shared by every
+  ⎿ … +295 more lines
+  → Bash(command: cat plays/010-data-validation/intent.md plays/010-data-validation/positions.y..., description: Read intent, vite config, App and buses logic)
+  ⎿ rooms:
+  ⎿   Joana: code
+  ⎿ sessions:
+  ⎿   - id: 329860f77811441e9d266efd5c2ff245
+  ⎿     state: running
+  ⎿     seq: 1
+  ⎿     datetime: '2026-09-30T09:40:40.867Z'
+  ⎿     team: Manual
+  ⎿     agent: Joana
+  ⎿     logs:
+  ⎿       pty: 001-joana.pty
+  ⎿       txt: 001-joana.txt
+  ⎿     cols: 180
+  ⎿     rows: 50
+  ⎿     generic: {}
+  ⎿ next_seq: 2
+  ⎿ ----
+  ⎿ /// <reference types="vitest/config" />
+  ⎿ import react from '@vitejs/plugin-react';
+  ⎿ import { defineConfig } from 'vite';
+  ⎿ … +499 more lines
+  → Bash(command: cd "C:/Users/haraujo/AppData/Local/Temp/claude/C--Dev-metro/329860f7-7811-441..., description: Fetch live timetable files three times and compare hashes)
+  ⎿ 5fbb9baadbaeba5ac81434a72e19da39 *route-shapes_1.json
+  ⎿ 5fbb9baadbaeba5ac81434a72e19da39 *route-shapes_2.json
+  ⎿ 5fbb9baadbaeba5ac81434a72e19da39 *route-shapes_3.json
+  ⎿ 4afb63c17cd0bc93cf98d14c91a9a1af *stops_1.json
+  ⎿ 4afb63c17cd0bc93cf98d14c91a9a1af *stops_2.json
+  ⎿ 4afb63c17cd0bc93cf98d14c91a9a1af *stops_3.json
+  ⎿ d95985034610d099622928d2c939dde4 *trips-DU_1.json
+  ⎿ d95985034610d099622928d2c939dde4 *trips-DU_2.json
+  ⎿ d95985034610d099622928d2c939dde4 *trips-DU_3.json
+  ⎿ 4abbc725cd76feda5be8d45673bab217 *trips-Dom_1.json
+  ⎿ 4abbc725cd76feda5be8d45673bab217 *trips-Dom_2.json
+  ⎿ 4abbc725cd76feda5be8d45673bab217 *trips-Dom_3.json
+  ⎿ 4ee9005e5de5be1f057795c82edb709a *trips-Sab_1.json
+  ⎿ 4ee9005e5de5be1f057795c82edb709a *trips-Sab_2.json
+  ⎿ 4ee9005e5de5be1f057795c82edb709a *trips-Sab_3.json
+  ⎿ HTTP/1.1 200 OK
+  ⎿ Accept-Ranges: bytes
+  ⎿ Access-Control-Allow-Origin: *
+  ⎿ Age: 32460
+  ⎿ Cache-Control: public, max-age=300
+  ⎿ … +11 more lines
+  → Bash(command: cd "C:/Users/haraujo/AppData/Local/Temp/claude/C--Dev-metro/329860f7-7811-441..., description: Analyse live timetable data for id and name issues)
+  ⎿ stops 39 sample {"id":"271","code":"cbr_mm029","name":"Açude","lines":["S1","U1","U3"],"isSuburbanOnly":false,"coords":{"lat":40.21697,"lng":-8.438565}}
+  ⎿ duplicate names []
+  ⎿ shapes S1-0:S1:Ida:41 S1-1:S1:Volta:41 S2-0:S2:Ida:40 S2-1:S2:Volta:40 U1-0:U1:Ida:15 U1-1:U1:Volta:15 U2-0:U2:Ida:14 U2-1:U2:Volta:14 U3-0:U3:Ida:8 U3-1:U3:Volta:8
+  ⎿ DU trips 452 dup ids 0 [] dirs [ [ 'P-S', 227 ], [ 'S-P', 225 ] ] unknown []
+  ⎿ {"id":"s1-DU-0-604","line":"S1","lineType":"suburbana","dayType":"DU","direction":"P-S","finalDestination":"Serpins","stops":[{"name":"Coimbra B","time":"05:50:00"},{"name":"Casa do Sal","time":"05:51:18"},{"name":"Açude","time":"05:52:25"},{"name":"Arnado","time":"05:53:38"},{"name":"Aeminium","time":"05:54:47"},{"name":"Portagem","time":"05:56:04"},{"name":"Parque","time":"05:57:28"},{"name":"Colégios","time":"05:59:01"},{"name":"Arregaça","time":"06:00:04"},{"name":"Norton de Matos","time":"06:01:25"},{"name":"São José","time":"06:02:29"},{"name":"Solum","time":"06:04:13"},{"name":"Fernando
+  ⎿ Sab trips 302 dup ids 0 [] dirs [ [ 'P-S', 157 ], [ 'S-P', 145 ] ] unknown []
+  ⎿ Dom trips 225 dup ids 0 [] dirs [ [ 'P-S', 113 ], [ 'S-P', 112 ] ] unknown []
+
+● Live data is stable and clean (identical across fetches, unique trip ids, no unknown stop names), so I'm now checking the app side: network/trip loading and the per-trip estimation.
+
+  → Bash(command: cat src/ui/hooks/useNetwork.ts src/ui/hooks/useNow.ts src/domain/interpolatio..., description: Read network hook, clock hook, interpolation and shape code)
+  ⎿ import { useCallback, useEffect, useState } from 'react';
+  ⎿ import type { Network } from '../../domain/types';
+  ⎿ import { fetchNetwork } from '../../sources/metrobusTimetable';
+  ⎿ 
+  ⎿ export const REFRESH_INTERVAL_MS = 6 * 60 * 60 * 1000;
+  ⎿ 
+  ⎿ interface NetworkState {
+  ⎿   network?: Network;
+  ⎿   error?: Error;
+  ⎿ }
+  ⎿ 
+  ⎿ /** Stops and shapes, fetched on mount and every 6 hours. A failed refresh keeps the last good data. */
+  ⎿ export function useNetwork(): NetworkState & { retry: () => void } {
+  ⎿   const [state, setState] = useState<NetworkState>({});
+  ⎿   const [attempt, setAttempt] = useState(0);
+  ⎿ 
+  ⎿   useEffect(() => {
+  ⎿     let cancelled = false;
+  ⎿     const load = () => {
+  ⎿       fetchNetwork().then(
+  ⎿ … +193 more lines
+  → Bash(command: cat tests/fixtures/README.md; git log --format='%h %ad %s' --date=iso -- test..., description: Compare recorded fixtures with live data)
+  ⎿ # Test fixtures
+  ⎿ 
+  ⎿ Recorded source data for the Metro Mondego timetable ("Horários Metrobus"). Tests use only these
+  ⎿ files and never call the live sources.
+  ⎿ 
+  ⎿ All files were recorded on **2026-09-25 at 19:00 UTC** from
+  ⎿ `https://planearviagem.metromondego.pt/data/` (the response had
+  ⎿ `Last-Modified: Fri, 25 Sep 2026 18:00:33 GMT`).
+  ⎿ 
+  ⎿ | File                    | Source                  | How it was trimmed                          |
+  ⎿ | ----------------------- | ----------------------- | ------------------------------------------- |
+  ⎿ | `stops.json`            | `data/stops.json`       | Not trimmed: the full file, byte for byte.  |
+  ⎿ | `route-shapes.json`     | `data/route-shapes.json` | Not trimmed: the full file, byte for byte. |
+  ⎿ | `trips-DU.sample.json`  | `data/trips-DU.json`    | A subset of the weekday trips (see below). The trips themselves are unchanged. |
+  ⎿ 
+  ⎿ `trips-DU.sample.json` keeps 96 of the 452 weekday trips:
+  ⎿ 
+  ⎿ - every U1 trip in both directions (49 `P-S`, 44 `S-P`);
+  ⎿ - `s1-DU-0-633`: S1 short-turn trip Coimbra B → Corvo at 07:40;
+  ⎿ - `s2-DU-0-701`: S2 trip from República (desc) at 10:20, which passes the `(desc)` stops;
+  ⎿ … +118 more lines
+  → Bash(command: cat src/ui/sheet/ApproachingBuses.tsx src/ui/sheet/NearestStopContent.tsx src..., description: Read the sheet list, directions and time/holiday code)
+  ⎿ import { formatCountdown, spokenCountdown } from '../../domain/countdown';
+  ⎿ import type { BusPosition, LineId } from '../../domain/types';
+  ⎿ import { DirectionButton } from './DirectionButton';
+  ⎿ import { LineChip } from './LineChip';
+  ⎿ import { ScheduledBadge } from './ScheduledBadge';
+  ⎿ 
+  ⎿ /** At most this many rows, so the sheet stays compact and leaves the map in view. */
+  ⎿ const MAX_ROWS = 4;
+  ⎿ 
+  ⎿ /** Shown instead of the list when the direction filter leaves no bus. */
+  ⎿ export const NO_BUSES_IN_DIRECTION = 'No buses in this direction right now.';
+  ⎿ 
+  ⎿ interface BusRowProps {
+  ⎿   bus: BusPosition;
+  ⎿   color: string;
+  ⎿   /** Show the Scheduled badge in the row, for when no header badge covers it. */
+  ⎿   badge?: boolean;
+  ⎿ }
+  ⎿ 
+  ⎿ /** One approaching bus: its line, destination and countdown. */
+  ⎿ … +380 more lines
+  → Bash(command: cd "C:/Users/haraujo/AppData/Local/Temp/claude/C--Dev-metro/329860f7-7811-441..., description: Simulate app list versus full timetable at several stops)
+  ⎿ Portagem @08:00
+  ⎿   app      : U2→Vale das Flores in 1m | U2→República (asc) in 5m | S1→Lousã - Estação in 6m | S1→Coimbra B in 11m
+  ⎿   timetable: U2→Vale das Flores in 1m | U2→República (asc) in 5m | S1→Lousã - Estação in 6m | U2→Vale das Flores in 11m [not started: departs República (desc) 08:05]
+  ⎿ Portagem @08:05
+  ⎿   app      : U2→República (asc) in 0m | S1→Lousã - Estação in 1m | U2→Vale das Flores in 6m | S1→Coimbra B in 6m
+  ⎿   timetable: U2→República (asc) in 0m | S1→Lousã - Estação in 1m | U2→Vale das Flores in 6m | S1→Coimbra B in 6m
+  ⎿ Portagem @08:10
+  ⎿   app      : U2→Vale das Flores in 1m | S1→Coimbra B in 1m | U2→República (asc) in 5m | S2→Corvo in 6m
+  ⎿   timetable: U2→Vale das Flores in 1m | S1→Coimbra B in 1m | U2→República (asc) in 5m | S2→Corvo in 6m
+  ⎿ Coimbra B @08:00
+  ⎿   app      : U1→Coimbra B in 0m | U3→Coimbra B in 7m | S1→Coimbra B in 17m | S1→Coimbra B in 37m
+  ⎿   timetable: U1→Coimbra B in 0m | U3→Coimbra B in 7m | U3→Coimbra B in 11m [not started: departs República (desc) 08:02] | S1→Coimbra B in 17m
+  ⎿ Coimbra B @08:05
+  ⎿   app      : U3→Coimbra B in 2m | U3→Coimbra B in 6m | S1→Coimbra B in 12m | S1→Coimbra B in 32m
+  ⎿   timetable: U3→Coimbra B in 2m | U3→Coimbra B in 6m | S1→Coimbra B in 12m | U3→Coimbra B in 18m [not started: departs República (desc) 08:14]
+  ⎿ Coimbra B @08:10
+  ⎿   app      : U3→Coimbra B in 1m | S1→Coimbra B in 7m | S1→Coimbra B in 27m | S1→Coimbra B in 49m
+  ⎿   timetable: U3→Coimbra B in 1m | S1→Coimbra B in 7m | U3→Coimbra B in 13m [not started: departs República (desc) 08:14] | U3→Coimbra B in 19m [not started: departs República (desc) 08:20]
+  ⎿ Hospitais da UC @08:00
+  ⎿   app      : (none)
+  ⎿ … +26 more lines
+  → Bash(command: grep -n "first.seconds > offset\|st.seconds > offset\|i >= 1 && st.stopId\|MA..., description: Find line numbers of the relevant filters)
+  ⎿ src/domain/buses.ts:91:      if (!first || !last || first.seconds > offset || offset > last.seconds) continue;
+  ⎿ src/domain/buses.ts:110:        ? trip.stopTimes.find((st) => st.stopId === stop.id && st.seconds > offset)
+  ⎿ src/domain/directions.ts:22:    if (!trip.stopTimes.some((st, i) => i >= 1 && st.stopId === stopId)) continue;
+  ⎿ src/ui/sheet/ApproachingBuses.tsx:8:const MAX_ROWS = 4;
+
+● The timetable data isn't changing. The problem is in the app: the list only includes buses that have **already left their first stop**, so a bus appears only once its trip starts, even when it's due at your stop before buses already on the list.
+
+## The data is stable
+- I downloaded `stops.json`, `route-shapes.json` and `trips-{DU,Sab,Dom}.json` three times. Every copy was byte-identical, and the weekday trips still match the fixtures recorded on 25 Sep.
+- Trip ids are unique, every stop name a trip uses exists, and there are no unknown directions. The parser isn't dropping anything.
+- The service worker's stale-while-revalidate caching isn't the cause either, because there is nothing newer for it to swap in.
+
+## What's wrong
+`src/domain/buses.ts:91`:
+```ts
+if (!first || !last || first.seconds > offset || offset > last.seconds) continue;
+```
+`busesInService` skips any trip that hasn't reached its first departure time yet, and the sheet's list is built from its output. That was meant for placing buses on the map, since a trip that hasn't started has no position to show. But it also means the list never shows a bus that's still waiting at its terminus.
+
+I replayed the real weekday timetable through the same rule. "App" is the current list; "timetable" is what the next 4 arrivals really are:
+
+| Stop @ time | App shows | Missing |
+| --- | --- | --- |
+| Casa do Sal @ 08:00 | S1 1m, U3 6m, S1 16m, **S1 36m** | U3 → República in **6m** (leaves Coimbra B 08:05), U3 → Coimbra B in **10m** (leaves República 08:02) |
+| Casa do Sal @ 08:10 | S1 6m, S1 26m, S1 47m | U1 in **6m**, S1 → Serpins in **11m**, U3 in **12m** |
+| Serpins @ 08:00 | 2 buses | the 08:20 S1 and the 08:50 S2 departures |
+
+This matches what you saw: open the app at 08:00, then again at 08:03 after the U3 has left Coimbra B, and a bus arriving sooner than ones already listed "appears". It also happens while the app stays open, since the list recalculates every second. Over every stop in 5-minute steps from 06:00 to 22:00 on a weekday, the list's first bus was missing or wrong in **12.1%** of cases (882 of 7,296).
+
+## Two related side effects
+1. **End-of-line stops only list buses arriving to finish there.** At Coimbra B at 08:00, the app shows 4 buses, all ending at Coimbra B. The departures you could actually board (U1 → Vale das Flores 08:15, S1 → Serpins 08:20) never appear, because a trip is never "heading to" its own first stop. `directionsAtStop` (`src/domain/directions.ts:22`) also ignores first-stop calls, so the direction filter at these stops is affected in the same way.
+2. The list is cut to 4 rows (`src/ui/sheet/ApproachingBuses.tsx:8`), so a bus 36 minutes away can fill a row that belongs to one 6 minutes away.
+
+## How to fix it
+Build the list from the timetable, separately from which buses are on the map:
+- The sheet lists the next scheduled calls at the stop, including trips that haven't started (optionally within a time limit). At an end-of-line stop, that includes buses leaving from there, and buses that finish there are probably left out.
+- The map keeps showing only buses in service, or shows a not-yet-started bus at its first stop marked "departs 08:15".
+- A new test covers a stop where the soonest bus hasn't left its first stop yet.
+
+This fits the empty `plays/010-data-validation` play, if that's where you want it. How to show a bus that hasn't left yet ("in 6 min" or "departs 08:15") and whether buses that finish at the stop stay in its list are your calls. Tell me and I'll write the intent and implement it.
+
+> yes fix it
+
+  → Bash(command: cat .claude/skills/manual-claude/SKILL.md; cat src/domain/types.ts; grep -rn ..., description: Read manual play skill, types, usages and countdown)
+  ⎿ ---
+  ⎿ name: manual-claude
+  ⎿ description: Work on one play by hand: read its intent and the project's context, then implement it.
+  ⎿ ---
+  ⎿ 
+  ⎿ You are working on a play in this project's specs repository. The play is `$play`.
+  ⎿ 
+  ⎿ Read `$play/intent.md` first and treat it as the source of truth for what to build,
+  ⎿ then read everything in `documentation/context/` — those documents are shared by every
+  ⎿ play and apply to all work here. The play's own notes, plan and session record live
+  ⎿ beside the intent in `$play/`.
+  ⎿ 
+  ⎿ Arguments: `$play` — the play folder, e.g. `plays/001-checkout`.
+  ⎿ /** Geographic coordinates. Inside the domain always `{ lat, lng }`; MapLibre's `[lng, lat]` lives in `src/ui/map/`. */
+  ⎿ export interface LatLng {
+  ⎿   lat: number;
+  ⎿   lng: number;
+  ⎿ }
+  ⎿ 
+  ⎿ /** A Metrobus line, e.g. 'S1' | 'S2' | 'U1' | 'U2' | 'U3' in the current data. */
+  ⎿ … +127 more lines
+  → Bash(command: cat src/domain/buses.test.ts src/domain/directions.test.ts; cat documentation..., description: Read existing tests, module docs and e2e references)
+  ⎿ import { describe, expect, it } from 'vitest';
+  ⎿ import stopsJson from '../../tests/fixtures/stops.json';
+  ⎿ import shapesJson from '../../tests/fixtures/route-shapes.json';
+  ⎿ import tripsJson from '../../tests/fixtures/trips-DU.sample.json';
+  ⎿ import { parseShapes, parseStops, parseTrips, stopIdsByName } from '../sources/metrobusTimetable';
+  ⎿ import { approachingBuses, busesInService, soonestPerDirection } from './buses';
+  ⎿ import { haversineMeters } from './geo';
+  ⎿ import { lisbonClock } from './lisbonTime';
+  ⎿ import { measureShape } from './shape';
+  ⎿ import type { BusPosition, DayType, Direction, Stop, Trip } from './types';
+  ⎿ 
+  ⎿ const stops = parseStops(stopsJson);
+  ⎿ const stopsById = new Map<string, Stop>(stops.map((s) => [s.id, s]));
+  ⎿ const shapesById = new Map(parseShapes(shapesJson).map((s) => [s.id, measureShape(s)]));
+  ⎿ const weekdayTrips = parseTrips(tripsJson, stopIdsByName(stops), 'DU');
+  ⎿ const tripsByDayType = new Map<DayType, Trip[]>([['DU', weekdayTrips]]);
+  ⎿ const stopNamed = (name: string) => stops.find((s) => s.name === name)!;
+  ⎿ 
+  ⎿ function busesAt(stopName: string | null, iso: string, trips = tripsByDayType) {
+  ⎿   const now = new Date(iso);
+  ⎿ … +492 more lines
+  → Bash(command: cd "C:/Users/haraujo/AppData/Local/Temp/claude/C--Dev-metro/329860f7-7811-441..., description: Check trip durations and repeated stops; read map-screen doc)
+  ⎿ DU max duration min 69.13333333333334 trips with repeated stop 0 loops 0 first dep 4.7125 last dep 24.416666666666668
+  ⎿ Sab max duration min 66.13333333333334 trips with repeated stop 0 loops 0 first dep 5.5 last dep 24.666666666666668
+  ⎿ Dom max duration min 66 trips with repeated stop 0 loops 0 first dep 5.5 last dep 24.666666666666668
+  ⎿ is off", and clearing it brings those states back.
+  ⎿ 
+  ⎿ The **stop content** (`sheet/NearestStopContent.tsx`, used for both kinds, with `kind` set to
+  ⎿ `nearest` or `selected`) shows the eyebrow `// NEAREST STOP` or `// SELECTED STOP`, the stop name
+  ⎿ exactly as in the data (for example `República (desc)`), the distance ("180 m away" or "1.2 km
+  ⎿ away"), and a chip for each line that serves the stop. Each chip uses the line's colour from the
+  ⎿ data, with white or dark text chosen for contrast. The distance of a selected stop is measured
+  ⎿ from the user's position; with no position, the distance is not rendered at all, in the expanded
+  ⎿ and the minimised sheet alike. Everything else below is the same for both kinds.
+  ⎿ 
+  ⎿ If any bus is heading to the stop, a **"Heading to this stop"** section follows
+  ⎿ (`sheet/ApproachingBuses.tsx`):
+  ⎿ - A single **Scheduled** badge in the section header covers the whole list.
+  ⎿ - Each bus gets one row, soonest first: its line chip, "to {destination}" (with an ellipsis if it
+  ⎿   is too long), and an `M:SS` countdown in large tabular figures. Minutes are not capped, so a bus
+  ⎿   63 minutes away shows `63:05`.
+  ⎿ - At most **4** rows are shown (`MAX_ROWS`, on phone and desktop alike), to keep the sheet
+  ⎿ … +44 more lines
+  → Bash(command: git branch -a; ls plays/009-select-stop; cat plays/009-select-stop/config.yam..., description: Inspect branches and a previous play's records)
+  ⎿ * main
+  ⎿   remotes/origin/HEAD -> origin/main
+  ⎿   remotes/origin/main
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design.yaml
+  ⎿ devops.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ plan.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ id: '009'
+  ⎿ name: select stop
+  ⎿ team: Autopilot
+  ⎿ status: completed
+  ⎿ created_at: '2026-09-29T09:29:22.441Z'
+  ⎿ events:
+  ⎿   - kind: transition
+  ⎿     at: '2026-09-29T10:02:46.071Z'
+  ⎿ … +39 more lines
+  → Bash(command: git switch -c 010-data-validation && sed -n 1,80p tests/e2e/map.spec.ts && se..., description: Create play branch and read e2e expectations)
+  ⎿ Switched to a new branch '010-data-validation'
+  ⎿ import { readFileSync } from 'node:fs';
+  ⎿ import { expect, test, type Locator, type Page, type TestInfo } from '@playwright/test';
+  ⎿ 
+  ⎿ const fixture = (name: string) =>
+  ⎿   readFileSync(new URL(`../fixtures/${name}`, import.meta.url), 'utf8');
+  ⎿ 
+  ⎿ const FIXTURES: Record<string, string> = {
+  ⎿   'stops.json': fixture('stops.json'),
+  ⎿   'route-shapes.json': fixture('route-shapes.json'),
+  ⎿   // Every day type gets the weekday sample; the clock below is a weekday anyway.
+  ⎿   trips: fixture('trips-DU.sample.json'),
+  ⎿ };
+  ⎿ 
+  ⎿ const TRANSPARENT_PNG = Buffer.from(
+  ⎿   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+  ⎿   'base64',
+  ⎿ );
+  ⎿ 
+  ⎿ /** Portagem stop, Coimbra. */
+  ⎿ … +260 more lines
+
+● I'm on a new branch `010-data-validation` and am now writing the fix: a separate "upcoming arrivals" list for the sheet, built from the whole timetable.
+
+  → Edit(replace_all: false, file_path: C:\Dev\metro\src\domain\types.ts, old_string: export interface Network {, new_string: /**
+ * A trip's next scheduled call at a stop, where a rider can board it: on...)
+  → Edit(replace_all: false, file_path: C:\Dev\metro\src\domain\types.ts, old_string:   /** The stop `arrivalAtStopSeconds` counts down to; null when the bus is no..., new_string:   /**
+   * The stop `arrivalAtStopSeconds` counts down to; null when the bus ...)
+  ⎿ The file C:\Dev\metro\src\domain\types.ts has been updated successfully.
+  ⎿ The file C:\Dev\metro\src\domain\types.ts has been updated successfully.
+
+● Now the domain logic in `buses.ts`.
+
+  → Bash(command: python - <<'EOF'
+import re
+p='src/domain/buses.ts'
+s=open(p,encoding='utf-8')..., description: Add boarding-call rule and upcomingArrivals to buses.ts)
+  ⎿ 21: * How far ahead `upcomingArrivals` looks. Longer than any trip (about 70 minutes), so every bus in
+  ⎿ 25:export const UPCOMING_HORIZON_SECONDS = 90 * 60;
+  ⎿ 54:function nextBoardingCall(trip: Trip, stopId: string, offset: number): StopTime | undefined {
+  ⎿ 99: * `source: 'scheduled'`. This is what the map draws; the sheet's list is `upcomingArrivals`, which
+  ⎿ 138:      const call = stop ? nextBoardingCall(trip, stop.id, offset) : undefined;
+  ⎿ 164: * The next scheduled calls at `stop` within `UPCOMING_HORIZON_SECONDS`, soonest first (ties by
+  ⎿ 169:export function upcomingArrivals({
+  ⎿ 182:      const call = nextBoardingCall(trip, stop.id, offset);
+  ⎿ 183:      if (!call || call.seconds - offset > UPCOMING_HORIZON_SECONDS) continue;
+
+● Now `directions.ts`: count a terminus in the direction that departs from it, and make the filter generic.
+
+  → Bash(command: python - <<'EOF'
+p='src/domain/directions.ts'
+s=open(p,encoding='utf-8').read..., description: Update directionsAtStop rule and generic filter)
+  ⎿ import type { Direction, Trip } from './types';
+  ⎿ 
+  ⎿ /** Which buses the sheet lists: every approaching bus, or only one direction's. */
+  ⎿ export type DirectionFilter = 'both' | Direction;
+
+● Now the UI: App and the sheet components.
+
+  → Bash(command: python - <<'EOF'
+def edit(p, pairs):
+    s=open(p,encoding='utf-8').read()
+  ..., description: Wire upcomingArrivals into App and the sheet)
+  ⎿ src/ui/App.tsx:4:  approachingBuses,
+  ⎿ src/ui/App.tsx:82:  const framedBuses = useMemo(() => soonestPerDirection(approachingBuses(buses)), [buses]);
+  ⎿ src/ui/App.tsx:114:    // The soonest approaching bus in each direction is framed, never every bus in service.
+  ⎿ src/ui/sheet/NearestStopContent.tsx:86:          arrivals[0] && <p className="approaching__empty">{NO_BUSES_IN_DIRECTION}</p>
+  → Bash(command: npx tsc -b --noEmit 2>&1 | head -20; npx tsc --noEmit -p . 2>&1 | head; npx v..., description: Typecheck and run unit tests)
+  ⎿     160|     expect(soonestAt('Portagem', '2026-09-24T02:30:00Z', trips)?.tripI…
+  ⎿        |                                                                          ^
+  ⎿     161|   });
+  ⎿     162|
+  ⎿ 
+  ⎿ ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+  ⎿ 
+  ⎿  FAIL  src/domain/directions.test.ts > directionsAtStop > ignores a call at the trip’s first stop
+  ⎿ AssertionError: expected [ { direction: 'outbound', …(1) } ] to deeply equal [ { direction: 'inbound', …(1) } ]
+  ⎿ 
+  ⎿ - Expected
+  ⎿ + Received
+  ⎿ 
+  ⎿   [
+  ⎿     {
+  ⎿       "destinations": [
+  ⎿ -       "Coimbra B",
+  ⎿ +       "Vale das Flores",
+  ⎿       ],
+  ⎿ -     "direction": "inbound",
+  ⎿ … +19 more lines
+  → Bash(command: npx vitest run src/domain/buses.test.ts 2>&1 | grep -E "FAIL|✗|×|Assertion" |..., description: List the failing buses tests)
+  ⎿      × uses yesterday's timetable with times past 24:00 after midnight 3ms
+  ⎿      × ignores yesterday's timetable from 04:00 1ms
+  ⎿  FAIL  src/domain/buses.test.ts > busesInService > uses yesterday's timetable with times past 24:00 after midnight
+  ⎿ AssertionError: expected undefined to be 's1-DU-0-726' // Object.is equality
+  ⎿  FAIL  src/domain/buses.test.ts > busesInService > ignores yesterday's timetable from 04:00
+  ⎿ AssertionError: expected undefined to be 'late' // Object.is equality
+
+● Two tests relied on countdowns to a trip's last stop, which no longer count. Let me pick intermediate stops instead.
+
+  → Bash(command: node -e "const t=require('./tests/fixtures/trips-DU.sample.json').find(t=>t.i..., description: Show last stops of the after-midnight fixture trip)
+  ⎿ Corvo 25:09:50
+  ⎿ Padrão 25:12:52
+  ⎿ Meiral 25:16:54
+  ⎿ Lousã - Parque de Exposições 25:19:42
+  ⎿ Lousã - Estação 25:21:42
+  ⎿ Casal do Espírito Santo 25:23:32
+  ⎿ Casal de Santo António 25:28:34
+  ⎿ Serpins 25:29:28
+  → Bash(command: python - <<'EOF'
+p='src/domain/buses.test.ts'
+s=open(p,encoding='utf-8').read..., description: Move two tests off terminating calls)
+  ⎿   it('gives no countdown to trips that have already passed the stop', () => {
+  ⎿     const s2 = busesAt('Portagem', weekdayMorning).find((b) => b.tripId === 's2-DU-0-701');
+  ⎿     expect(s2?.arrivalAtStopSeconds).toBeNull();
+  ⎿     // Just after 10:47:04 the first U1 has passed; the second one is next.
+  ⎿     const later = busesAt('Portagem', '2026-09-23T09:47:10Z');
+  ⎿     expect(approachingBuses(later)[0]?.tripId).toBe('u1-DU-1-823');
+  ⎿     expect(later.find((b) => b.tripId === 'u1-DU-0-852')?.arrivalAtStopSeconds).toBeNull();
+  ⎿   });
+  ⎿ 
+  ⎿   it('excludes trips that have not started yet', () => {
+  ⎿     // Both U1 trips leave their terminus at 10:41.
+  ⎿     const ids = busesAt('Portagem', '2026-09-23T09:40:30Z').map((b) => b.tripId);
+  ⎿     expect(ids).not.toContain('u1-DU-0-852');
+  ⎿     expect(ids).not.toContain('u1-DU-1-823');
+  ⎿   });
+  ⎿ 
+  ⎿   it("uses yesterday's timetable with times past 24:00 after midnight", () => {
+  ⎿     // Thursday 24 September 2026, 00:30 in Lisbon: s1-DU-0-726 from Wednesday is still running
+  ⎿     // and reaches Lousã - Estação at 25:21:42.
+  ⎿     const bus = soonestAt('Lousã - Estação', '2026-09-23T23:30:00Z');
+  ⎿ … +61 more lines
+  → Bash(command: cat > src/domain/tmp-probe.test.ts <<'EOF'
+import { it } from 'vitest';
+impor..., description: Probe upcomingArrivals results on the fixture)
+  ⎿  RUN  v5.0.2 C:/Dev/metro
+  ⎿  Test Files  1 passed (1)
+  ⎿       Tests  1 passed (1)
+  ⎿    Start at  10:59:40
+  ⎿    Duration  268ms (transform 64%, import 31%, tests 3%, worker 2%)
+  → Bash(command: git stash list >/dev/null; cat > src/domain/tmp-probe.test.ts <<'EOF'
+import ..., description: Probe upcomingArrivals output via thrown error)
+  ⎿ Error: Portagem 2026-09-23T09:40:30Z u1-DU-0-852 outbound Vale das Flores 394 | u1-DU-1-823 inbound Coimbra B 768 | u1-DU-0-585 outbound Vale das Flores 1414 | u1-DU-1-539 inbound Coimbra B 1668 | u1-DU-0-967 outbound Vale das Flores 1834 | u1-DU-1-541 inbound Coimbra B 2508
+  ⎿ Portagem 2026-09-23T09:44:00Z u1-DU-0-852 outbound Vale das Flores 184 | u1-DU-1-823 inbound Coimbra B 558 | u1-DU-0-585 outbound Vale das Flores 1204 | u1-DU-1-539 inbound Coimbra B 1458 | u1-DU-0-967 outbound Vale das Flores 1624 | u1-DU-1-541 inbound Coimbra B 2298
+  ⎿ Coimbra B 2026-09-23T09:44:00Z u1-DU-0-585 outbound Vale das Flores 840 | u1-DU-0-967 outbound Vale das Flores 1260 | u1-DU-0-968 outbound Vale das Flores 2580 | u1-DU-0-532 outbound Vale das Flores 3540 | u1-DU-0-534 outbound Vale das Flores 4440 | u1-DU-0-548 outbound Vale das Flores 4860
+  ⎿ Parque 2026-09-23T09:44:00Z u1-DU-0-852 outbound Vale das Flores 268 | u1-DU-1-823 inbound Coimbra B 463 | u1-DU-0-585 outbound Vale das Flores 1288 | u1-DU-1-539 inbound Coimbra B 1363 | u1-DU-0-967 outbound Vale das Flores 1708 | u1-DU-1-541 inbound Coimbra B 2203
+  ⎿ Portagem 2026-09-23T02:00:00Z 
+  ⎿ Portagem 2026-09-23T02:30:00Z u1-DU-1-978 inbound Coimbra B 5103
+
+● Results look right. Adding unit tests for the new behaviour.
+
+  → Bash(command: python - <<'EOF'
+p='src/domain/buses.test.ts'
+s=open(p,encoding='utf-8').read..., description: Add upcomingArrivals tests and run unit tests)
+  ⎿ ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  1 failed | 10 passed (11)
+  ⎿       Tests  1 failed | 112 passed (113)
+  ⎿    Start at  11:00:24
+  ⎿    Duration  537ms (transform 57%, import 30%, tests 8%, worker 5%)
+  → Bash(command: npx vitest run 2>&1 | grep -A25 FAIL | head -40, description: Show the failing test)
+  ⎿  FAIL  src/domain/buses.test.ts > upcomingArrivals > lists trips that have not left their first stop yet, soonest first
+  ⎿ AssertionError: expected [ { tripId: 's2-DU-0-701', …(8) } ] to deeply equal []
+  ⎿ 
+  ⎿ - Expected
+  ⎿ + Received
+  ⎿ 
+  ⎿ - []
+  ⎿ + [
+  ⎿ +   {
+  ⎿ +     "arrivalAtStopSeconds": null,
+  ⎿ +     "at": "2026-09-23T09:40:30.000Z",
+  ⎿ +     "coords": {
+  ⎿ +       "lat": 40.18598092045455,
+  ⎿ +       "lng": -8.398293068181818,
+  ⎿ +     },
+  ⎿ +     "destination": "Serpins",
+  ⎿ +     "direction": "outbound",
+  ⎿ +     "line": "S2",
+  ⎿ +     "source": "scheduled",
+  ⎿ +     "towardsStopId": null,
+  ⎿ … +6 more lines
+  → Bash(command: python - <<'EOF'
+p='src/domain/buses.test.ts'
+s=open(p,encoding='utf-8').read..., description: Fix test assertion, rerun tests, lint and format check)
+  ⎿  Test Files  11 passed (11)
+  ⎿       Tests  113 passed (113)
+  ⎿    Start at  11:00:42
+  ⎿    Duration  435ms (transform 57%, import 30%, tests 9%, worker 4%)
+  ⎿ 
+  ⎿ 
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+
+● Unit tests and lint pass. Now the build and end-to-end tests. Some of these were written against the old behaviour, so I expect failures on row counts.
+
+  → Bash(command: npm run build 2>&1 | tail -5 && npx playwright test --reporter=line 2>&1 | gr..., description: Build and run Playwright end-to-end tests, timeout: 600000)
+  ⎿ mode      generateSW
+  ⎿ precache  12 entries (1847.85 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  ⎿ [1/44] [mobile] › tests\e2e\map.spec.ts:278:3 › located near Portagem › the map loads and the locate button re-frames without errors
+  ⎿ [2/44] [mobile] › tests\e2e\map.spec.ts:190:3 › located near Portagem › shows the nearest stop and every scheduled bus
+  ⎿ [3/44] [mobile] › tests\e2e\map.spec.ts:324:3 › located near Portagem › phone: renders in the bottom sheet under the wordmark
+  ⎿ [4/44] [mobile] › tests\e2e\map.spec.ts:293:3 › located near Portagem › countdown ticks every second
+  ⎿ [5/44] [mobile] › tests\e2e\map.spec.ts:247:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction
+  ⎿ [6/44] [mobile] › tests\e2e\map.spec.ts:336:3 › located near Portagem › phone: the page stays clear of the system bars
+  ⎿ [7/44] [mobile] › tests\e2e\map.spec.ts:312:3 › located near Portagem › desktop: renders inside the 380px panel
+  ⎿ [8/44] [mobile] › tests\e2e\map.spec.ts:345:3 › located near Portagem › phone: the sheet minimises and restores
+  ⎿ [9/44] [mobile] › tests\e2e\map.spec.ts:401:3 › located near Portagem › cycles the direction filter
+  ⎿ [10/44] [mobile] › tests\e2e\map.spec.ts:376:3 › located near Portagem › phone: swiping the sheet minimises and restores it
+  ⎿ [11/44] [mobile] › tests\e2e\map.spec.ts:432:3 › located near Portagem › phone: the minimised sheet follows the direction filter
+  ⎿ [12/44] [mobile] › tests\e2e\map.spec.ts:454:3 › located near Portagem › desktop: the panel has no minimise control
+  ⎿ [13/44] [mobile] › tests\e2e\map.spec.ts:462:3 › located near Portagem › buses draw beneath the sheet
+  ⎿ [14/44] [mobile] › tests\e2e\map.spec.ts:526:3 › selecting a stop › selects a stop and frames it
+  ⎿ [15/44] [mobile] › tests\e2e\map.spec.ts:551:3 › selecting a stop › tapping away returns to the nearest stop
+  ⎿ … +45 more lines
+
+● As expected, only row counts fail: the sheet now fills its 4 rows with the next buses from the timetable. Updating those tests to the correct expectations.
+
+  → Bash(command: sed -n 18,30p tests/e2e/map.spec.ts; sed -n 340,352p tests/e2e/map.spec.ts; g..., description: Locate row-count assertions in e2e spec)
+  ⎿ /** Portagem stop, Coimbra. */
+  ⎿ const NEAR_PORTAGEM = { latitude: 40.2075, longitude: -8.4307 };
+  ⎿ /**
+  ⎿  * Wednesday 23 September 2026, 10:44 in Lisbon. Three buses are running: U1 u1-DU-0-852 to Vale
+  ⎿  * das Flores reaches Portagem at 10:47:04, U1 u1-DU-1-823 to Coimbra B at 10:53:18, and S2
+  ⎿  * s2-DU-0-701 to Serpins passed it at 10:25:35.
+  ⎿  */
+  ⎿ const WEEKDAY_10_44_LISBON = new Date('2026-09-23T09:44:00Z');
+  ⎿ 
+  ⎿ const U1_TO_VALE_DAS_FLORES = /^Scheduled position of line U1 bus to Vale das Flores, /;
+  ⎿ const U1_TO_COIMBRA_B = /^Scheduled position of line U1 bus to Coimbra B, /;
+  ⎿ const S2_TO_SERPINS = 'Scheduled position of line S2 bus to Serpins';
+  ⎿     // navigation bar while reporting no safe-area inset.
+  ⎿     const viewport = await page.locator('meta[name="viewport"]').getAttribute('content');
+  ⎿     expect(viewport).not.toContain('viewport-fit=cover');
+  ⎿   });
+  ⎿ 
+  ⎿   test('phone: the sheet minimises and restores', async ({ page }, testInfo) => {
+  ⎿     test.skip(testInfo.project.name !== 'mobile', 'phone layout only');
+  ⎿     await page.goto('/');
+  ⎿ … +22 more lines
+  → Bash(command: sed -n 526,536p tests/e2e/map.spec.ts; sed -n 632,650p tests/e2e/map.spec.ts, description: Read selected-stop row assertions)
+  ⎿   test('selects a stop and frames it', async ({ page }, testInfo) => {
+  ⎿     const sheet = await selectParque(page, await openDefaultView(page, testInfo));
+  ⎿     await expect(sheet.getByText('// SELECTED STOP')).toBeVisible();
+  ⎿     await expect(sheet.getByRole('heading', { level: 1, name: 'Parque' })).toBeVisible();
+  ⎿     await expect(sheet.getByText(/\d+(\.\d)? (m|km) away/)).toBeVisible();
+  ⎿     // At 10:44, u1-DU-0-852 reaches Parque at 10:48:28 and u1-DU-1-823 at 10:51:43.
+  ⎿     const rows = sheet.getByRole('listitem');
+  ⎿     await expect(rows).toHaveCount(2);
+  ⎿     await expect(rows.nth(0)).toContainText('to Vale das Flores');
+  ⎿     await expect(rows.nth(1)).toContainText('to Coimbra B');
+  ⎿ 
+  ⎿     test('selects a stop without a location', async ({ page }) => {
+  ⎿       await page.goto('/');
+  ⎿       await expect(page.getByRole('region', { name: 'Location unavailable' })).toBeVisible();
+  ⎿       // The buses show once the stops and the trips have loaded.
+  ⎿       await expect(page.getByRole('img', { name: S2_TO_SERPINS, exact: true })).toBeAttached();
+  ⎿ 
+  ⎿       const sheet = await selectParque(page, initialProjector(page.viewportSize()!));
+  ⎿       await expect(sheet.getByRole('heading', { level: 1, name: 'Parque' })).toBeVisible();
+  ⎿       await expect(sheet.locator('.stop-distance')).toHaveCount(0);
+  ⎿ … +10 more lines
+  → Bash(command: python - <<'EOF'
+p='tests/e2e/map.spec.ts'
+s=open(p,encoding='utf-8').read()
+..., description: Update e2e row expectations and rerun Playwright, timeout: 600000)
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿   36 passed (38.9s)
+
+● All 36 end-to-end tests pass (the rest are skipped by layout). Now updating the module docs so they describe what actually shipped.
+
+  → Bash(command: python - <<'EOF'
+p='documentation/modules/timetable-and-estimates.md'
+s=open(..., description: Update module docs for the new arrivals list)
+  ⎿ - If WebGL is unavailable, the map fails to start and logs an error. The sheet still works.
+  ⎿ 
+  ⎿ ## Smart zoom
+  ⎿ 
+  ⎿ The map is framed with `fitBounds` over one of two point sets:
+  ⎿ 
+  ⎿ - **Default view** (nothing selected): the user, the nearest stop and the soonest approaching buses
+  ⎿   described below. It needs a location.
+  ⎿ - **Selected view**: the selected stop and its soonest approaching buses, **without the user**,
+  ⎿   even when their position is known. It is the framing the user would get standing at that stop,
+  ⎿   and it works with no location.
+  ⎿ 
+  ⎿ The buses framed are the **soonest approaching bus in each direction of travel** to the shown
+  ⎿ stop (`soonestPerDirection` in `src/domain/buses.ts`): the next `outbound` bus and the next
+  ⎿ `inbound` bus heading to the stop, so up to two buses. A stop served in one direction only (for
+  ⎿ example `República (desc)`), or with buses approaching from one side only, frames one bus; with
+  ⎿ none approaching, only the stop (and, in the default view, the user) is framed. It never frames
+  ⎿ every bus in service, and it ignores the sheet's direction filter. The maximum zoom is 17. The
+  ⎿ animation takes 800 ms, or is instant under `prefers-reduced-motion`. The padding keeps the points clear of the sheet or panel: on phones, the
+  ⎿ bottom padding is the sheet's measured height.
+  ⎿ … +13 more lines
+  → Bash(command: python - <<'EOF'
+p='documentation/modules/map-screen.md'
+s=open(p,encoding='u..., description: Note framing caveat, lint, and review changes)
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿  M documentation/modules/map-screen.md
+  ⎿  M documentation/modules/timetable-and-estimates.md
+  ⎿  M src/domain/buses.test.ts
+  ⎿  M src/domain/buses.ts
+  ⎿  M src/domain/directions.test.ts
+  ⎿  M src/domain/directions.ts
+  ⎿  M src/domain/types.ts
+  ⎿  M src/ui/App.tsx
+  ⎿  M src/ui/sheet/ApproachingBuses.tsx
+  ⎿  M src/ui/sheet/NearestStopContent.tsx
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ ?? plays/010-data-validation/
+  ⎿ ?? tsconfig.tsbuildinfo
+  ⎿  documentation/modules/map-screen.md              | 19 +++--
+  ⎿  documentation/modules/timetable-and-estimates.md | 37 +++++++--
+  ⎿  src/domain/buses.test.ts                         | 99 +++++++++++++++++++++++-
+  ⎿  src/domain/buses.ts                              | 83 ++++++++++++++++++--
+  ⎿  src/domain/directions.test.ts                    |  6 +-
+  ⎿ … +7 more lines
+  → Bash(command: rm tsconfig.tsbuildinfo && git diff src/ui/App.tsx src/domain/buses.ts | head..., description: Remove stray build file and review the core diff)
+  ⎿ diff --git a/src/domain/buses.ts b/src/domain/buses.ts
+  ⎿ index 703c52b..42540c3 100644
+  ⎿ --- a/src/domain/buses.ts
+  ⎿ +++ b/src/domain/buses.ts
+  ⎿ @@ -2,11 +2,27 @@ import { dayTypeFor } from './holidays';
+  ⎿  import { positionAt } from './interpolation';
+  ⎿  import { previousDate, type LisbonClock } from './lisbonTime';
+  ⎿  import { stopDistancesForTrip, type MeasuredShape } from './shape';
+  ⎿ -import type { BusPosition, DayType, Direction, LatLng, LineId, Stop, Trip } from './types';
+  ⎿ +import type {
+  ⎿ +  BusPosition,
+  ⎿ +  DayType,
+  ⎿ +  Direction,
+  ⎿ +  LatLng,
+  ⎿ +  LineId,
+  ⎿ +  Stop,
+  ⎿ +  StopArrival,
+  ⎿ +  StopTime,
+  ⎿ +  Trip,
+  ⎿ +} from './types';
+  ⎿ … +130 more lines
+
+● I've fixed it. The stop's list of buses now comes straight from the timetable, so a bus shows up as soon as it's one of the next to reach your stop, not only once its trip has started. Unit tests, lint and the build pass, and all 36 end-to-end tests pass (the other 8 only apply to the other layout and were skipped). The work is on a new branch, `010-data-validation`, and isn't committed yet.
+
+**What changed**
+- **Which buses are listed:** the sheet now lists every trip whose next stop at your stop is within the next 90 minutes, including trips still waiting at their terminus. The map is unchanged: a bus only gets a marker once it has actually left, since before that there's no position to show. The new function is `upcomingArrivals` in `src/domain/buses.ts`.
+- **End-of-line stops:** at a terminus the list now shows the buses leaving from there. Buses that finish their trip there are no longer listed, and on the map they no longer get a countdown. The direction button follows the same rule, so at a terminus it now reflects the direction you can actually leave in.
+- **Why 90 minutes:** no trip takes longer than about 70 minutes, so every bus already on its way still makes the list. Without a limit, at 01:00 it would show the first morning bus as `300:00`.
+
+**Things you'll notice**
+- A bus that hasn't left yet looks the same in the list as any other, with a countdown to when it reaches your stop. So the top row can be a bus that isn't on the map yet, and the automatic zoom still only includes buses already on their way.
+- With the test data at 10:44 at Portagem, the list now fills all 4 rows instead of 2. Several end-to-end tests had hard-coded the old, incomplete list; I updated them and noted the reason next to the test data.
+
+**Tests and docs:** I added unit tests for the new list. They cover:
+- trips that haven't started yet;
+- the order staying stable while buses depart;
+- end-of-line stops;
+- the 90-minute limit;
+- trips running past midnight.
+
+Two existing tests that counted down to a trip's last stop now use a stop in the middle of the route instead. I also updated `documentation/modules/timetable-and-estimates.md` and `map-screen.md` to describe how it works now.
+
+I left `plays/010-data-validation/` alone, including its empty `intent.md`, because the Building app manages those files. Do you want me to commit this on the branch?

@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { PaddingOptions } from 'maplibre-gl';
-import { approachingBuses, busesInService, soonestPerDirection } from '../domain/buses';
+import {
+  approachingBuses,
+  busesInService,
+  soonestPerDirection,
+  upcomingArrivals,
+} from '../domain/buses';
 import { directionsAtStop, nextDirectionFilter, type DirectionFilter } from '../domain/directions';
 import { haversineMeters } from '../domain/geo';
 import { lisbonClock } from '../domain/lisbonTime';
@@ -73,8 +78,14 @@ export function App() {
       }),
     [stop, now, tripsByDayType, shapesById, stopsById],
   );
-  const approaching = useMemo(() => approachingBuses(buses), [buses]);
-  const framedBuses = useMemo(() => soonestPerDirection(approaching), [approaching]);
+  // Smart zoom frames buses on the map, so it only considers buses in service.
+  const framedBuses = useMemo(() => soonestPerDirection(approachingBuses(buses)), [buses]);
+  // The sheet's list: the next calls at the stop from the whole timetable, including trips that
+  // have not left their first stop yet, so a bus does not appear only once its trip has started.
+  const arrivals = useMemo(
+    () => (stop ? upcomingArrivals({ stop, clock: lisbonClock(now), tripsByDayType, now }) : []),
+    [stop, now, tripsByDayType],
+  );
 
   // ---------- Direction filter (the sheet's list only; the map always shows every bus) ----------
   // Keyed on the stop's id, since `nearest` is a new object on every position update.
@@ -187,7 +198,7 @@ export function App() {
         kind={kind}
         distanceMeters={distanceMeters}
         lineColors={network.lineColors}
-        approaching={approaching}
+        arrivals={arrivals}
         directions={directions}
         directionFilter={directionFilter}
         onCycleDirection={cycleDirection}

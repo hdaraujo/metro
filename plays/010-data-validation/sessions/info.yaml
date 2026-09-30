@@ -1,0 +1,24 @@
+sessions:
+  - id: 329860f77811441e9d266efd5c2ff245
+    state: finished
+    seq: 1
+    datetime: '2026-09-30T09:40:40.867Z'
+    team: Manual
+    agent: Joana
+    logs:
+      pty: 001-joana.pty
+      txt: 001-joana.txt
+    cols: 180
+    rows: 50
+    generic:
+      waiting: false
+      question: null
+      waiting_since: '2026-09-30T10:05:25.272Z'
+    usage:
+      claude-opus-5-5:
+        input: 150
+        output: 76614
+        cache_read: 7823713
+        cache_write_5m: 0
+        cache_write_1h: 243402
+next_seq: 2

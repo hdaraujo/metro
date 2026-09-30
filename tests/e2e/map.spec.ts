@@ -21,7 +21,9 @@ const NEAR_PORTAGEM = { latitude: 40.2075, longitude: -8.4307 };
 /**
  * Wednesday 23 September 2026, 10:44 in Lisbon. Three buses are running: U1 u1-DU-0-852 to Vale
  * das Flores reaches Portagem at 10:47:04, U1 u1-DU-1-823 to Coimbra B at 10:53:18, and S2
- * s2-DU-0-701 to Serpins passed it at 10:25:35.
+ * s2-DU-0-701 to Serpins passed it at 10:25:35. The sheet also lists the U1 trips that have not
+ * left their terminus yet, so its 4 rows alternate: Vale das Flores (10:47:04), Coimbra B
+ * (10:53:18), Vale das Flores (u1-DU-0-585, 11:04:04), Coimbra B (u1-DU-1-539, 11:08:18).
  */
 const WEEKDAY_10_44_LISBON = new Date('2026-09-23T09:44:00Z');
 
@@ -201,9 +203,11 @@ test.describe('located near Portagem', () => {
       sheet.getByRole('heading', { level: 2, name: 'Heading to this stop' }),
     ).toBeVisible();
     const rows = sheet.getByRole('listitem');
-    await expect(rows).toHaveCount(2);
+    await expect(rows).toHaveCount(4);
     await expect(rows.nth(0)).toContainText('to Vale das Flores');
     await expect(rows.nth(1)).toContainText('to Coimbra B');
+    await expect(rows.nth(2)).toContainText('to Vale das Flores');
+    await expect(rows.nth(3)).toContainText('to Coimbra B');
     await expect(sheet.getByText('Scheduled', { exact: true })).toHaveCount(1);
     await expect(sheet.getByText(/more heading here/)).toHaveCount(0);
     await expect(sheet.getByText(/Estimated at/)).toHaveCount(0);
@@ -346,7 +350,7 @@ test.describe('located near Portagem', () => {
     test.skip(testInfo.project.name !== 'mobile', 'phone layout only');
     await page.goto('/');
     const sheet = page.getByRole('region', { name: 'Nearest stop' });
-    await expect(sheet.getByRole('listitem')).toHaveCount(2);
+    await expect(sheet.getByRole('listitem')).toHaveCount(4);
     const expandedHeight = (await sheet.boundingBox())!.height;
 
     const minimise = sheet.getByRole('button', { name: 'Minimise' });
@@ -367,7 +371,7 @@ test.describe('located near Portagem', () => {
     expect((await sheet.boundingBox())!.height).toBeLessThan(expandedHeight);
 
     await expand.click();
-    await expect(sheet.getByRole('listitem')).toHaveCount(2);
+    await expect(sheet.getByRole('listitem')).toHaveCount(4);
     await expect(
       sheet.getByRole('heading', { level: 2, name: 'Heading to this stop' }),
     ).toBeVisible();
@@ -377,7 +381,7 @@ test.describe('located near Portagem', () => {
     test.skip(testInfo.project.name !== 'mobile', 'phone layout only');
     await page.goto('/');
     const sheet = page.getByRole('region', { name: 'Nearest stop' });
-    await expect(sheet.getByRole('listitem')).toHaveCount(2);
+    await expect(sheet.getByRole('listitem')).toHaveCount(4);
 
     const swipe = async (fromY: (box: { y: number; height: number }) => number, dy: number) => {
       const box = (await sheet.boundingBox())!;
@@ -395,7 +399,7 @@ test.describe('located near Portagem', () => {
 
     await swipe((box) => box.y + box.height / 2, -120);
     await expect(sheet.getByRole('button', { name: 'Minimise' })).toBeVisible();
-    await expect(sheet.getByRole('listitem')).toHaveCount(2);
+    await expect(sheet.getByRole('listitem')).toHaveCount(4);
   });
 
   test('cycles the direction filter', async ({ page }) => {
@@ -404,17 +408,17 @@ test.describe('located near Portagem', () => {
     const button = sheet.getByRole('button', { name: /^Direction: / });
     const rows = sheet.getByRole('listitem');
     await expect(button).toHaveAccessibleName('Direction: Both directions');
-    await expect(rows).toHaveCount(2);
+    await expect(rows).toHaveCount(4);
 
     await button.click();
     await expect(button).toHaveAccessibleName(/^Direction: To Vale das Flores/);
-    await expect(rows).toHaveCount(1);
-    await expect(rows).toContainText('to Vale das Flores');
+    await expect(rows).toHaveCount(4);
+    for (const row of await rows.all()) await expect(row).toContainText('to Vale das Flores');
 
     await button.click();
     await expect(button).toHaveAccessibleName('Direction: To Coimbra B');
-    await expect(rows).toHaveCount(1);
-    await expect(rows).toContainText('to Coimbra B');
+    await expect(rows).toHaveCount(4);
+    for (const row of await rows.all()) await expect(row).toContainText('to Coimbra B');
     // The map is not filtered: every bus stays, and the other direction keeps its countdown.
     await expect(page.getByRole('img', { name: /^Scheduled position of line/ })).toHaveCount(3);
     await expect(
@@ -426,7 +430,7 @@ test.describe('located near Portagem', () => {
 
     await button.click();
     await expect(button).toHaveAccessibleName('Direction: Both directions');
-    await expect(rows).toHaveCount(2);
+    await expect(rows).toHaveCount(4);
   });
 
   test('phone: the minimised sheet follows the direction filter', async ({ page }, testInfo) => {
@@ -528,11 +532,14 @@ test.describe('selecting a stop', () => {
     await expect(sheet.getByText('// SELECTED STOP')).toBeVisible();
     await expect(sheet.getByRole('heading', { level: 1, name: 'Parque' })).toBeVisible();
     await expect(sheet.getByText(/\d+(\.\d)? (m|km) away/)).toBeVisible();
-    // At 10:44, u1-DU-0-852 reaches Parque at 10:48:28 and u1-DU-1-823 at 10:51:43.
+    // At 10:44, u1-DU-0-852 reaches Parque at 10:48:28 and u1-DU-1-823 at 10:51:43, then two U1
+    // trips that have not left their terminus yet: u1-DU-0-585 at 11:05:28, u1-DU-1-539 at 11:06:43.
     const rows = sheet.getByRole('listitem');
-    await expect(rows).toHaveCount(2);
+    await expect(rows).toHaveCount(4);
     await expect(rows.nth(0)).toContainText('to Vale das Flores');
     await expect(rows.nth(1)).toContainText('to Coimbra B');
+    await expect(rows.nth(2)).toContainText('to Vale das Flores');
+    await expect(rows.nth(3)).toContainText('to Coimbra B');
 
     const stopMarker = page.getByRole('img', { name: 'Selected stop: Parque' });
     await expect(stopMarker).toBeVisible();
@@ -638,7 +645,7 @@ test.describe('location denied', () => {
       const sheet = await selectParque(page, initialProjector(page.viewportSize()!));
       await expect(sheet.getByRole('heading', { level: 1, name: 'Parque' })).toBeVisible();
       await expect(sheet.locator('.stop-distance')).toHaveCount(0);
-      await expect(sheet.getByRole('listitem')).toHaveCount(2);
+      await expect(sheet.getByRole('listitem')).toHaveCount(4);
       const stopMarker = page.getByRole('img', { name: 'Selected stop: Parque' });
       await expect(stopMarker).toBeVisible();
 

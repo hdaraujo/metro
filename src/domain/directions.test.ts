@@ -61,14 +61,14 @@ describe('directionsAtStop', () => {
     ]);
   });
 
-  it('ignores a call at the trip’s first stop', () => {
-    // A terminus: outbound trips start here, inbound trips end here.
+  it('ignores a call at the trip’s last stop, not at its first', () => {
+    // A terminus: outbound trips start here and can be boarded; inbound trips end here.
     const trips = [
       trip('outbound', 'Vale das Flores', ['T', 'A', 'B']),
       trip('inbound', 'Coimbra B', ['B', 'A', 'T']),
     ];
     expect(directionsAtStop('T', trips)).toEqual([
-      { direction: 'inbound', destinations: ['Coimbra B'] },
+      { direction: 'outbound', destinations: ['Vale das Flores'] },
     ]);
   });
 
