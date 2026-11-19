@@ -165,6 +165,42 @@ describe('bundleRoutes', () => {
       }
     });
 
+    it('bundles lines whose directions are labelled the other way round', () => {
+      const base = [p0, p1, p2, p3];
+      const offset = [p3, near(p2), near(p1), p0];
+      for (const shapes of [
+        [
+          shape('A-0', 'A', 'outbound', base),
+          shape('A-1', 'A', 'inbound', offset),
+          shape('B-0', 'B', 'outbound', offset),
+          shape('B-1', 'B', 'inbound', base),
+        ],
+        [
+          shape('A-0', 'A', 'outbound', base),
+          shape('A-1', 'A', 'inbound', offset),
+          shape('B-0', 'B', 'outbound', base),
+          shape('B-1', 'B', 'inbound', offset),
+          shape('C-0', 'C', 'outbound', offset),
+          shape('C-1', 'C', 'inbound', base),
+        ],
+      ]) {
+        const lines = [...new Set(shapes.map((s) => s.line))];
+        const slots = slotsByLineEdge(bundleRoutes(shapes));
+        expect(slots.size).toBe(3 * lines.length);
+        const n = lines.length;
+        const expected = Array.from({ length: n }, (_, i) => i - (n - 1) / 2);
+        for (const [a, b] of [
+          [p0, p1],
+          [p1, p2],
+          [p2, p3],
+        ] as const) {
+          const e = edgeKey(a, b);
+          const got = lines.map((l) => slots.get(`${l}@${e}`)!).sort((x, y) => x - y);
+          expect(got).toEqual(expected);
+        }
+      }
+    });
+
     it('never snaps across lines', () => {
       const b = [p0, p1, p2, p3].map(near);
       const runs = bundleRoutes([
@@ -195,8 +231,19 @@ describe('bundleRoutes', () => {
     expect(slotsByLineEdge(bundleRoutes(shuffled))).toEqual(slotsByLineEdge(bundleRoutes(shapes)));
   });
 
-  describe('on the recorded network', () => {
-    const shapes = parseShapes(shapesJson);
+  /** The recorded network with U3's two directions swapped, as the live source served it on 2026-11-19. */
+  const withU3Swapped = (shapes: Shape[]): Shape[] => {
+    const u3 = (dir: Direction) => shapes.find((s) => s.line === 'U3' && s.direction === dir)!;
+    const [out, back] = [u3('outbound'), u3('inbound')];
+    return shapes.map((s) =>
+      s === out ? { ...s, points: back.points } : s === back ? { ...s, points: out.points } : s,
+    );
+  };
+
+  describe.each([
+    ['on the recorded network', parseShapes(shapesJson)],
+    ['with U3 labelled the other way round', withU3Swapped(parseShapes(shapesJson))],
+  ])('%s', (_name, shapes) => {
     const runs = bundleRoutes(shapes);
     const slots = slotsByLineEdge(runs);
 
@@ -217,20 +264,23 @@ describe('bundleRoutes', () => {
     });
 
     it('covers every edge of every shape exactly once per line', () => {
-      const outboundPoints = (line: LineId) =>
+      const otherDirection = (s: Shape) =>
         shapes
-          .filter((s) => s.line === line && s.direction === 'outbound')
-          .flatMap((s) => s.points);
-      const isFar = (p: LatLng, line: LineId) =>
-        outboundPoints(line).every((o) => haversineMeters(p, o) > DIRECTION_MERGE_METERS);
+          .filter((o) => o.line === s.line && o.direction !== s.direction)
+          .flatMap((o) => o.points);
+      const isFar = (p: LatLng, s: Shape) =>
+        otherDirection(s).every((o) => haversineMeters(p, o) > DIRECTION_MERGE_METERS);
       for (const s of shapes) {
         for (let i = 0; i + 1 < s.points.length; i++) {
           const [a, b] = [s.points[i]!, s.points[i + 1]!];
           if (key(a) === key(b)) continue;
-          if (s.direction === 'inbound' && !(isFar(a, s.line) && isFar(b, s.line))) continue;
+          if (!(isFar(a, s) && isFar(b, s))) continue;
           expect(slots.has(`${s.line}@${edgeKey(a, b)}`)).toBe(true);
         }
       }
+      // Every vertex drawn is a vertex of some shape of that line's group.
+      const vertices = new Set(shapes.flatMap((s) => s.points.map(key)));
+      for (const run of runs) for (const p of run.points) expect(vertices.has(key(p))).toBe(true);
       // slotsByLineEdge already fails if a line draws an edge twice.
     });
 
@@ -255,7 +305,7 @@ describe('bundleRoutes', () => {
       }
     });
 
-    it('draws each line at most once on every edge', () => {
+    it('draws each line once on every edge, at most 4 lines per edge', () => {
       const linesByEdge = new Map<string, string[]>();
       for (const k of slots.keys()) {
         const at = k.indexOf('@');
@@ -268,6 +318,24 @@ describe('bundleRoutes', () => {
         maxLines = Math.max(maxLines, lines.length);
       }
       expect(maxLines).toBe(4);
+    });
+
+    it('draws one run per stretch: no line is drawn on two near-parallel paths', () => {
+      // Every pair of drawn vertices of the same line is either identical or far apart.
+      for (const line of new Set(runs.map((r) => r.line))) {
+        const pts = [
+          ...new Set(runs.filter((r) => r.line === line).flatMap((r) => r.points.map(key))),
+        ];
+        const ll = pts.map((k) => {
+          const [lat, lng] = k.split(',').map(Number) as [number, number];
+          return P(lat, lng);
+        });
+        for (let i = 0; i < ll.length; i++) {
+          for (let j = i + 1; j < ll.length; j++) {
+            expect(haversineMeters(ll[i]!, ll[j]!)).toBeGreaterThan(DIRECTION_MERGE_METERS);
+          }
+        }
+      }
     });
   });
 });

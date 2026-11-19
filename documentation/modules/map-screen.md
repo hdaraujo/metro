@@ -255,22 +255,29 @@ pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` 
   Stretches of different lines whose vertices don't match exactly are simply drawn un-offset,
   overlapping as they would without bundling. If a future source digitises shared roads
   differently, this is where it degrades.
-- **Per line, not per shape: one strand for both directions.** Before edges are built, every
-  inbound vertex is snapped onto the nearest vertex of the *same line's* outbound shape(s) when
-  it lies within `DIRECTION_MERGE_METERS` (75 m); otherwise it is kept. Then each edge of a line
-  is drawn exactly once, whichever direction it comes from, so a line's two directions are one
-  strand. Where a direction genuinely diverges (U3), its own edges are still drawn.
-  - Why: in the city centre S2, U2 and U3 run outbound past the `(desc)` stops and inbound past
-    the `(asc)` stops — separate stops on opposite sides of the street (Câmara and Mercado ≈ 5.5 m
-    apart, República ≈ 63 m). Without snapping that stretch showed six strands instead of three.
+- **Per line, not per shape: one strand for both directions.** Before edges are built, a vertex
+  of a line's outbound shape and a vertex of the *same line's* inbound shape within
+  `DIRECTION_MERGE_METERS` (75 m) of each other are linked. Linked vertices form groups
+  (transitively, so lines sharing vertices share a group), and every vertex of a group is drawn
+  at **one representative** for all lines: the vertex on the most outbound shapes, then on the
+  most shapes, then the smallest key. Then each edge of a line is drawn exactly once, whichever
+  direction it comes from, so a line's two directions are one strand. Where a direction
+  genuinely diverges (U3), its own edges are still drawn.
+  - Why: in the city centre S2, U2 and U3 pass the `(desc)` stops one way and the `(asc)` stops
+    the other — separate stops on opposite sides of the street (Câmara and Mercado ≈ 5.5 m
+    apart, República ≈ 63 m). Without merging that stretch showed six strands instead of three.
+  - Why per group, not per line: the representative must not depend on which direction the
+    source calls outbound. On 2026-11-19 the live `route-shapes.json` swapped U3's Ida/Volta
+    point lists, so U3's outbound passes the `(asc)` stops while S2's and U2's pass the `(desc)`
+    ones. Snapping each line's inbound onto its own outbound (play 014) then put U3 on the
+    `(asc)` side, apart from the S2/U2 bundle. Choosing one vertex per group keeps all three
+    lines on the same vertices either way (the `(desc)` vertices, on 2 of 3 outbound shapes).
   - Why 75 m: those three pairs are the only distinct same-line vertices closer than ~100 m on
-    the real network; the closest pair of different lines is ~104 m, and different lines are
-    never snapped onto each other anyway. A new source with tighter real divergences, or
+    the real network; the closest pair of different lines is ~104 m, and vertices of different
+    lines are never linked directly. A new source with tighter real divergences, or
     opposite-direction stops more than 75 m apart, would need this revisited.
-  - Snapping is drawing-only: `mergeDirections` returns copies and never mutates
-    `network.shapes`. Anchors are taken from outbound shapes in shape-id order, ties go to the
-    earlier anchor, so the result does not depend on input order. A line with no outbound shape
-    is left as is.
+  - Merging is drawing-only: `mergeDirections` returns copies and never mutates
+    `network.shapes`, and its result does not depend on input order.
 - **Slots.** On an edge carrying *n* lines, lines are ordered by id with plain string comparison
   (`S1, S2, U1, U2, U3`) and get slots `i − (n−1)/2` (−0.5/+0.5 for two, −1/0/+1 for three…),
   left to right relative to the edge's orientation.
@@ -293,14 +300,15 @@ pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` 
   middle of a bundle, and bus markers are still interpolated on the original, un-offset and
   un-snapped shapes, i.e. at the bundle's centre, not on their own strand. Bus pills are wider
   than a bundle, so this reads fine. On the merged centre stretch the `(asc)` stop circles and
-  inbound buses sit beside the strand rather than on it: ~5 m off at Câmara and Mercado, up to
+  the buses passing them sit beside the strand rather than on it: ~5 m off at Câmara and Mercado, up to
   ~63 m at República (asc).
 - Tests (`routeBundles.test.ts`) check slots by *geographic* side of each edge rather than the
   internal orientation, so the orientation heuristic can change without rewriting them; on the
-  recorded fixture they require every edge's slots to be distinct and centred, no edge to carry
-  a line twice (at most 4 lines on an edge: S1, S2, U1, U2), every outbound edge to be drawn,
-  and exactly S2, U2 and U3 — with none of the `(asc)`-only vertices — between the junction
-  west of Câmara and República.
+  recorded fixture — and again with U3's directions swapped, as the live source now serves it —
+  they require every edge's slots to be distinct and centred, no edge to carry a line twice (at
+  most 4 lines on an edge: S1, S2, U1, U2), every unmerged edge to be drawn, no line drawn on two
+  near-parallel paths, and exactly S2, U2 and U3 — with none of the `(asc)`-only vertices —
+  between the junction west of Câmara and República.
 
 ## Smart zoom
 

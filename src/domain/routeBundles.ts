@@ -2,9 +2,9 @@ import { haversineMeters } from './geo';
 import type { LatLng, LineId, Shape } from './types';
 
 /**
- * An inbound vertex within this distance of a vertex of the same line's outbound shape is
- * drawn at that outbound vertex, so a line's two directions form one strand even where they
- * stop at the opposite stops of a pair across a street (e.g. Câmara (asc)/(desc)).
+ * Vertices of a line's outbound and inbound shapes within this distance of each other are drawn
+ * at one shared vertex, so a line's two directions form one strand even where they stop at the
+ * opposite stops of a pair across a street (e.g. Câmara (asc)/(desc)).
  */
 export const DIRECTION_MERGE_METERS = 75;
 
@@ -45,9 +45,10 @@ const directionOrder = (shape: Shape) => (shape.direction === 'outbound' ? 0 : 1
  * Splits every line's shapes into runs that can be drawn side by side: wherever several lines
  * share a stretch of road (identical consecutive vertices), each line gets its own sideways slot,
  * ordered by line id, centred on the road. A stretch used by one line has offset 0. Every edge of
- * a line is drawn once, whichever of the line's shapes (directions) it comes from. Inbound
- * vertices within `DIRECTION_MERGE_METERS` of the same line's outbound vertices are snapped onto
- * them first, so each line is one strand for both directions.
+ * a line is drawn once, whichever of the line's shapes (directions) it comes from. A line's
+ * outbound and inbound vertices within `DIRECTION_MERGE_METERS` of each other are first merged
+ * onto one vertex (the same one for every line passing there), so each line is one strand for
+ * both directions, whichever way round the source labels them.
  *
  * Deterministic: the same shapes give the same runs, in the same order.
  */
@@ -152,43 +153,100 @@ export function bundleRoutes(shapes: readonly Shape[]): LineRun[] {
 }
 
 /**
- * Snaps each inbound vertex onto the nearest vertex of the same line's outbound shapes when it
- * lies within `DIRECTION_MERGE_METERS`, so both directions share edges. Returns the shapes in
- * input order; unchanged shapes are returned as-is, changed ones as copies. Never mutates input.
+ * Merges each line's two directions where they run within `DIRECTION_MERGE_METERS` of each other,
+ * so both directions share edges.
+ *
+ * Two distinct vertices are linked when one lies on an outbound and the other on an inbound shape
+ * of the **same line** within that distance. Linked vertices form groups (transitively, so lines
+ * that share vertices end up in the same group), and every vertex of a group is drawn at one
+ * representative: the vertex on the most outbound shapes, then on the most shapes, then the
+ * smallest key. Choosing per group, not per line, keeps lines that share a road on the same
+ * vertices even when the source labels their directions the other way round (e.g. U3's
+ * outbound passing the `(asc)` stops while S2's and U2's pass the `(desc)` ones). Vertices of
+ * different lines alone are never linked.
+ *
+ * Returns the shapes in input order; unchanged shapes are returned as-is, changed ones as copies.
+ * Never mutates input. Independent of input order.
  */
 function mergeDirections(shapes: readonly Shape[]): Shape[] {
-  const anchorsByLine = new Map<LineId, LatLng[]>();
-  const outbound = shapes
-    .filter((s) => s.direction === 'outbound')
-    .sort((x, y) => compare(x.id, y.id));
-  for (const shape of outbound) {
-    let anchors = anchorsByLine.get(shape.line);
-    if (!anchors) {
-      anchors = [];
-      anchorsByLine.set(shape.line, anchors);
+  // Distinct vertices, with how many shapes (and outbound shapes) use each.
+  interface Vertex {
+    point: LatLng;
+    shapes: number;
+    outbound: number;
+  }
+  const vertices = new Map<string, Vertex>();
+  // Per line and direction, the distinct vertex keys it passes.
+  const byLine = new Map<LineId, { outbound: Set<string>; inbound: Set<string> }>();
+  for (const shape of shapes) {
+    let sides = byLine.get(shape.line);
+    if (!sides) {
+      sides = { outbound: new Set(), inbound: new Set() };
+      byLine.set(shape.line, sides);
     }
-    anchors.push(...shape.points);
+    const own = new Set<string>();
+    for (const point of shape.points) {
+      const key = vertexKey(point);
+      if (own.has(key)) continue;
+      own.add(key);
+      sides[shape.direction].add(key);
+      let vertex = vertices.get(key);
+      if (!vertex) {
+        vertex = { point, shapes: 0, outbound: 0 };
+        vertices.set(key, vertex);
+      }
+      vertex.shapes++;
+      if (shape.direction === 'outbound') vertex.outbound++;
+    }
+  }
+
+  // Union-find over vertex keys.
+  const parent = new Map<string, string>();
+  const find = (k: string): string => {
+    let root = k;
+    while (parent.get(root) !== undefined && parent.get(root) !== root) root = parent.get(root)!;
+    parent.set(k, root);
+    return root;
+  };
+  for (const { outbound, inbound } of byLine.values()) {
+    for (const o of outbound) {
+      for (const i of inbound) {
+        if (o === i) continue;
+        if (
+          haversineMeters(vertices.get(o)!.point, vertices.get(i)!.point) > DIRECTION_MERGE_METERS
+        ) {
+          continue;
+        }
+        const [ro, ri] = [find(o), find(i)];
+        if (ro !== ri) parent.set(ro < ri ? ri : ro, ro < ri ? ro : ri);
+      }
+    }
+  }
+
+  // One representative per group.
+  const better = (x: string, y: string) => {
+    const [vx, vy] = [vertices.get(x)!, vertices.get(y)!];
+    return (
+      vx.outbound > vy.outbound ||
+      (vx.outbound === vy.outbound && (vx.shapes > vy.shapes || (vx.shapes === vy.shapes && x < y)))
+    );
+  };
+  const representative = new Map<string, string>();
+  for (const key of parent.keys()) {
+    const root = find(key);
+    const current = representative.get(root);
+    if (current === undefined || better(key, current)) representative.set(root, key);
   }
 
   return shapes.map((shape) => {
-    const anchors = anchorsByLine.get(shape.line);
-    if (shape.direction !== 'inbound' || !anchors || anchors.length === 0) return shape;
     let changed = false;
     const points = shape.points.map((p) => {
-      let best: LatLng | null = null;
-      let bestDistance = Infinity;
-      for (const anchor of anchors) {
-        const d = haversineMeters(p, anchor);
-        if (d < bestDistance) {
-          bestDistance = d;
-          best = anchor;
-        }
-      }
-      if (best && bestDistance <= DIRECTION_MERGE_METERS && best !== p) {
-        changed = true;
-        return best;
-      }
-      return p;
+      const key = vertexKey(p);
+      if (!parent.has(key)) return p;
+      const target = representative.get(find(key))!;
+      if (target === key) return p;
+      changed = true;
+      return vertices.get(target)!.point;
     });
     return changed ? { ...shape, points } : shape;
   });
