@@ -1,0 +1,201 @@
+> You are the Autopilot Planner for this play, running in plan mode. Read `plays/011-show-overlapping-lines/CLAUDE.md` and `plays/011-show-overlapping-lines/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `plays/011-show-overlapping-lines/design/` folder exists, this play already has a UI design I approved: read `plays/011-show-overlapping-lines/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cd plays/011-show-overlapping-lines && ls -R; cat CLAUDE.md intent.md config...., description: Read play files and context docs)
+  ⎿ .:
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design.yaml
+  ⎿ history.yaml
+  ⎿ intent.md
+  ⎿ positions.yaml
+  ⎿ sessions
+  ⎿ 
+  ⎿ ./sessions:
+  ⎿ 001-alice.pty
+  ⎿ 001-alice.txt
+  ⎿ 002-paula.pty
+  ⎿ 002-paula.txt
+  ⎿ info.yaml
+  ⎿ # Play `011` — Autopilot session instructions
+  ⎿ 
+  ⎿ This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ vision + tech stack, the Planner then checks whether the play introduces a new
+  ⎿ user interface and — if the user wants one — designs a visual prototype before
+  ⎿ … +196 more lines
+  → Bash(command: cd /c/Users/haraujo/.building/data/projects/003-metro/repos/metro && cat play..., description: Read play metadata, module doc, src tree)
+  → Grep(pattern: line-|addLayer|route|shape, path: C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\src\ui, output_mode: files_with_matches)
+  ⎿ phase: plan
+  ⎿ session_id: 1434bd1673dd43bf9e34822e5ca32d7d
+  ⎿ rooms:
+  ⎿   Alice: whiteboards
+  ⎿   Paula: spec
+  ⎿   Gui: whiteboards
+  ⎿   Dave: whiteboards
+  ⎿ events:
+  ⎿   - kind: transition
+  ⎿     at: '2026-11-19T15:20:37.829Z'
+  ⎿     from: ideation
+  ⎿     to: working
+  ⎿ sessions:
+  ⎿   - id: de046210e1764d42ab7519f4e3d0fda0
+  ⎿     state: finished
+  ⎿     seq: 1
+  ⎿     datetime: '2026-11-19T15:20:37.934Z'
+  ⎿     team: Autopilot
+  ⎿     agent: Alice
+  ⎿     logs:
+  ⎿ … +445 more lines
+  ⎿ Found 6 files
+  ⎿ src\ui\styles\app.css
+  ⎿ src\ui\sheet\LineChip.tsx
+  ⎿ src\ui\map\mapStyle.ts
+  ⎿ src\ui\map\MapView.tsx
+  ⎿ src\ui\hooks\useNetwork.ts
+  ⎿ src\ui\App.tsx
+  → Bash(command: cat src/ui/map/mapStyle.ts; grep -n "shape\|addSource\|addLayer\|setData\|lin..., description: Read map style, MapView layer code, types, shape)
+  ⎿ import type { StyleSpecification } from 'maplibre-gl';
+  ⎿ 
+  ⎿ export const OSM_TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+  ⎿ 
+  ⎿ /**
+  ⎿  * OpenStreetMap raster tiles, muted towards the design's calm base (#f1f0eb land, white roads,
+  ⎿  * #cad9e5 water) so that route colours and markers stand out. No glyphs or sprites: every label is
+  ⎿  * a DOM marker.
+  ⎿  */
+  ⎿ export const mapStyle: StyleSpecification = {
+  ⎿   version: 8,
+  ⎿   sources: {
+  ⎿     osm: {
+  ⎿       type: 'raster',
+  ⎿       tiles: [OSM_TILE_URL],
+  ⎿       tileSize: 256,
+  ⎿       maxzoom: 19,
+  ⎿     },
+  ⎿   },
+  ⎿   layers: [
+  ⎿ … +200 more lines
+  → Bash(command: sed -n 1,130p src/ui/map/MapView.tsx; ls tests/fixtures; python -c "
+import j..., description: Read MapView start, fixtures, shape adapter)
+  ⎿ import 'maplibre-gl/dist/maplibre-gl.css';
+  ⎿ import {
+  ⎿   LngLatBounds,
+  ⎿   Map as MapLibreMap,
+  ⎿   Marker,
+  ⎿   setWorkerUrl,
+  ⎿   type GeoJSONSource,
+  ⎿   type MapMouseEvent,
+  ⎿   type MarkerOptions,
+  ⎿   type PaddingOptions,
+  ⎿ } from 'maplibre-gl';
+  ⎿ // MapLibre 6 loads its worker from a separate module next to its own file, which a bundle does not
+  ⎿ // have; let Vite build the worker and point MapLibre at it.
+  ⎿ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+  ⎿ import type { FeatureCollection } from 'geojson';
+  ⎿ import { useEffect, useImperativeHandle, useMemo, useRef, useState, type Ref } from 'react';
+  ⎿ import { nearestStop } from '../../domain/nearestStop';
+  ⎿ import type { BusPosition, LatLng, LineId, Network, Stop } from '../../domain/types';
+  ⎿ import { prefersReducedMotion } from '../hooks/useMediaQuery';
+  ⎿ import { mapStyle } from './mapStyle';
+  ⎿ … +122 more lines
+  → Bash(command: python -c "
+import json,math
+d=json.load(open('tests/fixtures/route-shapes.js..., description: Analyse shape overlap in fixture data)
+  ⎿ S1-0 S1 Ida #0080FF 41 [40.224741, -8.439876]
+  ⎿ S1-1 S1 Volta #0080FF 41 [40.15577, -8.210009]
+  ⎿ S2-0 S2 Ida #FF0000 40 [40.209825, -8.419701]
+  ⎿ S2-1 S2 Volta #FF0000 40 [40.15577, -8.210009]
+  ⎿ U1-0 U1 Ida #2B6CC4 15 [40.224741, -8.439876]
+  ⎿ U1-1 U1 Volta #2B6CC4 15 [40.195444, -8.398046]
+  ⎿ U2-0 U2 Ida #FF5349 14 [40.209825, -8.419701]
+  ⎿ U2-1 U2 Volta #FF5349 14 [40.195444, -8.398046]
+  ⎿ U3-0 U3 Ida #00FF40 8 [40.209825, -8.419701]
+  ⎿ U3-1 U3 Volta #00FF40 8 [40.224741, -8.439876]
+  ⎿ S1-0 {'S1-1': 1.0, 'S2-0': 0.94, 'S2-1': 0.94, 'U1-0': 0.19, 'U1-1': 0.19, 'U2-0': 0.13, 'U2-1': 0.13, 'U3-0': 0.04, 'U3-1': 0.04}
+  ⎿ S1-1 {'S1-0': 1.0, 'S2-0': 0.94, 'S2-1': 0.94, 'U1-0': 0.19, 'U1-1': 0.19, 'U2-0': 0.13, 'U2-1': 0.13, 'U3-0': 0.04, 'U3-1': 0.04}
+  ⎿ S2-0 {'S1-0': 0.96, 'S1-1': 0.96, 'S2-1': 0.99, 'U1-0': 0.13, 'U1-1': 0.13, 'U2-0': 0.17, 'U2-1': 0.16, 'U3-0': 0.03, 'U3-1': 0.02}
+  ⎿ S2-1 {'S1-0': 0.96, 'S1-1': 0.96, 'S2-0': 0.99, 'U1-0': 0.13, 'U1-1': 0.13, 'U2-0': 0.16, 'U2-1': 0.17, 'U3-0': 0.02, 'U3-1': 0.03}
+  ⎿ U1-0 {'S1-0': 1.0, 'S1-1': 1.0, 'S2-0': 0.68, 'S2-1': 0.68, 'U1-1': 1.0, 'U2-0': 0.68, 'U2-1': 0.68, 'U3-0': 0.22, 'U3-1': 0.22}
+  ⎿ U1-1 {'S1-0': 1.0, 'S1-1': 1.0, 'S2-0': 0.68, 'S2-1': 0.68, 'U1-0': 1.0, 'U2-0': 0.68, 'U2-1': 0.68, 'U3-0': 0.22, 'U3-1': 0.22}
+  ⎿ U2-0 {'S1-0': 0.76, 'S1-1': 0.76, 'S2-0': 1.0, 'S2-1': 0.93, 'U1-0': 0.76, 'U1-1': 0.76, 'U2-1': 0.93, 'U3-0': 0.19, 'U3-1': 0.12}
+  ⎿ U2-1 {'S1-0': 0.76, 'S1-1': 0.76, 'S2-0': 0.94, 'S2-1': 1.0, 'U1-0': 0.76, 'U1-1': 0.76, 'U2-0': 0.94, 'U3-0': 0.12, 'U3-1': 0.19}
+  ⎿ U3-0 {'S1-0': 0.5, 'S1-1': 0.5, 'S2-0': 0.39, 'S2-1': 0.26, 'U1-0': 0.5, 'U1-1': 0.5, 'U2-0': 0.39, 'U2-1': 0.26, 'U3-1': 0.86}
+  ⎿ U3-1 {'S1-0': 0.5, 'S1-1': 0.5, 'S2-0': 0.26, 'S2-1': 0.39, 'U1-0': 0.5, 'U1-1': 0.5, 'U2-0': 0.26, 'U2-1': 0.39, 'U3-0': 0.87}
+  → Bash(command: python -c "
+import json
+d=json.load(open('tests/fixtures/route-shapes.json',e..., description: Check for exactly shared edges between shapes)
+  ⎿ S1-0 40 {'S1-1': 40, 'S2-0': 35, 'S2-1': 35, 'U1-0': 14, 'U1-1': 14, 'U2-0': 9, 'U2-1': 9, 'U3-0': 3, 'U3-1': 3}
+  ⎿ S1-1 40 {'S1-0': 40, 'S2-0': 35, 'S2-1': 35, 'U1-0': 14, 'U1-1': 14, 'U2-0': 9, 'U2-1': 9, 'U3-0': 3, 'U3-1': 3}
+  ⎿ S2-0 39 {'S1-0': 35, 'S1-1': 35, 'S2-1': 36, 'U1-0': 9, 'U1-1': 9, 'U2-0': 13, 'U2-1': 10, 'U3-0': 3}
+  ⎿ S2-1 39 {'S1-0': 35, 'S1-1': 35, 'S2-0': 36, 'U1-0': 9, 'U1-1': 9, 'U2-0': 10, 'U2-1': 13, 'U3-1': 3}
+  ⎿ U1-0 14 {'S1-0': 14, 'S1-1': 14, 'S2-0': 9, 'S2-1': 9, 'U1-1': 14, 'U2-0': 9, 'U2-1': 9, 'U3-0': 3, 'U3-1': 3}
+  ⎿ U1-1 14 {'S1-0': 14, 'S1-1': 14, 'S2-0': 9, 'S2-1': 9, 'U1-0': 14, 'U2-0': 9, 'U2-1': 9, 'U3-0': 3, 'U3-1': 3}
+  ⎿ U2-0 13 {'S1-0': 9, 'S1-1': 9, 'S2-0': 13, 'S2-1': 10, 'U1-0': 9, 'U1-1': 9, 'U2-1': 10, 'U3-0': 3}
+  ⎿ U2-1 13 {'S1-0': 9, 'S1-1': 9, 'S2-0': 10, 'S2-1': 13, 'U1-0': 9, 'U1-1': 9, 'U2-0': 10, 'U3-1': 3}
+  ⎿ U3-0 7 {'S1-0': 3, 'S1-1': 3, 'S2-0': 3, 'U1-0': 3, 'U1-1': 3, 'U2-0': 3, 'U3-1': 4}
+  ⎿ U3-1 7 {'S1-0': 3, 'S1-1': 3, 'S2-1': 3, 'U1-0': 3, 'U1-1': 3, 'U2-1': 3, 'U3-0': 4}
+  ⎿ [(40.209825, -8.419701), (40.211581, -8.424759), (40.211257, -8.429836), (40.21035, -8.432479), (40.212903, -8.436042), (40.21697, -8.438565), (40.220424, -8.43981), (40.224741, -8.439876)]
+  ⎿ [(40.224741, -8.439876), (40.220424, -8.43981), (40.21697, -8.438565), (40.212903, -8.436042), (40.209955, -8.433587), (40.207526, -8.430654), (40.203753, -8.425116), (40.19847, -8.420803), (40.199566, -8.416973), (40.201298, -8.410959), (40.201566, -8.407223), (40.204888, -8.40502), (40.203989, -8.4009), (40.200719, -8.399915), (40.195444, -8.398046)]
+  ⎿ # Test fixtures
+  ⎿ 
+  ⎿ Recorded source data for the Metro Mondego timetable ("Horários Metrobus"). Tests use only these
+  ⎿ files and never call the live sources.
+  ⎿ 
+  ⎿ All files were recorded on **2026-09-25 at 19:00 UTC** from
+  ⎿ `https://planearviagem.metromondego.pt/data/` (the response had
+  ⎿ `Last-Modified: Fri, 25 Sep 2026 18:00:33 GMT`).
+  ⎿ … +4 more lines
+  → Grep(pattern: routes|line-offset|shapes, path: C:\Users\haraujo\.building\data\projects\003-metro\repos\metro, glob: {src,tests}/**/*.{ts,tsx}, output_mode: content)
+  → Bash(command: sed -n 80,110p src/sources/metrobusTimetable.ts; grep -n '"maplibre-gl"\|"vit..., description: Check shape parsing, versions, test style)
+  ⎿ src\domain\buses.test.ts:3:import shapesJson from '../../tests/fixtures/route-shapes.json';
+  ⎿ src\domain\buses.test.ts:20:const shapesById = new Map(parseShapes(shapesJson).map((s) => [s.id, measureShape(s)]));
+  ⎿ src\domain\buses.test.ts:31:    shapesById,
+  ⎿ src\domain\buses.ts:32:  shapesById: ReadonlyMap<string, MeasuredShape>;
+  ⎿ src\domain\buses.ts:63:/** Memoised per `shapesById` map, so the lookup is built once rather than on every tick. */
+  ⎿ src\domain\buses.ts:64:const shapesByLineCache = new WeakMap<
+  ⎿ src\domain\buses.ts:69:function shapesByLine(
+  ⎿ src\domain\buses.ts:70:  shapesById: ReadonlyMap<string, MeasuredShape>,
+  ⎿ src\domain\buses.ts:72:  let byLine = shapesByLineCache.get(shapesById);
+  ⎿ src\domain\buses.ts:75:    for (const measured of shapesById.values()) {
+  ⎿ src\domain\buses.ts:79:    shapesByLineCache.set(shapesById, byLine);
+  ⎿ src\domain\buses.ts:106:  shapesById,
+  ⎿ src\domain\buses.ts:110:  const shapes = shapesByLine(shapesById);
+  ⎿ src\domain\buses.ts:122:      const measured = shapes.get(shapeKey(trip.line, trip.direction));
+  ⎿ src\domain\shape.test.ts:3:import shapesJson from '../../tests/fixtures/route-shapes.json';
+  ⎿ src\domain\shape.test.ts:71:  const shapes = parseShapes(shapesJson);
+  ⎿ src\domain\shape.test.ts:74:    measureShape(shapes.find((s) => s.line === trip.line && s.direction === trip.direction)!);
+  ⎿ src\domain\types.ts:88:  shapes: Shape[];
+  ⎿ src\sources\metrobusTimetable.test.ts:3:import shapesJson from '../../tests/fixtures/route-shapes.json';
+  ⎿ src\sources\metrobusTimetable.test.ts:45:  const shapes = parseShapes(shapesJson);
+  ⎿ … +32 more lines
+  ⎿   const pair = asArray(value, what);
+  ⎿   const [lat, lng] = pair;
+  ⎿   if (pair.length < 2 || typeof lat !== 'number' || typeof lng !== 'number') {
+  ⎿     fail(what, 'is not a [lat, lng] pair');
+  ⎿   }
+  ⎿   return { lat, lng };
+  ⎿ }
+  ⎿ 
+  ⎿ export function parseShapes(json: unknown): Shape[] {
+  ⎿   return asArray(json, 'route-shapes.json').map((item, i) => {
+  ⎿     const what = `shape #${i}`;
+  ⎿     const raw = asObject(item, what);
+  ⎿     const code = str(raw, 'direction', what);
+  ⎿     const direction = SHAPE_DIRECTIONS[code];
+  ⎿     if (!direction) fail(what, `has unknown direction "${code}"`);
+  ⎿     return {
+  ⎿       id: str(raw, 'id', what),
+  ⎿       line: str(raw, 'line', what),
+  ⎿       direction,
+  ⎿       color: str(raw, 'color', what),
+  ⎿ … +44 more lines
+  → Write(file_path: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-functional-lovelace.md, content: # Play 011 — Show overlapping lines side by side
+
+## Context
+
+Intent: *"When ...)
+  ⎿ File created successfully at: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-functional-lovelace.md (file state is current in your context — no need to Read it back)
+  → ToolSearch(query: select:ExitPlanMode, max_results: 1)

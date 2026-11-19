@@ -1,0 +1,1 @@
+When lines overlap in the map only one is visible. Make it so if more than one line overlap show them side by side so all are visible
