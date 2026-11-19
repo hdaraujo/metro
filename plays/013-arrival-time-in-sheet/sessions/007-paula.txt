@@ -1,0 +1,134 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `013-arrival-time-in-sheet`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/013-arrival-time-in-sheet/intent.md` and `plays/013-arrival-time-in-sheet/plan.md`, then read the real changes on the `013-arrival-time-in-sheet` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/` and `documentation/ontologies/`, which you may write in this session.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., description: Read play intent, plan, docs layout and context)
+  ⎿ In the 4 sheet next arrivals, also show the arrival time, remaining time is still the most relevant info. Show arrival time first in gray hh:mm 24h time. Above the times show icons, clock for arrival time and hourglass for remaining time# Play 013 — Arrival time in the sheet
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The sheet's "Heading to this stop" list shows up to 4 upcoming buses, each with only an `M:SS`
+  ⎿ countdown. Riders also want the clock time each bus is due. Intent (verbatim): *"In the 4 sheet
+  ⎿ next arrivals, also show the arrival time, remaining time is still the most relevant info. Show
+  ⎿ arrival time first in gray hh:mm 24h time. Above the times show icons, clock for arrival time and
+  ⎿ hourglass for remaining time."*
+  ⎿ 
+  ⎿ Outcome: every bus row shows `HH:MM` (Europe/Lisbon, 24 h, gray, smaller) **before** the
+  ⎿ countdown, which keeps its current large, bold look as the dominant figure. A small header row
+  ⎿ above the expanded list shows a clock icon above the arrival-time column and an hourglass icon
+  ⎿ above the countdown column. Decision taken with the user: the minimised phone sheet's single row
+  ⎿ **also shows the gray arrival time, with no icons** (the icon header exists only above the
+  ⎿ expanded list).
+  ⎿ 
+  ⎿ No new screen; no design folder exists for this play. This is an extension of the existing sheet.
+  ⎿ 
+  ⎿ ## Repositories touched
+  ⎿ … +338 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., description: Read map-screen doc and the code diff)
+  ⎿ <persisted-output>
+  ⎿ Output too large (32.7KB). Full output saved to: C:\Users\haraujo\.claude\projects\C--Users-haraujo--building-data-projects-003-metro-worktrees-013-metro\d57c39b5-c995-404e-a1f1-049904e94ce6\tool-results\blr70g3d8.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop (or any stop they tap), every Metrobus bus in service, and a
+  ⎿ countdown for each bus heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content, and it can be minimised
+  ⎿   (see [Minimising the phone sheet](#minimising-the-phone-sheet)).
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet, always expanded: it has no handle and cannot be minimised.
+  ⎿ … +16 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., description: Read full map-screen doc)
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop (or any stop they tap), every Metrobus bus in service, and a
+  ⎿ countdown for each bus heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content, and it can be minimised
+  ⎿   (see [Minimising the phone sheet](#minimising-the-phone-sheet)).
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet, always expanded: it has no handle and cannot be minimised.
+  ⎿   The locate button sits at the bottom right, with the attribution below it.
+  ⎿ - **Stacking.** `.map` has `z-index: 0` so that it forms its own stacking context. Marker
+  ⎿   z-indexes (for example `.marker-bus--approaching`, which lifts approaching buses above the
+  ⎿   others) then stay inside the map, and the wordmark, sheet, panel and controls, which come later
+  ⎿ … +320 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., description: Read upcoming arrivals section and code diff)
+  ⎿ and `at`, the time of the estimate.
+  ⎿ 
+  ⎿ ## Upcoming arrivals
+  ⎿ 
+  ⎿ `upcomingArrivals` in `buses.ts` builds the sheet's list for a stop straight from the timetable,
+  ⎿ separately from the buses on the map. It returns one `StopArrival` per trip: the trip's next
+  ⎿ boarding call at the stop (the same rule as the countdown above) later than now and at most
+  ⎿ `UPCOMING_HORIZON_SECONDS` (90 minutes) away, soonest first, ties broken by `tripId`. Each one has
+  ⎿ `arrivalAtStopSeconds` (always at least 1), the trip's `destination`, `source: 'scheduled'` and
+  ⎿ `at`. Today's and, before 04:00, yesterday's service days are both searched, as for the buses.
+  ⎿ 
+  ⎿ - **Trips that have not started count.** A bus still waiting at its terminus is listed as soon as
+  ⎿   it is among the next to call at the stop, not only once it departs. Before this, the list was
+  ⎿   built from the buses in service, so a bus due sooner than those already listed appeared only
+  ⎿   when its trip started, and the list's first bus was missing or wrong at about 12% of stop and
+  ⎿   time combinations on a weekday.
+  ⎿ - **At a terminus,** the list has the buses departing from it and never those ending their run
+  ⎿   there.
+  ⎿ - **The horizon** is longer than any trip (about 70 minutes), so every bus in service that is
+  ⎿   heading to the stop is within it. It keeps the first bus of the morning from being listed hours
+  ⎿ … +252 more lines
+
+● Code matches the plan. I'll update the two existing documents rather than add a new one.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., description: Update map-screen and timetable docs)
+  ⎿  documentation/modules/map-screen.md                | 683 +++++++++++----------
+  ⎿  documentation/modules/timetable-and-estimates.md   | 265 ++++----
+  ⎿  plays/013-arrival-time-in-sheet/config.yaml        |   2 +-
+  ⎿  plays/013-arrival-time-in-sheet/devops.yaml        |   2 +-
+  ⎿  plays/013-arrival-time-in-sheet/history.yaml       |  14 +
+  ⎿  plays/013-arrival-time-in-sheet/positions.yaml     |   4 +-
+  ⎿  plays/013-arrival-time-in-sheet/sessions/info.yaml |  25 +-
+  ⎿  7 files changed, 527 insertions(+), 468 deletions(-)
+
+● The whole files show as changed, so the line endings got converted. Fixing that.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., description: Restore LF line endings and recheck diff)
+  ⎿ 0000000   #       M   a   p       s   c   r   e   e   n  \n  \n   M   e
+  ⎿ 0000020   t   r   o       h   a   s       o   n   e       s   c   r   e
+  ⎿ 0000040   e   n   :       a       f   u   l   l   -   v   i   e   w   p
+  ⎿  documentation/modules/map-screen.md              | 27 +++++++++++++++++++-----
+  ⎿  documentation/modules/timetable-and-estimates.md | 11 ++++++++--
+  ⎿  2 files changed, 31 insertions(+), 7 deletions(-)
+
+● I updated the two module documents that already cover this part of the product, so there is no new document. The code matched the plan.
+
+- **`documentation/modules/map-screen.md`**, under "What the sheet shows":
+  - Each bus row now shows the arrival time before the countdown: `HH:MM`, 24-hour, Lisbon time, smaller and grey. The countdown stays the main figure.
+  - The clock and hourglass icon row sits above the list. It is hidden from screen readers, is not a list item, and doesn't show when the list doesn't or in the minimised sheet.
+  - The two time columns have fixed widths so the icons line up over them. The doc says what to revisit if the font sizes, row gap or 90-minute window change, and that the destination is what shortens on narrow screens.
+  - The screen-reader text now reads "arrives at 10:47, 3 minutes 4 seconds away".
+  - The minimised sheet's single row shows the arrival time too.
+- **`documentation/modules/timetable-and-estimates.md`**, under "Upcoming arrivals": `StopArrival.arrivalAt` is now covered. It is the current time, rounded down to the whole second, plus the countdown, so the arrival time and countdown always agree. Buses due after midnight on the previous day's timetable get the right date. Only the sheet's list has it, not the map markers.

@@ -173,6 +173,8 @@ export function upcomingArrivals({
   now,
 }: ArrivalsInput): StopArrival[] {
   const at = now.toISOString();
+  // `clock.seconds` is whole seconds, so countdowns are measured from `now` floored to the second.
+  const nowSecondMs = Math.floor(now.getTime() / 1000) * 1000;
   const seen = new Set<string>();
   const arrivals: StopArrival[] = [];
 
@@ -182,13 +184,15 @@ export function upcomingArrivals({
       const call = nextBoardingCall(trip, stop.id, offset);
       if (!call || call.seconds - offset > UPCOMING_HORIZON_SECONDS) continue;
       seen.add(trip.id);
+      const seconds = call.seconds - offset;
       arrivals.push({
         tripId: trip.id,
         line: trip.line,
         direction: trip.direction,
         destination: trip.destination,
         stopId: call.stopId,
-        arrivalAtStopSeconds: call.seconds - offset,
+        arrivalAtStopSeconds: seconds,
+        arrivalAt: new Date(nowSecondMs + seconds * 1000).toISOString(),
         source: 'scheduled',
         at,
       });

@@ -299,6 +299,7 @@ test.describe('located near Portagem', () => {
     const sheet = page.getByRole('region', { name: 'Nearest stop' });
     await expect(sheet.getByRole('listitem').first()).toBeVisible();
     const sheetTime = sheet.locator('.bus-list__time').first();
+    const sheetArrival = sheet.locator('.bus-list__arrival').first();
     const marker = page.getByRole('img', { name: U1_TO_VALE_DAS_FLORES });
     // The map (and so its markers) must finish loading before the clock is paused.
     await expect(marker).toBeVisible();
@@ -307,10 +308,44 @@ test.describe('located near Portagem', () => {
     // u1-DU-0-852 reaches Portagem at 10:47:04. Pause a minute in, well after loading has finished.
     await page.clock.pauseAt(new Date('2026-09-23T09:45:00Z'));
     await expect(sheetTime).toHaveText('2:04');
+    await expect(sheetArrival).toHaveText('10:47');
     await expect(markerTime).toHaveText('2:04');
     await page.clock.runFor(1000);
     await expect(sheetTime).toHaveText('2:03');
+    await expect(sheetArrival).toHaveText('10:47');
     await expect(markerTime).toHaveText('2:03');
+  });
+
+  test('sheet shows arrival times under a clock and hourglass header', async ({ page }) => {
+    await page.goto('/');
+    const sheet = page.getByRole('region', { name: 'Nearest stop' });
+    const rows = sheet.getByRole('listitem');
+    await expect(rows).toHaveCount(4);
+    const legend = sheet.locator('.bus-list__legend');
+    await expect(legend).toHaveCount(1);
+    await expect(legend.locator('svg')).toHaveCount(2);
+
+    const arrivals = sheet.locator('.bus-list__arrival');
+    await expect(arrivals).toHaveCount(4);
+    for (const arrival of await arrivals.all()) {
+      await expect(arrival).toHaveText(/^\d{2}:\d{2}$/);
+    }
+
+    const legendBox = (await legend.boundingBox())!;
+    const firstRowBox = (await rows.first().boundingBox())!;
+    expect(legendBox.y + legendBox.height).toBeLessThanOrEqual(firstRowBox.y + 1);
+
+    const right = (box: { x: number; width: number } | null) => box!.x + box!.width;
+    const clockCell = legend.locator('.bus-list__legend-cell--arrival');
+    const hourglassCell = legend.locator('.bus-list__legend-cell--time');
+    const firstArrival = rows.first().locator('.bus-list__arrival');
+    const firstTime = rows.first().locator('.bus-list__time');
+    expect(
+      Math.abs(right(await hourglassCell.boundingBox()) - right(await firstTime.boundingBox())),
+    ).toBeLessThanOrEqual(1);
+    expect(
+      Math.abs(right(await clockCell.boundingBox()) - right(await firstArrival.boundingBox())),
+    ).toBeLessThanOrEqual(1);
   });
 
   test('desktop: renders inside the 380px panel', async ({ page }, testInfo) => {
@@ -449,6 +484,8 @@ test.describe('located near Portagem', () => {
     await expect(rows).toHaveCount(1);
     await expect(rows).toContainText('to Coimbra B');
     await expect(rows.getByText('Scheduled', { exact: true })).toHaveCount(1);
+    await expect(rows.locator('.bus-list__arrival')).toHaveText(/^\d{2}:\d{2}$/);
+    await expect(sheet.locator('.bus-list__legend')).toHaveCount(0);
     await expect(button).toHaveCount(0);
 
     await sheet.getByRole('button', { name: 'Expand' }).click();

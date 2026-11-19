@@ -222,6 +222,25 @@ describe('upcomingArrivals', () => {
       { tripId: 'u1-DU-1-823', arrivalAtStopSeconds: 12 * 60 + 48 }, // 10:53:18
       { tripId: 'u1-DU-0-585', arrivalAtStopSeconds: 23 * 60 + 34 }, // 11:04:04
     ]);
+    const [first, second] = arrivalsAt('Portagem', iso);
+    expect(first?.arrivalAt).toBe('2026-09-23T09:47:04.000Z'); // 10:47:04 in Lisbon
+    expect(second?.arrivalAt).toBe('2026-09-23T09:53:18.000Z'); // 10:53:18 in Lisbon
+  });
+
+  it('gives the arrival instant to the second, whatever the milliseconds of `now`', () => {
+    const [first] = arrivalsAt('Portagem', '2026-09-23T09:40:30.900Z');
+    expect(first?.tripId).toBe('u1-DU-0-852');
+    expect(first?.arrivalAt).toBe('2026-09-23T09:47:04.000Z');
+  });
+
+  it('puts every arrival instant at `now` (to the second) plus its countdown', () => {
+    const iso = '2026-09-23T09:44:00.250Z';
+    const nowSecondMs = Math.floor(Date.parse(iso) / 1000) * 1000;
+    const arrivals = arrivalsAt('Portagem', iso);
+    expect(arrivals.length).toBeGreaterThan(0);
+    for (const a of arrivals) {
+      expect(Date.parse(a.arrivalAt)).toBe(nowSecondMs + a.arrivalAtStopSeconds * 1000);
+    }
   });
 
   it('does not change which buses come first when an earlier bus departs', () => {
@@ -272,6 +291,8 @@ describe('upcomingArrivals', () => {
     expect(summary(arrivals)).toEqual([
       { tripId: 's1-DU-0-726', arrivalAtStopSeconds: 51 * 60 + 42 }, // 25:21:42
     ]);
+    // 25:21:42 on the 23rd's timetable is 01:21:42 on the 24th in Lisbon, 00:21:42 UTC.
+    expect(arrivals[0]?.arrivalAt).toBe('2026-09-24T00:21:42.000Z');
   });
 });
 

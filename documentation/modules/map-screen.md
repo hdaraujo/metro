@@ -99,8 +99,24 @@ not left its terminus yet is listed, though it has no marker until it departs, a
 its trip at the stop is not.
 - A single **Scheduled** badge in the section header covers the whole list.
 - Each bus gets one row, soonest first: its line chip, "to {destination}" (with an ellipsis if it
-  is too long), and an `M:SS` countdown in large tabular figures. Minutes are not capped, so a bus
-  63 minutes away shows `63:05`.
+  is too long), the **arrival time** and the **countdown**. The countdown, `M:SS` in large bold
+  tabular figures, is the dominant figure; minutes are not capped, so a bus 63 minutes away shows
+  `63:05`. The arrival time comes before it: `HH:MM`, 24-hour, Europe/Lisbon
+  (`formatLisbonHM(new Date(bus.arrivalAt))`), smaller and grey (`--color-text-muted`). It stays
+  fixed while the countdown ticks, and since both come from the same number (see
+  `timetable-and-estimates.md`) they never disagree.
+- **Icon header.** Above the list, a small row shows a clock over the arrival-time column and an
+  hourglass over the countdown column (`.bus-list__legend`, `ClockIcon` and `HourglassIcon` in
+  `src/ui/icons.tsx`). It sits **outside** the `<ul>`, so it is never a list item, and it is
+  `aria-hidden`. It renders only when the list does: with the direction filter leaving no bus,
+  neither the header nor the list shows. The minimised sheet's row has no header.
+- **Column alignment.** Both time columns have fixed widths, right-aligned, set by the custom
+  properties `--bus-col-arrival` (44px, fits `10:47` at 14px) and `--bus-col-time` (64px, fits
+  `90:00`, the 90-minute horizon, at 20px bold). They are defined on both `.bus-list` and
+  `.bus-list__legend`, and the legend uses the row's 12px gap, so the icons sit exactly over their
+  figures in every row. Changing the row's gap, the figures' font sizes or the horizon means
+  revisiting these widths. The destination is the column that gives way (ellipsis) on narrow
+  screens.
 - At most **4** rows are shown (`MAX_ROWS`, on phone and desktop alike), to keep the sheet
   compact. Nothing says how many more there are.
 - A row is the exported `BusRow` component, which the minimised sheet reuses. Its optional
@@ -147,8 +163,9 @@ minimised sheet too.
 
 The sheet is an `aria-live="polite"` region, and its `aria-label` matches its current state. The
 bus list inside it is `aria-live="off"`: without that, the countdowns, which tick every second,
-would flood screen readers. Each row's visible time is `aria-hidden`, and a visually hidden text
-such as "3 minutes 4 seconds away" takes its place (the `.visually-hidden` utility in `app.css`).
+would flood screen readers. Each row's visible times are `aria-hidden`, and a visually hidden text
+such as "arrives at 10:47, 3 minutes 4 seconds away" takes their place (the `.visually-hidden`
+utility in `app.css`).
 
 ## Minimising the phone sheet
 
@@ -170,7 +187,7 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
 
   | State | Minimised content |
   | --- | --- |
-  | Nearest or selected stop | The stop name and distance (if the location is known), one `BusRow` for the soonest approaching bus **in the chosen direction** **with its own Scheduled badge** (the header that normally carries the badge is gone, and an estimate must always be labelled), and the stale line if it applies. If the direction filter leaves no bus while one approaches the other way, the row becomes "No buses in this direction right now." The eyebrow, the lines row, the "Heading to this stop" header and the direction button are dropped, but the chosen direction is kept when the sheet is expanded again. |
+  | Nearest or selected stop | The stop name and distance (if the location is known), one `BusRow` for the soonest approaching bus **in the chosen direction**, arrival time included, **with its own Scheduled badge** (the header that normally carries the badge is gone, and an estimate must always be labelled), and the stale line if it applies. If the direction filter leaves no bus while one approaches the other way, the row becomes "No buses in this direction right now." The eyebrow, the lines row, the "Heading to this stop" header and the direction button are dropped, but the chosen direction is kept when the sheet is expanded again. |
   | Locating, finding the nearest stop | The spinner and title row |
   | Location off, stops failed to load | The icon and title row, with no text and no **Try again** button. On phones, the locate button still retries geolocation. |
 

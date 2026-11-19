@@ -1,0 +1,293 @@
+> You are the Autopilot Developer for this play. Read `plays/013-arrival-time-in-sheet/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/013-arrival-time-in-sheet/design/` folder exists, this play already has a UI design I approved: read `plays/013-arrival-time-in-sheet/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-developer)
+  ⎿ Launching skill: autopilot-developer
+
+> Base directory for this skill: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\013\metro\.claude\skills\autopilot-developer
+
+You are the Autopilot Developer for this play. Read `$play/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ plays
+  ⎿ playwright.config.ts
+  ⎿ public
+  ⎿ pwa-assets.config.ts
+  ⎿ src
+  ⎿ tests
+  ⎿ tsconfig.json
+  ⎿ vite.config.ts
+  ⎿ CLAUDE.md
+  ⎿ config.yaml
+  ⎿ design.yaml
+  ⎿ devops.yaml
+  ⎿ history.yaml
+  ⎿ … +401 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿ 72:export interface StopArrival {
+  ⎿ 73-  tripId: string;
+  ⎿ 74-  line: LineId;
+  ⎿ 75-  direction: Direction;
+  ⎿ 76-  /** The trip's final destination, as in the data (e.g. 'Vale das Flores'). */
+  ⎿ 77-  destination: string;
+  ⎿ 78-  stopId: string;
+  ⎿ 79-  /** Seconds until the scheduled call (≥ 1). */
+  ⎿ 80-  arrivalAtStopSeconds: number;
+  ⎿ 81-  source: DataSource;
+  ⎿ 82-  /** When the arrival was estimated or observed, UTC ISO 8601. */
+  ⎿ 83-  at: string;
+  ⎿ 84-}
+  ⎿ 85-
+  ⎿ 86-export interface Network {
+  ⎿ 87-  stops: Stop[];
+  ⎿ 21: * How far ahead `upcomingArrivals` looks. Longer than any trip (about 70 minutes), so every bus in
+  ⎿ 22- * service that is heading to the stop is within it; short enough that the first bus of the morning
+  ⎿ 23- * is not listed hours ahead in the middle of the night.
+  ⎿ 24- */
+  ⎿ … +244 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿ 169:export function upcomingArrivals({
+  ⎿ 170-  stop,
+  ⎿ 171-  clock,
+  ⎿ 172-  tripsByDayType,
+  ⎿ 173-  now,
+  ⎿ 174-}: ArrivalsInput): StopArrival[] {
+  ⎿ 175-  const at = now.toISOString();
+  ⎿ 176-  const seen = new Set<string>();
+  ⎿ 177-  const arrivals: StopArrival[] = [];
+  ⎿ 178-
+  ⎿ 179-  for (const { dayType, offset } of serviceDays(clock)) {
+  ⎿ 180-    for (const trip of tripsByDayType.get(dayType) ?? []) {
+  ⎿ 181-      if (seen.has(trip.id)) continue;
+  ⎿ 182-      const call = nextBoardingCall(trip, stop.id, offset);
+  ⎿ 183-      if (!call || call.seconds - offset > UPCOMING_HORIZON_SECONDS) continue;
+  ⎿ 184-      seen.add(trip.id);
+  ⎿ 185-      arrivals.push({
+  ⎿ 186-        tripId: trip.id,
+  ⎿ 187-        line: trip.line,
+  ⎿ 188-        direction: trip.direction,
+  ⎿ … +57 more lines
+
+● Now edit domain.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿  plays/013-arrival-time-in-sheet/devops.yaml        |  2 ++
+  ⎿  plays/013-arrival-time-in-sheet/positions.yaml     |  2 +-
+  ⎿  plays/013-arrival-time-in-sheet/sessions/info.yaml | 35 +++++++++++++++++++++-
+  ⎿  src/domain/buses.ts                                |  6 +++-
+  ⎿  src/domain/types.ts                                |  2 ++
+  ⎿  5 files changed, 44 insertions(+), 3 deletions(-)
+  ⎿ 33:    arrivalAtStopSeconds: 60,
+  ⎿ });
+  ⎿ 
+  ⎿ describe('upcomingArrivals', () => {
+  ⎿   const arrivalsAt = (stopName: string, iso: string, trips = tripsByDayType) => {
+  ⎿     const now = new Date(iso);
+  ⎿     return upcomingArrivals({
+  ⎿       stop: stopNamed(stopName),
+  ⎿       clock: lisbonClock(now),
+  ⎿       tripsByDayType: trips,
+  ⎿       now,
+  ⎿     });
+  ⎿   };
+  ⎿   const summary = (list: ReturnType<typeof arrivalsAt>) =>
+  ⎿ … +88 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿ 297:  test('countdown ticks every second', async ({ page }) => {
+  ⎿ 298-    await page.goto('/');
+  ⎿ 299-    const sheet = page.getByRole('region', { name: 'Nearest stop' });
+  ⎿ 300-    await expect(sheet.getByRole('listitem').first()).toBeVisible();
+  ⎿ 301-    const sheetTime = sheet.locator('.bus-list__time').first();
+  ⎿ 302-    const marker = page.getByRole('img', { name: U1_TO_VALE_DAS_FLORES });
+  ⎿ 303-    // The map (and so its markers) must finish loading before the clock is paused.
+  ⎿ 304-    await expect(marker).toBeVisible();
+  ⎿ 305-    const markerTime = marker.locator('.marker-bus__time');
+  ⎿ 306-
+  ⎿ 307-    // u1-DU-0-852 reaches Portagem at 10:47:04. Pause a minute in, well after loading has finished.
+  ⎿ 308-    await page.clock.pauseAt(new Date('2026-09-23T09:45:00Z'));
+  ⎿ 309-    await expect(sheetTime).toHaveText('2:04');
+  ⎿ 310-    await expect(markerTime).toHaveText('2:04');
+  ⎿ 311-    await page.clock.runFor(1000);
+  ⎿ 312-    await expect(sheetTime).toHaveText('2:03');
+  ⎿ 313-    await expect(markerTime).toHaveText('2:03');
+  ⎿ 314-  });
+  ⎿ 315-
+  ⎿ 316-  test('desktop: renders inside the 380px panel', async ({ page }, testInfo) => {
+  ⎿ … +52 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿   const heading = (
+  ⎿     <div className="stop-heading__row">
+  ⎿       <h1 className="stop-name">{stop.name}</h1>
+  ⎿       {distanceMeters !== null && (
+  ⎿         <span className="stop-distance">{formatDistance(distanceMeters)} away</span>
+  ⎿       )}
+  ⎿     </div>
+  ⎿   );
+  ⎿   const staleNote = stale && (
+  ⎿     <p className="stale-note">
+  ⎿       Timetable data from {formatLisbonDate(fetched)} may be out of date.
+  ⎿     </p>
+  ⎿   );
+  ⎿ 
+  ⎿   if (collapsed) {
+  ⎿     const soonest = shown[0];
+  ⎿     return (
+  ⎿       <>
+  ⎿         {heading}
+  ⎿         {soonest ? (
+  ⎿ … +36 more lines
+
+● Now the e2e tests.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿ <stdin>:36: SyntaxWarning: "\d" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\d"? A raw string is also an option.
+  ⎿ <stdin>:61: SyntaxWarning: "\d" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\d"? A raw string is also an option.
+  ⎿ 223:    await expect(approachingMarker.locator('.marker-bus__time')).toHaveText(/^\d+:\d{2}$/);
+  ⎿ 224:    await expect(approachingMarker.locator('.marker-bus__tag')).toHaveText(/^\d+:\d{2}$/);
+  ⎿ 331:      await expect(arrival).toHaveText(/^\d{2}:\d{2}$/);
+  ⎿ 461:    ).toHaveText(/^\d+:\d{2}$/);
+  ⎿ 464:    ).toHaveText(/^\d+:\d{2}$/);
+  ⎿ 487:    await expect(rows.locator('.bus-list__arrival')).toHaveText(/^\d{2}:\d{2}$/);
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., timeout: 300000)
+  ⎿ npm warn exec The following package was not found and will be installed: prettier@3.10.1
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ 'eslint' is not recognized as an internal or external command,
+  ⎿ operable program or batch file.
+  ⎿   code: 'MODULE_NOT_FOUND',
+  ⎿   requireStack: []
+  ⎿ }
+  ⎿ 
+  ⎿ Node.js v24.22.1
+  ⎿ 
+  ⎿ > metro@0.0.0 test
+  ⎿ > vitest run
+  ⎿ 
+  ⎿ 'vitest' is not recognized as an internal or external command,
+  ⎿ operable program or batch file.
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., timeout: 600000)
+  ⎿   npm audit fix --force
+  ⎿ 
+  ⎿ Run `npm audit` for details.
+  ⎿  M plays/013-arrival-time-in-sheet/devops.yaml
+  ⎿  M plays/013-arrival-time-in-sheet/positions.yaml
+  ⎿  M plays/013-arrival-time-in-sheet/sessions/info.yaml
+  ⎿  M src/domain/buses.test.ts
+  ⎿  M src/domain/buses.ts
+  ⎿  M src/domain/types.ts
+  ⎿  M src/ui/icons.tsx
+  ⎿  M src/ui/sheet/ApproachingBuses.tsx
+  ⎿  M src/ui/styles/app.css
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ ?? plays/013-arrival-time-in-sheet/sessions/004-dave.pty
+  ⎿ ?? plays/013-arrival-time-in-sheet/sessions/004-dave.txt
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ … +11 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., timeout: 600000)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  ⎿   -  31 [desktop] › tests\e2e\map.spec.ts:375:3 › located near Portagem › phone: the page stays clear of the system bars
+  ⎿   -  32 [desktop] › tests\e2e\map.spec.ts:384:3 › located near Portagem › phone: the sheet minimises and restores
+  ⎿   ok 24 [desktop] › tests\e2e\map.spec.ts:251:5 › located near Portagem › default view › default view frames the stop and the soonest bus in each direction (8.9s)
+  ⎿   ok 27 [desktop] › tests\e2e\map.spec.ts:351:3 › located near Portagem › desktop: renders inside the 380px panel (9.1s)
+  ⎿   ok 29 [desktop] › tests\e2e\map.spec.ts:319:3 › located near Portagem › sheet shows arrival times under a clock and hourglass header (9.0s)
+  ⎿   ok 26 [desktop] › tests\e2e\map.spec.ts:282:3 › located near Portagem › the map loads and the locate button re-frames without errors (10.0s)
+  ⎿   ok 28 [desktop] › tests\e2e\map.spec.ts:297:3 › located near Portagem › countdown ticks every second (9.9s)
+  ⎿   ok 25 [desktop] › tests\e2e\map.spec.ts:192:3 › located near Portagem › shows the nearest stop and every scheduled bus (10.3s)
+  ⎿   -  33 [desktop] › tests\e2e\map.spec.ts:415:3 › located near Portagem › phone: swiping the sheet minimises and restores it
+  ⎿   -  35 [desktop] › tests\e2e\map.spec.ts:471:3 › located near Portagem › phone: the minimised sheet follows the direction filter
+  ⎿   ok 34 [desktop] › tests\e2e\map.spec.ts:440:3 › located near Portagem › cycles the direction filter (6.7s)
+  ⎿   ok 36 [desktop] › tests\e2e\map.spec.ts:495:3 › located near Portagem › desktop: the panel has no minimise control (3.4s)
+  ⎿   ok 37 [desktop] › tests\e2e\map.spec.ts:503:3 › located near Portagem › buses draw beneath the sheet (5.2s)
+  ⎿   ok 39 [desktop] › tests\e2e\map.spec.ts:595:3 › selecting a stop › tapping away returns to the nearest stop (6.0s)
+  ⎿   ok 40 [desktop] › tests\e2e\map.spec.ts:614:3 › selecting a stop › tapping empty map with nothing selected changes nothing (6.1s)
+  ⎿   ok 38 [desktop] › tests\e2e\map.spec.ts:567:3 › selecting a stop › selects a stop and frames it (7.1s)
+  ⎿   ok 41 [desktop] › tests\e2e\map.spec.ts:624:3 › selecting a stop › the locate button clears the selection (7.1s)
+  ⎿ … +8 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿ 1:import { defineConfig, devices } from '@playwright/test';
+  ⎿ 2-
+  ⎿ 3-const BASE_URL = 'http://localhost:4173';
+  ⎿ --
+  ⎿ 11:  webServer: {
+  ⎿ 12-    command: 'npm run build && npm run preview -- --port 4173 --strictPort',
+  ⎿ 13-    url: BASE_URL,
+  ⎿ --
+  ⎿ 18:    baseURL: BASE_URL,
+  ⎿ 19-    serviceWorkers: 'block',
+  ⎿ 20-    locale: 'en-GB',
+  ⎿ --
+  ⎿ 27:        ...devices['Desktop Chrome'],
+  ⎿ 28:        viewport: { width: 390, height: 844 },
+  ⎿ 29-        isMobile: true,
+  ⎿ 30-        hasTouch: true,
+  ⎿ --
+  ⎿ 35:      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } },
+  ⎿ 36-    },
+  ⎿ 37-  ],
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ...)
+  ⎿ 4:const fixture = (name: string) =>
+  ⎿ 5:  readFileSync(new URL(`../fixtures/${name}`, import.meta.url), 'utf8');
+  ⎿ 8:  'stops.json': fixture('stops.json'),
+  ⎿ 9:  'route-shapes.json': fixture('route-shapes.json'),
+  ⎿ 10:  // Every day type gets the weekday sample; the clock below is a weekday anyway.
+  ⎿ 11:  trips: fixture('trips-DU.sample.json'),
+  ⎿ 52:const STOPS: { name: string; coords: Coords }[] = JSON.parse(fixture('stops.json'));
+  ⎿ 55:  if (!stop) throw new Error(`No stop named ${name} in the fixture`);
+
+● Tests and lint all pass. Next I'm running a quick, temporary check that rows don't overflow on a 360 px-wide screen.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro"; ..., timeout: 300000)
+  ⎿ min [ true ] U1
+  ⎿ to Vale das Flores
+  ⎿ Scheduled
+  ⎿ 10:47
+  ⎿ 3:04
+  ⎿ arrives at 10:47, 3 minutes 4 seconds away
+  ⎿ 
+  ⎿   1 passed (14.6s)
+  ⎿  tests/e2e/map.spec.ts | 37 +++++++++++++++++++++++++++++++++++++
+  ⎿  1 file changed, 37 insertions(+)
+
+● I've implemented the plan: every bus row in the sheet now shows its arrival time as gray `HH:MM` (Lisbon time, 24 h) before the countdown. The countdown keeps its large bold style as the main figure. Lint, typecheck, the unit tests (123), the build and the end-to-end tests (38 passed, 8 skipped because they are for the other layout) all pass. Nothing is committed, as instructed.
+
+- **Arrival time data:** each upcoming arrival now carries its arrival time (`arrivalAt`, in `src/domain/types.ts`). In `src/domain/buses.ts` it is worked out from the same number as the countdown, so the two can't disagree, and the milliseconds of the current time don't shift it.
+- **Icons:** added a clock and an hourglass in `src/ui/icons.tsx`.
+- **Rows:** in `src/ui/sheet/ApproachingBuses.tsx`, each row shows the gray arrival time before the countdown, and screen readers hear "arrives at 10:47, 3 minutes 4 seconds away".
+- **Icon header:** above the expanded list, a header row puts the clock over the arrival-time column and the hourglass over the countdown column. It only appears when the list does.
+- **Minimised phone sheet:** its single row also shows the gray time, with no icons, as you decided.
+- **Styles:** in `src/ui/styles/app.css` the two time columns have fixed widths, so the icons line up with the numbers in every row. Long destination names are cut short with an ellipsis instead.
+- **Tests:**
+  - **Unit tests** (`src/domain/buses.test.ts`) check the exact arrival instants, that milliseconds don't shift them, and that they match the countdown. They also cover the after-midnight case.
+  - **End-to-end tests** (`tests/e2e/map.spec.ts`):
+    - a check that the arrival time stays at 10:47 while the countdown ticks;
+    - a new test for the icon header and column alignment;
+    - checks that the minimised sheet shows the time and no header.
+
+I also checked with a temporary test, since removed, that the expanded and minimised rows don't overflow on a 360 px-wide screen.
+
+I didn't run the manual look in the dev server (step 3 of the plan's verification), so the layout hasn't been checked by eye yet.

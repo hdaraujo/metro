@@ -100,8 +100,8 @@ and `at`, the time of the estimate.
 separately from the buses on the map. It returns one `StopArrival` per trip: the trip's next
 boarding call at the stop (the same rule as the countdown above) later than now and at most
 `UPCOMING_HORIZON_SECONDS` (90 minutes) away, soonest first, ties broken by `tripId`. Each one has
-`arrivalAtStopSeconds` (always at least 1), the trip's `destination`, `source: 'scheduled'` and
-`at`. Today's and, before 04:00, yesterday's service days are both searched, as for the buses.
+`arrivalAtStopSeconds` (always at least 1), `arrivalAt`, the trip's `destination`,
+`source: 'scheduled'` and `at`. Today's and, before 04:00, yesterday's service days are both searched, as for the buses.
 
 - **Trips that have not started count.** A bus still waiting at its terminus is listed as soon as
   it is among the next to call at the stop, not only once it departs. Before this, the list was
@@ -110,6 +110,13 @@ boarding call at the stop (the same rule as the countdown above) later than now 
   time combinations on a weekday.
 - **At a terminus,** the list has the buses departing from it and never those ending their run
   there.
+- **`arrivalAt`** is the scheduled instant of the call, UTC ISO 8601, computed as `now` floored
+  to the whole second plus `arrivalAtStopSeconds`. It is derived from the countdown rather than
+  from the timetable's clock time, so the sheet's arrival time and countdown always agree; the
+  flooring keeps the milliseconds of `now` from shifting it (`clock.seconds` is whole seconds).
+  Calls past midnight on the previous service day (for example `25:21:42`) land on the next
+  calendar day, not 24 hours off. Only `StopArrival` has it; `BusPosition` and the map markers
+  carry countdowns only.
 - **The horizon** is longer than any trip (about 70 minutes), so every bus in service that is
   heading to the stop is within it. It keeps the first bus of the morning from being listed hours
   ahead in the middle of the night.

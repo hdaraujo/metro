@@ -1,0 +1,274 @@
+> You are the Autopilot DevOps engineer for this play, wrapping up development. Read `plays/013-arrival-time-in-sheet/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`plays/013-arrival-time-in-sheet`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `C:\Users\haraujo\.building\data\projects\003-metro\worktrees\013/<repo-folder-name>`, checked out on branch `013-arrival-time-in-sheet`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "C:\Users\haraujo\.building\data\projects\003-metro\worktrees\013/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `013-arrival-time-in-sheet`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: metro:autopilot-devops)
+  ⎿ Launching skill: metro:autopilot-devops
+
+> Base directory for this skill: C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\.claude\skills\autopilot-devops
+
+You are the Autopilot DevOps engineer for this play, opened as an interactive session that the user drives directly. You are in the project's specs repository, on this play's branch; read `$play/plan.md` for context. The play's code changes live in isolated git worktrees under `$worktrees`. Do NOT start working on your own: wait for the user's first message and follow their direction.
+
+## 1. Prepare the repositories
+
+You are the Autopilot DevOps engineer for this play, preparing repositories for development. Read `$play/plan.md` — it states which of the attached repositories are part of this play; only touch those.
+
+Each play is developed on its own branch, `$branch`, in an isolated git worktree per repository, so several plays can be in progress at once without interfering. The specs repository (`this repository`) is already on that branch — you are working inside its worktree right now, which is why this play's folder is here. Your job is to do the same for each TARGET CODE repository, under the directory `$worktrees`.
+
+For each target repository (its main clone is one of the attached directories — call its path <clone> and its folder name <name>):
+1. Run `git -C <clone> fetch` so the clone is current.
+2. Create the play worktree at exactly `$worktrees/<name>`:
+   `git -C <clone> worktree add "$worktrees/<name>" -b $branch`
+
+Handle these cases without asking me:
+- If a worktree already exists at `$worktrees/<name>`, this is a resumed iteration of the same play — leave it as-is and continue; do not recreate it.
+- If the branch `$branch` already exists but has no worktree, add the worktree from that existing branch instead (omit `-b`): `git -C <clone> worktree add "$worktrees/<name>" $branch`.
+- If a target repository IS the specs repository you are already in, it already has its worktree — skip it.
+
+Only stop and ask me how to proceed if something genuinely conflicts — the worktree path is occupied by an unrelated directory, or the repository is in a broken state — do not guess and do not act destructively. Wait for my answer.
+
+Once every target repository has its `$branch` worktree under `$worktrees`, end your turn with a short factual summary of what you did. That summary must NOT end with a question — only end with a question mark when you are genuinely asking me how to proceed with a real conflict per the rule above.
+
+## 2. Finalize — commit and hand over for testing
+
+You are the Autopilot DevOps engineer for this play, wrapping up development. Read `$play/plan.md` for context.
+
+There are two kinds of working tree to commit, and both matter:
+
+1. **The specs repository** — the directory you are in. It carries this play's folder (`$play`: the intent, the plan, the session transcripts and the history) and any documentation written for this play. Stage and commit all of it.
+2. **Each target code repository**, in its worktree at `$worktrees/<repo-folder-name>`, checked out on branch `$branch`.
+
+For each of those with changes: stage everything first (including new/untracked files the Developer created — e.g. `git -C "$worktrees/<name>" add -A`), review the staged diff, write a clear conventional commit message describing the change, and commit it in that worktree. Skip any worktree with no changes. Everything is on the same branch name, `$branch`, in every repository, so the play reviews as one unit. Never merge anything into the default branch yourself — the code branches are left unmerged for me, and Building merges the specs branch when the play closes.
+
+Then make sure I have a concrete way to test and validate what was implemented: check each changed worktree for existing testing/run instructions (README, CONTRIBUTING, docs) and follow them, or write new ones if none exist. If the play has a web UI, include a direct link or the exact command to run it (point me at the worktree paths, since that is where the changes live).
+
+End your final message with those testing instructions, written clearly for me to follow — this is the last thing you say, and I will read it later by opening this session, so make it complete. Do not end it with a question.
+
+## 3. Close, once the play is approved
+
+The play was just approved. Do NOT merge the play's branch `$branch` into the default branch in any repository yourself. In the target code repositories it stays unmerged, so I can review and merge it myself; in the specs repository — the directory you are in — Building commits whatever is left, squash-merges the branch into the default branch as a single commit and deletes it, once the play has been documented.
+
+Your only job now is to make sure nothing is left uncommitted in the target code repositories. For each worktree under `$worktrees`, check `git -C "$worktrees/<name>" status`; if anything changed since you finalized (for example while I was validating), stage all of it (`add -A`) and commit it on `$branch` with a clear conventional commit message. Skip any worktree with no changes. You do not need to commit in the specs repository.
+
+Do NOT merge, rebase, squash or push, and do NOT delete the worktrees or the `$branch` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+---
+
+Arguments: `$play`, `$branch`, `$worktrees`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro" &..., description: Read plan, context docs and git status)
+  ⎿ # Play 013 — Arrival time in the sheet
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ The sheet's "Heading to this stop" list shows up to 4 upcoming buses, each with only an `M:SS`
+  ⎿ countdown. Riders also want the clock time each bus is due. Intent (verbatim): *"In the 4 sheet
+  ⎿ next arrivals, also show the arrival time, remaining time is still the most relevant info. Show
+  ⎿ arrival time first in gray hh:mm 24h time. Above the times show icons, clock for arrival time and
+  ⎿ hourglass for remaining time."*
+  ⎿ 
+  ⎿ Outcome: every bus row shows `HH:MM` (Europe/Lisbon, 24 h, gray, smaller) **before** the
+  ⎿ countdown, which keeps its current large, bold look as the dominant figure. A small header row
+  ⎿ above the expanded list shows a clock icon above the arrival-time column and an hourglass icon
+  ⎿ above the countdown column. Decision taken with the user: the minimised phone sheet's single row
+  ⎿ **also shows the gray arrival time, with no icons** (the icon header exists only above the
+  ⎿ expanded list).
+  ⎿ 
+  ⎿ No new screen; no design folder exists for this play. This is an extension of the existing sheet.
+  ⎿ 
+  ⎿ ## Repositories touched
+  ⎿ … +354 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro" &..., description: Review code diff)
+  ⎿ diff --git a/src/domain/buses.test.ts b/src/domain/buses.test.ts
+  ⎿ index fd08aa6..dd921ee 100644
+  ⎿ --- a/src/domain/buses.test.ts
+  ⎿ +++ b/src/domain/buses.test.ts
+  ⎿ @@ -222,6 +222,25 @@ describe('upcomingArrivals', () => {
+  ⎿        { tripId: 'u1-DU-1-823', arrivalAtStopSeconds: 12 * 60 + 48 }, // 10:53:18
+  ⎿        { tripId: 'u1-DU-0-585', arrivalAtStopSeconds: 23 * 60 + 34 }, // 11:04:04
+  ⎿      ]);
+  ⎿ +    const [first, second] = arrivalsAt('Portagem', iso);
+  ⎿ +    expect(first?.arrivalAt).toBe('2026-09-23T09:47:04.000Z'); // 10:47:04 in Lisbon
+  ⎿ +    expect(second?.arrivalAt).toBe('2026-09-23T09:53:18.000Z'); // 10:53:18 in Lisbon
+  ⎿ +  });
+  ⎿ +
+  ⎿ +  it('gives the arrival instant to the second, whatever the milliseconds of `now`', () => {
+  ⎿ +    const [first] = arrivalsAt('Portagem', '2026-09-23T09:40:30.900Z');
+  ⎿ +    expect(first?.tripId).toBe('u1-DU-0-852');
+  ⎿ +    expect(first?.arrivalAt).toBe('2026-09-23T09:47:04.000Z');
+  ⎿ +  });
+  ⎿ +
+  ⎿ +  it('puts every arrival instant at `now` (to the second) plus its countdown', () => {
+  ⎿ … +285 more lines
+
+● Diff matches the plan. Running the quick checks before committing.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro" &..., description: Run lint, typecheck, unit tests, format check, timeout: 300000)
+  ⎿ HAS_NM
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿  RUN  v5.0.2 C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  12 passed (12)
+  ⎿       Tests  123 passed (123)
+  ⎿    Start at  15:55:26
+  ⎿    Duration  624ms (transform 54%, import 30%, tests 9%, worker 6%)
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro" &..., description: Build and run Playwright e2e tests, timeout: 600000)
+  ⎿ precache  12 entries (1851.55 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  ⎿   ok 38 [desktop] › tests\e2e\map.spec.ts:567:3 › selecting a stop › selects a stop and frames it (4.1s)
+  ⎿   ok 40 [desktop] › tests\e2e\map.spec.ts:614:3 › selecting a stop › tapping empty map with nothing selected changes nothing (5.9s)
+  ⎿   ok 39 [desktop] › tests\e2e\map.spec.ts:595:3 › selecting a stop › tapping away returns to the nearest stop (6.1s)
+  ⎿   ok 42 [desktop] › tests\e2e\map.spec.ts:632:3 › selecting a stop › tapping the nearest stop keeps "Nearest stop" (6.2s)
+  ⎿   ok 41 [desktop] › tests\e2e\map.spec.ts:624:3 › selecting a stop › the locate button clears the selection (6.4s)
+  ⎿   ok 44 [desktop] › tests\e2e\map.spec.ts:664:3 › location denied › explains that location is off and keeps the map (4.9s)
+  ⎿   ok 43 [desktop] › tests\e2e\map.spec.ts:643:3 › selecting a stop › desktop: the cursor points over a stop (7.3s)
+  ⎿   ok 46 [desktop] › tests\e2e\map.spec.ts:700:1 › attribution links to the OpenStreetMap copyright page (4.9s)
+  ⎿   ok 45 [desktop] › tests\e2e\map.spec.ts:676:5 › location denied › selecting › selects a stop without a location (6.8s)
+  ⎿ 
+  ⎿   8 skipped
+  ⎿   38 passed (43.8s)
+
+● All green. Since `metro` is both the specs and the only code repository, I'll make two commits in this one worktree: one for the code and one for the play records.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro" &..., description: Commit code and play records)
+  ⎿  M plays/013-arrival-time-in-sheet/devops.yaml
+  ⎿  M plays/013-arrival-time-in-sheet/positions.yaml
+  ⎿  M plays/013-arrival-time-in-sheet/sessions/info.yaml
+  ⎿  M src/domain/buses.test.ts
+  ⎿  M src/domain/buses.ts
+  ⎿  M src/domain/types.ts
+  ⎿  M src/ui/icons.tsx
+  ⎿  M src/ui/sheet/ApproachingBuses.tsx
+  ⎿  M src/ui/styles/app.css
+  ⎿  M tests/e2e/map.spec.ts
+  ⎿ ?? plays/013-arrival-time-in-sheet/sessions/004-dave.pty
+  ⎿ ?? plays/013-arrival-time-in-sheet/sessions/004-dave.txt
+  ⎿ ?? plays/013-arrival-time-in-sheet/sessions/005-gui.pty
+  ⎿ ?? plays/013-arrival-time-in-sheet/sessions/005-gui.txt
+  ⎿ 66a06db Play 013: record development sessions and history
+  ⎿ a388598 feat(sheet): show arrival time beside each bus countdown
+  ⎿ 06b8c81 Start play 013
+  ⎿ 105f072 Close play 011
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro" &..., description: Check dev server config and scripts)
+  ⎿ CLAUDE.md
+  ⎿ README.md
+  ⎿ dist
+  ⎿ documentation
+  ⎿ eslint.config.js
+  ⎿ index.html
+  ⎿ node_modules
+  ⎿ package-lock.json
+  ⎿ package.json
+  ⎿ plays
+  ⎿ playwright.config.ts
+  ⎿ public
+  ⎿ pwa-assets.config.ts
+  ⎿ src
+  ⎿ test-results
+  ⎿ tests
+  ⎿ tsconfig.json
+  ⎿ vite.config.ts
+  ⎿ 2:import react from '@vitejs/plugin-react';
+  ⎿ 3:import { defineConfig } from 'vite';
+  ⎿ … +16 more lines
+
+● Play 013 is committed on branch `013-arrival-time-in-sheet`, and nothing is merged.
+
+**What I committed.** `metro` is both the specs repository and the only code repository, so both commits are in the one worktree, `C:\Users\haraujo\.building\data\projects\003-metro\worktrees\013\metro`:
+- `a388598 feat(sheet): show arrival time beside each bus countdown` holds the code (`src/domain/types.ts`, `buses.ts`, `buses.test.ts`, `src/ui/icons.tsx`, `src/ui/sheet/ApproachingBuses.tsx`, `src/ui/styles/app.css`, `tests/e2e/map.spec.ts`).
+- `66a06db Play 013: record development sessions and history` holds the play folder (`devops.yaml`, `positions.yaml`, `sessions/info.yaml` and the transcripts for sessions 004 and 005).
+
+The working tree is clean. The code change matches `plan.md`: each row shows a new `arrivalAt` time before the countdown, the clock and hourglass header sits above the expanded list only, and the minimised row shows the arrival time with no icons. No other worktrees exist for this play.
+
+**Checks.** I ran all of these before committing and they passed:
+- **Lint and formatting:** `npm run lint` was clean.
+- **Type check:** `npm run typecheck` (TypeScript 7) was clean.
+- **Unit tests:** `npm test` passed 123 of 123.
+- **Build and browser tests:** `npm run build` succeeded, and `npm run test:e2e` passed 38 with 8 skipped. The skipped ones are the existing tests that only run on phone or only on desktop.
+
+---
+
+## How to test play 013
+
+Run everything from the worktree, because that is where the changes are:
+
+```powershell
+cd C:\Users\haraujo\.building\data\projects\003-metro\worktrees\013\metro
+```
+
+`node_modules` is already installed there. On a fresh checkout, run `npm install` first, and run `npx playwright install chromium` once before the browser tests. These commands are also listed in `README.md` and `documentation/context/tech.md`.
+
+### 1. Automated checks
+```powershell
+npm run lint
+npm run typecheck
+npm test            # Vitest: arrivalAt is exact to the second, ignores milliseconds, and handles times after midnight
+npm run build
+npm run test:e2e    # Playwright, phone and desktop
+```
+Everything should pass. The new or extended browser tests are:
+- "countdown ticks every second": the arrival time stays at `10:47` while the countdown goes from `2:04` to `2:03`.
+- "sheet shows arrival times under a clock and hourglass header": checks that the icons line up with their columns.
+- "phone: the minimised sheet follows the direction filter": the minimised row shows the time and no icon header.
+
+### 2. Check it by hand in the browser
+```powershell
+npm run dev
+```
+Open **http://localhost:5173/**. That is Vite's default address; if the port is taken, use the address the terminal prints. Allow location, or tap a stop.
+
+1. **Desktop:** in the "Heading to this stop" list, a small **clock** icon sits above the arrival-time column and an **hourglass** icon above the countdown column. Each icon is right-aligned with the numbers below it.
+2. Each row reads like `U1 to Vale das Flores 10:47 2:04`:
+   - The arrival time comes first, in 24-hour `HH:MM`, gray and smaller.
+   - The countdown keeps its large, bold look.
+3. Watch for a few seconds: the countdown ticks every second and the arrival time does not change. The arrival time should equal the current Lisbon time plus the countdown.
+4. **Phone:** in DevTools, turn on device mode at **360×780**.
+   - Rows don't overflow; long destination names get cut off with "…" instead.
+   - Minimise the sheet. The single row shows the gray arrival time, with no icon header, and the "Scheduled" badge still fits.
+5. Press the direction button until you reach a direction with no buses. You should see only "No buses in this direction right now." and no icon header.
+6. **Screen reader (optional):** each row is read as "arrives at HH:MM, N minutes … away". The icon header is not read out.
+
+To check the production build, including the service worker: run `npm run build`, then `npm run preview`, and open the address it prints (normally **http://localhost:4173/**).
+
+> squash or push, and do NOT delete the worktrees or the `013-arrival-time-in-sheet` branches — the worktrees are removed automatically once you finish, and the code branches are kept. End with a short summary, not a question.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/013/metro" &..., description: Check worktree for uncommitted changes)
+  ⎿ 013-arrival-time-in-sheet
+  ⎿  M plays/013-arrival-time-in-sheet/config.yaml
+  ⎿  M plays/013-arrival-time-in-sheet/devops.yaml
+  ⎿  M plays/013-arrival-time-in-sheet/history.yaml
+  ⎿  M plays/013-arrival-time-in-sheet/sessions/info.yaml
+  ⎿ metro
+
+● Nothing needed committing. The only worktree for this play, `worktrees\013\metro`, is on branch `013-arrival-time-in-sheet`, and it has no code changes since the commit `a388598`.
+
+Four files in the play's own folder have changed: `config.yaml`, `devops.yaml`, `history.yaml` and `sessions/info.yaml` under `plays/013-arrival-time-in-sheet/`. Building updated these as it closed the play. I left them uncommitted because Building commits what's left in the specs repository before it squash-merges the branch.
+
+I didn't merge, rebase, squash or push anything, and I didn't delete any worktree or branch. The code commit stays on the branch for you to review and merge.

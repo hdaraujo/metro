@@ -78,6 +78,8 @@ export interface StopArrival {
   stopId: string;
   /** Seconds until the scheduled call (≥ 1). */
   arrivalAtStopSeconds: number;
+  /** When the bus is scheduled to call at the stop, UTC ISO 8601. `formatLisbonHM` shows it. */
+  arrivalAt: string;
   source: DataSource;
   /** When the arrival was estimated or observed, UTC ISO 8601. */
   at: string;
