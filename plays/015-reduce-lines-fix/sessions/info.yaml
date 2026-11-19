@@ -13,12 +13,12 @@ sessions:
     generic:
       waiting: false
       question: null
-      waiting_since: '2026-11-19T17:14:41.993Z'
+      waiting_since: '2026-11-19T17:24:24.950Z'
     usage:
       claude-opus-5-5:
-        input: 112
-        output: 42768
-        cache_read: 4440184
+        input: 216
+        output: 73452
+        cache_read: 9670102
         cache_write_5m: 0
-        cache_write_1h: 148912
+        cache_write_1h: 227018
 next_seq: 2

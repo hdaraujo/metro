@@ -10,6 +10,7 @@ export const DIRECTION_MERGE_METERS = 75;
 
 /** One drawable piece of a line: consecutive edges with the same sideways offset. */
 export interface LineRun {
+  /** The line drawn. A line lying wholly on a longer one is drawn as that line (see `bundleRoutes`). */
   line: LineId;
   /** The line's colour: the colour of its first shape in input order. */
   color: string;
@@ -41,6 +42,10 @@ function edgeKey(u: string, v: string): string {
 
 const directionOrder = (shape: Shape) => (shape.direction === 'outbound' ? 0 : 1);
 
+/** Shapes relabelled by `absorbSublines`: walked after the line's own, so its runs stay whole. */
+const absorbed = new WeakSet<Shape>();
+const absorbedOrder = (shape: Shape) => (absorbed.has(shape) ? 1 : 0);
+
 /**
  * Splits every line's shapes into runs that can be drawn side by side: wherever several lines
  * share a stretch of road (identical consecutive vertices), each line gets its own sideways slot,
@@ -48,12 +53,14 @@ const directionOrder = (shape: Shape) => (shape.direction === 'outbound' ? 0 : 1
  * a line is drawn once, whichever of the line's shapes (directions) it comes from. A line's
  * outbound and inbound vertices within `DIRECTION_MERGE_METERS` of each other are first merged
  * onto one vertex (the same one for every line passing there), so each line is one strand for
- * both directions, whichever way round the source labels them.
+ * both directions, whichever way round the source labels them. Then a line whose route lies
+ * wholly on a longer line's (a short-turn variant, e.g. U1 on S1) is drawn as that longer line,
+ * so the map shows one strand per route, not per service.
  *
  * Deterministic: the same shapes give the same runs, in the same order.
  */
 export function bundleRoutes(shapes: readonly Shape[]): LineRun[] {
-  const merged = mergeDirections(shapes);
+  const merged = absorbSublines(mergeDirections(shapes));
   const latLngByKey = new Map<string, LatLng>();
   const colorByLine = new Map<LineId, string>();
 
@@ -104,6 +111,7 @@ export function bundleRoutes(shapes: readonly Shape[]): LineRun[] {
   const ordered = [...vertexPaths.keys()].sort(
     (x, y) =>
       lineRank.get(x.line)! - lineRank.get(y.line)! ||
+      absorbedOrder(x) - absorbedOrder(y) ||
       directionOrder(x) - directionOrder(y) ||
       compare(x.id, y.id),
   );
@@ -150,6 +158,59 @@ export function bundleRoutes(shapes: readonly Shape[]): LineRun[] {
     close(run);
   }
   return runs;
+}
+
+/**
+ * Relabels every shape of a line whose edges are a strict subset of another line's edges as that
+ * other line (with its colour). Among several such lines, the one with the most edges wins, then
+ * the smallest id; chains resolve to the outermost line. Lines with identical routes are kept
+ * apart. Returns the shapes in input order; unchanged ones as-is, changed ones as copies.
+ */
+function absorbSublines(shapes: readonly Shape[]): Shape[] {
+  const edgesByLine = new Map<LineId, Set<string>>();
+  const colorByLine = new Map<LineId, string>();
+  for (const shape of shapes) {
+    if (!colorByLine.has(shape.line)) colorByLine.set(shape.line, shape.color);
+    let edges = edgesByLine.get(shape.line);
+    if (!edges) {
+      edges = new Set();
+      edgesByLine.set(shape.line, edges);
+    }
+    let prev: string | null = null;
+    for (const point of shape.points) {
+      const key = vertexKey(point);
+      if (prev !== null && prev !== key) edges.add(edgeKey(prev, key));
+      prev = key;
+    }
+  }
+
+  const lines = [...edgesByLine.keys()].sort(compare);
+  const parentOf = new Map<LineId, LineId>();
+  for (const line of lines) {
+    const own = edgesByLine.get(line)!;
+    if (own.size === 0) continue;
+    let best: LineId | null = null;
+    for (const other of lines) {
+      const theirs = edgesByLine.get(other)!;
+      if (other === line || theirs.size <= own.size) continue;
+      if (![...own].every((e) => theirs.has(e))) continue;
+      if (best === null || theirs.size > edgesByLine.get(best)!.size) best = other;
+    }
+    if (best !== null) parentOf.set(line, best);
+  }
+  const rootOf = (line: LineId): LineId => {
+    let root = line;
+    while (parentOf.has(root)) root = parentOf.get(root)!;
+    return root;
+  };
+
+  return shapes.map((shape) => {
+    const root = rootOf(shape.line);
+    if (root === shape.line) return shape;
+    const copy = { ...shape, line: root, color: colorByLine.get(root)! };
+    absorbed.add(copy);
+    return copy;
+  });
 }
 
 /**

@@ -244,9 +244,10 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
 
 ## Route lines
 
-Most of the network is a shared trunk (S1 and S2 overlap almost entirely, U1 runs on S1, U2 on
-S2), so lines are drawn **side by side** wherever they share a road, metro-map style, each in its
-own colour; a stretch used by one line is a single line centred on the road. The geometry is the
+The map shows **three lines, like Metro Mondego's network diagram**: S1 in blue (Coimbra-B →
+Serpins), S2 in red (República → Serpins) and U3 in green (Coimbra-B ↔ República). U1 and U2 are
+not drawn on their own. Lines are drawn **side by side** wherever they share a road, metro-map
+style, each in its own colour; a stretch used by one line is a single line centred on the road. The geometry is the
 pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` only renders it.
 
 - **Overlap means identical vertices.** The source's shapes share exactly identical vertices
@@ -278,8 +279,16 @@ pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` 
     opposite-direction stops more than 75 m apart, would need this revisited.
   - Merging is drawing-only: `mergeDirections` returns copies and never mutates
     `network.shapes`, and its result does not depend on input order.
+- **Short-turn lines are drawn as their longer line.** After the directions are merged, a line
+  whose edges are a strict subset of another line's edges is relabelled as that line, in its
+  colour (`absorbSublines`): U1 lies wholly on S1 and U2 on S2, so they are drawn as S1 and S2.
+  U3 is on neither (it leaves S1 at Aeminium for S2's branch), so it stays. Among several longer
+  lines the one with the most edges wins, then the smallest id; chains resolve to the outermost.
+  Lines with identical routes are kept apart. Relabelled shapes are walked after the line's own,
+  so its runs stay whole. Only the drawing changes: bus markers and the sheet keep each bus's own
+  line and colour (a U1 bus is a `#2B6CC4` pill on the `#0080FF` S1 strand).
 - **Slots.** On an edge carrying *n* lines, lines are ordered by id with plain string comparison
-  (`S1, S2, U1, U2, U3`) and get slots `i − (n−1)/2` (−0.5/+0.5 for two, −1/0/+1 for three…),
+  (`S1, S2, U3`) and get slots `i − (n−1)/2` (−0.5/+0.5 for two, −1/0/+1 for three…),
   left to right relative to the edge's orientation.
 - **Orientation.** MapLibre's `line-offset` is relative to each line's drawing direction, and the
   shapes are digitised in either direction. So every edge gets one consistent orientation,
@@ -305,10 +314,10 @@ pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` 
 - Tests (`routeBundles.test.ts`) check slots by *geographic* side of each edge rather than the
   internal orientation, so the orientation heuristic can change without rewriting them; on the
   recorded fixture — and again with U3's directions swapped, as the live source now serves it —
-  they require every edge's slots to be distinct and centred, no edge to carry a line twice (at
-  most 4 lines on an edge: S1, S2, U1, U2), every unmerged edge to be drawn, no line drawn on two
-  near-parallel paths, and exactly S2, U2 and U3 — with none of the `(asc)`-only vertices —
-  between the junction west of Câmara and República.
+  they require exactly S1, S2 and U3 to be drawn in their own colours, every edge's slots to be
+  distinct and centred, no edge to carry a line twice (at most 2 lines on an edge), every
+  unmerged edge to be drawn, no line drawn on two near-parallel paths, and exactly S2 and U3 —
+  with none of the `(asc)`-only vertices — between the junction west of Câmara and República.
 
 ## Smart zoom
 

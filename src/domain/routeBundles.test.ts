@@ -223,6 +223,39 @@ describe('bundleRoutes', () => {
     });
   });
 
+  describe('lines lying on a longer line', () => {
+    const [p0, p1, p2, p3] = corridor as [LatLng, LatLng, LatLng, LatLng];
+
+    it('are drawn as the longer line, in its colour', () => {
+      const runs = bundleRoutes([
+        shape('U-0', 'U', 'outbound', [p0, p1, p2], '#222222'),
+        shape('U-1', 'U', 'inbound', [p2, p1, p0], '#222222'),
+        shape('S-0', 'S', 'outbound', [p0, p1, p2, p3], '#111111'),
+        shape('S-1', 'S', 'inbound', [p3, p2, p1, p0], '#111111'),
+      ]);
+      expect(runs).toEqual([{ line: 'S', color: '#111111', offset: 0, points: [p0, p1, p2, p3] }]);
+    });
+
+    it('go to the longest line, through chains', () => {
+      const runs = bundleRoutes([
+        shape('A-0', 'A', 'outbound', [p0, p1]),
+        shape('B-0', 'B', 'outbound', [p0, p1, p2]),
+        shape('C-0', 'C', 'outbound', [p0, p1, p2, p3]),
+      ]);
+      expect(runs.map((r) => r.line)).toEqual(['C']);
+    });
+
+    it('are kept apart when they leave the longer line or share it equally', () => {
+      const branch = P(40.001, -8.01);
+      const runs = bundleRoutes([
+        shape('A-0', 'A', 'outbound', [p0, p1, p2, p3]),
+        shape('B-0', 'B', 'outbound', [p0, p1, p2, p3]),
+        shape('C-0', 'C', 'outbound', [p0, p1, branch]),
+      ]);
+      expect([...new Set(runs.map((r) => r.line))]).toEqual(['A', 'B', 'C']);
+    });
+  });
+
   it('is deterministic and independent of input order', () => {
     const shapes = parseShapes(shapesJson);
     expect(bundleRoutes(shapes)).toEqual(bundleRoutes(shapes));
@@ -260,7 +293,7 @@ describe('bundleRoutes', () => {
         const expected = Array.from({ length: n }, (_, i) => i - (n - 1) / 2);
         expect([...list].sort((x, y) => x - y)).toEqual(expected);
       }
-      expect(maxLines).toBeGreaterThanOrEqual(4);
+      expect(maxLines).toBe(2);
     });
 
     it('covers every edge of every shape exactly once per line', () => {
@@ -270,12 +303,13 @@ describe('bundleRoutes', () => {
           .flatMap((o) => o.points);
       const isFar = (p: LatLng, s: Shape) =>
         otherDirection(s).every((o) => haversineMeters(p, o) > DIRECTION_MERGE_METERS);
+      const drawnAs: Record<string, string> = { S1: 'S1', U1: 'S1', S2: 'S2', U2: 'S2', U3: 'U3' };
       for (const s of shapes) {
         for (let i = 0; i + 1 < s.points.length; i++) {
           const [a, b] = [s.points[i]!, s.points[i + 1]!];
           if (key(a) === key(b)) continue;
           if (!(isFar(a, s) && isFar(b, s))) continue;
-          expect(slots.has(`${s.line}@${edgeKey(a, b)}`)).toBe(true);
+          expect(slots.has(`${drawnAs[s.line]}@${edgeKey(a, b)}`)).toBe(true);
         }
       }
       // Every vertex drawn is a vertex of some shape of that line's group.
@@ -284,7 +318,18 @@ describe('bundleRoutes', () => {
       // slotsByLineEdge already fails if a line draws an edge twice.
     });
 
-    it('draws S2, U2 and U3 as three strands between Câmara and República', () => {
+    it('draws three lines, S1 in blue, S2 in red and U3 in green, like the network diagram', () => {
+      const colorOf = new Map(shapes.map((s) => [s.line, s.color]));
+      expect(new Map(runs.map((r) => [r.line, r.color]))).toEqual(
+        new Map([
+          ['S1', colorOf.get('S1')],
+          ['S2', colorOf.get('S2')],
+          ['U3', colorOf.get('U3')],
+        ]),
+      );
+    });
+
+    it('draws S2 and U3 as two strands between Câmara and República', () => {
       const path = [
         P(40.21035, -8.432479),
         P(40.211257, -8.429836),
@@ -297,7 +342,7 @@ describe('bundleRoutes', () => {
           .filter((k) => k.endsWith(`@${e}`))
           .map((k) => k.slice(0, k.indexOf('@')))
           .sort();
-        expect(lines).toEqual(['S2', 'U2', 'U3']);
+        expect(lines).toEqual(['S2', 'U3']);
       }
       const drawn = new Set(runs.flatMap((r) => r.points.map(key)));
       for (const p of [P(40.211255, -8.42977), P(40.211565, -8.42482), P(40.209594, -8.420384)]) {
@@ -305,7 +350,7 @@ describe('bundleRoutes', () => {
       }
     });
 
-    it('draws each line once on every edge, at most 4 lines per edge', () => {
+    it('draws each line once on every edge, at most 2 lines per edge', () => {
       const linesByEdge = new Map<string, string[]>();
       for (const k of slots.keys()) {
         const at = k.indexOf('@');
@@ -317,7 +362,7 @@ describe('bundleRoutes', () => {
         expect(new Set(lines).size).toBe(lines.length);
         maxLines = Math.max(maxLines, lines.length);
       }
-      expect(maxLines).toBe(4);
+      expect(maxLines).toBe(2);
     });
 
     it('draws one run per stretch: no line is drawn on two near-parallel paths', () => {
