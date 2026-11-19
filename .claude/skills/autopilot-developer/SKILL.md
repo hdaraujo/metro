@@ -9,6 +9,8 @@ If a `$play/design/` folder exists, this play already has a UI design I approved
 
 PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
 
+DOMAIN ONTOLOGY: this product's domain vocabulary is formalised as RDF/OWL ontologies (Turtle) in `documentation/ontologies/`: every `.ttl` file in `documentation/ontologies/`. They define what the product is about — its entities, actors, modules and the relations between them. Read the ones relevant to your task and use their terms EXACTLY: the same names in plans, code (types, tables, endpoints, variables), documents and conversation, so the product keeps a single vocabulary. When the work needs a concept the ontologies do not define, or contradicts one, say so explicitly rather than inventing a synonym. Treat `documentation/ontologies/` as read-only in this session.
+
 ---
 
 Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
