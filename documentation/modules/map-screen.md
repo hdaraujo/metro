@@ -184,9 +184,10 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
 - The base map is MapLibre GL with OpenStreetMap raster tiles, muted (desaturated and brightened)
   so that route colours stand out. Rotation and pitch are disabled. Before a location is known,
   the map opens on Coimbra at zoom 13.
-- Layers: every line shape in its line colour, and every stop as a small white circle. There are
-  no map glyphs or sprites. The user dot, the stop marker (a red dot with a name pill) and the bus
-  markers are DOM markers (`src/ui/map/markers.ts`).
+- Layers: the `routes` line layer (every line in its colour, see
+  [Route lines](#route-lines)), and above it the `stops` layer, every stop as a small white
+  circle. There are no map glyphs or sprites. The user dot, the stop marker (a red dot with a name
+  pill) and the bus markers are DOM markers (`src/ui/map/markers.ts`).
 - There is a single **stop marker**, on the shown stop. It looks the same for both kinds; its
   `aria-label` is `Nearest stop: {name}` or `Selected stop: {name}` (`StopKind`). While another
   stop is selected, the nearest stop has no marker of its own. `MapView` memoises the stop
@@ -223,6 +224,46 @@ state lives in `App.tsx` (`sheetCollapsed`), is not persisted, and is forced off
 - MapLibre's own attribution control is turned off and replaced by an attribution element that is
   always visible: "© OpenStreetMap contributors".
 - If WebGL is unavailable, the map fails to start and logs an error. The sheet still works.
+
+## Route lines
+
+Most of the network is a shared trunk (S1 and S2 overlap almost entirely, U1 runs on S1, U2 on
+S2), so lines are drawn **side by side** wherever they share a road, metro-map style, each in its
+own colour; a stretch used by one line is a single line centred on the road. The geometry is the
+pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` only renders it.
+
+- **Overlap means identical vertices.** The source's shapes share exactly identical vertices
+  where lines overlap, so overlap is found by matching edges (pairs of consecutive vertices,
+  keyed to 6 decimal places, direction ignored), with no geometric tolerance. Stretches whose
+  vertices don't match exactly are simply drawn un-offset, overlapping as they would without
+  bundling. If a future source digitises shared roads differently, this is where it degrades.
+- **Per line, not per shape.** A line's outbound and inbound shapes form one strand: each edge of
+  a line is drawn exactly once, whichever direction it comes from. Where a direction diverges
+  (U3), its own edges are drawn too.
+- **Slots.** On an edge carrying *n* lines, lines are ordered by id with plain string comparison
+  (`S1, S2, U1, U2, U3`) and get slots `i − (n−1)/2` (−0.5/+0.5 for two, −1/0/+1 for three…),
+  left to right relative to the edge's orientation.
+- **Orientation.** MapLibre's `line-offset` is relative to each line's drawing direction, and the
+  shapes are digitised in either direction. So every edge gets one consistent orientation,
+  grown greedily from the busiest edge, always continuing into the neighbour that shares the
+  most lines; this keeps each line on the same side along a corridor and through junctions where
+  the bundle continues. Each run's offset is then signed against its own travel direction.
+- **Runs.** The output is a list of `LineRun`s (`line`, `color`, `offset` in line widths,
+  `points`): consecutive edges of one line with the same offset. Where a line joins or leaves a
+  bundle its offset changes and a new run starts at the shared vertex; the small sideways jog
+  there is accepted (round caps soften it). A line's colour is that of its first shape.
+- The result is deterministic (same shapes → same runs, in order), and is recomputed whenever
+  the network refreshes (`routesGeoJson` feeds the `routes` source).
+- **Rendering.** Each run is a GeoJSON feature with `line`, `color` and `offset`. The `routes`
+  layer is `ROUTE_WIDTH_PX` (4 px) wide with
+  `line-offset = offset × ROUTE_WIDTH_PX`, so strands touch with no gap at every zoom, and the
+  bundle stays centred on the road. Widths are not zoom-dependent.
+- **Not offset:** the stop circles stay on the road, so they sit in the middle of a bundle, and
+  bus markers are still interpolated on the original, un-offset shapes, i.e. at the bundle's
+  centre, not on their own strand. Bus pills are wider than a bundle, so this reads fine.
+- Tests (`routeBundles.test.ts`) check slots by *geographic* side of each edge rather than the
+  internal orientation, so the orientation heuristic can change without rewriting them; on the
+  recorded fixture they require every edge's slots to be distinct and centred.
 
 ## Smart zoom
 

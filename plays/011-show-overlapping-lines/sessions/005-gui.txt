@@ -1,0 +1,188 @@
+> You are the Autopilot Developer for this play. Read `plays/011-show-overlapping-lines/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/011-show-overlapping-lines/design/` folder exists, this play already has a UI design I approved: read `plays/011-show-overlapping-lines/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &...)
+  ⎿ # Play 011 — Show overlapping lines side by side
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ Intent: *"When lines overlap in the map only one is visible. Make it so if more than one line
+  ⎿ overlap show them side by side so all are visible."*
+  ⎿ 
+  ⎿ Today `MapView.tsx` draws every shape (`network.shapes`, 10 of them: S1, S2, U1, U2, U3 × Ida/Volta)
+  ⎿ as a plain 4 px line in its colour, all on the same layer. Most of the network is a shared trunk
+  ⎿ (in the recorded fixture, S1/S2 overlap ~95 %, U1 lies entirely on S1, U2 on S2, etc.), so whichever
+  ⎿ line is drawn last hides the others and the rider can't tell which lines run where.
+  ⎿ 
+  ⎿ Goal: wherever two or more **lines** share a stretch of road, draw them as parallel strands side by
+  ⎿ side (metro-map style), each in its own colour, centred on the road. A stretch used by one line
+  ⎿ looks exactly as today. Nothing else on the map changes. No new screen → no UI design was needed
+  ⎿ (the design triage in session 002 confirmed this).
+  ⎿ 
+  ⎿ **Repositories touched: `metro` only** (code in `src/`). No other repository.
+  ⎿ 
+  ⎿ ### Key facts from exploration (the algorithm relies on them)
+  ⎿ … +427 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &...)
+  ⎿ /** Geographic coordinates. Inside the domain always `{ lat, lng }`; MapLibre's `[lng, lat]` lives in `src/ui/map/`. */
+  ⎿ export interface LatLng {
+  ⎿   lat: number;
+  ⎿   lng: number;
+  ⎿ }
+  ⎿ 
+  ⎿ /** A Metrobus line, e.g. 'S1' | 'S2' | 'U1' | 'U2' | 'U3' in the current data. */
+  ⎿ export type LineId = string;
+  ⎿ 
+  ⎿ export type Direction = 'outbound' | 'inbound';
+  ⎿ 
+  ⎿ /** Timetable day type: weekday (`DU`), Saturday (`Sab`), Sunday and public holidays (`Dom`). */
+  ⎿ export type DayType = 'DU' | 'Sab' | 'Dom';
+  ⎿ 
+  ⎿ export interface Stop {
+  ⎿   id: string;
+  ⎿   code: string;
+  ⎿   name: string;
+  ⎿   lines: LineId[];
+  ⎿   coords: LatLng;
+  ⎿ … +454 more lines
+  → Write(file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\src\do..., content: import type { LatLng, LineId, Shape } from './types';
+
+/** One drawable piece...)
+  ⎿ File created successfully at: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\src\domain\routeBundles.ts (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &..., timeout: 600000)
+  ⎿ npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+  ⎿ 
+  ⎿ added 500 packages in 14s
+
+● Now the tests.
+
+  → Write(file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\src\do..., content: import { describe, expect, it } from 'vitest';
+import shapesJson from '../../...)
+  ⎿ File created successfully at: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\src\domain\routeBundles.test.ts (file state is current in your context — no need to Read it back)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &..., timeout: 300000)
+  ⎿  RUN  v5.0.2 C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  1 passed (1)
+  ⎿       Tests  8 passed (8)
+  ⎿    Start at  15:26:44
+  ⎿    Duration  273ms (transform 55%, import 30%, tests 12%, worker 4%)
+
+● Now MapView.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &..., timeout: 600000)
+  ⎿  src/ui/map/MapView.tsx | 689 +++++++++++++++++++++++++------------------------
+  ⎿  1 file changed, 348 insertions(+), 341 deletions(-)
+  ⎿ src/domain/routeBundles.ts 89ms
+  ⎿ src/domain/routeBundles.test.ts 24ms
+  ⎿ src/ui/map/MapView.tsx 29ms
+  ⎿ 
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿  RUN  v5.0.2 C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  12 passed (12)
+  ⎿       Tests  121 passed (121)
+  ⎿ … +3 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &...)
+  ⎿ /dev/stdin: JavaScript source, ASCII text
+  ⎿ src/ui/map/MapView.tsx: JavaScript source, ASCII text
+  ⎿ root = true
+  ⎿ 
+  ⎿ [*]
+  ⎿ charset = utf-8
+  ⎿ end_of_line = lf
+  ⎿ indent_style = space
+  ⎿ indent_size = 2
+  ⎿ insert_final_newline = true
+  ⎿ trim_trailing_whitespace = true
+  ⎿ 
+  ⎿ [*.md]
+  ⎿ trim_trailing_whitespace = false
+  ⎿ {
+  ⎿   "singleQuote": true,
+  ⎿   "semi": true,
+  ⎿   "printWidth": 100,
+  ⎿   "trailingComma": "all"
+  ⎿ }
+  ⎿ … +1 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &...)
+  ⎿  package-lock.json                                  | 16 ----------
+  ⎿  plays/011-show-overlapping-lines/devops.yaml       |  2 ++
+  ⎿  plays/011-show-overlapping-lines/positions.yaml    |  2 +-
+  ⎿  .../011-show-overlapping-lines/sessions/info.yaml  | 35 +++++++++++++++++++++-
+  ⎿  src/ui/map/MapView.tsx                             | 15 +++++++---
+  ⎿  5 files changed, 48 insertions(+), 22 deletions(-)
+  ⎿ diff --git a/src/ui/map/MapView.tsx b/src/ui/map/MapView.tsx$
+  ⎿ index 6ceadbd..61eaa51 100644$
+  ⎿ --- a/src/ui/map/MapView.tsx$
+  ⎿ +++ b/src/ui/map/MapView.tsx$
+  ⎿ @@ -15,6 +15,7 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';$
+  ⎿  import type { FeatureCollection } from 'geojson';$
+  ⎿  import { useEffect, useImperativeHandle, useMemo, useRef, useState, type Ref } from 'react';$
+  ⎿  import { nearestStop } from '../../domain/nearestStop';$
+  ⎿ +import { bundleRoutes } from '../../domain/routeBundles';$
+  ⎿  import type { BusPosition, LatLng, LineId, Network, Stop } from '../../domain/types';$
+  ⎿  import { prefersReducedMotion } from '../hooks/useMediaQuery';$
+  ⎿  import { mapStyle } from './mapStyle';$
+  ⎿ @@ -34,6 +35,8 @@ setWorkerUrl(workerUrl);$
+  ⎿  const INITIAL_CENTER: [number, number] = [-8.4196, 40.2056];$
+  ⎿ … +6 more lines
+
+● npm install touched `package-lock.json`; restoring it, then build and e2e.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &..., timeout: 600000)
+  ⎿ mode      generateSW
+  ⎿ precache  12 entries (1849.92 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  ⎿ |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.6 MiB
+  ⎿ Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) downloaded to C:\Users\haraujo\AppData\Local\ms-playwright\chromium_headless_shell-1243
+  ⎿   ok 34 [desktop] › tests\e2e\map.spec.ts:458:3 › located near Portagem › desktop: the panel has no minimise control (2.5s)
+  ⎿   ok 35 [desktop] › tests\e2e\map.spec.ts:466:3 › located near Portagem › buses draw beneath the sheet (2.9s)
+  ⎿   ok 32 [desktop] › tests\e2e\map.spec.ts:405:3 › located near Portagem › cycles the direction filter (6.3s)
+  ⎿   ok 36 [desktop] › tests\e2e\map.spec.ts:530:3 › selecting a stop › selects a stop and frames it (3.8s)
+  ⎿   ok 37 [desktop] › tests\e2e\map.spec.ts:558:3 › selecting a stop › tapping away returns to the nearest stop (4.0s)
+  ⎿   ok 39 [desktop] › tests\e2e\map.spec.ts:587:3 › selecting a stop › the locate button clears the selection (5.5s)
+  ⎿   ok 38 [desktop] › tests\e2e\map.spec.ts:577:3 › selecting a stop › tapping empty map with nothing selected changes nothing (5.8s)
+  ⎿   ok 41 [desktop] › tests\e2e\map.spec.ts:606:3 › selecting a stop › desktop: the cursor points over a stop (5.2s)
+  ⎿   ok 40 [desktop] › tests\e2e\map.spec.ts:595:3 › selecting a stop › tapping the nearest stop keeps "Nearest stop" (6.3s)
+  ⎿   ok 42 [desktop] › tests\e2e\map.spec.ts:627:3 › location denied › explains that location is off and keeps the map (4.9s)
+  ⎿   ok 44 [desktop] › tests\e2e\map.spec.ts:663:1 › attribution links to the OpenStreetMap copyright page (4.1s)
+  ⎿   ok 43 [desktop] › tests\e2e\map.spec.ts:639:5 › location denied › selecting › selects a stop without a location (6.4s)
+  ⎿ 
+  ⎿ … +2 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro" &...)
+  ⎿  M plays/011-show-overlapping-lines/devops.yaml
+  ⎿  M plays/011-show-overlapping-lines/positions.yaml
+  ⎿  M plays/011-show-overlapping-lines/sessions/info.yaml
+  ⎿  M src/ui/map/MapView.tsx
+  ⎿ ?? plays/011-show-overlapping-lines/sessions/004-dave.pty
+  ⎿ ?? plays/011-show-overlapping-lines/sessions/004-dave.txt
+  ⎿ ?? src/domain/routeBundles.test.ts
+  ⎿ ?? src/domain/routeBundles.ts
+
+● I've implemented the plan in the `metro` worktree: where lines share a stretch of road, the map now draws them side by side in their own colours. Lint, typecheck, unit tests (121), build and the Playwright e2e suite (36 passed, 8 skipped) all pass. I didn't do the manual check from the plan (opening the dev server and zooming into central Coimbra), so nobody has looked at the result on screen yet.
+
+- **New `src/domain/routeBundles.ts`:** `bundleRoutes(shapes)` returns `LineRun[]`, each a stretch of one line with its colour, a sideways offset and its points. It follows the plan's algorithm.
+  - **Overlap:** two shapes overlap on a stretch where they share exactly the same consecutive points.
+  - **Order:** lines are ranked by name (S1, S2, U1, U2, U3), and that sets their left-to-right order wherever they share a stretch.
+  - **Sides:** each line keeps the same side along a shared stretch, even where shapes were drawn in opposite directions.
+  - **No double drawing:** each line draws each stretch once, so its outbound and return shapes no longer overlap each other.
+  - Repeated points and shapes with fewer than two points are handled. The output is always the same for the same input.
+- **New `src/domain/routeBundles.test.ts`:** 8 tests. They cover the plan's synthetic cases (one line, shared stretch, opposite directions, lines joining and leaving, bad input, input order) and the recorded network. On the recorded data, the lines on each stretch get distinct, centred positions, every stretch is covered once per line, and at least one stretch carries 4 or more lines.
+- **`src/ui/map/MapView.tsx`:** added `ROUTE_WIDTH_PX = 4`. `routesGeoJson` now builds its features from `bundleRoutes`, and the `routes` layer shifts each strand sideways by its offset times the width. Stops, tap targets, markers and bus positions are unchanged.
+
+`npm install` had modified `package-lock.json`, so I restored it. Nothing is committed, and nothing under `documentation/` was touched.

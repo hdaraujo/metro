@@ -3,3 +3,24 @@ events:
     at: '2026-11-19T15:20:37.829Z'
     from: ideation
     to: working
+  - kind: transition
+    at: '2026-11-19T15:31:13.018Z'
+    from: working
+    to: validation
+  - kind: decision
+    at: '2026-11-19T15:32:36.296Z'
+    question: 'Ready for review: show overlapping lines'
+    agent: Dave
+    resolution: approved
+    session_id: a76922c9a4f34db1b0e61210b4840e6d
+  - kind: transition
+    at: '2026-11-19T15:32:36.299Z'
+    from: validation
+    to: completed
+  - kind: document
+    at: '2026-11-19T15:33:38.839Z'
+    folder: modules
+    name: map-screen.md
+    agent: Paula
+    action: updated
+    base: 72b3b2b1e1458dc39d43bacfcdbd56ea58ebae01

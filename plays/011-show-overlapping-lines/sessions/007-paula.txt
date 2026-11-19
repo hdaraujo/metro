@@ -1,0 +1,90 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `011-show-overlapping-lines`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/011-show-overlapping-lines/intent.md` and `plays/011-show-overlapping-lines/plan.md`, then read the real changes on the `011-show-overlapping-lines` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/` and `documentation/ontologies/`, which you may write in this session.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro"; ..., description: Read play intent, plan, docs and branch changes)
+  ⎿ When lines overlap in the map only one is visible. Make it so if more than one line overlap show them side by side so all are visible# Play 011 — Show overlapping lines side by side
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ Intent: *"When lines overlap in the map only one is visible. Make it so if more than one line
+  ⎿ overlap show them side by side so all are visible."*
+  ⎿ 
+  ⎿ Today `MapView.tsx` draws every shape (`network.shapes`, 10 of them: S1, S2, U1, U2, U3 × Ida/Volta)
+  ⎿ as a plain 4 px line in its colour, all on the same layer. Most of the network is a shared trunk
+  ⎿ (in the recorded fixture, S1/S2 overlap ~95 %, U1 lies entirely on S1, U2 on S2, etc.), so whichever
+  ⎿ line is drawn last hides the others and the rider can't tell which lines run where.
+  ⎿ 
+  ⎿ Goal: wherever two or more **lines** share a stretch of road, draw them as parallel strands side by
+  ⎿ side (metro-map style), each in its own colour, centred on the road. A stretch used by one line
+  ⎿ looks exactly as today. Nothing else on the map changes. No new screen → no UI design was needed
+  ⎿ (the design triage in session 002 confirmed this).
+  ⎿ 
+  ⎿ **Repositories touched: `metro` only** (code in `src/`). No other repository.
+  ⎿ 
+  ⎿ ### Key facts from exploration (the algorithm relies on them)
+  ⎿ … +311 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/011/metro"; ..., description: Read map doc and code changes)
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop (or any stop they tap), every Metrobus bus in service, and a
+  ⎿ countdown for each bus heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content, and it can be minimised
+  ⎿   (see [Minimising the phone sheet](#minimising-the-phone-sheet)).
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet, always expanded: it has no handle and cannot be minimised.
+  ⎿   The locate button sits at the bottom right, with the attribution below it.
+  ⎿ - **Stacking.** `.map` has `z-index: 0` so that it forms its own stacking context. Marker
+  ⎿   z-indexes (for example `.marker-bus--approaching`, which lifts approaching buses above the
+  ⎿   others) then stay inside the map, and the wordmark, sheet, panel and controls, which come later
+  ⎿ … +530 more lines
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\docume..., old_string: - Layers: every line shape in its line colour, and every stop as a small whit..., new_string: - Layers: the `routes` line layer (every line in its colour, see
+  [Route lin...)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\docume..., old_string: ## Smart zoom, new_string: ## Route lines
+
+Most of the network is a shared trunk (S1 and S2 overlap almo...)
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\documentation\modules\map-screen.md has been updated successfully.
+  ⎿ The file C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\documentation\modules\map-screen.md has been updated successfully.
+  → Grep(pattern: shapes, path: C:\Users\haraujo\.building\data\projects\003-metro\worktrees\011\metro\src\do..., output_mode: content)
+  ⎿ 32:  shapesById: ReadonlyMap<string, MeasuredShape>;
+  ⎿ 63:/** Memoised per `shapesById` map, so the lookup is built once rather than on every tick. */
+  ⎿ 64:const shapesByLineCache = new WeakMap<
+  ⎿ 69:function shapesByLine(
+  ⎿ 70:  shapesById: ReadonlyMap<string, MeasuredShape>,
+  ⎿ 72:  let byLine = shapesByLineCache.get(shapesById);
+  ⎿ 75:    for (const measured of shapesById.values()) {
+  ⎿ 79:    shapesByLineCache.set(shapesById, byLine);
+  ⎿ 106:  shapesById,
+  ⎿ 110:  const shapes = shapesByLine(shapesById);
+  ⎿ 122:      const measured = shapes.get(shapeKey(trip.line, trip.direction));
+
+● I updated the existing `documentation/modules/map-screen.md` instead of adding a new document, because that document already covers the map. Nothing is committed.
+
+- **Map → Layers bullet:** now names the `routes` layer with the `stops` layer drawn above it, and links to the new section.
+- **New "Route lines" section:** explains how lines that share a road are drawn side by side.
+  - **How it's computed:** the pure function `bundleRoutes` in `src/domain/routeBundles.ts`. Two lines overlap only where their vertices are exactly identical; anywhere else they are drawn on the road centre, so they overlap as before.
+  - **Per line, not per direction:** a line's two directions are drawn as one strand, and each piece of road is drawn once per line.
+  - **Order across the road:** lines are ordered by id across the road, the bundle is centred on it, and each line keeps its side along a shared stretch.
+  - **Drawing:** strands are 4 px wide and touch with no gap. A line steps sideways slightly where it joins or leaves a bundle; that step is accepted.
+  - **What stays on the road centre:** stop circles and bus markers. Buses are still placed on the original route shapes, which I checked in `src/domain/buses.ts`.
+  - **Tests:** they check which side of the road each line is on, not the internal direction choice, so that choice can change without rewriting them.
+
+The code matched the plan, so nothing in the document had to correct it.

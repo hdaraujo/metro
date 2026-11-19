@@ -15,6 +15,7 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import type { FeatureCollection } from 'geojson';
 import { useEffect, useImperativeHandle, useMemo, useRef, useState, type Ref } from 'react';
 import { nearestStop } from '../../domain/nearestStop';
+import { bundleRoutes } from '../../domain/routeBundles';
 import type { BusPosition, LatLng, LineId, Network, Stop } from '../../domain/types';
 import { prefersReducedMotion } from '../hooks/useMediaQuery';
 import { mapStyle } from './mapStyle';
@@ -34,6 +35,8 @@ setWorkerUrl(workerUrl);
 const INITIAL_CENTER: [number, number] = [-8.4196, 40.2056];
 const INITIAL_ZOOM = 13;
 const FALLBACK_LINE_COLOR = '#1f5fa8';
+/** Width of a route strand; lines sharing a road sit side by side, one width apart. */
+const ROUTE_WIDTH_PX = 4;
 /** How far from a stop's circle, in pixels, a tap still selects it: a 32px target. */
 const STOP_HIT_RADIUS_PX = 16;
 
@@ -63,10 +66,10 @@ const toLngLat = (p: LatLng): [number, number] => [p.lng, p.lat];
 function routesGeoJson(network: Network): FeatureCollection {
   return {
     type: 'FeatureCollection',
-    features: network.shapes.map((shape) => ({
+    features: bundleRoutes(network.shapes).map((run) => ({
       type: 'Feature',
-      properties: { id: shape.id, color: shape.color },
-      geometry: { type: 'LineString', coordinates: shape.points.map(toLngLat) },
+      properties: { line: run.line, color: run.color, offset: run.offset },
+      geometry: { type: 'LineString', coordinates: run.points.map(toLngLat) },
     })),
   };
 }
@@ -97,7 +100,11 @@ function showNetwork(map: MapLibreMap, network: Network) {
     type: 'line',
     source: 'routes',
     layout: { 'line-cap': 'round', 'line-join': 'round' },
-    paint: { 'line-color': ['get', 'color'], 'line-width': 4 },
+    paint: {
+      'line-color': ['get', 'color'],
+      'line-width': ROUTE_WIDTH_PX,
+      'line-offset': ['*', ['get', 'offset'], ROUTE_WIDTH_PX],
+    },
   });
   map.addLayer({
     id: 'stops',
