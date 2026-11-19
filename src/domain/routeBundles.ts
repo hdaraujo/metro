@@ -1,4 +1,12 @@
+import { haversineMeters } from './geo';
 import type { LatLng, LineId, Shape } from './types';
+
+/**
+ * An inbound vertex within this distance of a vertex of the same line's outbound shape is
+ * drawn at that outbound vertex, so a line's two directions form one strand even where they
+ * stop at the opposite stops of a pair across a street (e.g. Câmara (asc)/(desc)).
+ */
+export const DIRECTION_MERGE_METERS = 75;
 
 /** One drawable piece of a line: consecutive edges with the same sideways offset. */
 export interface LineRun {
@@ -37,17 +45,20 @@ const directionOrder = (shape: Shape) => (shape.direction === 'outbound' ? 0 : 1
  * Splits every line's shapes into runs that can be drawn side by side: wherever several lines
  * share a stretch of road (identical consecutive vertices), each line gets its own sideways slot,
  * ordered by line id, centred on the road. A stretch used by one line has offset 0. Every edge of
- * a line is drawn once, whichever of the line's shapes (directions) it comes from.
+ * a line is drawn once, whichever of the line's shapes (directions) it comes from. Inbound
+ * vertices within `DIRECTION_MERGE_METERS` of the same line's outbound vertices are snapped onto
+ * them first, so each line is one strand for both directions.
  *
  * Deterministic: the same shapes give the same runs, in the same order.
  */
 export function bundleRoutes(shapes: readonly Shape[]): LineRun[] {
+  const merged = mergeDirections(shapes);
   const latLngByKey = new Map<string, LatLng>();
   const colorByLine = new Map<LineId, string>();
 
   // 1. Each shape as a list of distinct consecutive vertex keys.
   const vertexPaths = new Map<Shape, string[]>();
-  for (const shape of shapes) {
+  for (const shape of merged) {
     if (!colorByLine.has(shape.line)) colorByLine.set(shape.line, shape.color);
     const keys: string[] = [];
     for (const point of shape.points) {
@@ -60,7 +71,7 @@ export function bundleRoutes(shapes: readonly Shape[]): LineRun[] {
 
   // 2. Line rank: the left-to-right order of strands on every edge.
   const lineRank = new Map(
-    [...new Set(shapes.map((s) => s.line))].sort(compare).map((line, i) => [line, i]),
+    [...new Set(merged.map((s) => s.line))].sort(compare).map((line, i) => [line, i]),
   );
 
   // 3. Undirected edges and the lines using them.
@@ -138,6 +149,49 @@ export function bundleRoutes(shapes: readonly Shape[]): LineRun[] {
     close(run);
   }
   return runs;
+}
+
+/**
+ * Snaps each inbound vertex onto the nearest vertex of the same line's outbound shapes when it
+ * lies within `DIRECTION_MERGE_METERS`, so both directions share edges. Returns the shapes in
+ * input order; unchanged shapes are returned as-is, changed ones as copies. Never mutates input.
+ */
+function mergeDirections(shapes: readonly Shape[]): Shape[] {
+  const anchorsByLine = new Map<LineId, LatLng[]>();
+  const outbound = shapes
+    .filter((s) => s.direction === 'outbound')
+    .sort((x, y) => compare(x.id, y.id));
+  for (const shape of outbound) {
+    let anchors = anchorsByLine.get(shape.line);
+    if (!anchors) {
+      anchors = [];
+      anchorsByLine.set(shape.line, anchors);
+    }
+    anchors.push(...shape.points);
+  }
+
+  return shapes.map((shape) => {
+    const anchors = anchorsByLine.get(shape.line);
+    if (shape.direction !== 'inbound' || !anchors || anchors.length === 0) return shape;
+    let changed = false;
+    const points = shape.points.map((p) => {
+      let best: LatLng | null = null;
+      let bestDistance = Infinity;
+      for (const anchor of anchors) {
+        const d = haversineMeters(p, anchor);
+        if (d < bestDistance) {
+          bestDistance = d;
+          best = anchor;
+        }
+      }
+      if (best && bestDistance <= DIRECTION_MERGE_METERS && best !== p) {
+        changed = true;
+        return best;
+      }
+      return p;
+    });
+    return changed ? { ...shape, points } : shape;
+  });
 }
 
 /**

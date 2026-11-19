@@ -251,12 +251,26 @@ pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` 
 
 - **Overlap means identical vertices.** The source's shapes share exactly identical vertices
   where lines overlap, so overlap is found by matching edges (pairs of consecutive vertices,
-  keyed to 6 decimal places, direction ignored), with no geometric tolerance. Stretches whose
-  vertices don't match exactly are simply drawn un-offset, overlapping as they would without
-  bundling. If a future source digitises shared roads differently, this is where it degrades.
-- **Per line, not per shape.** A line's outbound and inbound shapes form one strand: each edge of
-  a line is drawn exactly once, whichever direction it comes from. Where a direction diverges
-  (U3), its own edges are drawn too.
+  keyed to 6 decimal places, direction ignored), with no geometric tolerance *between lines*.
+  Stretches of different lines whose vertices don't match exactly are simply drawn un-offset,
+  overlapping as they would without bundling. If a future source digitises shared roads
+  differently, this is where it degrades.
+- **Per line, not per shape: one strand for both directions.** Before edges are built, every
+  inbound vertex is snapped onto the nearest vertex of the *same line's* outbound shape(s) when
+  it lies within `DIRECTION_MERGE_METERS` (75 m); otherwise it is kept. Then each edge of a line
+  is drawn exactly once, whichever direction it comes from, so a line's two directions are one
+  strand. Where a direction genuinely diverges (U3), its own edges are still drawn.
+  - Why: in the city centre S2, U2 and U3 run outbound past the `(desc)` stops and inbound past
+    the `(asc)` stops — separate stops on opposite sides of the street (Câmara and Mercado ≈ 5.5 m
+    apart, República ≈ 63 m). Without snapping that stretch showed six strands instead of three.
+  - Why 75 m: those three pairs are the only distinct same-line vertices closer than ~100 m on
+    the real network; the closest pair of different lines is ~104 m, and different lines are
+    never snapped onto each other anyway. A new source with tighter real divergences, or
+    opposite-direction stops more than 75 m apart, would need this revisited.
+  - Snapping is drawing-only: `mergeDirections` returns copies and never mutates
+    `network.shapes`. Anchors are taken from outbound shapes in shape-id order, ties go to the
+    earlier anchor, so the result does not depend on input order. A line with no outbound shape
+    is left as is.
 - **Slots.** On an edge carrying *n* lines, lines are ordered by id with plain string comparison
   (`S1, S2, U1, U2, U3`) and get slots `i − (n−1)/2` (−0.5/+0.5 for two, −1/0/+1 for three…),
   left to right relative to the edge's orientation.
@@ -275,12 +289,18 @@ pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` 
   layer is `ROUTE_WIDTH_PX` (4 px) wide with
   `line-offset = offset × ROUTE_WIDTH_PX`, so strands touch with no gap at every zoom, and the
   bundle stays centred on the road. Widths are not zoom-dependent.
-- **Not offset:** the stop circles stay on the road, so they sit in the middle of a bundle, and
-  bus markers are still interpolated on the original, un-offset shapes, i.e. at the bundle's
-  centre, not on their own strand. Bus pills are wider than a bundle, so this reads fine.
+- **Not offset or snapped:** the stop circles stay at their real coordinates, so they sit in the
+  middle of a bundle, and bus markers are still interpolated on the original, un-offset and
+  un-snapped shapes, i.e. at the bundle's centre, not on their own strand. Bus pills are wider
+  than a bundle, so this reads fine. On the merged centre stretch the `(asc)` stop circles and
+  inbound buses sit beside the strand rather than on it: ~5 m off at Câmara and Mercado, up to
+  ~63 m at República (asc).
 - Tests (`routeBundles.test.ts`) check slots by *geographic* side of each edge rather than the
   internal orientation, so the orientation heuristic can change without rewriting them; on the
-  recorded fixture they require every edge's slots to be distinct and centred.
+  recorded fixture they require every edge's slots to be distinct and centred, no edge to carry
+  a line twice (at most 4 lines on an edge: S1, S2, U1, U2), every outbound edge to be drawn,
+  and exactly S2, U2 and U3 — with none of the `(asc)`-only vertices — between the junction
+  west of Câmara and República.
 
 ## Smart zoom
 

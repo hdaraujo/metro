@@ -1,0 +1,76 @@
+> You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `014-reduce-lines-to-3`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `plays/014-reduce-lines-to-3/intent.md` and `plays/014-reduce-lines-to-3/plan.md`, then read the real changes on the `014-reduce-lines-to-3` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/modules/` and `documentation/ontologies/`, which you may write in this session.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Read play intent, plan, docs)
+  ⎿ Show only one line in the map for both directions# Play 014 — One strand per line for both directions ("reduce lines to 3")
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ Intent: *"Show only one line in the map for both directions."*
+  ⎿ 
+  ⎿ Play 011 draws lines side by side (`bundleRoutes` in `src/domain/routeBundles.ts`) and already
+  ⎿ merges a line's outbound and inbound shapes wherever they share **identical** vertices. In the
+  ⎿ real data (recorded fixture and today's live `route-shapes.json`, which are identical) that holds
+  ⎿ everywhere except one stretch in the city centre: S2, U2 and U3 run outbound past the
+  ⎿ `(desc)` stops and inbound past the `(asc)` stops, which are separate stops on opposite sides of
+  ⎿ the same street:
+  ⎿ 
+  ⎿ | Stop pair | outbound (`desc`) vertex | inbound (`asc`) vertex | apart |
+  ⎿ | --- | --- | --- | --- |
+  ⎿ | Câmara | 40.211257, -8.429836 | 40.211255, -8.429770 | 5.6 m |
+  ⎿ | Mercado | 40.211581, -8.424759 | 40.211565, -8.424820 | 5.5 m |
+  ⎿ | República | 40.209825, -8.419701 | 40.209594, -8.420384 | 63.4 m |
+  ⎿ 
+  ⎿ Because the vertices differ, each of these three lines' outbound and inbound edges are treated
+  ⎿ … +286 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Show code diff and map doc section)
+  ⎿  plays/014-reduce-lines-to-3/devops.yaml           |   2 +
+  ⎿  plays/014-reduce-lines-to-3/positions.yaml        |   2 +-
+  ⎿  plays/014-reduce-lines-to-3/sessions/004-dave.pty |  27 ++++
+  ⎿  plays/014-reduce-lines-to-3/sessions/004-dave.txt |  51 ++++++
+  ⎿  plays/014-reduce-lines-to-3/sessions/005-gui.pty  | 183 ++++++++++++++++++++++
+  ⎿  plays/014-reduce-lines-to-3/sessions/005-gui.txt  | 161 +++++++++++++++++++
+  ⎿  plays/014-reduce-lines-to-3/sessions/info.yaml    |  56 ++++++-
+  ⎿  src/domain/routeBundles.test.ts                   | 127 ++++++++++++++-
+  ⎿  src/domain/routeBundles.ts                        |  60 ++++++-
+  ⎿  9 files changed, 661 insertions(+), 8 deletions(-)
+  ⎿ diff --git a/src/domain/routeBundles.ts b/src/domain/routeBundles.ts
+  ⎿ index 8bec143..f0ea01e 100644
+  ⎿ --- a/src/domain/routeBundles.ts
+  ⎿ +++ b/src/domain/routeBundles.ts
+  ⎿ @@ -1,5 +1,13 @@
+  ⎿ +import { haversineMeters } from './geo';
+  ⎿  import type { LatLng, LineId, Shape } from './types';
+  ⎿  
+  ⎿ +/**
+  ⎿ + * An inbound vertex within this distance of a vertex of the same line's outbound shape is
+  ⎿ … +180 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Update map-screen route lines section)
+  ⎿  documentation/modules/map-screen.md | 40 +++++++++++++++++++++++++++----------
+  ⎿  1 file changed, 30 insertions(+), 10 deletions(-)
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Check line endings unchanged)
+  ⎿ /dev/stdin: Unicode text, UTF-8 text, with very long lines (643)
+  ⎿ documentation/modules/map-screen.md: Unicode text, UTF-8 text, with very long lines (643)
+
+● I updated the "Route lines" section of `documentation/modules/map-screen.md` instead of adding a new document, because that section already covers this part of the product. The code matched the plan, so the document describes what was actually built.
+
+The section now covers:
+- **One strand per line:** before the map works out which roads lines share, each inbound vertex is moved onto the nearest vertex of the same line's outbound route if it is within `DIRECTION_MERGE_METERS` (75 m). As a result, each line is drawn as one strand for both directions.
+- **Why it was needed:** in the city centre, S2, U2 and U3 stop at paired stops on opposite sides of the street (Câmara, Mercado, República). Without the merge, that stretch showed six strands instead of three.
+- **Why 75 m, and when to revisit it:** the farthest pair is about 63 m apart, and the closest pair of vertices from different lines is about 104 m apart. Lines are only ever merged with themselves, never with another line.
+- **Limits worth knowing:** the merge only changes how lines are drawn. The original route data is untouched, the result does not depend on input order, and a line with no outbound route is left as is.
+- **Side effect:** stop circles and bus markers still use real coordinates. On the centre stretch, the stops on the inbound side and the buses going that way sit beside the strand rather than on it: about 5 m off at Câmara and Mercado, and about 63 m at República.
+- **What the tests now check on the recorded data:** no line appears twice on a road, at most 4 lines share one road, every outbound road is drawn, and only S2, U2 and U3 appear between Câmara and República.
+
+I haven't committed anything; Building will commit the document on the play's branch.

@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import shapesJson from '../../tests/fixtures/route-shapes.json';
 import { parseShapes } from '../sources/metrobusTimetable';
-import { bundleRoutes, type LineRun } from './routeBundles';
+import { bundleRoutes, DIRECTION_MERGE_METERS, type LineRun } from './routeBundles';
+import { haversineMeters } from './geo';
 import type { Direction, LatLng, LineId, Shape } from './types';
 
 const P = (lat: number, lng: number): LatLng => ({ lat, lng });
@@ -110,6 +111,82 @@ describe('bundleRoutes', () => {
     ]);
   });
 
+  describe("merging a line's two directions", () => {
+    const [p0, p1, p2, p3] = corridor as [LatLng, LatLng, LatLng, LatLng];
+    const near = (p: LatLng) => P(p.lat + 0.00005, p.lng);
+    const far = (p: LatLng) => P(p.lat, p.lng + 0.0025);
+
+    it('merges near-parallel directions into one strand on the outbound coordinates', () => {
+      const runs = bundleRoutes([
+        shape('A-0', 'A', 'outbound', [p0, p1, p2, p3]),
+        shape('A-1', 'A', 'inbound', [p3, near(p2), near(p1), p0]),
+      ]);
+      expect(runs).toEqual([{ line: 'A', color: '#000000', offset: 0, points: [p0, p1, p2, p3] }]);
+      const drawn = runs.flatMap((r) => r.points.map(key));
+      expect(drawn).not.toContain(key(near(p1)));
+      expect(drawn).not.toContain(key(near(p2)));
+    });
+
+    it('keeps a far divergence', () => {
+      const runs = bundleRoutes([
+        shape('A-0', 'A', 'outbound', [p0, p1, p2, p3]),
+        shape('A-1', 'A', 'inbound', [p3, far(p2), far(p1), p0]),
+      ]);
+      const slots = slotsByLineEdge(runs);
+      for (const [a, b] of [
+        [p0, p1],
+        [p1, p2],
+        [p2, p3],
+        [p3, far(p2)],
+        [far(p2), far(p1)],
+        [far(p1), p0],
+      ] as const) {
+        expect(slots.has(`A@${edgeKey(a, b)}`)).toBe(true);
+      }
+    });
+
+    it('bundles merged lines together', () => {
+      const inbound = [p3, near(p2), near(p1), p0];
+      const runs = bundleRoutes([
+        shape('A-0', 'A', 'outbound', [p0, p1, p2, p3]),
+        shape('A-1', 'A', 'inbound', inbound),
+        shape('B-0', 'B', 'outbound', [p0, p1, p2, p3]),
+        shape('B-1', 'B', 'inbound', inbound),
+      ]);
+      const slots = slotsByLineEdge(runs);
+      expect(slots.size).toBe(6);
+      for (const [a, b] of [
+        [p0, p1],
+        [p1, p2],
+        [p2, p3],
+      ] as const) {
+        const e = edgeKey(a, b);
+        expect([slots.get(`A@${e}`), slots.get(`B@${e}`)].sort()).toEqual([-0.5, 0.5]);
+      }
+    });
+
+    it('never snaps across lines', () => {
+      const b = [p0, p1, p2, p3].map(near);
+      const runs = bundleRoutes([
+        shape('A-0', 'A', 'outbound', [p0, p1, p2, p3]),
+        shape('B-0', 'B', 'outbound', b),
+      ]);
+      expect(runs.filter((r) => r.line === 'B')).toEqual([
+        { line: 'B', color: '#000000', offset: 0, points: b },
+      ]);
+    });
+
+    it('does not mutate its input', () => {
+      const input = [
+        shape('A-0', 'A', 'outbound', [p0, p1, p2, p3]),
+        shape('A-1', 'A', 'inbound', [p3, near(p2), near(p1), p0]),
+      ];
+      const clone = structuredClone(input);
+      bundleRoutes(input);
+      expect(input).toEqual(clone);
+    });
+  });
+
   it('is deterministic and independent of input order', () => {
     const shapes = parseShapes(shapesJson);
     expect(bundleRoutes(shapes)).toEqual(bundleRoutes(shapes));
@@ -140,13 +217,57 @@ describe('bundleRoutes', () => {
     });
 
     it('covers every edge of every shape exactly once per line', () => {
+      const outboundPoints = (line: LineId) =>
+        shapes
+          .filter((s) => s.line === line && s.direction === 'outbound')
+          .flatMap((s) => s.points);
+      const isFar = (p: LatLng, line: LineId) =>
+        outboundPoints(line).every((o) => haversineMeters(p, o) > DIRECTION_MERGE_METERS);
       for (const s of shapes) {
         for (let i = 0; i + 1 < s.points.length; i++) {
-          if (key(s.points[i]!) === key(s.points[i + 1]!)) continue;
-          expect(slots.has(`${s.line}@${edgeKey(s.points[i]!, s.points[i + 1]!)}`)).toBe(true);
+          const [a, b] = [s.points[i]!, s.points[i + 1]!];
+          if (key(a) === key(b)) continue;
+          if (s.direction === 'inbound' && !(isFar(a, s.line) && isFar(b, s.line))) continue;
+          expect(slots.has(`${s.line}@${edgeKey(a, b)}`)).toBe(true);
         }
       }
       // slotsByLineEdge already fails if a line draws an edge twice.
+    });
+
+    it('draws S2, U2 and U3 as three strands between Câmara and República', () => {
+      const path = [
+        P(40.21035, -8.432479),
+        P(40.211257, -8.429836),
+        P(40.211581, -8.424759),
+        P(40.209825, -8.419701),
+      ];
+      for (let i = 0; i + 1 < path.length; i++) {
+        const e = edgeKey(path[i]!, path[i + 1]!);
+        const lines = [...slots.keys()]
+          .filter((k) => k.endsWith(`@${e}`))
+          .map((k) => k.slice(0, k.indexOf('@')))
+          .sort();
+        expect(lines).toEqual(['S2', 'U2', 'U3']);
+      }
+      const drawn = new Set(runs.flatMap((r) => r.points.map(key)));
+      for (const p of [P(40.211255, -8.42977), P(40.211565, -8.42482), P(40.209594, -8.420384)]) {
+        expect(drawn.has(key(p))).toBe(false);
+      }
+    });
+
+    it('draws each line at most once on every edge', () => {
+      const linesByEdge = new Map<string, string[]>();
+      for (const k of slots.keys()) {
+        const at = k.indexOf('@');
+        const e = k.slice(at + 1);
+        linesByEdge.set(e, [...(linesByEdge.get(e) ?? []), k.slice(0, at)]);
+      }
+      let maxLines = 0;
+      for (const lines of linesByEdge.values()) {
+        expect(new Set(lines).size).toBe(lines.length);
+        maxLines = Math.max(maxLines, lines.length);
+      }
+      expect(maxLines).toBe(4);
     });
   });
 });

@@ -1,0 +1,161 @@
+> You are the Autopilot Developer for this play. Read `plays/014-reduce-lines-to-3/plan.md` — it is the approved implementation plan and your source of truth. A DevOps engineer has already created an isolated git worktree for each target repository, already checked out on the play's branch — those worktrees are the directories attached to your session. Implement your changes directly inside them. Do not create or switch branches, do not create or move worktrees, and do not commit your changes yourself; DevOps will review your diff and commit it after you finish. Implement the plan fully across the attached worktrees in a single pass, then stop. Work autonomously: do not ask for confirmation and do not stop partway to check in. When you are done, end with a short summary statement of what you changed — not a question.
+
+If a `plays/014-reduce-lines-to-3/design/` folder exists, this play already has a UI design I approved: read `plays/014-reduce-lines-to-3/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Read plan, intent, and context docs)
+  ⎿ # Play 014 — One strand per line for both directions ("reduce lines to 3")
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ Intent: *"Show only one line in the map for both directions."*
+  ⎿ 
+  ⎿ Play 011 draws lines side by side (`bundleRoutes` in `src/domain/routeBundles.ts`) and already
+  ⎿ merges a line's outbound and inbound shapes wherever they share **identical** vertices. In the
+  ⎿ real data (recorded fixture and today's live `route-shapes.json`, which are identical) that holds
+  ⎿ everywhere except one stretch in the city centre: S2, U2 and U3 run outbound past the
+  ⎿ `(desc)` stops and inbound past the `(asc)` stops, which are separate stops on opposite sides of
+  ⎿ the same street:
+  ⎿ 
+  ⎿ | Stop pair | outbound (`desc`) vertex | inbound (`asc`) vertex | apart |
+  ⎿ | --- | --- | --- | --- |
+  ⎿ | Câmara | 40.211257, -8.429836 | 40.211255, -8.429770 | 5.6 m |
+  ⎿ | Mercado | 40.211581, -8.424759 | 40.211565, -8.424820 | 5.5 m |
+  ⎿ | República | 40.209825, -8.419701 | 40.209594, -8.420384 | 63.4 m |
+  ⎿ 
+  ⎿ Because the vertices differ, each of these three lines' outbound and inbound edges are treated
+  ⎿ … +334 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Read routeBundles source and tests)
+  ⎿ import type { LatLng, LineId, Shape } from './types';
+  ⎿ 
+  ⎿ /** One drawable piece of a line: consecutive edges with the same sideways offset. */
+  ⎿ export interface LineRun {
+  ⎿   line: LineId;
+  ⎿   /** The line's colour: the colour of its first shape in input order. */
+  ⎿   color: string;
+  ⎿   /**
+  ⎿    * Sideways offset in line widths, relative to the order of `points`:
+  ⎿    * positive = right of travel, negative = left, 0 = centred on the road.
+  ⎿    * Values are multiples of 0.5 (e.g. -1.5, -0.5, 0.5, 1.5 for four lines).
+  ⎿    */
+  ⎿   offset: number;
+  ⎿   /** At least 2 points, in travel order. */
+  ⎿   points: LatLng[];
+  ⎿ }
+  ⎿ 
+  ⎿ interface Edge {
+  ⎿   key: string;
+  ⎿   /** The two vertex keys, smaller first. */
+  ⎿ … +345 more lines
+
+● Now implement the source change.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Apply mergeDirections change to routeBundles.ts)
+  ⎿ 45: * Splits every line's shapes into runs that can be drawn side by side: wherever several lines
+  ⎿ 48: * a line is drawn once, whichever of the line's shapes (directions) it comes from. Inbound
+  ⎿ 52: * Deterministic: the same shapes give the same runs, in the same order.
+  ⎿ 54:export function bundleRoutes(shapes: readonly Shape[]): LineRun[] {
+  ⎿ 55:  const merged = mergeDirections(shapes);
+  ⎿ 155: * Snaps each inbound vertex onto the nearest vertex of the same line's outbound shapes when it
+  ⎿ 156: * lies within `DIRECTION_MERGE_METERS`, so both directions share edges. Returns the shapes in
+  ⎿ 157: * input order; unchanged shapes are returned as-is, changed ones as copies. Never mutates input.
+  ⎿ 159:function mergeDirections(shapes: readonly Shape[]): Shape[] {
+  ⎿ 161:  const outbound = shapes
+  ⎿ 173:  return shapes.map((shape) => {
+
+● Now the tests.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Add tests, format, run routeBundles tests)
+  ⎿ [[31merror[39m] src/domain/routeBundles.test.ts: SyntaxError: ',' expected. (114:28)
+  ⎿ [[31merror[39m]   112 |   });
+  ⎿ [[31merror[39m]   113 |
+  ⎿ [[31merror[39m] > 114 |   describe('merging a line's two directions', () => {
+  ⎿ [[31merror[39m]       |                            ^
+  ⎿ [[31merror[39m]   115 |     const [p0, p1, p2, p3] = corridor as [LatLng, LatLng, LatLng, LatLng];
+  ⎿ [[31merror[39m]   116 |     const near = (p: LatLng) => P(p.lat + 0.00005, p.lng);
+  ⎿ [[31merror[39m]   117 |     const far = (p: LatLng) => P(p.lat, p.lng + 0.0025);
+  ⎿  [38;5;240m  │[0m                                 ╰──── Module not found, treating it as an external dependency
+  ⎿ [38;5;246m───╯[0m
+  ⎿ 
+  ⎿ vite.config.ts (4:24) [33m[UNRESOLVED_IMPORT] [0mCould not resolve 'vite-plugin-pwa' in vite.config.ts
+  ⎿    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m vite.config.ts:4:25 [38;5;246m][0m
+  ⎿    [38;5;246m│[0m
+  ⎿  [38;5;246m4 │[0m [38;5;249mi[0m[38;5;249mm[0m[38;5;249mp[0m[38;5;249mo[0m[38;5;249mr[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249m{[0m[38;5;249m [0m[38;5;249mV[0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mP[0m[38;5;249mW[0m[38;5;249mA[0m[38;5;249m [0m[38;5;249m}[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249m [0m'vite-plugin-pwa'[38;5;249m;[0m
+  ⎿  [38;5;240m  │[0m                         ────────┬────────  
+  ⎿  [38;5;240m  │[0m                                 ╰────────── Module not found, treating it as an external dependency
+  ⎿ [38;5;246m───╯[0m
+  ⎿ 
+  ⎿ [31mfailed to load config from C:\Users\haraujo\.building\data\projects\003-metro\worktrees\014\metro\vite.config.ts[39m
+  ⎿ … +15 more lines
+
+● Fix the quote, and install deps (none in the worktree).
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Fix quote, install deps, run tests, timeout: 600000)
+  ⎿ ci=0
+  ⎿ [90msrc/domain/routeBundles.ts[39m 96ms (unchanged)
+  ⎿ src/domain/routeBundles.test.ts 37ms
+  ⎿ 
+  ⎿  RUN  v5.0.2 C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  1 passed (1)
+  ⎿       Tests  15 passed (15)
+  ⎿    Start at  16:06:17
+  ⎿    Duration  288ms (transform 57%, import 27%, tests 12%, worker 4%)
+
+● All 15 pass. Now the full verification suite.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Run lint, typecheck, tests, build, timeout: 600000)
+  ⎿ > metro@0.0.0 lint
+  ⎿ > eslint . && prettier --check .
+  ⎿ 
+  ⎿ Checking formatting...
+  ⎿ All matched files use Prettier code style!
+  ⎿ 
+  ⎿ > metro@0.0.0 typecheck
+  ⎿ > node ./node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+  ⎿ 
+  ⎿ 
+  ⎿  Test Files  12 passed (12)
+  ⎿       Tests  130 passed (130)
+  ⎿    Start at  16:06:34
+  ⎿    Duration  566ms (transform 50%, import 33%, tests 10%, worker 7%)
+  ⎿ 
+  ⎿ precache  12 entries (1851.97 KiB)
+  ⎿ files generated
+  ⎿   dist/sw.js
+  ⎿   dist/workbox-5a76e2bc.js
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/worktrees/014/metro"; ..., description: Run Playwright e2e suite and check status, timeout: 600000)
+  ⎿   ok 44 [desktop] › tests\e2e\map.spec.ts:664:3 › location denied › explains that location is off and keeps the map (4.2s)
+  ⎿   ok 41 [desktop] › tests\e2e\map.spec.ts:624:3 › selecting a stop › the locate button clears the selection (6.3s)
+  ⎿   ok 43 [desktop] › tests\e2e\map.spec.ts:643:3 › selecting a stop › desktop: the cursor points over a stop (6.1s)
+  ⎿   ok 46 [desktop] › tests\e2e\map.spec.ts:700:1 › attribution links to the OpenStreetMap copyright page (4.3s)
+  ⎿   ok 45 [desktop] › tests\e2e\map.spec.ts:676:5 › location denied › selecting › selects a stop without a location (5.8s)
+  ⎿ 
+  ⎿   8 skipped
+  ⎿   38 passed (40.1s)
+  ⎿  M plays/014-reduce-lines-to-3/devops.yaml
+  ⎿  M plays/014-reduce-lines-to-3/positions.yaml
+  ⎿  M plays/014-reduce-lines-to-3/sessions/info.yaml
+  ⎿  M src/domain/routeBundles.test.ts
+  ⎿  M src/domain/routeBundles.ts
+  ⎿ ?? plays/014-reduce-lines-to-3/sessions/004-dave.pty
+  ⎿ ?? plays/014-reduce-lines-to-3/sessions/004-dave.txt
+
+● Each line on the map is now drawn as one strand for both directions, so the Câmara–Mercado–República stretch shows 3 strands (S2, U2, U3) instead of 6. I made all of the change in the `metro` worktree, in `src/domain/` only.
+
+**What changed:**
+- **`src/domain/routeBundles.ts`**: before drawing, `bundleRoutes` now moves each inbound point onto the nearest point of the same line's outbound route, if it is within 75 m (`DIRECTION_MERGE_METERS`). The two directions then share the same edges and are drawn once. It never moves a point onto a different line, and it does not change the input. The rest of the line-drawing logic is unchanged.
+- **`src/domain/routeBundles.test.ts`**:
+  - New small test cases: close directions merge, a far divergence is kept, two merged lines sit side by side, there is no snapping between lines, and the input is not mutated.
+  - On the recorded data, the "every edge is drawn" test now skips inbound edges that are close enough to snap.
+  - New checks on the recorded data: exactly S2, U2 and U3 on each edge from Câmara to República, the three inbound-only `(asc)` points are no longer drawn, no line appears twice on an edge, and the busiest edge has exactly 4 lines.
+
+**Checks:** lint, typecheck, unit tests (130 passed), build and the Playwright suite (38 passed, 8 skipped) all pass.
+
+- **Not checked by eye:** I did not do the manual `npm run dev` check on a phone-sized screen, so nobody has looked at the three strands on the map yet.
+- **Unexpected on the map:** bus markers and stop circles stay at their real positions. An inbound bus near República (asc) can sit up to about 63 m from the drawn strand; elsewhere it is about 5 m or less.
+- **Setup:** I ran `npm ci` and installed Playwright's Chromium in the worktree to run the checks.
+
+I did not edit `documentation/` and did not commit.
