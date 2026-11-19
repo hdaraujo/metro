@@ -24,3 +24,12 @@ events:
     agent: Paula
     action: updated
     base: 72b3b2b1e1458dc39d43bacfcdbd56ea58ebae01
+  - kind: commit
+    at: '2026-11-19T15:33:45.000Z'
+    repo: metro
+    branch: main
+    sha: f077beead2da99c491b0e61af968a61a84ce58e1
+    subject: 'Play 011: show overlapping lines'
+    added: 1735
+    removed: 9
+    files: 16
