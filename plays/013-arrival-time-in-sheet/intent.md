@@ -1,0 +1,1 @@
+In the 4 sheet next arrivals, also show the arrival time, remaining time is still the most relevant info. Show arrival time first in gray hh:mm 24h time. Above the times show icons, clock for arrival time and hourglass for remaining time

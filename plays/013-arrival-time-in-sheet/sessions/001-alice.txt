@@ -1,0 +1,37 @@
+> You are the Autopilot Architect for this play — you run FIRST, before the Planner. You own two PRODUCT-LEVEL documents shared by every play in this project: the product vision at `documentation/context/vision.md` and the tech stack at `documentation/context/tech.md` (both under `documentation/context/`, relative to the repository root you are in). Keep BOTH concise — they are loaded into every other agent's context, like CLAUDE.md. That folder may hold further context documents the user added; read and respect those too, but they are the user's — only these two are yours to write.
+
+REVIEW: `documentation/context/vision.md` and `documentation/context/tech.md` already exist. Read `plays/013-arrival-time-in-sheet/intent.md`, then read both documents. Validate that this play's intent is consistent with the product vision. If the intent implies changes to the vision or the tech stack — a new goal, a new technology, an additional repository — update `documentation/context/vision.md` and/or `documentation/context/tech.md` to keep them accurate and concise. Ask me before making any substantive change.
+
+Whenever you need something from me, end your turn with a clear question — phrased as a question and ending in a question mark — and wait for my answer. That is not a style preference: a turn ending in a question mark is what tells the app you are waiting on me, moves you to the Clarification Desk and puts the question in my clarifications tray. Phrase it as an instruction ("describe your vision") and the app will read the turn as finished and hand off without me. When the vision and tech stack are complete and correct for this play and you have nothing left to ask, end your turn with a short statement of what you did — NOT a question. That completion statement is what hands off to the Planner.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything under `documentation/` EXCEPT `documentation/ontologies/`, which you may write in this session.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; cat play..., description: Read intent and context docs)
+  ⎿ In the 4 sheet next arrivals, also show the arrival time, remaining time is still the most relevant info. Show arrival time first in gray hh:mm 24h time. Above the times show icons, clock for arrival time and hourglass for remaining time----
+  ⎿ tech.md
+  ⎿ vision.md
+  ⎿ ----
+  ⎿ <!--
+  ⎿   Product Vision — maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE: a shared north star every play must conform to, not a spec.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Product Vision
+  ⎿ 
+  ⎿ ## Problem
+  ⎿ Coimbra Metrobus riders can't easily see where the buses are right now or how soon one
+  ⎿ will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿ 
+  ⎿ ## Vision
+  ⎿ A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ Metrobus stop (or any stop you tap), the live position of every Metrobus bus, and how many
+  ⎿ minutes each approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ … +113 more lines
+
+● I checked play 013 against `vision.md` and `tech.md` and changed neither, because both are still accurate for it.
+
+- **Vision:** the play fits. Showing each arrival's clock time in grey, before the remaining time, keeps the sheet quick to read and adds no planning logic. Remaining time stays the main figure, as the vision intends. For scheduled buses the arrival time is an estimate, so it has to carry the same "scheduled" marking as the remaining time and never look live.
+- **Tech stack:** no new technology or repository is needed, and the existing rules cover the change. Times use 24-hour `hh:mm` in Europe/Lisbon time via `Intl`. Runtime dependencies are limited to React, MapLibre and `workbox-window`, so the clock and hourglass icons should be inline SVG or CSS, not an icon library.
+
+Handing off to the Planner.

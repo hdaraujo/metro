@@ -1,0 +1,318 @@
+> You are the Autopilot Planner for this play, running in plan mode. Read `plays/013-arrival-time-in-sheet/CLAUDE.md` and `plays/013-arrival-time-in-sheet/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `plays/013-arrival-time-in-sheet/design/` folder exists, this play already has a UI design I approved: read `plays/013-arrival-time-in-sheet/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Skill(skill: autopilot-planner)
+  ⎿ Launching skill: autopilot-planner
+
+> Base directory for this skill: C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\.claude\skills\autopilot-planner
+
+You are the Autopilot Planner for this play, opened as an interactive session that the user drives directly. Your job is to shape a complete, unambiguous implementation plan from `$play/CLAUDE.md` and `$play/intent.md` — that plan becomes the Developer's sole specification. Do NOT start planning on your own: wait for the user's first message and follow their direction.
+
+## 1. Design triage (before any planning)
+
+You are the Autopilot Planner for this play, but you are NOT writing the implementation plan yet — that happens in a separate session straight after this one. This session exists to answer ONE question and, depending on the answer, to produce a visual design.
+
+STEP 1 — Read `$play/CLAUDE.md` and `$play/intent.md`, plus the project context documents named below. Then decide: does this play introduce a NEW user-facing screen, page, view or surface? Be strict about this. Changing, extending or restyling a screen that already exists does NOT count, and neither does work with no user interface at all (an API, a job, a migration, a refactor).
+
+STEP 2 — If the answer is NO: do nothing else. End your turn with a single line saying this play introduces no new user interface, so planning can start. That must be a statement, NOT a question — the statement is what hands off to planning.
+
+STEP 3 — If the answer is YES: end your turn with a clear question — ending in a question mark, which is what tells the app you are waiting on me — asking whether I want you to design a visual prototype of the new screens before you write the implementation plan. Name the screens you mean, in one line each, so I know what I would be getting. Then wait for my answer.
+- If I decline, end your turn with a single line saying we are going straight to planning — again a statement, not a question.
+- If I accept, do STEP 4.
+
+STEP 4 — Write the design brief, and STOP. Do NOT try to run the `design` skill yourself: it is reserved for explicit user invocation and the Skill tool will refuse it. I will run it for you the moment your brief is on disk.
+
+Write the brief to `$play/design/brief.md` — one short paragraph on what the product is, who it is for and the look and feel it should have, then one line per new screen naming it and saying what it does. Brief it from intent.md, the product vision and the tech stack, and look at the attached repositories first: if this product already has a frontend, say so and name its real colours, type and spacing so the design matches rather than inventing a new look. End the brief by saying the canvas payload must be saved as `$play/design/canvas.html`.
+
+Keep it compact — it is passed to the design skill as a single line, so write it as flowing prose with no headings, no bullet characters and no code blocks. Then end your turn with one short statement saying the brief is ready. NOT a question: that statement is what starts the design run.
+
+STEP 5 — Once the design skill has produced the canvas, leave the design in two places, both of which matter:
+1. `$play/design/design.md` — the published canvas URL, then one line per screen saying what it is and what it does. The Planner and the Developer read this file; keep it short and factual.
+2. `documentation/design/<play-id>-<play-name>-prototype.html` — how I actually LOOK at the prototype, from the Documentation tab of the project screen. Create the folder if it is not there. This file is rendered inside a sandboxed iframe with NO scripting, NO navigation and NO network, so it must be ONE self-contained page: every artboard's markup stacked one under another with a heading naming the screen, every style inline or in a `<style>` block in that same file, no script tags, and no references to any external file, font or image (inline any image as a data URI). Put the canvas URL at the top as plain visible text as well as a link — a link alone cannot be opened from that sandbox. Do NOT copy the canvas payload itself here; it needs JavaScript and would render as a blank page.
+
+If the canvas cannot be PUBLISHED, that is fine: keep the artboards the skill produced, still write both documents from them, and say plainly that the canvas was not published. That is the only fallback. If the design skill did not run at all, do NOT hand-write a canvas file or a prototype in its place — say plainly that the skill did not run and stop, so the problem is visible instead of being papered over with something that only looks like a design.
+
+STEP 6 — Hand the prototype to me for review, and STOP. Once both documents are written, end your turn by telling me in a few lines what you designed and where I can look at it, and then ASKING me to review the prototype and confirm it is what I want before you plan the implementation. End that turn on that question and wait — planning does not start until I have approved the design.
+- If I ask for changes, revise the design and both documents, then ask me again. Keep ending those turns on a question.
+- Only once I have actually approved it, end your turn with a single short statement saying the design is approved. That statement — and nothing else — is what starts the planning session. Never write it while I still owe you an answer.
+
+You are designing only. Do not modify anything in the repositories, do not implement anything, and do not write `$play/plan.md`.
+
+## 2. The implementation plan
+
+You are the Autopilot Planner for this play, running in plan mode. Read `$play/CLAUDE.md` and `$play/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `$play/design/` folder exists, this play already has a UI design I approved: read `$play/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+ONTOLOGY: the plan MUST contain a `## Concepts` section listing — one per line, as prefixed names such as `shop:Order` taken from the ontologies in `documentation/ontologies/` — every domain concept this play creates, changes or depends on. If the play needs a concept the ontologies do not define yet, or changes the meaning of one, add a `## Ontology changes` section describing each addition or change precisely: class or property, its prefixed name, label, one-sentence definition, and its parent class or domain and range. Do not edit the ontology files yourself; they are updated from that section once the play is approved.
+
+## 3. Documenting what shipped (once the play is approved)
+
+You are the Autopilot Planner for this play, but you are NOT planning anything now: the user has just APPROVED this play. You are working on its branch `$branch`: the directory you are in is the specs repository's worktree on that branch, and the play's code is in the attached worktrees. The code branches stay unmerged for the user to review; the specs branch — with your document — is squash-merged into the default branch once you finish. Your job in this session is to document what was actually implemented, so that someone meeting this part of the product later understands it without reading the diff.
+
+STEP 1 — Find out what was built. Read `$play/intent.md` and `$play/plan.md`, then read the real changes on the `$branch` branch of the project's repositories (`git log` and `git diff` against the default branch it was cut from). Where the plan and the code disagree, the CODE is the truth — the plan is only what was intended.
+
+STEP 2 — Find where it belongs. List `documentation/modules/` and read what is already there.
+- If a document there ALREADY covers this play, UPDATE it. Do not add a second document about the same thing.
+- Otherwise place a new document, respecting the granularity that already exists. If there are module folders, they are this product's modules: put the document in the one this play belongs to, and only create a new module folder if this play genuinely is a new part of the product. If the documents are flat, keep them flat.
+- If `documentation/modules/` is EMPTY, you are choosing the structure. Judge the size of the product from the vision, the tech stack and the repositories, then pick a granularity you would still be happy with after twenty more plays: a small product is served well by a few flat documents, a larger one by a handful of module folders. Say in one line why you chose what you chose.
+- DEPTH LIMIT: only `documentation/modules/<name>.md` or `documentation/modules/<module>/<name>.md` are possible. There is no third level — do not try to nest deeper.
+
+STEP 3 — Write it. Describe the PRODUCT, not the changeset: what this part does, how it behaves, the decisions and constraints worth knowing, and anything a future implementer would trip over. No changelog, no diff, no "we changed X to Y", no restating the intent. Keep it concise and concrete. Do not commit — Building commits your document on the play's branch once you finish. Then end your turn with a short statement of what you wrote and where — not a question.
+
+STEP 4 — Keep the ontology in step, before you end your turn. If `$play/plan.md` has an `## Ontology changes` section, or the code introduced domain concepts the ontologies in `documentation/ontologies/` do not define, apply them to the PROJECT-SPECIFIC ontology there — never to the copies of shared library ontologies: each new class or property with its rdfs:label, a one-sentence rdfs:comment and its parent class or domain and range, and bump the file's owl:versionInfo patch number. Keep it valid Turtle. Then make the first line under the title of the module document you wrote a `Concepts:` line listing the prefixed names of the concepts it covers.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: every document in `documentation/context/`. Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+DOMAIN ONTOLOGY: this product's domain vocabulary is formalised as RDF/OWL ontologies (Turtle) in `documentation/ontologies/`: every `.ttl` file in `documentation/ontologies/`. They define what the product is about — its entities, actors, modules and the relations between them. Read the ones relevant to your task and use their terms EXACTLY: the same names in plans, code (types, tables, endpoints, variables), documents and conversation, so the product keeps a single vocabulary. When the work needs a concept the ontologies do not define, or contradicts one, say so explicitly rather than inventing a synonym. Treat `documentation/ontologies/` as read-only in this session.
+
+---
+
+Arguments: `$play`. `$play` is the play's folder, e.g. `plays/001-checkout`.
+
+  → PowerShell(command: Get-ChildItem -Recurse plays/013-arrival-time-in-sheet | Select-Object FullNa..., description: Read play files and list documentation)
+  ⎿ FullName                                                                                                               
+  ⎿ --------                                                                                                               
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\sessions                
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\CLAUDE.md               
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\config.yaml             
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\design.yaml             
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\history.yaml            
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\intent.md               
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\positions.yaml          
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\sessions\001-alice.pty  
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\sessions\001-alice.txt  
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\sessions\002-paula.pty  
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\sessions\002-paula.txt  
+  ⎿ C:\Users\haraujo\.building\data\projects\003-metro\repos\metro\plays\013-arrival-time-in-sheet\sessions\info.yaml      
+  ⎿ # Play `013` â€” Autopilot session instructions
+  ⎿ 
+  ⎿ This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ vision + tech stack, the Planner then checks whether the play introduces a new
+  ⎿ user interface and â€” if the user wants one â€” designs a visual prototype before
+  ⎿ shaping an implementation plan (in plan mode), DevOps prepares an isolated git
+  ⎿ … +62 more lines
+  → PowerShell(command: Get-Content documentation/context/vision.md, documentation/context/tech.md, d..., description: Read context and module docs)
+  ⎿ <persisted-output>
+  ⎿ Output too large (39.8KB). Full output saved to: C:\Users\haraujo\.claude\projects\C--Users-haraujo--building-data-projects-003-metro-repos-metro\b39812df-b37f-48c0-bc78-79c689dbe430\tool-results\bejncppuo.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ <!--
+  ⎿   Product Vision â€” maintained by the Autopilot Architect.
+  ⎿   Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿   so keep it CONCISE: a shared north star every play must conform to, not a spec.
+  ⎿ -->
+  ⎿ 
+  ⎿ # Product Vision
+  ⎿ 
+  ⎿ ## Problem
+  ⎿ Coimbra Metrobus riders can't easily see where the buses are right now or how soon one
+  ⎿ will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿ 
+  ⎿ ## Vision
+  ⎿ A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ Metrobus stop (or any stop you tap), the live position of every Metrobus bus, and how many
+  ⎿ minutes each approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ … +22 more lines
+  → Read(file_path: C:\Users\haraujo\.claude\projects\C--Users-haraujo--building-data-projects-00...)
+  ⎿ 1	<!--
+  ⎿ 2	  Product Vision â€” maintained by the Autopilot Architect.
+  ⎿ 3	  Lives in the PROJECT ROOT and is loaded into every agent's context (like CLAUDE.md),
+  ⎿ 4	  so keep it CONCISE: a shared north star every play must conform to, not a spec.
+  ⎿ 5	-->
+  ⎿ 6	
+  ⎿ 7	# Product Vision
+  ⎿ 8	
+  ⎿ 9	## Problem
+  ⎿ 10	Coimbra Metrobus riders can't easily see where the buses are right now or how soon one
+  ⎿ 11	will reach their stop, so deciding when to leave home or work is guesswork.
+  ⎿ 12	
+  ⎿ 13	## Vision
+  ⎿ 14	A mobile-first web app that opens straight onto a map showing where you are, your nearest
+  ⎿ 15	Metrobus stop (or any stop you tap), the live position of every Metrobus bus, and how many
+  ⎿ 16	minutes each approaching bus is from that stop. You look at it and decide when to leave.
+  ⎿ 17	
+  ⎿ 18	## Target users
+  ⎿ 19	- **Primary: the owner.** A regular Metrobus rider checking a phone before heading out.
+  ⎿ 20	  They need to see at a glance how far away the next buses are.
+  ⎿ … +571 more lines
+  → PowerShell(command: Get-Content plays/013-arrival-time-in-sheet/design.yaml; Get-ChildItem src -R..., description: Read design.yaml, list src, read ApproachingBuses)
+  → Grep(pattern: StopArrival|arrivalAtStopSeconds|at:, path: src/domain/buses.ts, output_mode: content)
+  ⎿ phase: plan
+  ⎿ session_id: ba3be45b51e843ddb95441b5a023bf0f
+  ⎿ domain
+  ⎿ sources
+  ⎿ ui
+  ⎿ main.tsx
+  ⎿ domain\buses.test.ts
+  ⎿ domain\buses.ts
+  ⎿ domain\color.test.ts
+  ⎿ domain\color.ts
+  ⎿ domain\countdown.test.ts
+  ⎿ domain\countdown.ts
+  ⎿ domain\directions.test.ts
+  ⎿ domain\directions.ts
+  ⎿ domain\geo.test.ts
+  ⎿ domain\geo.ts
+  ⎿ domain\holidays.test.ts
+  ⎿ domain\holidays.ts
+  ⎿ domain\interpolation.test.ts
+  ⎿ domain\interpolation.ts
+  ⎿ … +108 more lines
+  ⎿ 12:  StopArrival,
+  ⎿ 87:  const aWait = a.arrivalAtStopSeconds;
+  ⎿ 88:  const bWait = b.arrivalAtStopSeconds;
+  ⎿ 149:        arrivalAtStopSeconds: call ? call.seconds - offset : null,
+  ⎿ 174:}: ArrivalsInput): StopArrival[] {
+  ⎿ 177:  const arrivals: StopArrival[] = [];
+  ⎿ 191:        arrivalAtStopSeconds: call.seconds - offset,
+  ⎿ 198:    (a, b) => a.arrivalAtStopSeconds - b.arrivalAtStopSeconds || compareIds(a.tripId, b.tripId),
+  ⎿ 204:  return buses.filter((bus) => bus.arrivalAtStopSeconds !== null);
+  ⎿ 215:    if (bus.arrivalAtStopSeconds === null || seen.has(bus.direction)) continue;
+
+● Reading the sheet code and timetable logic to plan how arrival times get added to the bus rows.
+
+  → PowerShell(command: Get-Content src/domain/buses.ts | Select-Object -Skip 160 -First 45; Select-S..., description: Read domain types, time helpers, icons, CSS)
+  ⎿ }
+  ⎿ 
+  ⎿ /**
+  ⎿  * The next scheduled calls at `stop` within `UPCOMING_HORIZON_SECONDS`, soonest first (ties by
+  ⎿  * `tripId`), one per trip. Unlike `busesInService`, a trip counts whether or not it has left its
+  ⎿  * first stop yet, so a bus still waiting at its terminus is listed as soon as it is among the next
+  ⎿  * to call here, not only once it departs. A trip that ends its run at the stop is not listed.
+  ⎿  */
+  ⎿ export function upcomingArrivals({
+  ⎿   stop,
+  ⎿   clock,
+  ⎿   tripsByDayType,
+  ⎿   now,
+  ⎿ }: ArrivalsInput): StopArrival[] {
+  ⎿   const at = now.toISOString();
+  ⎿   const seen = new Set<string>();
+  ⎿   const arrivals: StopArrival[] = [];
+  ⎿ 
+  ⎿   for (const { dayType, offset } of serviceDays(clock)) {
+  ⎿     for (const trip of tripsByDayType.get(dayType) ?? []) {
+  ⎿ … +329 more lines
+  → Grep(pattern: bus-list|BusRow|formatLisbonHM|toHaveText\(/\d, output_mode: content, glob: {src,tests}/**/*.{ts,tsx})
+  ⎿ src\domain\lisbonTime.test.ts:4:  formatLisbonHM,
+  ⎿ src\domain\lisbonTime.test.ts:75:describe('formatLisbonHM', () => {
+  ⎿ src\domain\lisbonTime.test.ts:77:    expect(formatLisbonHM(new Date('2026-09-23T09:42:30Z'))).toBe('10:42');
+  ⎿ src\domain\lisbonTime.test.ts:78:    expect(formatLisbonHM(new Date('2026-12-23T00:05:00Z'))).toBe('00:05');
+  ⎿ src\domain\lisbonTime.ts:61:export function formatLisbonHM(now: Date): string {
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:13:interface BusRowProps {
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:21:export function BusRow({ bus, color, badge }: BusRowProps) {
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:24:    <li className="bus-list__row">
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:26:      <span className="bus-list__destination">to {bus.destination}</span>
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:28:      <span className="bus-list__time" aria-hidden="true">
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:58:        <ul className="bus-list" aria-live="off">
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:60:            <BusRow key={bus.tripId} bus={bus} color={colorOf(bus.line)} />
+  ⎿ src\ui\sheet\NearestStopContent.tsx:10:import { ApproachingBuses, BusRow, NO_BUSES_IN_DIRECTION } from './ApproachingBuses';
+  ⎿ src\ui\sheet\NearestStopContent.tsx:82:          <ul className="bus-list" aria-live="off">
+  ⎿ src\ui\sheet\NearestStopContent.tsx:83:            <BusRow bus={soonest} color={colorOf(soonest.line)} badge />
+  ⎿ tests\e2e\map.spec.ts:301:    const sheetTime = sheet.locator('.bus-list__time').first();
+  → PowerShell(command: Get-Content tests/e2e/map.spec.ts | Select-Object -Skip 270 -First 60; Select..., description: Inspect e2e tests and unit tests for arrivals)
+  ⎿           const x = box.x + box.width / 2;
+  ⎿           const y = box.y + box.height / 2;
+  ⎿           expect(x).toBeGreaterThan(panelRight);
+  ⎿           expect(x).toBeLessThan(viewport.width);
+  ⎿           expect(y).toBeGreaterThan(0);
+  ⎿           expect(y).toBeLessThan(sheetTop);
+  ⎿         }
+  ⎿       }).toPass();
+  ⎿     });
+  ⎿   });
+  ⎿ 
+  ⎿   test('the map loads and the locate button re-frames without errors', async ({ page }) => {
+  ⎿     const errors: string[] = [];
+  ⎿     page.on('pageerror', (error) => errors.push(error.message));
+  ⎿     page.on('console', (message) => {
+  ⎿       if (message.type() === 'error') errors.push(message.text());
+  ⎿     });
+  ⎿     await page.goto('/');
+  ⎿     await expect(page.getByRole('region', { name: 'Nearest stop' })).toBeVisible();
+  ⎿     await expect(page.getByText('Heading to this stop')).toBeVisible();
+  ⎿ … +59 more lines
+  → PowerShell(command: Get-Content tests/e2e/map.spec.ts | Select-Object -Skip 198 -First 20; Get-Co..., description: View e2e row assertions)
+  ⎿     for (const line of ['S1', 'S2', 'U1', 'U2']) {
+  ⎿       await expect(sheet.locator('.lines-row').getByText(line, { exact: true })).toBeVisible();
+  ⎿     }
+  ⎿     await expect(
+  ⎿       sheet.getByRole('heading', { level: 2, name: 'Heading to this stop' }),
+  ⎿     ).toBeVisible();
+  ⎿     const rows = sheet.getByRole('listitem');
+  ⎿     await expect(rows).toHaveCount(4);
+  ⎿     await expect(rows.nth(0)).toContainText('to Vale das Flores');
+  ⎿     await expect(rows.nth(1)).toContainText('to Coimbra B');
+  ⎿     await expect(rows.nth(2)).toContainText('to Vale das Flores');
+  ⎿     await expect(rows.nth(3)).toContainText('to Coimbra B');
+  ⎿     await expect(sheet.getByText('Scheduled', { exact: true })).toHaveCount(1);
+  ⎿     await expect(sheet.getByText(/more heading here/)).toHaveCount(0);
+  ⎿     await expect(sheet.getByText(/Estimated at/)).toHaveCount(0);
+  ⎿ 
+  ⎿     await expect(
+  ⎿       page.getByRole('button', { name: 'Centre on my location', exact: true }),
+  ⎿     ).toBeEnabled();
+  ⎿ 
+  ⎿ … +50 more lines
+  → AskUserQuestion(questions: [{"question":"The minimised phone sheet shows a single bus row (the soonest b...)
+  ⎿ Your questions have been answered: "The minimised phone sheet shows a single bus row (the soonest bus) and has no room for the clock/hourglass icon header. Should that single row also show the gray arrival time?"="Yes, time only, no icons (Recommended)". You can now continue with these answers in mind.
+  → Grep(pattern: StopArrival|nextBoardingCall\(|function nextBoardingCall, output_mode: content, glob: {src,tests}/**/*.{ts,tsx}, -A: 0)
+  ⎿ src\domain\buses.ts:12:  StopArrival,
+  ⎿ src\domain\buses.ts:54:function nextBoardingCall(trip: Trip, stopId: string, offset: number): StopTime | undefined {
+  ⎿ src\domain\buses.ts:138:      const call = stop ? nextBoardingCall(trip, stop.id, offset) : undefined;
+  ⎿ src\domain\buses.ts:174:}: ArrivalsInput): StopArrival[] {
+  ⎿ src\domain\buses.ts:177:  const arrivals: StopArrival[] = [];
+  ⎿ src\domain\buses.ts:182:      const call = nextBoardingCall(trip, stop.id, offset);
+  ⎿ src\domain\types.ts:72:export interface StopArrival {
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:2:import type { LineId, StopArrival } from '../../domain/types';
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:14:  bus: StopArrival;
+  ⎿ src\ui\sheet\ApproachingBuses.tsx:38:  buses: readonly StopArrival[];
+  ⎿ src\ui\sheet\NearestStopContent.tsx:9:import type { LineId, Stop, StopArrival } from '../../domain/types';
+  ⎿ src\ui\sheet\NearestStopContent.tsx:25:  arrivals: readonly StopArrival[];
+  → PowerShell(command: Get-Content src/domain/buses.ts | Select-Object -Skip 25 -First 45; Get-Conte..., description: Read serviceDays/nextBoardingCall and arrivals tests)
+  ⎿ export interface BusesInput {
+  ⎿   /** The selected (nearest) stop, or null when none is known yet. */
+  ⎿   stop: Stop | null;
+  ⎿   clock: LisbonClock;
+  ⎿   tripsByDayType: ReadonlyMap<DayType, readonly Trip[]>;
+  ⎿   shapesById: ReadonlyMap<string, MeasuredShape>;
+  ⎿   stopsById: ReadonlyMap<string, Stop>;
+  ⎿   now: Date;
+  ⎿ }
+  ⎿ 
+  ⎿ /** Service days whose trips may be running at `clock`, each with the offset of `clock` into it. */
+  ⎿ function serviceDays(clock: LisbonClock): { dayType: DayType; offset: number }[] {
+  ⎿   const days = [{ dayType: dayTypeFor(clock.date), offset: clock.seconds }];
+  ⎿   if (clock.seconds < PREVIOUS_SERVICE_DAY_UNTIL) {
+  ⎿     days.push({
+  ⎿       dayType: dayTypeFor(previousDate(clock.date)),
+  ⎿       offset: clock.seconds + DAY_SECONDS,
+  ⎿     });
+  ⎿   }
+  ⎿   return days;
+  ⎿ … +64 more lines
+  → Grep(pattern: ## Concepts|## Ontology, path: plays, output_mode: content, -A: 6)
+  ⎿ No matches found
+  → Write(file_path: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-radiant-mist.md, content: # Play 013 — Arrival time in the sheet
+
+## Context
+
+The sheet's "Heading to t...)
+  ⎿ File created successfully at: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-radiant-mist.md (file state is current in your context — no need to Read it back)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-radiant-mist.md, old_string: **outside** the `<ul>** so, new_string: **outside** the `<ul>` so)
+  ⎿ The file C:\Users\haraujo\.claude\plans\you-are-the-autopilot-radiant-mist.md has been updated successfully. (file state is current in your context — no need to Read it back)
+  → Edit(replace_all: false, file_path: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-radiant-mist.md, old_string: Fixed column widths so the icons sit exactly over their columns in every row...., new_string: Fixed column widths so the icons sit exactly over their columns in every row....)
+  → ToolSearch(query: select:ExitPlanMode, max_results: 1)
+  ⎿ The file C:\Users\haraujo\.claude\plans\you-are-the-autopilot-radiant-mist.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+● The plan is written; I'm submitting it for your approval.
+
+  → ExitPlanMode(plan: # Play 013 — Arrival time in the sheet
+
+## Context
+
+The sheet's "Heading to t..., planFilePath: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-radiant-mist.md)
