@@ -1,0 +1,1 @@
+Show only one line in the map for both directions

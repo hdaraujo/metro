@@ -1,0 +1,275 @@
+> You are the Autopilot Planner for this play, running in plan mode. Read `plays/014-reduce-lines-to-3/CLAUDE.md` and `plays/014-reduce-lines-to-3/intent.md` — that folder is this play's, inside the project's specs repository, and it is where every file named below lives. If intent.md is empty or thin, ask me what I want to build for this play and help me shape the requirements. When the requirements are clear, produce a complete, unambiguous implementation plan and present it with ExitPlanMode. The plan you present is the SOLE specification the Developer will implement, so make it thorough and self-contained. A DevOps engineer will read your plan to know which repositories to prepare before the Developer starts, so explicitly state — by name — which of the attached repositories this play's implementation will touch. You cannot edit files in plan mode — the plan itself is your deliverable.
+
+If a `plays/014-reduce-lines-to-3/design/` folder exists, this play already has a UI design I approved: read `plays/014-reduce-lines-to-3/design/design.md` and the `.dc.html` artboards beside it and treat them as the specification for the user interface. Do not redesign it and do not second-guess the layout.
+
+PROJECT CONTEXT FILES: this project keeps its documentation under `documentation/`; the documents in `documentation/context/` are shared by every play and apply to all work. Read ALL of them before doing anything and make your work conform to them: `documentation/context/vision.md` (the problem, users, and product direction), `documentation/context/tech.md` (overall architecture plus the technology used in each repository). Only the Architect writes `documentation/context/vision.md` and `documentation/context/tech.md`; treat every other document as read-only reference the user maintains, and do not create, move or edit anything else under `documentation/`.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; for f in..., description: Read play files and context docs)
+  ⎿ === plays/014-reduce-lines-to-3/CLAUDE.md
+  ⎿ # Play `014` — Autopilot session instructions
+  ⎿ 
+  ⎿ This play is run by the **Autopilot** team: the Architect shapes the product
+  ⎿ vision + tech stack, the Planner then checks whether the play introduces a new
+  ⎿ user interface and — if the user wants one — designs a visual prototype before
+  ⎿ shaping an implementation plan (in plan mode), DevOps prepares an isolated git
+  ⎿ worktree carrying the play's branch in each target repo, the Developer implements
+  ⎿ the plan inside those worktrees, then DevOps commits the changes and posts testing
+  ⎿ instructions before the play goes to validation.
+  ⎿ 
+  ⎿ Your session starts at the root of the project's **specs repository** — the one
+  ⎿ holding `documentation/` and `plays/`. While this play is in progress that root is
+  ⎿ its own git worktree, checked out on the play's branch, so everything you write
+  ⎿ here belongs to this play and lands on the default branch as a single commit
+  ⎿ when the play closes.
+  ⎿ 
+  ⎿ ## Product context (read first)
+  ⎿ 
+  ⎿ This project's `documentation/context/` folder holds context documents shared by
+  ⎿ … +186 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; cat docu..., description: Read module docs and list source)
+  ⎿ <persisted-output>
+  ⎿ Output too large (34.7KB). Full output saved to: C:\Users\haraujo\.claude\projects\C--Users-haraujo--building-data-projects-003-metro-repos-metro\73daa2ac-ca0b-4486-94c4-8ef75c2903b2\tool-results\b3een7spq.txt
+  ⎿ 
+  ⎿ Preview (first 2KB):
+  ⎿ # Map screen
+  ⎿ 
+  ⎿ Metro has one screen: a full-viewport map with a content sheet over it. It shows where the user
+  ⎿ is, their nearest Metrobus stop (or any stop they tap), every Metrobus bus in service, and a
+  ⎿ countdown for each bus heading towards that stop. The approved
+  ⎿ prototype (`documentation/design/001-project-structure-prototype.html`) is the visual
+  ⎿ specification. Code lives in `src/ui/`.
+  ⎿ 
+  ⎿ ## Layout
+  ⎿ 
+  ⎿ - **Phone** (below `min-width: 768px`): a "Metro" wordmark chip at the top left. At the bottom
+  ⎿   there is a stack of a controls row (the OSM attribution on the left, the locate button on the
+  ⎿   right) above a bottom sheet. The sheet's height follows its content, and it can be minimised
+  ⎿   (see [Minimising the phone sheet](#minimising-the-phone-sheet)).
+  ⎿ - **Desktop** (768px and wider): a 380px floating panel at the top left, titled "Metro". It holds
+  ⎿   the same content as the phone sheet, always expanded: it has no handle and cannot be minimised.
+  ⎿ … +16 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; grep -n ..., description: Grep route line content in map-screen doc)
+  ⎿ 30:the bus countdowns and dimming, the direction filter and smart zoom all follow it. It is the stop
+  ⎿ 90:away"), and a chip for each line that serves the stop. Each chip uses the line's colour from the
+  ⎿ 101:- Each bus gets one row, soonest first: its line chip, "to {destination}" (with an ellipsis if it
+  ⎿ 111:  `aria-hidden`. It renders only when the list does: with the direction filter leaving no bus,
+  ⎿ 127:### Direction filter
+  ⎿ 129:At a stop served both ways (for example Portagem), a **direction button** sits on its own row
+  ⎿ 130:under the section header, above the list (`sheet/DirectionButton.tsx`). Each press cycles the list
+  ⎿ 131:**both → outbound → inbound → both**. The logic is pure and lives in `src/domain/directions.ts`.
+  ⎿ 133:- **Served directions.** `directionsAtStop` scans every loaded trip, across all day types in
+  ⎿ 134:  `tripsByDayType` and not only today's. A stop is served in a direction when at least one trip of
+  ⎿ 135:  that direction calls there **at any stop but its last**, the same rule as the list: a bus
+  ⎿ 137:  terminus therefore counts as served in one direction only, the one departing from it. The button shows only when the stop is served in exactly both directions, and
+  ⎿ 139:- **Label.** `Both directions`, or `To ` followed by that direction's distinct trip destinations,
+  ⎿ 141:  `To Vale das Flores, Serpins, Corvo`). If a direction has no destinations, the label falls back
+  ⎿ 143:  button's `title`. The accessible name is `Direction: <label>`, where "Direction: " is visually
+  ⎿ 146:  after filtering. The section still shows as long as a bus is approaching in *either* direction.
+  ⎿ 147:  If the filter leaves no bus, the list is replaced by "No buses in this direction right now."
+  ⎿ 148:  (`NO_BUSES_IN_DIRECTION`). The header, its Scheduled badge and the button stay, so the user can
+  ⎿ 153:  persisted, just like `sheetCollapsed`. `directions` is memoised on the stop **id**, because
+  ⎿ 160:(`STALE_AFTER_MS` in `NearestStopContent.tsx`) does one line close the content: "Timetable data
+  ⎿ … +130 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; sed -n 2..., description: Read route lines section and bundling code)
+  ⎿   must tell markers apart by destination as well as by line.
+  ⎿ - MapLibre's own attribution control is turned off and replaced by an attribution element that is
+  ⎿   always visible: "© OpenStreetMap contributors".
+  ⎿ - If WebGL is unavailable, the map fails to start and logs an error. The sheet still works.
+  ⎿ 
+  ⎿ ## Route lines
+  ⎿ 
+  ⎿ Most of the network is a shared trunk (S1 and S2 overlap almost entirely, U1 runs on S1, U2 on
+  ⎿ S2), so lines are drawn **side by side** wherever they share a road, metro-map style, each in its
+  ⎿ own colour; a stretch used by one line is a single line centred on the road. The geometry is the
+  ⎿ pure function `bundleRoutes(shapes)` in `src/domain/routeBundles.ts`; `MapView` only renders it.
+  ⎿ 
+  ⎿ - **Overlap means identical vertices.** The source's shapes share exactly identical vertices
+  ⎿   where lines overlap, so overlap is found by matching edges (pairs of consecutive vertices,
+  ⎿   keyed to 6 decimal places, direction ignored), with no geometric tolerance. Stretches whose
+  ⎿   vertices don't match exactly are simply drawn un-offset, overlapping as they would without
+  ⎿   bundling. If a future source digitises shared roads differently, this is where it degrades.
+  ⎿ - **Per line, not per shape.** A line's outbound and inbound shapes form one strand: each edge of
+  ⎿   a line is drawn exactly once, whichever direction it comes from. Where a direction diverges
+  ⎿   (U3), its own edges are drawn too.
+  ⎿ … +252 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; ls tests..., description: List fixtures and read play 011 plan)
+  ⎿ tests/e2e:
+  ⎿ map.spec.ts
+  ⎿ 
+  ⎿ tests/fixtures:
+  ⎿ README.md
+  ⎿ route-shapes.json
+  ⎿ stops.json
+  ⎿ trips-DU.sample.json
+  ⎿ # Play 011 — Show overlapping lines side by side
+  ⎿ 
+  ⎿ ## Context
+  ⎿ 
+  ⎿ Intent: *"When lines overlap in the map only one is visible. Make it so if more than one line
+  ⎿ overlap show them side by side so all are visible."*
+  ⎿ 
+  ⎿ Today `MapView.tsx` draws every shape (`network.shapes`, 10 of them: S1, S2, U1, U2, U3 × Ida/Volta)
+  ⎿ as a plain 4 px line in its colour, all on the same layer. Most of the network is a shared trunk
+  ⎿ (in the recorded fixture, S1/S2 overlap ~95 %, U1 lies entirely on S1, U2 on S2, etc.), so whichever
+  ⎿ line is drawn last hides the others and the rider can't tell which lines run where.
+  ⎿ 
+  ⎿ … +138 more lines
+
+● Checking how each line's two directions differ in the recorded route shapes, to pin down what "one line for both directions" means here.
+
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; head -c ..., description: Inspect route shapes fixture structure)
+  ⎿ [
+  ⎿   {
+  ⎿     "id": "S1-0",
+  ⎿     "line": "S1",
+  ⎿     "direction": "Ida",
+  ⎿     "color": "#0080FF",
+  ⎿     "points": [
+  ⎿       [
+  ⎿         40.224741,
+  ⎿         -8.439876
+  ⎿       ],
+  ⎿       [
+  ⎿         40.220424,
+  ⎿         -8.43981
+  ⎿       ],
+  ⎿       [
+  ⎿         40.21697,
+  ⎿         -8.438565
+  ⎿       ],
+  ⎿       [
+  ⎿ … +59 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; node -e ..., description: Compare edges between directions per line)
+  ⎿ S1-0 S1 Ida #0080FF 41
+  ⎿ S1-1 S1 Volta #0080FF 41
+  ⎿ S2-0 S2 Ida #FF0000 40
+  ⎿ S2-1 S2 Volta #FF0000 40
+  ⎿ U1-0 U1 Ida #2B6CC4 15
+  ⎿ U1-1 U1 Volta #2B6CC4 15
+  ⎿ U2-0 U2 Ida #FF5349 14
+  ⎿ U2-1 U2 Volta #FF5349 14
+  ⎿ U3-0 U3 Ida #00FF40 8
+  ⎿ U3-1 U3 Volta #00FF40 8
+  ⎿ S1 ida 40 volta 40 shared 40
+  ⎿ S2 ida 39 volta 39 shared 36
+  ⎿ U1 ida 14 volta 14 shared 14
+  ⎿ U2 ida 13 volta 13 shared 10
+  ⎿ U3 ida 7 volta 7 shared 4
+  → Bash(command: cd "C:/Users/haraujo/AppData/Local/Temp/claude/0914c1dc873e55c2/73daa2ac-ca0b..., description: Fetch live route shapes and compare directions)
+  ⎿ -rw-r--r-- 1 CRITICAL+haraujo 4096 14305 Nov 19 16:02 live-shapes.json
+  ⎿ S1-0 S1 Ida #0080FF 41
+  ⎿ S1-1 S1 Volta #0080FF 41
+  ⎿ S2-0 S2 Ida #FF0000 40
+  ⎿ S2-1 S2 Volta #FF0000 40
+  ⎿ U1-0 U1 Ida #2B6CC4 15
+  ⎿ U1-1 U1 Volta #2B6CC4 15
+  ⎿ U2-0 U2 Ida #FF5349 14
+  ⎿ U2-1 U2 Volta #FF5349 14
+  ⎿ U3-0 U3 Ida #00FF40 8
+  ⎿ U3-1 U3 Volta #00FF40 8
+  ⎿ S1 ida 40 volta 40 shared 40
+  ⎿ S2 ida 39 volta 39 shared 36
+  ⎿ U1 ida 14 volta 14 shared 14
+  ⎿ U2 ida 13 volta 13 shared 10
+  ⎿ U3 ida 7 volta 7 shared 4
+  ⎿ Shell cwd was reset to C:\Users\haraujo\.building\data\projects\003-metro\repos\metro
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; node -e ..., description: Count lines per edge and divergent edges)
+  ⎿ {
+  ⎿   'S1+U1+U3': 3,
+  ⎿   'S1+U1': 2,
+  ⎿   'S1+S2+U1+U2': 9,
+  ⎿   'S1+S2': 26,
+  ⎿   'S2+U2+U3': 6,
+  ⎿   'S2+U2': 1,
+  ⎿   U3: 1
+  ⎿ }
+  ⎿ S2 ida-only [
+  ⎿   '40.209825,-8.419701|40.211581,-8.424759',
+  ⎿   '40.211257,-8.429836|40.211581,-8.424759',
+  ⎿   '40.210350,-8.432479|40.211257,-8.429836'
+  ⎿ ] volta-only [
+  ⎿   '40.210350,-8.432479|40.211255,-8.429770',
+  ⎿   '40.211255,-8.429770|40.211565,-8.424820',
+  ⎿   '40.209594,-8.420384|40.211565,-8.424820'
+  ⎿ ]
+  ⎿ U2 ida-only [
+  ⎿   '40.209825,-8.419701|40.211581,-8.424759',
+  ⎿ … +19 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; node -e ..., description: Show divergent stretch and nearby stops)
+  ⎿ S2-0 [[40.211581,-8.424759],[40.211257,-8.429836],[40.21035,-8.432479],[40.207526,-8.430654],[40.203753,-8.425116],[40.19847,-8.420803],[40.199566,-8.416973],[40.201298,-8.410959],[40.201566,-8.407223]]
+  ⎿ S2-1 [[40.203753,-8.425116],[40.207526,-8.430654],[40.21035,-8.432479],[40.211255,-8.42977],[40.211565,-8.42482],[40.209594,-8.420384]]
+  ⎿ [{"id":"274","code":"cbr_mm033","name":"Câmara (asc)","lines":["S2","U2","U3"],"isSuburbanOnly":false,"coords":{"lat":40.211255,"lng":-8.42977}},{"id":"231","code":"cbr_mm045","name":"Câmara (desc)","lines":["S2","U2","U3"],"isSuburbanOnly":false,"coords":{"lat":40.211257,"lng":-8.429836}},{"id":"275","code":"cbr_mm034","name":"Mercado (asc)","lines":["S2","U2","U3"],"isSuburbanOnly":false,"coords":{"lat":40.211565,"lng":-8.42482}},{"id":"230","code":"cbr_mm047","name":"Mercado (desc)","lines":["S2","U2","U3"],"isSuburbanOnly":false,"coords":{"lat":40.211581,"lng":-8.424759}},{"id":"276","code":"cbr_mm035","name":"República (asc)","lines":["S2","U2","U3"],"isSuburbanOnly":false,"coords":{"lat":40.209594,"lng":-8.420384}},{"id":"229","code":"cbr_mm048","name":"República (desc)","lines":["S2","U2","U3"],"isSuburbanOnly":false,"coords":{"lat":40.209825,"lng":-8.419701}}]
+  ⎿ 204:- Layers: the `routes` line layer (every line in its colour, see
+  ⎿ 205-  [Route lines](#route-lines)), and above it the `stops` layer, every stop as a small white
+  ⎿ 206-  circle. There are no map glyphs or sprites. The user dot, the stop marker (a red dot with a name
+  ⎿ 207-  pill) and the bus markers are DOM markers (`src/ui/map/markers.ts`).
+  ⎿ 208-- There is a single **stop marker**, on the shown stop. It looks the same for both kinds; its
+  ⎿ 209-  `aria-label` is `Nearest stop: {name}` or `Selected stop: {name}` (`StopKind`). While another
+  ⎿ 210-  stop is selected, the nearest stop has no marker of its own. `MapView` memoises the stop
+  ⎿ 211-  together with its kind, so a change of kind alone (the selected stop becoming the nearest one)
+  ⎿ 212-  still updates the label.
+  ⎿ 213-- **Every bus in service has a marker**: every line, both directions, whether or not the bus is
+  ⎿ 214-  heading to the user's stop. `useBusMarkers` in `MapView.tsx` keeps one MapLibre marker per
+  ⎿ 215-  `tripId`. On each tick it moves and updates the existing markers in place, adds markers for new
+  ⎿ 216-  trips and removes the markers of trips that have ended.
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; node -e ..., description: Find closest distinct vertex pairs)
+  ⎿ 48
+  ⎿ 5.5 40.211581,-8.424759 40.211565,-8.424820
+  ⎿ 5.6 40.211257,-8.429836 40.211255,-8.429770
+  ⎿ 63.4 40.209825,-8.419701 40.209594,-8.420384
+  ⎿ 103.8 40.209955,-8.433587 40.210350,-8.432479
+  ⎿ 145.2 40.136720,-8.358167 40.135481,-8.357628
+  ⎿ 229.0 40.110920,-8.292410 40.111968,-8.290092
+  ⎿ 244.0 40.115186,-8.357221 40.114616,-8.354451
+  ⎿ 246.1 40.211257,-8.429836 40.210350,-8.432479
+  ⎿ 251.1 40.210350,-8.432479 40.211255,-8.429770
+  ⎿ 318.7 40.201298,-8.410959 40.201566,-8.407223
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; sed -n 1..., description: Read bundle tests, geo helpers, usages)
+  ⎿ import { describe, expect, it } from 'vitest';
+  ⎿ import shapesJson from '../../tests/fixtures/route-shapes.json';
+  ⎿ import { parseShapes } from '../sources/metrobusTimetable';
+  ⎿ import { bundleRoutes, type LineRun } from './routeBundles';
+  ⎿ import type { Direction, LatLng, LineId, Shape } from './types';
+  ⎿ 
+  ⎿ const P = (lat: number, lng: number): LatLng => ({ lat, lng });
+  ⎿ 
+  ⎿ function shape(
+  ⎿   id: string,
+  ⎿   line: LineId,
+  ⎿   direction: Direction,
+  ⎿   points: LatLng[],
+  ⎿   color = '#000000',
+  ⎿ ): Shape {
+  ⎿   return { id, line, direction, color, points };
+  ⎿ }
+  ⎿ 
+  ⎿ const key = (p: LatLng) => `${p.lat.toFixed(6)},${p.lng.toFixed(6)}`;
+  ⎿ const edgeKey = (a: LatLng, b: LatLng) => {
+  ⎿ … +97 more lines
+  → Bash(command: cd "C:/Users/haraujo/.building/data/projects/003-metro/repos/metro"; sed -n 1..., description: Read fixture tests in bundle test file)
+  ⎿   });
+  ⎿ 
+  ⎿   it('tolerates duplicate consecutive points and one-point shapes', () => {
+  ⎿     const runs = bundleRoutes([
+  ⎿       shape('A-0', 'A', 'outbound', [corridor[0]!, corridor[0]!, corridor[1]!, corridor[1]!]),
+  ⎿       shape('B-0', 'B', 'outbound', [corridor[2]!]),
+  ⎿       shape('C-0', 'C', 'outbound', []),
+  ⎿     ]);
+  ⎿     expect(runs).toEqual([
+  ⎿       { line: 'A', color: '#000000', offset: 0, points: [corridor[0], corridor[1]] },
+  ⎿     ]);
+  ⎿   });
+  ⎿ 
+  ⎿   it('is deterministic and independent of input order', () => {
+  ⎿     const shapes = parseShapes(shapesJson);
+  ⎿     expect(bundleRoutes(shapes)).toEqual(bundleRoutes(shapes));
+  ⎿     const shuffled = [...shapes].reverse();
+  ⎿     shuffled.push(shuffled.splice(3, 1)[0]!);
+  ⎿     expect(slotsByLineEdge(bundleRoutes(shuffled))).toEqual(slotsByLineEdge(bundleRoutes(shapes)));
+  ⎿   });
+  ⎿ … +33 more lines
+  → Write(file_path: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-cryptic-puzzle.md, content: # Play 014 — One strand per line for both directions ("reduce lines to 3")
+
+#...)
+  ⎿ File created successfully at: C:\Users\haraujo\.claude\plans\you-are-the-autopilot-cryptic-puzzle.md (file state is current in your context — no need to Read it back)
+  → ToolSearch(query: select:ExitPlanMode, max_results: 1)
