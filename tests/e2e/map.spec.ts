@@ -316,14 +316,12 @@ test.describe('located near Portagem', () => {
     await expect(markerTime).toHaveText('2:03');
   });
 
-  test('sheet shows arrival times under a clock and hourglass header', async ({ page }) => {
+  test('sheet shows arrival times in aligned columns, with no icon header', async ({ page }) => {
     await page.goto('/');
     const sheet = page.getByRole('region', { name: 'Nearest stop' });
     const rows = sheet.getByRole('listitem');
     await expect(rows).toHaveCount(4);
-    const legend = sheet.locator('.bus-list__legend');
-    await expect(legend).toHaveCount(1);
-    await expect(legend.locator('svg')).toHaveCount(2);
+    await expect(sheet.locator('.bus-list__legend')).toHaveCount(0);
 
     const arrivals = sheet.locator('.bus-list__arrival');
     await expect(arrivals).toHaveCount(4);
@@ -331,21 +329,24 @@ test.describe('located near Portagem', () => {
       await expect(arrival).toHaveText(/^\d{2}:\d{2}$/);
     }
 
-    const legendBox = (await legend.boundingBox())!;
-    const firstRowBox = (await rows.first().boundingBox())!;
-    expect(legendBox.y + legendBox.height).toBeLessThanOrEqual(firstRowBox.y + 1);
-
+    // Every row's times line up in the same columns.
     const right = (box: { x: number; width: number } | null) => box!.x + box!.width;
-    const clockCell = legend.locator('.bus-list__legend-cell--arrival');
-    const hourglassCell = legend.locator('.bus-list__legend-cell--time');
     const firstArrival = rows.first().locator('.bus-list__arrival');
     const firstTime = rows.first().locator('.bus-list__time');
-    expect(
-      Math.abs(right(await hourglassCell.boundingBox()) - right(await firstTime.boundingBox())),
-    ).toBeLessThanOrEqual(1);
-    expect(
-      Math.abs(right(await clockCell.boundingBox()) - right(await firstArrival.boundingBox())),
-    ).toBeLessThanOrEqual(1);
+    for (const row of await rows.all()) {
+      expect(
+        Math.abs(
+          right(await row.locator('.bus-list__arrival').boundingBox()) -
+            right(await firstArrival.boundingBox()),
+        ),
+      ).toBeLessThanOrEqual(1);
+      expect(
+        Math.abs(
+          right(await row.locator('.bus-list__time').boundingBox()) -
+            right(await firstTime.boundingBox()),
+        ),
+      ).toBeLessThanOrEqual(1);
+    }
   });
 
   test('desktop: renders inside the 380px panel', async ({ page }, testInfo) => {

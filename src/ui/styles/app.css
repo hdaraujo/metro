@@ -542,8 +542,7 @@ button {
   color: var(--color-text-secondary);
 }
 
-.bus-list,
-.bus-list__legend {
+.bus-list {
   --bus-col-arrival: 44px; /* "10:47" at 14px tabular */
   --bus-col-time: 64px; /* up to "90:00" at 20px bold tabular (the horizon is 90 min) */
 }
@@ -566,27 +565,6 @@ button {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: var(--color-text);
-}
-
-.bus-list__legend {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px; /* the same as .bus-list__row */
-  margin-bottom: 4px;
-  color: var(--color-text-muted);
-}
-
-.bus-list__legend-cell {
-  display: flex;
-  justify-content: flex-end; /* flush with the right-aligned figures below */
-}
-
-.bus-list__legend-cell--arrival {
-  width: var(--bus-col-arrival);
-}
-
-.bus-list__legend-cell--time {
-  width: var(--bus-col-time);
 }
 
 .scheduled-badge {

@@ -105,16 +105,12 @@ its trip at the stop is not.
   (`formatLisbonHM(new Date(bus.arrivalAt))`), smaller and grey (`--color-text-muted`). It stays
   fixed while the countdown ticks, and since both come from the same number (see
   `timetable-and-estimates.md`) they never disagree.
-- **Icon header.** Above the list, a small row shows a clock over the arrival-time column and an
-  hourglass over the countdown column (`.bus-list__legend`, `ClockIcon` and `HourglassIcon` in
-  `src/ui/icons.tsx`). It sits **outside** the `<ul>`, so it is never a list item, and it is
-  `aria-hidden`. It renders only when the list does: with the direction filter leaving no bus,
-  neither the header nor the list shows. The minimised sheet's row has no header.
+- **No column header.** The list has no header or icons over its time columns; the arrival time
+  and countdown are told apart by size and colour alone.
 - **Column alignment.** Both time columns have fixed widths, right-aligned, set by the custom
   properties `--bus-col-arrival` (44px, fits `10:47` at 14px) and `--bus-col-time` (64px, fits
-  `90:00`, the 90-minute horizon, at 20px bold). They are defined on both `.bus-list` and
-  `.bus-list__legend`, and the legend uses the row's 12px gap, so the icons sit exactly over their
-  figures in every row. Changing the row's gap, the figures' font sizes or the horizon means
+  `90:00`, the 90-minute horizon, at 20px bold). They are defined on `.bus-list`, so the figures line up in every
+  row. Changing the row's gap, the figures' font sizes or the horizon means
   revisiting these widths. The destination is the column that gives way (ellipsis) on narrow
   screens.
 - At most **4** rows are shown (`MAX_ROWS`, on phone and desktop alike), to keep the sheet

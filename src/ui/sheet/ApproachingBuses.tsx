@@ -1,7 +1,6 @@
 import { formatCountdown, spokenCountdown } from '../../domain/countdown';
 import { formatLisbonHM } from '../../domain/lisbonTime';
 import type { LineId, StopArrival } from '../../domain/types';
-import { ClockIcon, HourglassIcon } from '../icons';
 import { DirectionButton } from './DirectionButton';
 import { LineChip } from './LineChip';
 import { ScheduledBadge } from './ScheduledBadge';
@@ -63,15 +62,6 @@ export function ApproachingBuses({ buses, colorOf, direction }: ApproachingBuses
       {direction && <DirectionButton label={direction.label} onCycle={direction.onCycle} />}
       {shown.length > 0 ? (
         <>
-          {/* Decorative: each row's hidden text already says "arrives at …, … away". */}
-          <div className="bus-list__legend" aria-hidden="true">
-            <span className="bus-list__legend-cell bus-list__legend-cell--arrival">
-              <ClockIcon size={16} />
-            </span>
-            <span className="bus-list__legend-cell bus-list__legend-cell--time">
-              <HourglassIcon size={16} />
-            </span>
-          </div>
           {/* Off: the countdowns tick every second and must not flood the sheet's live region. */}
           <ul className="bus-list" aria-live="off">
             {shown.map((bus) => (

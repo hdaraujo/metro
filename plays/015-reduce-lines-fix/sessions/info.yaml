@@ -1,6 +1,6 @@
 sessions:
   - id: 63287523f9bc44789d6962c7870bba96
-    state: running
+    state: finished
     seq: 1
     datetime: '2026-11-19T17:07:22.155Z'
     team: Manual
@@ -16,9 +16,9 @@ sessions:
       waiting_since: '2026-11-19T17:24:24.950Z'
     usage:
       claude-opus-5-5:
-        input: 216
-        output: 73452
-        cache_read: 9670102
+        input: 276
+        output: 87205
+        cache_read: 13411759
         cache_write_5m: 0
-        cache_write_1h: 227018
+        cache_write_1h: 256231
 next_seq: 2
